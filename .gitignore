@@ -36,3 +36,15 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/lib/libdecora_sse.dylib
+/lib/libfxplugins.dylib
+/lib/libglass.dylib
+/lib/libglib-lite.dylib
+/lib/libgstreamer-lite.dylib
+/lib/libjavafx_font.dylib
+/lib/libjavafx_iio.dylib
+/lib/libjfxmedia.dylib
+/lib/libjfxmedia_avf.dylib
+/lib/libprism_common.dylib
+/lib/libprism_es2.dylib
+/lib/libprism_sw.dylib
