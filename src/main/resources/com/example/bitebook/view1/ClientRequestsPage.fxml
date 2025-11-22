@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ClientRequestsPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomePage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0" />
+      <Text layoutX="232.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Requests">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <ScrollPane fx:id="menusScrollPane" layoutX="239.0" layoutY="76.0" prefHeight="648.0" prefWidth="940.0" style="-fx-border-color: #383397; -fx-background-color: white;">
+         <content>
+            <VBox fx:id="requestsVBox" prefHeight="645.0" prefWidth="914.0" style="-fx-background-color: white;" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleClick" prefHeight="88.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.SelectMenuCardControllerG">
+   <children>
+      <Text layoutX="10.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="423.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diet Type:" wrappingWidth="122.80462646484375">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="10.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of courses:" wrappingWidth="223.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="423.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price per person:" wrappingWidth="190.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="nameLabel" layoutX="85.0" layoutY="9.0" prefHeight="31.0" prefWidth="329.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="dietTypeLabel" layoutX="538.0" layoutY="9.0" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="numberOfCoursesLabel" layoutX="227.0" layoutY="47.0" prefHeight="31.0" prefWidth="83.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="pricePerPersonLabel" layoutX="611.0" layoutY="47.0" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

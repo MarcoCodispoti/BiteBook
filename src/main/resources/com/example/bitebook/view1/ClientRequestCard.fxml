@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="167.0" prefWidth="914.0" style="-fx-background-color: white; -fx-background-radius: 6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ClientRequestCardControllerG">
+   <children>
+      <AnchorPane layoutX="4.0" layoutY="4.0" prefHeight="159.0" prefWidth="906.0" style="-fx-background-color: #383397; -fx-background-radius: 6;">
+         <children>
+            <AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="148.0" prefWidth="894.0" style="-fx-background-color: white; -fx-background-radius: 3;">
+               <children>
+                  <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request ID: ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="requestIdLabel" layoutX="113.0" layoutY="8.0" prefHeight="26.0" prefWidth="58.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="216.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chef:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="chefLabel" layoutX="265.0" layoutY="7.0" prefHeight="26.0" prefWidth="247.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="menuLabel" layoutX="595.0" layoutY="7.0" prefHeight="26.0" prefWidth="282.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="538.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="10.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Level:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="menuLevelLabel" layoutX="116.0" layoutY="43.0" prefHeight="26.0" prefWidth="87.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="216.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="201.47177124023438">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="numberOfParticipantsLabel" layoutX="420.0" layoutY="43.0" prefHeight="26.0" prefWidth="31.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="539.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total price:" wrappingWidth="101.83309936523438">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="totalPriceLabel" layoutX="638.0" layoutY="43.0" prefHeight="26.0" prefWidth="75.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="539.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="addressLabel" layoutX="619.0" layoutY="79.0" prefHeight="26.0" prefWidth="259.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="timeLabel" layoutX="266.0" layoutY="79.0" prefHeight="26.0" prefWidth="131.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="217.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="dateLabel" layoutX="60.0" layoutY="80.0" prefHeight="26.0" prefWidth="128.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="11.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="11.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="statusLabel" layoutX="74.0" layoutY="116.0" prefHeight="26.0" prefWidth="140.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

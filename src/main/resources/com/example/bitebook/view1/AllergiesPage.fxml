@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.AllergiesPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0">
+         <children>
+            <ImageView fitHeight="221.0" fitWidth="981.0" layoutX="2.0" opacity="0.82" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/allergies1.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register your allergies" wrappingWidth="387.0262451171875">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <Button fx:id="removeAllergyButton" layoutX="538.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnRemoveAllergy" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: red;" text="Remove allergy" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <ScrollPane fx:id="allergiesScrollPane" layoutX="262.0" layoutY="356.0" prefHeight="359.0" prefWidth="261.0" style="-fx-background-color: white; -fx-border-color: #383397;">
+         <content>
+            <VBox fx:id="allergiesVBox" prefHeight="364.0" prefWidth="240.0" style="-fx-background-color: white;" />
+         </content>
+      </ScrollPane>
+      <Text layoutX="233.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Allergies" wrappingWidth="154.93951416015625">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text layoutX="845.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add allergy" wrappingWidth="154.93951416015625">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Text layoutX="845.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select your allergy" wrappingWidth="187.37152099609375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="insertAllergyButton" layoutX="846.0" layoutY="436.0" mnemonicParsing="false" onAction="#clickedOnInsertAllergy" prefHeight="48.0" prefWidth="155.0" style="-fx-background-color: #383397;" text="Insert allergy" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="selectAllergyComboBox" layoutX="843.0" layoutY="388.0" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: white; -fx-border-color: #383397;" />
+   </children>
+</AnchorPane>

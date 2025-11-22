@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ChefHomePageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="menusHyperlink" layoutX="2.0" layoutY="1.0" onAction="#clickedOnMenus" prefHeight="73.0" prefWidth="217.0" text=" Menus" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="664.0" prefHeight="57.0" prefWidth="219.0">
+               <children>
+                  <Hyperlink fx:id="logoutHyperlink" layoutX="6.0" onAction="#clickedOnLogout" prefHeight="74.0" prefWidth="211.0" text=" Logout" textFill="WHITE">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Hyperlink>
+                  <ImageView fitHeight="51.0" fitWidth="55.0" layoutX="98.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0">
+         <children>
+            <ImageView fitHeight="224.0" fitWidth="983.0" layoutX="2.0" opacity="0.82" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/chefhome1.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Approved Requests">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <ScrollPane fx:id="confirmedRequestsScrollPane" layoutX="246.0" layoutY="279.0" prefHeight="449.0" prefWidth="931.0" style="-fx-border-color: #383397; -fx-background-color: white;">
+         <content>
+            <VBox fx:id="approvedRequestsVBox" prefHeight="440.0" prefWidth="906.0" style="-fx-background-color: white;" />
+         </content>
+      </ScrollPane>
+      <Text layoutX="236.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chef" visible="false">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

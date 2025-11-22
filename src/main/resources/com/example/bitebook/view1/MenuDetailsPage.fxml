@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.MenuDetailsPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="228.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="315.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses list" wrappingWidth="188.14874267578125">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <Button fx:id="confirmMenuButton" layoutX="1022.0" layoutY="610.0" mnemonicParsing="false" onAction="#clickedOnConfirmMenu" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Confirm Menu" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+      <ScrollPane fx:id="menusScrollPane" layoutX="256.0" layoutY="289.0" prefHeight="436.0" prefWidth="749.0" style="-fx-border-color: #383397; -fx-background-color: white;">
+         <content>
+            <VBox fx:id="coursesVBox" prefHeight="428.0" prefWidth="722.0" style="-fx-background-color: white;" />
+         </content>
+      </ScrollPane>
+      <Text layoutX="232.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu details" wrappingWidth="188.14874267578125">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="229.0" layoutY="228.0" prefHeight="1.0" prefWidth="961.0" style="-fx-background-color: #383397;" />
+      <Text layoutX="232.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of courses:" wrappingWidth="227.63885498046875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="562.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diet type:" wrappingWidth="114.5821533203125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="894.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price per person:" wrappingWidth="187.70880126953125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="nameLabel" layoutX="310.0" layoutY="80.0" prefHeight="31.0" prefWidth="331.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="numberOfCoursesLabel" layoutX="449.0" layoutY="128.0" prefHeight="31.0" prefWidth="56.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="dietTypeLabel" layoutX="670.0" layoutY="127.0" prefHeight="31.0" prefWidth="214.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="pricePerPersonLabel" layoutX="1081.0" layoutY="127.0" prefHeight="31.0" prefWidth="90.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="allergensLabel" layoutX="344.0" layoutY="176.0" prefHeight="31.0" prefWidth="845.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text layoutX="232.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergens:" wrappingWidth="113.70700073242188">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Button fx:id="backToMenusButton" layoutX="1022.0" layoutY="668.0" mnemonicParsing="false" onAction="#clickedOnBackToMenus" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back to menus" textFill="#383397">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

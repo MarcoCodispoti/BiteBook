@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.PaymentPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0" />
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Details" wrappingWidth="276.6703796386719">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Pay " textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Text layoutX="232.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment" wrappingWidth="220.2218017578125">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="229.0" layoutY="288.0" prefHeight="1.0" prefWidth="961.0" style="-fx-background-color: #383397;" />
+      <Text layoutX="232.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="99.69970703125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="276.1143798828125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredients level:" wrappingWidth="187.33154296875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="977.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="84.716796875">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="1150.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="€" wrappingWidth="31.99462890625">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="229.0" layoutY="80.0" prefHeight="1.0" prefWidth="961.0" style="-fx-background-color: #383397;" />
+      <Text layoutX="232.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" wrappingWidth="91.6683349609375">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="847.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back" textFill="#383397">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Label fx:id="pricePerPersonLabel" layoutX="752.0" layoutY="220.0" prefHeight="31.0" prefWidth="90.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="dietTypeLabel" layoutX="341.0" layoutY="220.0" prefHeight="31.0" prefWidth="214.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="numberOfCoursesLabel" layoutX="872.0" layoutY="164.0" prefHeight="31.0" prefWidth="56.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="310.0" layoutY="164.0" prefHeight="31.0" prefWidth="331.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text layoutX="565.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price per person:" wrappingWidth="187.70880126953125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="233.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diet type:" wrappingWidth="114.5821533203125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="655.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of courses:" wrappingWidth="227.63885498046875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="totalPriceLabel" layoutX="1056.0" layoutY="600.0" prefHeight="37.0" prefWidth="86.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateLabel" layoutX="299.0" layoutY="361.0" prefHeight="31.0" prefWidth="205.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLabel" layoutX="301.0" layoutY="412.0" prefHeight="31.0" prefWidth="205.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="addressLabel" layoutX="334.0" layoutY="461.0" prefHeight="31.0" prefWidth="328.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="numberOfParticipantsLabel" layoutX="495.0" layoutY="511.0" prefHeight="31.0" prefWidth="78.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="ingredientsLevelLabel" layoutX="422.0" layoutY="561.0" prefHeight="31.0" prefWidth="188.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

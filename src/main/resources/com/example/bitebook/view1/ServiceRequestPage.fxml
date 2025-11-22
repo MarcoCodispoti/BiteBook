@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ServiceRequestPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Details" wrappingWidth="276.6703796386719">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Send Request" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Text layoutX="232.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send Request" wrappingWidth="220.2218017578125">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="229.0" layoutY="228.0" prefHeight="1.0" prefWidth="961.0" style="-fx-background-color: #383397;" />
+      <Text layoutX="232.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="99.69970703125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="476.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="276.1143798828125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredients level:" wrappingWidth="187.33154296875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="serviceDatePicker" layoutX="296.0" layoutY="304.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-background-radius: 10; -fx-border-radius: 2;" />
+      <ComboBox fx:id="timeComboBox" layoutX="299.0" layoutY="355.0" prefHeight="27.0" prefWidth="176.0" style="-fx-background-color: white; -fx-background-radius: 2; -fx-border-color: #383397; -fx-border-radius: 2;" />
+      <TextField fx:id="addressTextField" layoutX="339.0" layoutY="403.0" prefHeight="27.0" prefWidth="222.0" style="-fx-background-color: white; -fx-background-radius: 2; -fx-border-radius: 2; -fx-border-color: #383397;" />
+      <ComboBox fx:id="numberOfParticipantsComboBox" layoutX="492.0" layoutY="454.0" prefHeight="29.0" prefWidth="132.0" style="-fx-background-color: white; -fx-background-radius: 2; -fx-border-color: #383397; -fx-border-radius: 2;" />
+      <ComboBox fx:id="ingredientsLevelComboBox" layoutX="421.0" layoutY="504.0" prefHeight="29.0" prefWidth="245.0" style="-fx-background-color: white; -fx-background-radius: 2; -fx-border-color: #383397; -fx-border-radius: 2;" />
+      <Text layoutX="977.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" wrappingWidth="84.716796875">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="1150.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="€" wrappingWidth="31.99462890625">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Label fx:id="pricePerPersonLabel" layoutX="1081.0" layoutY="127.0" prefHeight="31.0" prefWidth="90.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="dietTypeLabel" layoutX="670.0" layoutY="127.0" prefHeight="31.0" prefWidth="214.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="numberOfCoursesLabel" layoutX="449.0" layoutY="128.0" prefHeight="31.0" prefWidth="100.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="310.0" layoutY="80.0" prefHeight="31.0" prefWidth="331.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text layoutX="894.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price per person:" wrappingWidth="187.70880126953125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="562.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diet type:" wrappingWidth="114.5821533203125">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of courses:" wrappingWidth="227.63885498046875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="232.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergens:" wrappingWidth="113.70700073242188">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="allergensLabel" layoutX="344.0" layoutY="176.0" prefHeight="31.0" prefWidth="845.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalPriceLabel" layoutX="1051.0" layoutY="600.0" prefHeight="37.0" prefWidth="90.0" textAlignment="RIGHT">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="errorLabel" layoutX="527.0" layoutY="674.0" prefHeight="31.0" prefWidth="299.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="allergenWarningAnchorPane" layoutX="421.0" layoutY="309.0" prefHeight="246.0" prefWidth="490.0" style="-fx-background-radius: 8; -fx-border-color: #383397; -fx-border-radius: 8; -fx-border-width: 3; -fx-background-color: white;">
+         <children>
+            <Text layoutX="165.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Warning !!!" wrappingWidth="161.0">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A menu allergen incompatibility has been found" wrappingWidth="463.7070007324219">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
+            <Button fx:id="cancelRequestButton" layoutX="265.0" layoutY="139.0" mnemonicParsing="false" onAction="#clickedOnCancelRequest" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: #383397;" text="Cancel Request" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="proceedAnywayButton" layoutX="40.0" layoutY="139.0" mnemonicParsing="false" onAction="#clickedOnProceedAnyway" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: red;" text="Proceed Anyway" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Text layoutX="15.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you decide to proceed you are assuming the responsibility of every possible consequence" wrappingWidth="463.70703125">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Button fx:id="backButton" layoutX="843.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back " textFill="#383397">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

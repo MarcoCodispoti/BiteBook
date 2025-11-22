@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane onMouseClicked="#handleClick" prefHeight="148.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ChefRequestCardControllerG">
+   <children>
+      <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request ID: ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="requestIdLabel" layoutX="113.0" layoutY="8.0" prefHeight="26.0" prefWidth="52.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="181.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="clientLabel" layoutX="243.0" layoutY="7.0" prefHeight="26.0" prefWidth="192.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="menuLabel" layoutX="507.0" layoutY="6.0" prefHeight="26.0" prefWidth="214.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="446.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="10.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu Level:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="menuLevelLabel" layoutX="116.0" layoutY="43.0" prefHeight="26.0" prefWidth="87.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="216.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="201.47177124023438">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="numberOfParticipantsLabel" layoutX="420.0" layoutY="43.0" prefHeight="26.0" prefWidth="32.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="480.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total price:" wrappingWidth="101.83309936523438">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="totalPriceLabel" layoutX="579.0" layoutY="43.0" prefHeight="26.0" prefWidth="75.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="446.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="addressLabel" layoutX="531.0" layoutY="77.0" prefHeight="26.0" prefWidth="192.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLabel" layoutX="266.0" layoutY="79.0" prefHeight="26.0" prefWidth="131.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="217.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="dateLabel" layoutX="60.0" layoutY="80.0" prefHeight="26.0" prefWidth="128.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="11.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="11.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="statusLabel" layoutX="73.0" layoutY="116.0" prefHeight="26.0" prefWidth="140.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

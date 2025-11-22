@@ -1,0 +1,11 @@
+IdClient,AllergenId,AllergenName        // Struttura: CodiceUtenteAllergia, IdAllergene, NomeAllergen
+1,1,Glutine
+2,4,Pesce
+5,5,Frutta a guscio
+9,2,Latte
+10,3,Uova
+15,1,Glutine
+15,2,Latte
+15,3,Uova
+16,7,Crostacei
+16,4,Pesce

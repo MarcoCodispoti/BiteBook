@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.SelectChefPageControllerG">
+   <children>
+      <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
+         <children>
+            <Label layoutX="10.0" layoutY="7.0" prefHeight="61.0" prefWidth="196.0" text="BiteBook" textFill="#383397">
+               <font>
+                  <Font name="Avenir Heavy" size="42.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
+            <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="228.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+            <Label fx:id="errorLabel" layoutX="34.0" layoutY="316.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
+               <children>
+                  <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0">
+         <children>
+            <ImageView fitHeight="221.0" fitWidth="981.0" layoutX="2.0" opacity="0.82" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/selectchef1.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text layoutX="232.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the chef you prefer" wrappingWidth="387.0262451171875">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+      <Button fx:id="viewMenusButton" layoutX="1029.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnViewMenus" prefHeight="48.0" prefWidth="143.0" style="-fx-background-color: #383397;" text="View menus" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <ScrollPane fx:id="chefsScrollPane" layoutX="256.0" layoutY="289.0" prefHeight="436.0" prefWidth="749.0" style="-fx-border-color: #383397; -fx-background-color: white;">
+         <content>
+            <VBox fx:id="chefsVBox" prefHeight="428.0" prefWidth="722.0" style="-fx-background-color: white;">
+               <children>
+                  <AnchorPane prefHeight="88.0" prefWidth="722.0" />
+               </children></VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

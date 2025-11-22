@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="167.0" prefWidth="722.0" style="-fx-background-color: #383397; -fx-background-radius: 6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.DishCardControllerG">
+   <children>
+      <AnchorPane layoutX="4.0" layoutY="4.0" prefHeight="159.0" prefWidth="714.0" style="-fx-background-color: white; -fx-background-radius: 6;" />
+      <Text layoutX="10.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="82.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="10.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Course Type:" wrappingWidth="154.80462646484375">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="nameLabel" layoutX="85.0" layoutY="9.0" prefHeight="31.0" prefWidth="630.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="courseTypeLabel" layoutX="161.0" layoutY="47.0" prefHeight="31.0" prefWidth="219.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text layoutX="10.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="142.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="descriptionLabel" layoutX="145.0" layoutY="87.0" prefHeight="25.0" prefWidth="569.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="87.0" layoutY="9.0" prefHeight="31.0" prefWidth="620.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Text layoutX="10.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergens:" wrappingWidth="114.66864013671875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Label fx:id="allergensLabel" layoutX="124.0" layoutY="126.0" prefHeight="31.0" prefWidth="588.0" style="-fx-background-color: white;">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane onMouseClicked="#handleClick" prefHeight="69.0" prefWidth="221.0" style="-fx-background-color: white; -fx-background-radius: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.AllergyCardControllerG">
+   <children>
+      <Text layoutX="8.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergen:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Label fx:id="allergenName" layoutX="9.0" layoutY="35.0" prefHeight="26.0" prefWidth="202.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
