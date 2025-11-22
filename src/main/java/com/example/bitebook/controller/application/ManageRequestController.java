@@ -40,7 +40,7 @@ public class ManageRequestController {
                     reservationDetailsBeans.setAddress(chefServiceRequest.getReservationDetails().getAddress());
                     serviceRequestBean.setStatus(chefServiceRequest.getStatus());
                     // serviceRequestBean.setClient(chefServiceRequest.getClient());
-
+                    // prova
                     // serviceRequestBean.setClient(client);
 
                     serviceRequestBean.setClientBean(new ClientBean(client.getName(), client.getSurname()));
