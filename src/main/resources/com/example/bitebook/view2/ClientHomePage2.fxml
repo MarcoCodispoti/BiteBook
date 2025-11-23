@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.LoginPageControllerG">
+   <children>
+      <AnchorPane prefHeight="65.0" prefWidth="1200.0" style="-fx-background-color: #7cb518;">
+         <children>
+            <Label layoutX="13.0" layoutY="2.0" prefHeight="61.0" prefWidth="249.0" text="BiteBook" textFill="WHITE">
+               <font>
+                  <Font name="Charter Black" size="48.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="requestsHyperlink" layoutX="972.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text=" Requests" textFill="WHITE">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="allergiesHyperlink" layoutX="823.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="152.0" text="Allergies" textFill="WHITE">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Hyperlink>
+            <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="1135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logout.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="676.0" fitWidth="1200.0" layoutX="-1.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

@@ -39,12 +39,6 @@
                         <Font size="32.0" />
                      </font>
                   </Label>
-                  <Button fx:id="backButton" layoutX="456.0" layoutY="360.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="errorLabel" layoutX="194.0" layoutY="278.0" prefHeight="17.0" prefWidth="341.0" text="Label" visible="false" />
                   <Button fx:id="loginButton" layoutX="610.0" layoutY="360.0" mnemonicParsing="false" onAction="#clickedOnLogin" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Login" textFill="WHITE">
                      <font>
                         <Font size="22.0" />
@@ -52,6 +46,7 @@
                   </Button>
                   <Hyperlink fx:id="guestHyperlink" layoutX="57.0" layoutY="310.0" onAction="#clickedOnProceedAsGuest" prefHeight="25.0" prefWidth="111.0" text="proceed as guest" />
                   <AnchorPane layoutX="63.0" layoutY="332.0" prefHeight="1.0" prefWidth="100.0" style="-fx-background-color: black;" />
+                  <Label fx:id="errorLabel" layoutX="68.0" layoutY="350.0" prefHeight="17.0" prefWidth="367.0" />
                </children>
             </AnchorPane>
             <TextField fx:id="passwordTextField" layoutX="400.0" layoutY="384.0" prefHeight="27.0" prefWidth="170.0" promptText="Insert password" />

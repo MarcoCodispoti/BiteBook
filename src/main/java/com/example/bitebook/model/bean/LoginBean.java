@@ -8,6 +8,13 @@ public class LoginBean {
     private String email;
     private String password;
 
+    public LoginBean(){};
+
+    public LoginBean(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+
     public boolean validateEmail(){
         // Rimuovi i doppi apici e il punto extra all'inizio.
         // Il singolo backslash davanti al punto nel dominio è sufficiente.
