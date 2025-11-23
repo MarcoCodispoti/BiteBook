@@ -18,12 +18,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="allergiesHyperlink" layoutX="976.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="149.0" text=" Allergies" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="1027.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="823.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="allergiesHyperlink" layoutX="878.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
