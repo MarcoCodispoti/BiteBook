@@ -31,7 +31,7 @@ public class FxmlLoader2 extends Application {
     }
 
     public static void setPage(String fileName) {
-        URL fileUrl = FxmlLoader2.class.getResource(fileName + ".fxml");
+        URL fileUrl = FxmlLoader2.class.getResource(fxmlPath + fileName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fileUrl);
         assert fileUrl != null;
         try {

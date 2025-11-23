@@ -18,7 +18,7 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="1027.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
+            <Hyperlink fx:id="menusHyperlink" layoutX="1027.0" onAction="#clickedOnMenus" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -33,14 +33,26 @@
                   <Image url="@../images/logout.png" />
                </image>
             </ImageView>
-            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
+            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickedOnLogoutButton" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="676.0" fitWidth="1200.0" layoutX="-1.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="676.0" fitWidth="1200.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/clienthome2.jpg" />
+            <Image url="@../images/chefhome2_1.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="186.0" layoutY="127.0" prefHeight="553.0" prefWidth="815.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 2;" />
+      <AnchorPane layoutX="186.0" layoutY="127.0" prefHeight="553.0" prefWidth="815.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
+         <children>
+            <Label layoutX="21.0" layoutY="19.0" text="Manage">
+               <font>
+                  <Font size="47.0" />
+               </font>
+            </Label>
+            <Button fx:id="manageRequestsButton" layoutX="224.0" layoutY="194.0" mnemonicParsing="false" onAction="#clickedOnManageRequests" prefHeight="163.0" prefWidth="357.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Manage Requests" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
    </children>
 </AnchorPane>
