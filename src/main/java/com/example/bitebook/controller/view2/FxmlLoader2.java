@@ -16,7 +16,7 @@ public class FxmlLoader2 extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Stage stage;
-        FXMLLoader fxmlloader = new FXMLLoader(FxmlLoader2.class.getResource(fxmlPath + "WelcomePage2.fxml"));
+        FXMLLoader fxmlloader = new FXMLLoader(FxmlLoader2.class.getResource(fxmlPath + "LoginPage2.fxml"));
         Scene scene = new Scene(fxmlloader.load(), 1200, 740);
         stage = primaryStage;
         stage.setTitle("BiteBook v2");

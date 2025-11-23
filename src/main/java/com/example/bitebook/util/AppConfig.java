@@ -13,9 +13,7 @@ public class AppConfig{
         // 1. Definisci il nome della tua proprietà
         String propertyName = "bitebook.mode";
 
-
         String mode = System.getProperty(propertyName, "persistence");
-
         this.demoMode = mode.equalsIgnoreCase("demo");
 
         System.out.println("--- BiteBook avviato in modalità: " +
