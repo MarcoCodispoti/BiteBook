@@ -134,6 +134,7 @@ public class SelectMenuPageControllerG2{
         }
     }
 
+
     public String getSpecializationsAsString(ChefBean chefBean){
         Vector<SpecializationType> specializationTypes = chefBean.getSpecializationTypes();
         String specializationsString = "";
@@ -206,6 +207,36 @@ public class SelectMenuPageControllerG2{
 
 
 
+    public int extractMenuId(String menuString) throws NumberFormatException, StringIndexOutOfBoundsException, IllegalArgumentException {
+
+        if (menuString == null || menuString.isEmpty()) {
+            throw new IllegalArgumentException("Nessuna selezione del menù trovata.");
+        }
+
+        // 1. Definisci i limiti della sottostringa che contiene l'ID
+        final String START_TAG = "ID:";
+        final String END_TAG = "Name:"; // Usiamo Name come tag di chiusura
+
+        // Cerca l'indice iniziale e finale
+        int startIndex = menuString.indexOf(START_TAG);
+        int endIndex = menuString.indexOf(END_TAG);
+
+        // Controllo di validità dei tag
+        if (startIndex == -1 || endIndex == -1 || endIndex <= startIndex) {
+            throw new StringIndexOutOfBoundsException("Formato stringa menù non valido. Manca 'ID:' o 'Name:'.");
+        }
+
+        // 2. Estrai la sottostringa contenente solo il numero dell'ID
+        // Inizio: Subito dopo "ID:"
+        // Fine: L'indice dove inizia "Name:"
+        String idString = menuString.substring(startIndex + START_TAG.length(), endIndex).trim();
+
+        // 3. Converte la stringa pulita in un intero
+        return Integer.parseInt(idString);
+    }
+
+
+
     public void fillMenuComboBox(ChefBean chefBean){
         menuComboBox.getItems().clear();
         if(chefBean == null){
@@ -213,7 +244,7 @@ public class SelectMenuPageControllerG2{
         }
         selectedChefMenuBeans = explorationController.getChefMenus(chefBean);
         for(MenuBean menuBean:selectedChefMenuBeans){
-            menuComboBox.getItems().add("Name: " + menuBean.getName() + "      Diet Type: " + menuBean.getDietType() + "        Number of courses:  " + menuBean.getNumberOfCourses() + "      Price per person: " + menuBean.getPricePerPerson() + "€ ");
+            menuComboBox.getItems().add("ID: " + menuBean.getId()  + "     Name: " + menuBean.getName() + "      Diet Type: " + menuBean.getDietType() + "        Number of courses:  " + menuBean.getNumberOfCourses() + "      Price per person: " + menuBean.getPricePerPerson() + "€ ");
         }
     }
 
