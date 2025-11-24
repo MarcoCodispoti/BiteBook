@@ -14,6 +14,8 @@ module com.example.bitebook {
     requires java.desktop;
     requires java.sql;
     requires javafx.base;
+    requires com.example.bitebook;
+    // requires com.example.bitebook;
     // requires com.example.bitebook;
     // requires com.example.bitebook;
     // requires com.example.bitebook;

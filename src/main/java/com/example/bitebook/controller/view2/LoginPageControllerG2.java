@@ -4,6 +4,7 @@ import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.WrongCredentialsExcpetion;
 import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.enums.Role;
+import com.example.bitebook.model.singleton.LoggedUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,6 +53,7 @@ public class LoginPageControllerG2{
         try{
             LoginController loginController = new LoginController();
             loginController.authenticate(loginBean);
+            actualRole = LoggedUser.getInstance().getRole();  // o sostituire con un metodo del LoginController
         }catch(WrongCredentialsExcpetion e){
             errorLabel.setText("Incorrect username or password."); return;
         } catch(FailedLoginException e){
@@ -59,9 +61,9 @@ public class LoginPageControllerG2{
         }
         switch(actualRole){
             case CLIENT -> FxmlLoader2.setPage("ClientHomePage2");
-            case CHEF -> FxmlLoader2.setPage("ChefHomePage");
-            default -> errorLabel.setText("Login system error");
+            case CHEF -> FxmlLoader2.setPage("ChefHomePage2");
         }
+        errorLabel.setText("Login system error");
     }
 
     @FXML

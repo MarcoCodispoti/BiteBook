@@ -66,7 +66,7 @@ public class ClientHomePageControllerG{
         if(!checkCityField()){
             return;
         }
-        if(!chefBean.validateCity(insertCityTextField.getText())){
+        if(!chefBean.validateCity()){
             errorLabel.setText("You inserted an invalid city!");
             return;
         }

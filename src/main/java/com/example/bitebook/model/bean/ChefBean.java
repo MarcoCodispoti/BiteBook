@@ -6,10 +6,7 @@ import com.example.bitebook.model.enums.SpecializationType;
 
 import java.util.Vector;
 
-public class ChefBean extends UserBean {
-    // private int id;
-//    private String name;
-//    private String surname;
+public class ChefBean extends UserBean{
     private CookingStyle cookingStyle;
     private Vector<SpecializationType> specializationTypes;
     private String city;
@@ -40,7 +37,7 @@ public class ChefBean extends UserBean {
     public void setCity(String inputCity){this.city=inputCity;}
 
 
-    public boolean validateCity(String inputCity){
+    public boolean validateCity(){
         if (city == null || city.trim().isEmpty()) {
             return false;
         }
