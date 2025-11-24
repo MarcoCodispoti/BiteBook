@@ -122,7 +122,8 @@ public class ServiceRequestPageControllerG{
         reservationDetailsBean.setAddress(selectedAddress);
         reservationDetailsBean.setParticipantNumber(numberOfParticipants);
 
-        if(!SendServiceRequestController.checkAllergies(menuAllergenBeans) && !ignoreAllergenWarning){
+        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+        if(!sendServiceRequestController.checkAllergies(menuAllergenBeans) && !ignoreAllergenWarning){
             allergenWarningAnchorPane.setVisible(true);
             return;
         }

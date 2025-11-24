@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
@@ -13,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.Vector;
 
@@ -50,6 +52,15 @@ public class SelectMenuPageControllerG2{
     @FXML
     private Label allergensLabel;
 
+    @FXML
+    private AnchorPane allergyWarningAnchorPane;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button proceedButton;
+
 
     ExplorationController explorationController = new ExplorationController();
     private String city;
@@ -59,6 +70,7 @@ public class SelectMenuPageControllerG2{
     private MenuBean selectedMenuBean;
     private Vector<DishBean> selectedMenuDishBeans;
     private Vector<AllergenBean> menuAllergenBeans;
+    private boolean ignoreAllergies = false;
 
 
 
@@ -120,20 +132,47 @@ public class SelectMenuPageControllerG2{
 
     }
 
-    @FXML
-    void clickedOnLogout(ActionEvent event) {
-
-    }
 
     @FXML
-    void clickedOnBook(ActionEvent event) {
+    void clickedOnBook(ActionEvent event){
+        if(!explorationController.isLoggedClient()){
+            errorLabel.setText("You must be logged in to proceed!");
+            return;
+        }
+        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+        if(sendServiceRequestController.checkAllergies(menuAllergenBeans) && ignoreAllergies ){
+            // FxmlLoader2.setPage("ServiceRequestPage2");  // da sostituire poi
+
+//            ServiceRequestPageController2 serviceRequestPageController2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
+//            if(serviceRequestPageController2 != null){
+//                serviceRequestPageController2.initData();
+//            } else {
+//                errorLabel.setText("Error occurred! Please restart the app");
+//            }
+
+            // Spostare la logica dell'allergia nella pagina successiva
+        } else {
+            allergyWarningAnchorPane.setVisible(true);
+        }
 
     }
 
     @FXML
     void clickedOnBack(ActionEvent event) {
-
+        FxmlLoader2.setPage("ClientHomePage2");
     }
+
+    @FXML
+    void clickedOnCancel(ActionEvent event){
+        FxmlLoader2.setPage("ClientHomePage2");
+    }
+
+    @FXML
+    void clickedOnProceed(ActionEvent event){
+        ignoreAllergies = true;
+        clickedOnBook(event);
+    }
+
 
 
     public void fillChefComboBox(){
@@ -296,8 +335,11 @@ public class SelectMenuPageControllerG2{
             }
         }
         this.menuAllergenBeans = menuAllergenBeans;
+        System.out.println("menuAllergenBeans.size(): " + menuAllergenBeans.size());
         return allergensAsString;
     }
+
+
 
     public boolean isAlredyPresent(Vector<String> writtenAllergenNames, String actualName){
         for(String writtenAllergenName:writtenAllergenNames){

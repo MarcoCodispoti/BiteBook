@@ -41,7 +41,7 @@ public class SendServiceRequestController{
     }
 
 
-    public static boolean checkAllergies(Vector<AllergenBean> menuAllergensBean) {
+    public boolean checkAllergies(Vector<AllergenBean> menuAllergensBean) {
         Vector<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
         if (clientAllergies == null || clientAllergies.isEmpty()) {
             return true;
