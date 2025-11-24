@@ -167,7 +167,6 @@ public class ExplorationController{
                 }
             }
         }
-
         return menuAllergenBeans;
     }
 
