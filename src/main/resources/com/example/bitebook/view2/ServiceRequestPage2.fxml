@@ -37,12 +37,12 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="bookButton" layoutX="656.0" layoutY="455.0" mnemonicParsing="false" onAction="#clickedOnBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
+            <Button fx:id="sendRequestButton" layoutX="636.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickedOnSendRequest" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Send Request" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" layoutX="656.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
+            <Button fx:id="backButton" layoutX="468.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
                <font>
                   <Font size="22.0" />
                </font>
@@ -100,7 +100,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="341.0" layoutY="118.0" text="Diet Type:">
+            <Label layoutX="341.0" layoutY="118.0" text="Price per person:">
                <font>
                   <Font size="22.0" />
                </font>
@@ -118,8 +118,78 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Slider layoutX="255.0" layoutY="409.0" prefHeight="16.0" prefWidth="146.0" style="-fx-background-color: white;" />
+            <Slider fx:id="participantsNumberSlider" layoutX="255.0" layoutY="409.0" prefHeight="16.0" prefWidth="146.0" style="-fx-background-color: white;" />
             <Label layoutX="23.0" layoutY="464.0" text="Menu level:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="baseLevelRadioButton" layoutX="146.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBase" text="Base: ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="premiumLevelRadioButton" layoutX="146.0" layoutY="506.0" mnemonicParsing="false" onAction="#clickedOnPremium" text="Premium: ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="luxeLevelRadioButton" layoutX="146.0" layoutY="546.0" mnemonicParsing="false" onAction="#clickedOnLuxe" text="Luxe: ">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </RadioButton>
+            <Label layoutX="601.0" layoutY="461.0" text="Totale:">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="luxeLevelLabel" layoutX="237.0" layoutY="545.0" prefHeight="28.0" prefWidth="199.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="premiumLevelLabel" layoutX="272.0" layoutY="506.0" prefHeight="28.0" prefWidth="189.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="241.0" layoutY="466.0" prefHeight="28.0" prefWidth="66.0" text="+ 0 €">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="participantsNumberLabel" layoutX="410.0" layoutY="402.0" prefHeight="28.0" prefWidth="61.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLabel" layoutX="692.0" layoutY="460.0" prefHeight="37.0" prefWidth="91.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="menuAllergensLabel" layoutX="179.0" layoutY="151.0" prefHeight="28.0" prefWidth="596.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="dietTypeLabel" layoutX="125.0" layoutY="118.0" prefHeight="28.0" prefWidth="203.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="pricePerPersonLabel" layoutX="499.0" layoutY="118.0" prefHeight="28.0" prefWidth="89.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="menuNameLabel" layoutX="148.0" layoutY="85.0" prefHeight="28.0" prefWidth="376.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberOfCoursesLabel" layoutX="725.0" layoutY="85.0" prefHeight="28.0" prefWidth="51.0">
                <font>
                   <Font size="22.0" />
                </font>
