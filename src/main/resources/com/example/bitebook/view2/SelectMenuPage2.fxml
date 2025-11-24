@@ -58,30 +58,39 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="bookButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
+            <Button fx:id="bookButton" layoutX="656.0" layoutY="393.0" mnemonicParsing="false" onAction="#clickedOnBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Label fx:id="errorLabel" layoutX="404.0" layoutY="494.0" prefHeight="17.0" prefWidth="224.0" />
-            <Button fx:id="backButton" layoutX="509.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
+            <Button fx:id="backButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <ComboBox fx:id="chefComboBox" layoutX="149.0" layoutY="148.0" prefHeight="29.0" prefWidth="308.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-radius: 4;" />
+            <ComboBox fx:id="chefComboBox" layoutX="149.0" layoutY="148.0" prefHeight="29.0" prefWidth="632.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-radius: 4;" />
             <Label layoutX="23.0" layoutY="203.0" text="Select Menu:">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <ComboBox fx:id="menuComboBox" layoutX="156.0" layoutY="202.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-radius: 4;" />
+            <ComboBox fx:id="menuComboBox" layoutX="156.0" layoutY="202.0" prefHeight="29.0" prefWidth="625.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-radius: 4;" />
             <Label layoutX="23.0" layoutY="255.0" text="Menu Details:">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <ListView fx:id="menuDetailsListView" layoutX="165.0" layoutY="259.0" prefHeight="260.0" prefWidth="292.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-width: 1;" />
+            <ListView fx:id="menuDetailsListView" layoutX="165.0" layoutY="259.0" mouseTransparent="true" prefHeight="219.0" prefWidth="398.0" style="-fx-background-color: white; -fx-border-color: #7cb518; -fx-border-width: 1;" />
+            <Label layoutX="23.0" layoutY="500.0" text="Menu Allergens:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="allergensLabel" layoutX="179.0" layoutY="501.0" prefHeight="28.0" prefWidth="446.0">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </children>
 </AnchorPane>

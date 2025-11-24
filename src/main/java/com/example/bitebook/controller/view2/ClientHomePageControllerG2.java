@@ -32,7 +32,6 @@ public class ClientHomePageControllerG2{
     private Label errorLabel;
 
 
-
     ChefBean chefBean;
 
 
@@ -63,7 +62,6 @@ public class ClientHomePageControllerG2{
         if(!chefBean.validateCity()){
             errorLabel.setText("You inserted an invalid city");
         }
-
         ExplorationController explorationController = new ExplorationController();
         SelectMenuPageControllerG2 selectMenuPageControllerG2 = null;
         if(explorationController.checkCityChefs(chefBean)){
@@ -74,7 +72,6 @@ public class ClientHomePageControllerG2{
         }
 
         chefBean.setCity(cityTextField.getText());
-
     }
 
 }

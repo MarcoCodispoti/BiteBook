@@ -1,7 +1,9 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
+import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.enums.SpecializationType;
 import javafx.event.ActionEvent;
@@ -45,6 +47,9 @@ public class SelectMenuPageControllerG2{
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Label allergensLabel;
+
 
     ExplorationController explorationController = new ExplorationController();
     private String city;
@@ -52,6 +57,8 @@ public class SelectMenuPageControllerG2{
     private ChefBean selectedChefBean;
     private Vector<MenuBean> selectedChefMenuBeans;
     private MenuBean selectedMenuBean;
+    private Vector<DishBean> selectedMenuDishBeans;
+    private Vector<AllergenBean> menuAllergenBeans;
 
 
 
@@ -74,6 +81,8 @@ public class SelectMenuPageControllerG2{
             } else {
                 // Se la selezione è stata azzerata, svuota anche la ComboBox dei Menu
                 menuComboBox.getItems().clear();
+                menuAllergenBeans = null;
+                allergensLabel.setText("");
                 // E aggiorna lo stato visivo (es. nascondi i dettagli)
                 // hideMenuDetails();
             }
@@ -89,6 +98,8 @@ public class SelectMenuPageControllerG2{
             } else {
                 // Se la selezione è stata azzerata, svuota anche la ComboBox dei Menu
                 menuDetailsListView.getItems().clear();
+                menuAllergenBeans = null;
+                allergensLabel.setText("");
                 // E aggiorna lo stato visivo (es. nascondi i dettagli)
                 // hideMenuDetails();
             }
@@ -125,12 +136,10 @@ public class SelectMenuPageControllerG2{
     }
 
 
-
-
     public void fillChefComboBox(){
         chefComboBox.getItems().clear();
         for(ChefBean chefBean:chefListBeans){
-            chefComboBox.getItems().add("ID:  " + chefBean.getId() + "  Chef: " + chefBean.getName() + "  " + chefBean.getSurname() +  "  Style: " + chefBean.getCookingStyle() + "  Specializations: " + getSpecializationsAsString(chefBean));
+            chefComboBox.getItems().add("ID:  " + chefBean.getId() + "  Chef: " + chefBean.getName() + " " + chefBean.getSurname() +  "  Style: " + chefBean.getCookingStyle() + "  Specializations: " + getSpecializationsAsString(chefBean));
         }
     }
 
@@ -244,14 +253,59 @@ public class SelectMenuPageControllerG2{
         }
         selectedChefMenuBeans = explorationController.getChefMenus(chefBean);
         for(MenuBean menuBean:selectedChefMenuBeans){
-            menuComboBox.getItems().add("ID: " + menuBean.getId()  + "     Name: " + menuBean.getName() + "      Diet Type: " + menuBean.getDietType() + "        Number of courses:  " + menuBean.getNumberOfCourses() + "      Price per person: " + menuBean.getPricePerPerson() + "€ ");
+            menuComboBox.getItems().add("ID: " + menuBean.getId()  + "     Name: " + menuBean.getName() + "      Diet Type: " + String.valueOf(menuBean.getDietType()).toLowerCase() + "        Number of courses:  " + menuBean.getNumberOfCourses() + "      Price per person: " + menuBean.getPricePerPerson() + "€ ");
         }
     }
 
     public void fillMenuDetailsListView(){
         menuDetailsListView.getItems().clear();
 
+        if(selectedMenuBean == null){
+            errorLabel.setText("Error occurred while obtaining menu detals"); return;
+        }
+        selectedMenuDishBeans = explorationController.getCourses(selectedMenuBean);
 
+        for(DishBean dishBean:selectedMenuDishBeans){
+            menuDetailsListView.getItems().add(String.valueOf(dishBean.getCourseType()).toLowerCase().replace("_"," ") + ":  " + dishBean.getName()  + ":  " + dishBean.getDescription());
+        }
+        allergensLabel.setText(getAllergensAsString(explorationController.getMenuAllergens(selectedMenuDishBeans)));
+    }
+
+    public String getAllergensAsString(Vector<AllergenBean> allergenBeans){
+        Vector<String> writteAllergenNames = new Vector<>();
+        Vector<AllergenBean> menuAllergenBeans = new Vector<>();
+        int index = 0;
+        String allergensAsString = "";
+        for(AllergenBean allergenBean:allergenBeans){
+            if(index == 0){
+                if(!isAlredyPresent(writteAllergenNames,allergenBean.getName())){
+                    allergensAsString = allergensAsString.concat(allergenBean.getName());
+                    menuAllergenBeans.add(allergenBean);
+
+                    index++;
+                    writteAllergenNames.add(allergenBean.getName());
+                }
+            } else {
+                if(!isAlredyPresent(writteAllergenNames,allergenBean.getName())){
+                    allergensAsString = allergensAsString.concat(", ").concat(allergenBean.getName());
+                    menuAllergenBeans.add(allergenBean);
+
+                    index++;
+                    writteAllergenNames.add(allergenBean.getName());
+                }
+            }
+        }
+        this.menuAllergenBeans = menuAllergenBeans;
+        return allergensAsString;
+    }
+
+    public boolean isAlredyPresent(Vector<String> writtenAllergenNames, String actualName){
+        for(String writtenAllergenName:writtenAllergenNames){
+            if(writtenAllergenName.equals(actualName)){
+                return true;
+            }
+        }
+        return false;
     }
 
 
