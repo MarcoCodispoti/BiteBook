@@ -65,7 +65,7 @@ public class ClientHomePageControllerG2{
 
         ExplorationController explorationController = new ExplorationController();
         if(explorationController.checkCityChefs(chefBean)){
-            SelectMenuPageControllerG2 selectMenuPageControllerG2 =
+            SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
         }
 
         chefBean.setCity(cityTextField.getText());
