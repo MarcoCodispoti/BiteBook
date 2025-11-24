@@ -33,8 +33,9 @@ public class ExplorationController{
     }
 
 
-    public Vector<Chef> getChefsInCity(ChefBean chefBean){
+    public Vector<ChefBean> getChefsInCity(ChefBean chefBean){
         Vector<Chef> chefsInCity = new Vector<>();
+        Vector<ChefBean> chefInCityBeans = new Vector<>();
         chefsInCity = null;
         // ChefDbDao chefDbDao = new ChefDbDao();
         ChefDao chefDao = DaoFactory.getChefDao();
@@ -43,13 +44,21 @@ public class ExplorationController{
         if(chefsInCity == null || chefsInCity.isEmpty()){
             throw new SQLException();
         }
+
+        for(Chef chef : chefsInCity){
+            ChefBean newChefbean = new ChefBean(chef);
+            chefInCityBeans.add(newChefbean);
+        }
+
+
         } catch(SQLException e){
             e.printStackTrace();
             e.getMessage();
             e.getCause();
             return null;
         }
-        return chefsInCity; // Qui dovrei ritornare il Bean o un Vector<ChefBean> ??
+        return chefInCityBeans;
+        // sreturn chefsInCity; // Qui dovrei ritornare il Bean o un Vector<ChefBean> ??
                             // potrei ritornarli come un attributo Vector<Chef> di Bean?
     }
 

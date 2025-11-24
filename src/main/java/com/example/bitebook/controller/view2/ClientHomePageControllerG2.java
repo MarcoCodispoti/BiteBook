@@ -59,13 +59,18 @@ public class ClientHomePageControllerG2{
         if(!cityTextField.getText().isEmpty()){
             errorLabel.setText("Please insert a city first");
         }
+        chefBean.setCity(cityTextField.getText());
         if(!chefBean.validateCity()){
             errorLabel.setText("You inserted an invalid city");
         }
 
         ExplorationController explorationController = new ExplorationController();
+        SelectMenuPageControllerG2 selectMenuPageControllerG2 = null;
         if(explorationController.checkCityChefs(chefBean)){
-            SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+            selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        }
+        if(selectMenuPageControllerG2!=null){
+            selectMenuPageControllerG2.initData(chefBean);
         }
 
         chefBean.setCity(cityTextField.getText());

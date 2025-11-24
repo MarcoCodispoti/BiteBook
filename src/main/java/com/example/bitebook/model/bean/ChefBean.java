@@ -20,6 +20,7 @@ public class ChefBean extends UserBean{
         this.surname = chef.getSurname();
         this.cookingStyle = chef.getStyle();
         this.specializationTypes = chef.getSpecializations();
+        this.city = chef.getCity();
     }
 
 //    public int getId(){return id;}

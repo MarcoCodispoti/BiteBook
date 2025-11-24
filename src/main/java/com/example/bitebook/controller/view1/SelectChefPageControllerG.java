@@ -20,7 +20,8 @@ public class SelectChefPageControllerG {
     private Parent selectedCardUI;
     private ChefBean cityChefBean;
     ChefBean selectedChefBean;
-    private Vector<Chef>  chefsInCity;
+    // private Vector<Chef>  chefsInCity;
+    private Vector<ChefBean> chefInCityBeans;
 
     @FXML
     private Hyperlink requestsHyperlink;
@@ -52,11 +53,12 @@ public class SelectChefPageControllerG {
         errorLabel.setText(chefBean.getCity());
         ExplorationController explorationController = new ExplorationController();
         System.out.println("Vado a prendere gli chef a: "  + chefBean.getCity());
-        this.chefsInCity = explorationController.getChefsInCity(this.cityChefBean);
-        System.out.println("Ho inizializato: " + chefsInCity.size() + " chefs in the selected city: " + chefsInCity);
+        // this.chefsInCity = explorationController.getChefsInCity(this.cityChefBean);
+        this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
+        System.out.println("Ho inizializato: " + chefInCityBeans.size() + " chefs in the selected city: " + chefInCityBeans);
 
 
-        if(this.chefsInCity == null || this.chefsInCity.isEmpty()){
+        if(this.chefInCityBeans == null || this.chefInCityBeans.isEmpty()){
             errorLabel.setText("An error occurred while trying to populate the chefs in city, please restart the app");
             return;
         }
@@ -107,13 +109,14 @@ public class SelectChefPageControllerG {
     void populateChefs(){
         chefsVBox.getChildren().clear();
 
-        for(Chef chef : chefsInCity){
+        for(ChefBean chefBean : chefInCityBeans){
             try{
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/SelectChefCard.fxml"));
                 Parent chefCard = cardLoader.load();
 
                 SelectChefCardControllerG controller = cardLoader.getController();
-                controller.initData(new ChefBean(chef));
+                // controller.initData(new ChefBean(chef));
+                controller.initData(chefBean);
                 controller.setCardUI(chefCard);
                 controller.setParentController(this);
 
