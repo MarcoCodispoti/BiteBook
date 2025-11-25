@@ -1,7 +1,7 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.controller.view1.FxmlLoader;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
@@ -12,11 +12,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Vector;
 
 public class ServiceRequestPageControllerG2{
+
+    SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
+    private ChefBean selectedChefBean;
+    private MenuBean selectedMenuBean;
+    private Vector<AllergenBean> selectedMenuAllergenBeans;
+    private ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
+    private boolean ignoreAllergenWarning = false;
 
 
     @FXML
@@ -82,15 +90,53 @@ public class ServiceRequestPageControllerG2{
     @FXML
     private TextField addressTextField;
 
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private AnchorPane serviceRequestAnchorPane;
+
 
     @FXML
     void clickedOnSendRequest(ActionEvent event) {
+        if(!(isSelectedDate())){return;}
+        LocalDate selectedDate = datePicker.getValue();
+        if(!(isSelectedTime())){return;}
+        LocalTime selectedTime = timeComboBox.getValue();
+        if(!(isInsertedAddress())){return;}
+        String selectedAddress = addressTextField.getText();
+
+        reservationDetailsBean.setDate(selectedDate);
+        reservationDetailsBean.setTime(selectedTime);
+        reservationDetailsBean.setAddress(selectedAddress);
+
+        for(AllergenBean allergyBean : selectedMenuAllergenBeans){
+            System.out.println("Allergia trovata:" + allergyBean.getName());
+        }
+
+
+        if(!sendServiceRequestController.checkAllergies(selectedMenuAllergenBeans) && !ignoreAllergenWarning){
+//            sendRequestButton.setDisable(true);
+//            backButton.setDisable(true);
+            serviceRequestAnchorPane.setDisable(true);
+            allergyWarningAnchorPane.setVisible(true);
+            allergyWarningAnchorPane.setDisable(false);
+            return;
+        }
+
+        PaymentPageControllerG2  paymentPageControllerG2 = FxmlLoader2.setPageAndReturnController("PaymentPage2");
+        if(paymentPageControllerG2 != null){
+            paymentPageControllerG2.initData(reservationDetailsBean,selectedMenuBean, selectedMenuAllergenBeans, selectedChefBean);
+        }
 
     }
 
     @FXML
     void clickedOnBack(ActionEvent event) {
-
+        SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        if(selectMenuPageControllerG2 != null){
+            selectMenuPageControllerG2.initData(selectedChefBean);
+        }
     }
 
 
@@ -101,7 +147,12 @@ public class ServiceRequestPageControllerG2{
 
     @FXML
     void clickedOnProceed(ActionEvent event) {
+//        sendRequestButton.setDisable(false);
+//        backButton.setDisable(false);
         ignoreAllergenWarning = true;
+        serviceRequestAnchorPane.setDisable(false);
+        allergyWarningAnchorPane.setVisible(false);
+        allergyWarningAnchorPane.setDisable(true);
         clickedOnSendRequest(event);
     }
 
@@ -123,19 +174,11 @@ public class ServiceRequestPageControllerG2{
         updateTotalPrice();
     }
 
-    SendServiceRequestController sendServiceRequestControllerG =  new SendServiceRequestController();
-
-    private ChefBean chefBean;
-    private MenuBean selectedMenuBean;
-    private Vector<AllergenBean> selectedMenuAllergenBeans;
-    private ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
-    private boolean ignoreAllergenWarning = false;
-
 
 
 
     public void initData(ChefBean chefBean, MenuBean selectedMenuBean, Vector<AllergenBean> selectedMenuAllergenBeans){
-        this.chefBean = chefBean;
+        this.selectedChefBean = chefBean;
         this.selectedMenuBean = selectedMenuBean;
         this.selectedMenuAllergenBeans = selectedMenuAllergenBeans;
 
@@ -148,31 +191,35 @@ public class ServiceRequestPageControllerG2{
         premiumLevelRadioButton.setToggleGroup(levelToggleGroup);
         luxeLevelRadioButton.setToggleGroup(levelToggleGroup);
         baseLevelRadioButton.setSelected(true);
-        selectedMenuBean = sendServiceRequestControllerG.getMenuLevelsSurcharge(selectedMenuBean);
+        selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
         premiumLevelLabel.setText("+ "+selectedMenuBean.getPremiumLevelSurcharge()+" €");
         luxeLevelLabel.setText("+ "+selectedMenuBean.getLuxeLevelSurcharge()+" €");
-
-
 
         participantsNumberLabel.setText("1");
         reservationDetailsBean.setParticipantNumber(1);
         reservationDetailsBean.setSelectedMenuLevel(MenuLevel.BASE);
 
+        updateTotalPrice();
+    }
+
+    public void setupParticipantsSlider(){
+        setupParticipantsSlider();
         participantsNumberSlider.setMin(1);
         participantsNumberSlider.setMax(10);
+        participantsNumberSlider.setBlockIncrement(1);
+        participantsNumberSlider.setMajorTickUnit(1);
+        participantsNumberSlider.setMinorTickCount(0);
+        participantsNumberSlider.setSnapToTicks(true);
         participantsNumberSlider.setValue(1);
         participantsNumberLabel.setText("1");
 
         participantsNumberSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-        participantsNumberLabel.setText(String.valueOf(newValue.intValue()));
-        reservationDetailsBean.setParticipantNumber(newValue.intValue());
+            participantsNumberLabel.setText(String.valueOf(newValue.intValue()));
+            reservationDetailsBean.setParticipantNumber(newValue.intValue());
             // Chiama la funzione di aggiornamento del prezzo
         updateTotalPrice();
         });
-
-        updateTotalPrice();
     }
-
 
 
 
@@ -225,7 +272,7 @@ public class ServiceRequestPageControllerG2{
 
 
     public void updateTotalPrice(){
-        totalPriceLabel.setText(String.valueOf(sendServiceRequestControllerG.calculateTotalPrice(reservationDetailsBean,selectedMenuBean)) + " €");
+        totalPriceLabel.setText(String.valueOf(sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,selectedMenuBean)) + " €");
     }
 
 
@@ -251,8 +298,6 @@ public class ServiceRequestPageControllerG2{
             timeSlots.add(currentLunchTime);
             currentLunchTime = currentLunchTime.plus(30, ChronoUnit.MINUTES); // Aggiunge 30 minuti
         }
-
-        // 2. Genera slot per la CENA
         LocalTime currentDinnerTime = dinnerStart;
         while (currentDinnerTime.isBefore(dinnerEnd) || currentDinnerTime.equals(dinnerEnd)) {
             timeSlots.add(currentDinnerTime);
@@ -262,6 +307,38 @@ public class ServiceRequestPageControllerG2{
         return timeSlots;
     }
 
+    public boolean isSelectedDate(){
+        LocalDate requestDate = datePicker.getValue();
+        if (requestDate == null) {
+            errorLabel.setText("Please Select a Date");
+            return false;
+        } else if (requestDate.isBefore(LocalDate.now()) || requestDate.equals(LocalDate.now())){
+            errorLabel.setText("Select a date after today");
+            return false;
+        } else{
+            return true;
+        }
+    }
 
+    public boolean isSelectedTime(){
+        LocalTime selectedTime = timeComboBox.getValue();
+        if(selectedTime == null){
+            errorLabel.setText("Please Select a Time"); return false;
+        }
+        return true;
+    }
+
+    public boolean isInsertedAddress(){
+        String address = addressTextField.getText();
+        if(address == null || address.isEmpty()){
+            errorLabel.setText("Please Enter Address");
+            return false;
+        }
+        if(address.length() < 10 ){
+            errorLabel.setText("Please insert a valid address");
+            return false;
+        }
+        return true;
+    }
 
 }

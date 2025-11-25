@@ -102,6 +102,8 @@ public class ServiceRequestPageControllerG{
     @FXML
     void clickedOnProceedAnyway(ActionEvent event){
         ignoreAllergenWarning = true;
+        backButton.setDisable(false);
+        sendRequestButton.setDisable(false);
         allergenWarningAnchorPane.setVisible(false);
         clickedOnSendRequest(event);
     }
@@ -125,6 +127,8 @@ public class ServiceRequestPageControllerG{
 
         SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
         if(!sendServiceRequestController.checkAllergies(menuAllergenBeans) && !ignoreAllergenWarning){
+            backButton.setDisable(true);
+            sendRequestButton.setDisable(true);
             allergenWarningAnchorPane.setVisible(true);
             return;
         }

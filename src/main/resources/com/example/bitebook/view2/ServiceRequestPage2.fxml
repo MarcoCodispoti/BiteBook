@@ -25,7 +25,7 @@
             <Image url="@../images/clienthome2.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="186.0" layoutY="104.0" prefHeight="610.0" prefWidth="815.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
+      <AnchorPane fx:id="serviceRequestAnchorPane" layoutX="186.0" layoutY="104.0" prefHeight="610.0" prefWidth="815.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
          <children>
             <Label layoutX="19.0" layoutY="16.0" text="Service Request">
                <font>
@@ -58,31 +58,6 @@
                </font>
             </Label>
             <Label fx:id="errorLabel" layoutX="585.0" layoutY="360.0" prefHeight="17.0" prefWidth="205.0" />
-            <AnchorPane fx:id="allergyWarningAnchorPane" layoutX="219.0" layoutY="169.0" prefHeight="238.0" prefWidth="424.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-width: 2;" visible="false">
-               <children>
-                  <Label layoutX="144.0" layoutY="18.0" text="Warning!">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="21.0" layoutY="74.0" text="An allergy incompatibility has been found">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="cancelButton" layoutX="241.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickedOnCancel" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Cancel" textFill="WHITE">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="proceedButton" layoutX="71.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickedOnProceed" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #CC0000; -fx-background-radius: 3;" text="Proceed" textFill="WHITE">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="30.0" layoutY="200.0" prefHeight="17.0" prefWidth="369.0" text="If you decide to proceed you are assuming all the responsibilities" />
-               </children>
-            </AnchorPane>
             <AnchorPane layoutX="22.0" layoutY="75.0" prefHeight="2.0" prefWidth="755.0" style="-fx-background-color: #7cb518;" />
             <AnchorPane layoutX="22.0" layoutY="189.0" prefHeight="2.0" prefWidth="755.0" style="-fx-background-color: #7cb518;" />
             <Label layoutX="24.0" layoutY="85.0" text="Menu Name:">
@@ -196,5 +171,30 @@
             </Label>
             <Label fx:id="errorLabel" layoutX="468.0" layoutY="414.0" prefHeight="17.0" prefWidth="316.0" />
          </children></AnchorPane>
+      <AnchorPane fx:id="allergyWarningAnchorPane" layoutX="380.0" layoutY="300.0" prefHeight="238.0" prefWidth="424.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-width: 2;" visible="false">
+         <children>
+            <Label layoutX="144.0" layoutY="18.0" text="Warning!">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="74.0" text="An allergy incompatibility has been found">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="cancelButton" layoutX="241.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickedOnCancel" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="proceedButton" layoutX="71.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickedOnProceed" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #CC0000; -fx-background-radius: 3;" text="Proceed" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Label layoutX="30.0" layoutY="200.0" prefHeight="17.0" prefWidth="369.0" text="If you decide to proceed you are assuming all the responsibilities" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
