@@ -9,6 +9,7 @@ import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.enums.SpecializationType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
@@ -52,14 +53,14 @@ public class SelectMenuPageControllerG2{
     @FXML
     private Label allergensLabel;
 
-    @FXML
-    private AnchorPane allergyWarningAnchorPane;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Button proceedButton;
+//    @FXML
+//    private AnchorPane allergyWarningAnchorPane;
+//
+//    @FXML
+//    private Button cancelButton;
+//
+//    @FXML
+//    private Button proceedButton;
 
 
     ExplorationController explorationController = new ExplorationController();
@@ -139,20 +140,24 @@ public class SelectMenuPageControllerG2{
             errorLabel.setText("You must be logged in to proceed!");
             return;
         }
-        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
-        if(sendServiceRequestController.checkAllergies(menuAllergenBeans) && ignoreAllergies ){
-            // FxmlLoader2.setPage("ServiceRequestPage2");  // da sostituire poi
-
-//            ServiceRequestPageController2 serviceRequestPageController2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
-//            if(serviceRequestPageController2 != null){
-//                serviceRequestPageController2.initData();
-//            } else {
-//                errorLabel.setText("Error occurred! Please restart the app");
-//            }
-
-            // Spostare la logica dell'allergia nella pagina successiva
-        } else {
-            allergyWarningAnchorPane.setVisible(true);
+//        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+//        if(sendServiceRequestController.checkAllergies(menuAllergenBeans) && ignoreAllergies ){
+//            // FxmlLoader2.setPage("ServiceRequestPage2");  // da sostituire poi
+//
+////            ServiceRequestPageController2 serviceRequestPageController2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
+////            if(serviceRequestPageController2 != null){
+////                serviceRequestPageController2.initData();
+////            } else {
+////                errorLabel.setText("Error occurred! Please restart the app");
+////            }
+//
+//            // Spostare la logica dell'allergia nella pagina successiva
+//        } else {
+//            allergyWarningAnchorPane.setVisible(true);
+//        }
+        ServiceRequestPageControllerG2 serviceRequestPageControllerG2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
+        if(serviceRequestPageControllerG2 != null){
+            serviceRequestPageControllerG2.initData(selectedChefBean,selectedMenuBean,menuAllergenBeans);
         }
 
     }
@@ -162,16 +167,16 @@ public class SelectMenuPageControllerG2{
         FxmlLoader2.setPage("ClientHomePage2");
     }
 
-    @FXML
-    void clickedOnCancel(ActionEvent event){
-        FxmlLoader2.setPage("ClientHomePage2");
-    }
-
-    @FXML
-    void clickedOnProceed(ActionEvent event){
-        ignoreAllergies = true;
-        clickedOnBook(event);
-    }
+//    @FXML
+//    void clickedOnCancel(ActionEvent event){
+//        FxmlLoader2.setPage("ClientHomePage2");
+//    }
+//
+//    @FXML
+//    void clickedOnProceed(ActionEvent event){
+//        ignoreAllergies = true;
+//        clickedOnBook(event);
+//    }
 
 
 

@@ -75,10 +75,11 @@ public class PaymentPageControllerG {
     void clickedOnSendRequest(ActionEvent event) {
 
         try{
-            serviceRequestBean = SendServiceRequestController.fillServiceRequest(requestMenuBean,requestReservationDetailsBean);
+            SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+            serviceRequestBean = sendServiceRequestController.fillServiceRequest(requestMenuBean,requestReservationDetailsBean);
             serviceRequestBean.validate();  // è dummy -> Implementare dopo
             System.out.println("Mando la SendServiceRequest");
-            SendServiceRequestController.sendServiceRequest(serviceRequestBean);
+            sendServiceRequestController.sendServiceRequest(serviceRequestBean);
         } catch (Exception e){
             errorLabel.setText("Error completing the request");
             e.getMessage();
@@ -115,7 +116,8 @@ public class PaymentPageControllerG {
         addressLabel.setText(reservationDetailsBean.getAddress());
         numberOfParticipantsLabel.setText(String.valueOf(reservationDetailsBean.getParticipantNumber()));
         ingredientsLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
-        totalPriceLabel.setText(String.valueOf(SendServiceRequestController.calculateTotalPrice(reservationDetailsBean,menuBean)));
+        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+        totalPriceLabel.setText(String.valueOf(sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,menuBean)));
 
     }
 

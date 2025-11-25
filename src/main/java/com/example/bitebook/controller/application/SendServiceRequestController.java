@@ -14,7 +14,7 @@ import com.example.bitebook.model.singleton.LoggedUser;
 import java.util.Vector;
 
 public class SendServiceRequestController{
-    public static MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
+    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
 
         try{
             MenuDao menuDao = DaoFactory.getMenuDao();
@@ -27,7 +27,7 @@ public class SendServiceRequestController{
         return menuBean;
     }
 
-    public static int calculateTotalPrice(ReservationDetailsBean reservationDetailsBean, MenuBean menuBean){
+    public int calculateTotalPrice(ReservationDetailsBean reservationDetailsBean, MenuBean menuBean){
         int totalPrice = -1;
         int singleMenuSurcharge = -1;
         switch (reservationDetailsBean.getSelectedMenuLevel()){
@@ -56,7 +56,7 @@ public class SendServiceRequestController{
         return true;
     }
 
-    public static ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws Exception{
+    public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws Exception{
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
         ChefDao chefDao = DaoFactory.getChefDao();
         Chef chef = chefDao.getChefFromMenu(menuBean.getId());
@@ -76,7 +76,7 @@ public class SendServiceRequestController{
 
 
 
-    public static void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws Exception{
+    public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws Exception{
         System.out.println("Vado a convertire la richiesta dal bean");
         ServiceRequest serviceRequest = ConvertServiceRequestBean(serviceRequestBean);
         System.out.println("" + serviceRequest.getReservationDetails().getAddress());
@@ -91,7 +91,7 @@ public class SendServiceRequestController{
 
 
 
-    public static ServiceRequest ConvertServiceRequestBean(ServiceRequestBean serviceRequestBean){
+    public ServiceRequest ConvertServiceRequestBean(ServiceRequestBean serviceRequestBean){
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         Client client = new  Client();

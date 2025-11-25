@@ -25,7 +25,8 @@ public class ServiceRequestPageControllerG{
 //    private AnchorPane serviceRequestPageAnchorPane;
 //    @FXML
 
-    // SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
+    SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
+
     private ChefBean menuChefBean;
     MenuBean selectedMenuBean;
     Vector<AllergenBean> menuAllergenBeans;
@@ -229,10 +230,6 @@ public class ServiceRequestPageControllerG{
     }
 
 
-    private void fillTimeComboBox(){
-        timeComboBox.getItems().clear();
-        timeComboBox.getItems().addAll(generateTimeSlots());
-    };
 
     private void fillNumberOfParticipantsComboBox(){
         for(int i = 1; i <= 10; i++){
@@ -241,7 +238,7 @@ public class ServiceRequestPageControllerG{
     }
 
     private void fillIngredientsLevelComboBox(){
-        selectedMenuBean = SendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+        selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
         for(int i = 1; i <= 3; i++){
             switch(i){
                 case 1: ingredientsLevelComboBox.getItems().add("1: Base        Surcharge: +0 €"); break;
@@ -251,6 +248,10 @@ public class ServiceRequestPageControllerG{
         }
     }
 
+    private void fillTimeComboBox(){
+        timeComboBox.getItems().clear();
+        timeComboBox.getItems().addAll(generateTimeSlots());
+    };
 
     public Vector<LocalTime> generateTimeSlots(){
         Vector<LocalTime> timeSlots = new Vector<>();
@@ -352,7 +353,7 @@ public class ServiceRequestPageControllerG{
     private int calculateTotalPrice(){
         // Da rimuovere il facade
         totalPrice = -1;
-        totalPrice = SendServiceRequestController.calculateTotalPrice(reservationDetailsBean,selectedMenuBean);
+        totalPrice = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,selectedMenuBean);
         return totalPrice;
     }
 
