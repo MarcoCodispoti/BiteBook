@@ -58,7 +58,7 @@ public class AllergiesPageControllerG{
     void clickedOnRemoveAllergy(ActionEvent event){
         if(selectedAllergenBean!=null){
             try {
-                AllergiesController.removeClientAllergy(selectedAllergenBean.getId());
+                AllergiesController.removeClientAllergy(selectedAllergenBean);
             } catch (Exception e) {
                 errorLabel.setText("Error while removing allergy");
             }
@@ -97,12 +97,14 @@ public class AllergiesPageControllerG{
             this.clientAllergyBeans = AllergiesController.getClientAllergies();
         } catch (Exception e){
             e.printStackTrace();
+            errorLabel.setText("Error while getting allergies, please try again");
+            return;
         }
-        populateAllergies();
+        populateClientAllergies();
         fillSelectAllergyComboBox();
     }
 
-    private void populateAllergies(){
+    private void populateClientAllergies(){
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
             errorLabel.setText("The client has no allergies");
             return;

@@ -42,7 +42,7 @@
                   <Font size="47.0" />
                </font>
             </Label>
-            <ListView fx:id="clientRequestsListView" layoutX="14.0" layoutY="95.0" prefHeight="435.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
+            <ListView fx:id="clientRequestsListView" layoutX="14.0" layoutY="95.0" mouseTransparent="true" prefHeight="435.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

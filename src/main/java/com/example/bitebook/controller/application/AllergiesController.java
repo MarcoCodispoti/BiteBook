@@ -39,15 +39,15 @@ public class AllergiesController{
     }
 
 
-    public static void removeClientAllergy(int allergenId) throws Exception{
+    public static void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
         try{
             AllergenDao allergenDao = DaoFactory.getAllergenDao();
-            allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergenId);
+            allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
             // AllergenDbDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergenId);
         } catch (Exception e) {
             throw new Exception(e);
         }
-        LoggedUser.getInstance().getClient().getAllergies().removeIf(allergen -> allergen.getId() == allergenId);
+        LoggedUser.getInstance().getClient().getAllergies().removeIf(allergen -> allergen.getId() == allergyToRemoveBean.getId());
     }
 
     public static Vector<AllergenBean> getAllergens() throws Exception{
