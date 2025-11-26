@@ -37,12 +37,24 @@ public class ClientHomePageControllerG2{
 
     @FXML
     void clickedOnAllergies(ActionEvent event) {
-
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
+            FxmlLoader2.setPage("AllergiesPage2");
+        }
+        else{
+            errorLabel.setText("You must be logged in to view Allergies");
+        }
     }
 
     @FXML
     void clickedOnRequests(ActionEvent event) {
-        FxmlLoader2.setPage("ClientRequestsPage2");
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
+            FxmlLoader2.setPage("ClientRequestsPage2");
+        }
+        else{
+            errorLabel.setText("You must be logged in to view Requests");
+        }
     }
 
     @FXML

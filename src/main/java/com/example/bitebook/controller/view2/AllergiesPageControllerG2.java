@@ -32,12 +32,12 @@ public class AllergiesPageControllerG2{
 
     @FXML
     void clickedOnRequests(ActionEvent event) {
-
+        FxmlLoader2.setPage("ClientRequestsPage2");
     }
 
     @FXML
     void clickedOnHomepage(ActionEvent event) {
-
+        FxmlLoader2.setPage("ClientHomePage2");
     }
 
     @FXML

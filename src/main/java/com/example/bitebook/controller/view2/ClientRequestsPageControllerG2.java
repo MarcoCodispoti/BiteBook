@@ -25,7 +25,7 @@ public class ClientRequestsPageControllerG2{
 
     @FXML
     void clickedOnAllergies(ActionEvent event) {
-
+        FxmlLoader2.setPage("AllergiesPage2");
     }
 
     @FXML
