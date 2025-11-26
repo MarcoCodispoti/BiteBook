@@ -42,7 +42,7 @@ public class ClientHomePageControllerG2{
 
     @FXML
     void clickedOnRequests(ActionEvent event) {
-
+        FxmlLoader2.setPage("ClientRequestsPage2");
     }
 
     @FXML

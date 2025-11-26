@@ -108,6 +108,7 @@ public class SelectMenuPageControllerG2{
                 // 2. Estrai l'ID dello Chef dalla stringa e popola i menu
                 selectedMenuBean = extractMenuBean(selectedMenuString);
                 fillMenuDetailsListView();
+                allergensLabel.setText(getAllergensAsString(explorationController.getMenuAllergens(selectedMenuDishBeans)));
             } else {
                 // Se la selezione è stata azzerata, svuota anche la ComboBox dei Menu
                 menuDetailsListView.getItems().clear();
@@ -130,7 +131,7 @@ public class SelectMenuPageControllerG2{
 
     @FXML
     void clickedOnRequests(ActionEvent event) {
-
+        FxmlLoader2.setPage("ClientRequestsPage2");
     }
 
 
@@ -312,7 +313,6 @@ public class SelectMenuPageControllerG2{
         for(DishBean dishBean:selectedMenuDishBeans){
             menuDetailsListView.getItems().add(String.valueOf(dishBean.getCourseType()).toLowerCase().replace("_"," ") + ":  " + dishBean.getName()  + ":  " + dishBean.getDescription());
         }
-        allergensLabel.setText(getAllergensAsString(explorationController.getMenuAllergens(selectedMenuDishBeans)));
     }
 
     public String getAllergensAsString(Vector<AllergenBean> allergenBeans){
