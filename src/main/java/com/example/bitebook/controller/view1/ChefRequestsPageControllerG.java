@@ -55,31 +55,33 @@ public class ChefRequestsPageControllerG{
 
     @FXML
     void clickedOnRejectRequest(ActionEvent event) {
-        if(selectedServiceRequestBean==null){
-            errorLabel.setText("Select a request first");
-            return;
-        }
-        selectedServiceRequestBean.setStatus(RequestStatus.REJECTED);
-        try {
-            ManageRequestController.manageRequest(selectedServiceRequestBean);
-        } catch (Exception e) {
-            errorLabel.setText("Unable to reject request");
-        }
+//        if(selectedServiceRequestBean==null){
+//            errorLabel.setText("Select a request first");
+//            return;
+//        }
+//        selectedServiceRequestBean.setStatus(RequestStatus.REJECTED);
+//        try {
+//            ManageRequestController.manageRequest(selectedServiceRequestBean);
+//        } catch (Exception e) {
+//            errorLabel.setText("Unable to reject request");
+//        }
+        manageRequest(RequestStatus.REJECTED);
         initialize();
     }
 
     @FXML
     void clickedOnApproveRequest(ActionEvent event){
-        if(selectedServiceRequestBean==null){
-            errorLabel.setText("Select a request first");
-            return;
-        }
-        selectedServiceRequestBean.setStatus(RequestStatus.APPROVED);
-        try {
-            ManageRequestController.manageRequest(selectedServiceRequestBean);
-        } catch (Exception e) {
-            errorLabel.setText("Unable to approve request");
-        }
+//        if(selectedServiceRequestBean==null){
+//            errorLabel.setText("Select a request first");
+//            return;
+//        }
+//        selectedServiceRequestBean.setStatus(RequestStatus.APPROVED);
+//        try {
+//            ManageRequestController.manageRequest(selectedServiceRequestBean);
+//        } catch (Exception e) {
+//            errorLabel.setText("Unable to manage request");
+//        }
+        manageRequest(RequestStatus.APPROVED);
         initialize();
     }
 
@@ -129,6 +131,19 @@ public class ChefRequestsPageControllerG{
         }
         selectedCardUi = cardUi;
         selectedCardUi.setStyle("-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;");
+    }
+
+    public void manageRequest(RequestStatus requestStatus){
+        if(selectedServiceRequestBean==null){
+            errorLabel.setText("Select a request first");
+            return;
+        }
+        selectedServiceRequestBean.setStatus(requestStatus);
+        try {
+            ManageRequestController.manageRequest(selectedServiceRequestBean);
+        } catch (Exception e) {
+            errorLabel.setText("Unable to manage request");
+        }
     }
 
 }
