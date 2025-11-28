@@ -199,11 +199,6 @@ public class ServiceRequestPageControllerG2{
         reservationDetailsBean.setParticipantNumber(1);
         reservationDetailsBean.setSelectedMenuLevel(MenuLevel.BASE);
 
-        updateTotalPrice();
-    }
-
-    public void setupParticipantsSlider(){
-        setupParticipantsSlider();
         participantsNumberSlider.setMin(1);
         participantsNumberSlider.setMax(10);
         participantsNumberSlider.setBlockIncrement(1);
@@ -219,7 +214,10 @@ public class ServiceRequestPageControllerG2{
             // Chiama la funzione di aggiornamento del prezzo
         updateTotalPrice();
         });
+
+        updateTotalPrice();
     }
+
 
 
 

@@ -18,31 +18,42 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="menusHyperlink" layoutX="1027.0" onAction="#clickedOnMenus" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
+            <Hyperlink fx:id="menusHyperlink" layoutX="1082.0" onAction="#clickedOnMenus" prefHeight="65.0" prefWidth="118.0" text="Menus" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="allergiesHyperlink" layoutX="878.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="homepageHyperlink" layoutX="913.0" onAction="#clickedOnHomepage" prefHeight="65.0" prefWidth="168.0" text="Homepage" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="1135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/logout.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickedOnLogoutButton" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="64.0" prefHeight="677.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-border-width: 3;">
+      <ImageView fitHeight="676.0" fitWidth="1200.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/clienthome2.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="23.0" layoutY="102.0" prefHeight="627.0" prefWidth="1157.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
          <children>
-            <Label layoutX="21.0" layoutY="17.0" text="Manage requests">
+            <Label layoutX="19.0" layoutY="16.0" text="Manage Requests">
                <font>
                   <Font size="47.0" />
                </font>
             </Label>
+            <ListView fx:id="chefRequestsListView" layoutX="14.0" layoutY="95.0" prefHeight="435.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
+            <Button fx:id="rejectRequestButton" layoutX="758.0" layoutY="549.0" mnemonicParsing="false" onAction="#clickedOnRejectRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #cc0000; -fx-background-radius: 3;" text="Reject request" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="approveRequestButton" layoutX="951.0" layoutY="549.0" mnemonicParsing="false" onAction="#clickedOnApproveRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Approve request" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+            <Label fx:id="errorLabel" layoutX="411.0" layoutY="568.0" prefHeight="17.0" prefWidth="323.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

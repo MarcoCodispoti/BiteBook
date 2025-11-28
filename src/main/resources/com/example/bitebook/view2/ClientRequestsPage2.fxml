@@ -37,12 +37,12 @@
       </ImageView>
       <AnchorPane layoutX="23.0" layoutY="127.0" prefHeight="553.0" prefWidth="1157.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
          <children>
-            <Label layoutX="19.0" layoutY="16.0" text="My Requests">
+            <Label layoutX="23.0" layoutY="22.0" text="My Requests">
                <font>
                   <Font size="47.0" />
                </font>
             </Label>
-            <ListView fx:id="clientRequestsListView" layoutX="14.0" layoutY="95.0" mouseTransparent="true" prefHeight="435.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
+            <ListView fx:id="clientRequestsListView" layoutX="21.0" layoutY="95.0" prefHeight="435.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

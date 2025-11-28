@@ -23,7 +23,7 @@
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="allergiesHyperlink" layoutX="878.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="878.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -43,16 +43,13 @@
       </ImageView>
       <AnchorPane layoutX="186.0" layoutY="127.0" prefHeight="553.0" prefWidth="815.0" style="-fx-border-color: #7cb518; -fx-background-color: white; -fx-border-width: 3;">
          <children>
-            <Label layoutX="21.0" layoutY="19.0" text="Manage">
+            <Label layoutX="21.0" layoutY="19.0" text="Approved requests">
                <font>
                   <Font size="47.0" />
                </font>
             </Label>
-            <Button fx:id="manageRequestsButton" layoutX="224.0" layoutY="194.0" mnemonicParsing="false" onAction="#clickedOnManageRequests" prefHeight="163.0" prefWidth="357.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Manage Requests" textFill="WHITE">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Button>
+            <Label fx:id="errorLabel" layoutX="200.0" layoutY="454.0" prefHeight="11.0" prefWidth="407.0" />
+            <ListView fx:id="approvedRequestsListView" layoutX="24.0" layoutY="88.0" prefHeight="433.0" prefWidth="763.0" style="-fx-border-color: #7cb518;" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
