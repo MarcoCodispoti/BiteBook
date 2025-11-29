@@ -86,11 +86,10 @@ public class LoginPageControllerG {
                 return false;
             }
             return true;
-
-
         }
         return false;
     }
+
 
     private boolean checkEmptyFields(){
         if(emailTextField.getText().isEmpty()){

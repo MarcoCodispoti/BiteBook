@@ -1,6 +1,5 @@
 package com.example.bitebook.controller.application;
 
-import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.WrongCredentialsExcpetion;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
@@ -8,26 +7,18 @@ import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.UserDao;
-import com.example.bitebook.model.dao.persistence.UserDbDao;
-import com.example.bitebook.model.dao.persistence.UserFsDao;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
-import com.example.bitebook.util.AppConfig;
-import com.example.bitebook.util.Connector;
-
 import javax.security.auth.login.FailedLoginException;
-import java.sql.Connection;
 
 import static com.example.bitebook.model.enums.Role.CHEF;
 import static com.example.bitebook.model.enums.Role.CLIENT;
 
 public class LoginController{
 
-    // public Role role = null;  -> Da cancellare
-
     public void authenticate(LoginBean loginBean) throws FailedLoginException, WrongCredentialsExcpetion {
 
-        Role role = null;
+        Role role;
         Client client = null;
         Chef chef = null;
 

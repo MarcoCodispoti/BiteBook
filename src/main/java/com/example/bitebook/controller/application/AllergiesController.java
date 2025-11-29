@@ -75,17 +75,48 @@ public class AllergiesController{
     }
 
     public static void insertAllergy(AllergenBean allergenBean) throws Exception{
+//        Allergen allergen = new Allergen();
+//        allergen.setId(allergenBean.getId());
+//        allergen.setName(allergenBean.getName());
+//        try {
+//            AllergenDao allergenDao = DaoFactory.getAllergenDao();
+//            allergenDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
+//            // AllergenDbDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
+//        } catch (Exception e) {
+//            throw new Exception(e);
+//        }
+//        LoggedUser.getInstance().getClient().getAllergies().add(allergen);
+
+
         Allergen allergen = new Allergen();
         allergen.setId(allergenBean.getId());
         allergen.setName(allergenBean.getName());
+
         try {
             AllergenDao allergenDao = DaoFactory.getAllergenDao();
             allergenDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
-            // AllergenDbDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
         } catch (Exception e) {
             throw new Exception(e);
         }
-        LoggedUser.getInstance().getClient().getAllergies().add(allergen);
+
+        Vector<Allergen> currentList = LoggedUser.getInstance().getClient().getAllergies();
+
+        if (currentList == null) {
+            currentList = new Vector<>();
+            LoggedUser.getInstance().getClient().setAllergies(currentList);
+        }
+
+        boolean alreadyExists = false;
+        for (Allergen existing : currentList) {
+            if (existing.getId() == allergen.getId()) {
+                alreadyExists = true;
+                break;
+            }
+        }
+
+        if (!alreadyExists) {
+            currentList.add(allergen);
+        }
     }
 
 
