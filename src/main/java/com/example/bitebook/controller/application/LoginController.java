@@ -23,7 +23,7 @@ import static com.example.bitebook.model.enums.Role.CLIENT;
 
 public class LoginController{
 
-    public Role role = null;
+    // public Role role = null;  -> Da cancellare
 
     public void authenticate(LoginBean loginBean) throws FailedLoginException, WrongCredentialsExcpetion {
 
@@ -33,7 +33,6 @@ public class LoginController{
 
         try {
             UserDao userDao = DaoFactory.getUserDao();
-
             role = userDao.getCredentialsRole(loginBean.getEmail(), loginBean.getPassword());
 
             if (role == CLIENT) {
