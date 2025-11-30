@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.application;
 
-import com.example.bitebook.exceptions.WrongCredentialsExcpetion;
+import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.LoginBean;
@@ -16,7 +16,7 @@ import static com.example.bitebook.model.enums.Role.CLIENT;
 
 public class LoginController{
 
-    public void authenticate(LoginBean loginBean) throws FailedLoginException, WrongCredentialsExcpetion {
+    public void authenticate(LoginBean loginBean) throws FailedLoginException, WrongCredentialsException {
 
         Role role;
         Client client = null;
@@ -57,7 +57,7 @@ public class LoginController{
             LoggedUser.getInstance().setRole(role);
 
         } catch (FailedLoginException e) {
-            throw new WrongCredentialsExcpetion("Email o Password errati");
+            throw new WrongCredentialsException("Email o Password errati");
 
         } catch (Exception e) {
             throw new FailedLoginException("Errore di sistema durante il login");

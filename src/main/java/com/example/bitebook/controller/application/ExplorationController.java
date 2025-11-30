@@ -10,49 +10,7 @@ import java.util.Vector;
 
 public class ExplorationController{
 
-//    public Boolean checkCityChefs(ChefBean chefBean){
-//        ChefDao chefDbDao = DaoFactory.getChefDao();
-//        try{
-//            chefDbDao.findCityChefs(chefBean.getCity());
-//        } catch (NoChefInCityException e) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//
-//    public boolean isLoggedClient(){
-//        return LoggedUser.getInstance().getClient() != null ;
-//    }
-//
-//
-//    public Vector<ChefBean> getChefsInCity(ChefBean chefBean){
-//        Vector<Chef> chefsInCity;
-//        Vector<ChefBean> chefInCityBeans = new Vector<>();
-//        ChefDao chefDao = DaoFactory.getChefDao();
-//        try{
-//            chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
-//        if(chefsInCity == null || chefsInCity.isEmpty()){
-//            throw new SQLException();
-//        }
-//
-//        for(Chef chef : chefsInCity){
-//            ChefBean newChefbean = new ChefBean(chef);
-//            chefInCityBeans.add(newChefbean);
-//        }
-//
-//
-//        } catch(SQLException e){
-//            // to be handled
-//            return null;
-//        }
-//        return chefInCityBeans;
-//    }
-
-
-
     public Boolean checkCityChefs(ChefBean chefBean) {
-        // CORRETTO: Uso DaoFactory invece di new ChefDbDao()
         ChefDao chefDao = DaoFactory.getChefDao();
         try {
             chefDao.findCityChefs(chefBean.getCity());

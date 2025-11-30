@@ -1,7 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.LoginController;
-import com.example.bitebook.exceptions.WrongCredentialsExcpetion;
+import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
@@ -54,7 +54,7 @@ public class LoginPageControllerG2{
             LoginController loginController = new LoginController();
             loginController.authenticate(loginBean);
             actualRole = LoggedUser.getInstance().getRole();  // o sostituire con un metodo del LoginController
-        }catch(WrongCredentialsExcpetion e){
+        }catch(WrongCredentialsException e){
             errorLabel.setText("Incorrect username or password."); return;
         } catch(FailedLoginException e){
             errorLabel.setText("Something went wrong");    return;
