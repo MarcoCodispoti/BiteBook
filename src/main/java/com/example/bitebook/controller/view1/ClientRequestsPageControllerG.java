@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,8 +44,12 @@ public class ClientRequestsPageControllerG{
     }
 
     public void initialize(){
-        ExplorationController explorationController = new ExplorationController();
-        this.serviceRequestBeans = explorationController.getClientRequests();
+//        ExplorationController explorationController = new ExplorationController();
+//        this.serviceRequestBeans = explorationController.getClientRequests();
+
+        RequestManagerController requestManagerController = new RequestManagerController();
+        this.serviceRequestBeans = requestManagerController.getClientRequests();
+
         populateRequests();
     }
 

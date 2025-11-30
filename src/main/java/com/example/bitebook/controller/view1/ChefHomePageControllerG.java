@@ -2,7 +2,7 @@ package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
-import com.example.bitebook.controller.application.ManageRequestController;
+import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,8 +60,14 @@ public class ChefHomePageControllerG {
 
     public void initialize(){
         try {
-            ExplorationController explorationController = new ExplorationController();
-            this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
+            // ExplorationController explorationController = new ExplorationController();
+
+            RequestManagerController requestManagerController = new RequestManagerController();
+
+            // this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
+
+            this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
+
         } catch (Exception e){
             this.approvedServiceRequestBeans = new Vector<>();
         }

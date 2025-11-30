@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ManageRequestController;
+import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import com.example.bitebook.model.enums.RequestStatus;
 import javafx.event.ActionEvent;
@@ -88,8 +88,8 @@ public class ChefRequestsPageControllerG{
 
     public void initialize(){
         try {
-            ManageRequestController manageRequestController = new ManageRequestController();
-            this.chefServiceRequestBeans = manageRequestController.getChefRequests();
+            RequestManagerController requestManagerController = new RequestManagerController();
+            this.chefServiceRequestBeans = requestManagerController.getChefRequests();
             selectedServiceRequestBean = null;
             errorLabel.setText( "caricate " + chefServiceRequestBeans.size() + " richieste ottenute ");
             populateRequests();
@@ -141,8 +141,8 @@ public class ChefRequestsPageControllerG{
         }
         selectedServiceRequestBean.setStatus(requestStatus);
         try {
-            ManageRequestController manageRequestController = new ManageRequestController();
-            manageRequestController.manageRequest(selectedServiceRequestBean);
+            RequestManagerController requestManagerController = new RequestManagerController();
+            requestManagerController.manageRequest(selectedServiceRequestBean);
         } catch (Exception e) {
             errorLabel.setText("Unable to manage request");
         }

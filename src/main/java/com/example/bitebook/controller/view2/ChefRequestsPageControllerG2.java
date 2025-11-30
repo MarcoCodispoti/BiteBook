@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ManageRequestController;
-import com.example.bitebook.model.bean.AllergenBean;
+import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import com.example.bitebook.model.enums.RequestStatus;
 import javafx.event.ActionEvent;
@@ -16,7 +15,7 @@ import java.util.Vector;
 public class ChefRequestsPageControllerG2{
 
     private Vector<ServiceRequestBean> chefRequestBeans;
-    private ManageRequestController manageRequestController =  new ManageRequestController();
+    private RequestManagerController requestManagerController =  new RequestManagerController();
     private ServiceRequestBean selectedServiceRequestBean = null;
 
 
@@ -64,7 +63,7 @@ public class ChefRequestsPageControllerG2{
     @FXML
     void initialize(){
         try {
-            this.chefRequestBeans = manageRequestController.getChefRequests();
+            this.chefRequestBeans = requestManagerController.getChefRequests();
         } catch (Exception e){
             errorLabel.setText("Error occured while getting chef requests");
         }
@@ -138,7 +137,7 @@ public class ChefRequestsPageControllerG2{
             ServiceRequestBean selectedStatusServiceRequestBean = extractServiceRequestBean(selectedString);
             selectedStatusServiceRequestBean.setStatus(setStatus);
             try {
-                manageRequestController.manageRequest(selectedStatusServiceRequestBean);
+                requestManagerController.manageRequest(selectedStatusServiceRequestBean);
             }catch(Exception e) {
                 errorLabel.setText("Error occured while trying to approve the request");
             }

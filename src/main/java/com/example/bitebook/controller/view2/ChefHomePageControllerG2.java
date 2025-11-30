@@ -2,6 +2,7 @@ package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
+import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ public class ChefHomePageControllerG2{
 
     private Vector<ServiceRequestBean> approvedServiceRequestBeans;
     ExplorationController explorationController =  new ExplorationController();
+    RequestManagerController requestManagerController = new RequestManagerController();
 
 
     @FXML
@@ -62,7 +64,11 @@ public class ChefHomePageControllerG2{
         approvedRequestsListView.getItems().clear();
 
         try {
-            this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
+            // this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
+
+            this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
+
+
         }catch(Exception e){
             errorLabel.setText("Error occured while obtaining approved requests");
             return;
