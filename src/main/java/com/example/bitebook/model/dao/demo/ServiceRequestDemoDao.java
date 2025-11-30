@@ -112,7 +112,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
     @Override
-    public void approveRequest(ServiceRequest serviceRequest) throws Exception {
+    public void manageRequest(ServiceRequest serviceRequest) throws Exception {
         // Qui replichiamo la logica del tuo DbDao che distingue tra APPROVE e REJECT
 
         // 1. Cerchiamo la richiesta salvata nel "DB" usando l'ID

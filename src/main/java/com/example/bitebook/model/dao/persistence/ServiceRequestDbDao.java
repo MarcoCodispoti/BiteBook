@@ -139,7 +139,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
     @Override
-    public void approveRequest(ServiceRequest serviceRequest) throws Exception {
+    public void manageRequest(ServiceRequest serviceRequest) throws Exception {
         Connection conn = null;
 
         try {

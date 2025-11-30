@@ -14,5 +14,5 @@ public interface ServiceRequestDao{
 
     public Vector<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception;
 
-    public void approveRequest(ServiceRequest serviceRequest) throws Exception;
+    public void manageRequest(ServiceRequest serviceRequest) throws Exception;
 }

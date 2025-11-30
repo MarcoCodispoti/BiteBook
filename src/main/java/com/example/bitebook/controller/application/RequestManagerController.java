@@ -1,6 +1,5 @@
 package com.example.bitebook.controller.application;
 
-import com.example.bitebook.model.Client;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
@@ -158,23 +157,20 @@ public class RequestManagerController {
         Vector<ServiceRequestBean> resultBeans = new Vector<>();
         try {
             ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            // Assicurati che LoggedUser non ritorni null
             Vector<ServiceRequest> requests = dao.getClientServiceRequests(LoggedUser.getInstance().getClient());
 
             if (requests != null) {
                 for (ServiceRequest req : requests) {
-                    // RIUTILIZZO IL METODO PRIVATO (DRY!)
                     resultBeans.add(convertToBean(req));
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Almeno stampa l'errore!
+            e.printStackTrace();
             return null;
         }
         return resultBeans;
     }
 
-    // --- LATO CHEF (Richieste Approvate) ---
     public Vector<ServiceRequestBean> getApprovedServiceRequests() throws Exception {
         Vector<ServiceRequestBean> resultBeans = new Vector<>();
         try {
@@ -190,12 +186,11 @@ public class RequestManagerController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw e; // Rilancia l'eccezione se vuoi gestirla nella UI
+            throw e;
         }
         return resultBeans;
     }
 
-    // --- LATO CHEF (Tutte le richieste/Pending) ---
     public Vector<ServiceRequestBean> getChefRequests() throws Exception {
         Vector<ServiceRequestBean> resultBeans = new Vector<>();
         try {
@@ -207,8 +202,7 @@ public class RequestManagerController {
                     resultBeans.add(convertToBean(req));
                 }
             } else {
-                // Non lanciare eccezioni se è vuoto, ritorna semplicemente il vettore vuoto
-                // return resultBeans;
+                return resultBeans;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -221,20 +215,17 @@ public class RequestManagerController {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
-        DaoFactory.getServiceRequestDao().approveRequest(serviceRequest);
+        DaoFactory.getServiceRequestDao().manageRequest(serviceRequest);
     }
 
-    // ---------------------------------------------------------
-    // METODO PRIVATO DI CONVERSIONE (HELPER)
-    // Tutta la logica "brutta" di set è qui, scritta UNA VOLTA SOLA
-    // ---------------------------------------------------------
+
     private ServiceRequestBean convertToBean(ServiceRequest entity) {
         ServiceRequestBean bean = new ServiceRequestBean();
         bean.setId(entity.getId());
         bean.setStatus(entity.getStatus());
         bean.setTotalPrice(entity.getTotalPrice());
 
-        // Conversione Chef (se presente)
+
         if (entity.getChef() != null) {
             ChefBean cb = new ChefBean();
             cb.setName(entity.getChef().getName());
@@ -242,19 +233,17 @@ public class RequestManagerController {
             bean.setChefBean(cb);
         }
 
-        // Conversione Client (se presente)
         if (entity.getClient() != null) {
             bean.setClientBean(new ClientBean(entity.getClient().getName(), entity.getClient().getSurname()));
         }
 
-        // Conversione Menu
         if (entity.getMenu() != null) {
             MenuBean mb = new MenuBean();
             mb.setName(entity.getMenu().getName());
             bean.setMenuBean(mb);
         }
 
-        // Conversione Reservation
+
         if (entity.getReservationDetails() != null) {
             ReservationDetailsBean rdb = new ReservationDetailsBean();
             rdb.setSelectedMenuLevel(entity.getReservationDetails().getSelectedMenuLevel());
