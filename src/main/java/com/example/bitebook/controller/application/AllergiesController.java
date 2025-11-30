@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class AllergiesController{
 
-    public static Vector<AllergenBean> getClientAllergies() throws SQLException{
+    public Vector<AllergenBean> getClientAllergies() throws SQLException{
         Vector<AllergenBean> clientAllergyBeans = new Vector<>();
         Vector<Allergen> clientAllergies;
 
@@ -39,7 +39,7 @@ public class AllergiesController{
     }
 
 
-    public static void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
+    public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
         try{
             AllergenDao allergenDao = DaoFactory.getAllergenDao();
             allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
@@ -50,7 +50,7 @@ public class AllergiesController{
         LoggedUser.getInstance().getClient().getAllergies().removeIf(allergen -> allergen.getId() == allergyToRemoveBean.getId());
     }
 
-    public static Vector<AllergenBean> getAllergens() throws Exception{
+    public Vector<AllergenBean> getAllergens() throws Exception{
         Vector<AllergenBean> allergenBeans = new Vector<>();
         Vector<Allergen> allergens;
 
@@ -74,7 +74,7 @@ public class AllergiesController{
         return allergenBeans;
     }
 
-    public static void insertAllergy(AllergenBean allergenBean) throws Exception{
+    public void insertAllergy(AllergenBean allergenBean) throws Exception{
 //        Allergen allergen = new Allergen();
 //        allergen.setId(allergenBean.getId());
 //        allergen.setName(allergenBean.getName());

@@ -88,7 +88,8 @@ public class ChefRequestsPageControllerG{
 
     public void initialize(){
         try {
-            this.chefServiceRequestBeans = ManageRequestController.getChefRequests();
+            ManageRequestController manageRequestController = new ManageRequestController();
+            this.chefServiceRequestBeans = manageRequestController.getChefRequests();
             selectedServiceRequestBean = null;
             errorLabel.setText( "caricate " + chefServiceRequestBeans.size() + " richieste ottenute ");
             populateRequests();
@@ -140,7 +141,8 @@ public class ChefRequestsPageControllerG{
         }
         selectedServiceRequestBean.setStatus(requestStatus);
         try {
-            ManageRequestController.manageRequest(selectedServiceRequestBean);
+            ManageRequestController manageRequestController = new ManageRequestController();
+            manageRequestController.manageRequest(selectedServiceRequestBean);
         } catch (Exception e) {
             errorLabel.setText("Unable to manage request");
         }

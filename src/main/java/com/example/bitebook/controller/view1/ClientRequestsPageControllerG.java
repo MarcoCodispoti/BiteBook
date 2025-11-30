@@ -44,7 +44,8 @@ public class ClientRequestsPageControllerG{
     }
 
     public void initialize(){
-        this.serviceRequestBeans = ExplorationController.getClientRequests();
+        ExplorationController explorationController = new ExplorationController();
+        this.serviceRequestBeans = explorationController.getClientRequests();
         populateRequests();
     }
 

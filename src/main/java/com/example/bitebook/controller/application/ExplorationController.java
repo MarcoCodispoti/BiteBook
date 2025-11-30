@@ -28,7 +28,7 @@ public class ExplorationController{
     }
 
 
-    public static boolean isLoggedClient(){
+    public boolean isLoggedClient(){
         return LoggedUser.getInstance().getClient() != null ;
     }
 
@@ -171,7 +171,7 @@ public class ExplorationController{
     }
 
     // Da spostare in Manage Request Controller e rinomicare Request Controller?
-    public static Vector<ServiceRequestBean> getClientRequests(){
+    public Vector<ServiceRequestBean> getClientRequests(){
         Vector<ServiceRequestBean> clientRequestBeans = new Vector<>();
         Vector<ServiceRequest> clientRequests = new Vector<>();
 
@@ -221,7 +221,7 @@ public class ExplorationController{
 
 
 
-    public static Vector<ServiceRequestBean> getApprovedServiceRequests() throws Exception{
+    public Vector<ServiceRequestBean> getApprovedServiceRequests() throws Exception{
         Chef chef = LoggedUser.getInstance().getChef();
             Vector<ServiceRequestBean> chefServiceRequestBeans = new Vector<>();
             Vector<ServiceRequest> chefServiceRequests;
@@ -230,30 +230,20 @@ public class ExplorationController{
                 ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
                 chefServiceRequests = serviceRequestDao.getChefServiceRequests(LoggedUser.getInstance().getChef());
                 if(!(chefServiceRequestBeans == null)){
-                System.out.println( chefServiceRequests.size() + " richieste trovate dal DAO");
 
                     for(ServiceRequest chefServiceRequest : chefServiceRequests){
                         if(chefServiceRequest.getStatus().equals(RequestStatus.APPROVED)) {
                             ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
-                            // Client client = new Client();
                             MenuBean menuBean = new MenuBean();
                             ReservationDetailsBean reservationDetailsBeans = new ReservationDetailsBean();
                             serviceRequestBean.setId(chefServiceRequest.getId());
-//                            client.setName(chefServiceRequest.getClient().getName());
-//                            client.setSurname(chefServiceRequest.getClient().getSurname());
-                            System.out.println("Controller dalla classe client request: " + chefServiceRequest.getMenu().getName());
                             menuBean.setName(chefServiceRequest.getMenu().getName());
-                            System.out.println("Controller MenuName: " + menuBean.getName());
                             reservationDetailsBeans.setSelectedMenuLevel(chefServiceRequest.getReservationDetails().getSelectedMenuLevel());
                             reservationDetailsBeans.setParticipantNumber(chefServiceRequest.getReservationDetails().getParticipantNumber());
                             serviceRequestBean.setTotalPrice(chefServiceRequest.getTotalPrice());
                             reservationDetailsBeans.setDate(chefServiceRequest.getReservationDetails().getDate());
                             reservationDetailsBeans.setTime(chefServiceRequest.getReservationDetails().getTime());
                             reservationDetailsBeans.setAddress(chefServiceRequest.getReservationDetails().getAddress());
-                            // serviceRequestBean.setStatus(chefServiceRequest.getStatus());
-                            // serviceRequestBean.setClient(chefServiceRequest.getClient());
-                            // serviceRequestBean.setClient(client);
-                            System.out.println("Nomi e cognomi trovati da getApprovedServiceRequests: " + chefServiceRequest.getClient().getName() + " " + chefServiceRequest.getClient().getSurname());
                             serviceRequestBean.setClientBean(new ClientBean(chefServiceRequest.getClient().getName(),chefServiceRequest.getClient().getSurname()));
 
                             serviceRequestBean.setMenuBean(menuBean);
@@ -262,7 +252,6 @@ public class ExplorationController{
                         }
                     }
                 } else{
-                    System.out.println("Chef service requests empty");
                     // throw new Exception();
                 }
 

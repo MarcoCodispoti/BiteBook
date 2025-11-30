@@ -10,7 +10,8 @@ import com.example.bitebook.model.singleton.LoggedUser;
 import java.util.Vector;
 
 public class ManageRequestController {
-    public static Vector<ServiceRequestBean> getChefRequests() throws Exception{
+
+    public Vector<ServiceRequestBean> getChefRequests() throws Exception{
         Vector<ServiceRequestBean> chefServiceRequestBeans = new Vector<>();
         Vector<ServiceRequest> chefServiceRequests;
 
@@ -65,7 +66,7 @@ public class ManageRequestController {
     }
 
 
-    public static void manageRequest(ServiceRequestBean serviceRequestBean) throws Exception{
+    public void manageRequest(ServiceRequestBean serviceRequestBean) throws Exception{
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());

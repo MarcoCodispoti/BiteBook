@@ -19,7 +19,6 @@ import static com.example.bitebook.model.enums.Role.CLIENT;
 public class LoginPageControllerG {
 
     LoginBean loginBean =  new LoginBean();
-
     LoginController loginController = new LoginController();
 
     @FXML

@@ -73,8 +73,9 @@ public class SelectChefPageControllerG {
 
 
     @FXML
-    void clickedOnRequests(ActionEvent event) {
-        if(ExplorationController.isLoggedClient()){
+    void clickedOnRequests(ActionEvent event){
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
             FxmlLoader.setPage("ClientRequestsPage");
         } else{
             errorLabel.setText("You must be logged in to access this page!");
@@ -83,7 +84,8 @@ public class SelectChefPageControllerG {
 
     @FXML
     void clickedOnAllergies(ActionEvent event) {
-        if(ExplorationController.isLoggedClient()){
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
             FxmlLoader.setPage("AllergiesPage");
         } else{
             errorLabel.setText("You must be logged in to access this page!");

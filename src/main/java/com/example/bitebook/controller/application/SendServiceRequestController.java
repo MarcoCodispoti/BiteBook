@@ -77,14 +77,8 @@ public class SendServiceRequestController{
 
 
     public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws Exception{
-        System.out.println("Vado a convertire la richiesta dal bean");
         ServiceRequest serviceRequest = ConvertServiceRequestBean(serviceRequestBean);
-        System.out.println("" + serviceRequest.getReservationDetails().getAddress());
-        System.out.println("Ho convertito la richiesta da Bean");
-
-        System.out.println("Vado a prendere il dao dalla factory");
         ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
-        System.out.println("ho preso il dao dalla factory e vado a salvare la richiesta");
         serviceRequestDao.saveServiceRequest(serviceRequest);
 
     }
@@ -99,13 +93,9 @@ public class SendServiceRequestController{
         client.setName(serviceRequestBean.getClientBean().getName());
         client.setSurname(serviceRequestBean.getClientBean().getSurname());
 
-        System.out.println("Nome e cognome presi dal Bean " + client.getId() + " " + client.getName() + " " +  client.getSurname());
-
-        //serviceRequest.setClient(serviceRequestBean.getClient());
         serviceRequest.setClient(client);
         serviceRequest.setChef(convertChefBean(serviceRequestBean.getChefBean()));
         serviceRequest.setMenu(convertMenuBean(serviceRequestBean.getMenuBean()));
-        // System.out.println("Indirizzo dal Bean: " +  serviceRequestBean.getReservationDetails().getAddress());
         serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetails()));
         serviceRequest.setStatus(serviceRequestBean.getStatus());
         serviceRequest.setTotalPrice(calculateTotalPrice(serviceRequestBean.getReservationDetails(), serviceRequestBean.getMenuBean()));
@@ -113,7 +103,7 @@ public class SendServiceRequestController{
     }
 
 
-    public static Chef convertChefBean(ChefBean chefBean){
+    public Chef convertChefBean(ChefBean chefBean){
         Chef chef = new Chef();
         chef.setId(chefBean.getId());
         chef.setName(chefBean.getName());
@@ -121,17 +111,16 @@ public class SendServiceRequestController{
         return chef;
     }
 
-    public static Menu convertMenuBean(MenuBean menuBean){
+    public Menu convertMenuBean(MenuBean menuBean){
         Menu menu = new Menu();
         menu.setId(menuBean.getId());
         menu.setName(menuBean.getName());
         menu.setNumberOfCourses(menuBean.getNumberOfCourses());
         menu.setDietType(menuBean.getDietType());
-        // menu.setMenuLevel(menuBean.getMenuLevel());
         return menu;
     }
 
-    public static ReservationDetails convertReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){
+    public ReservationDetails convertReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){
         ReservationDetails reservationDetails = new ReservationDetails();
         reservationDetails.setDate(reservationDetailsBean.getDate());
         reservationDetails.setTime(reservationDetailsBean.getTime());

@@ -13,11 +13,12 @@ import java.util.Vector;
 
 public class AllergiesPageControllerG{
 
+    private AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
-    Vector<AllergenBean> clientAllergyBeans;
-    Vector<AllergenBean> allergenListBeans;
-    AllergenBean selectedAllergenBean;
-    AllergenBean newAllergenBean;
+    private Vector<AllergenBean> clientAllergyBeans;
+    private Vector<AllergenBean> allergenListBeans;
+    private AllergenBean selectedAllergenBean;
+    private AllergenBean newAllergenBean;
 
     @FXML
     private Hyperlink homepageHyperlink;
@@ -58,7 +59,7 @@ public class AllergiesPageControllerG{
     void clickedOnRemoveAllergy(ActionEvent event){
         if(selectedAllergenBean!=null){
             try {
-                AllergiesController.removeClientAllergy(selectedAllergenBean);
+                allergiesController.removeClientAllergy(selectedAllergenBean);
             } catch (Exception e) {
                 errorLabel.setText("Error while removing allergy");
             }
@@ -83,7 +84,7 @@ public class AllergiesPageControllerG{
             return;
         }
         try {
-            AllergiesController.insertAllergy(newAllergenBean);
+            allergiesController.insertAllergy(newAllergenBean);
         } catch (Exception e) {
             errorLabel.setText("Error while inserting allergy");
         }
@@ -94,7 +95,7 @@ public class AllergiesPageControllerG{
     @FXML
     void initialize(){
         try {
-            this.clientAllergyBeans = AllergiesController.getClientAllergies();
+            this.clientAllergyBeans = allergiesController.getClientAllergies();
         } catch (Exception e){
             e.printStackTrace();
             errorLabel.setText("Error while getting allergies, please try again");
@@ -146,7 +147,7 @@ public class AllergiesPageControllerG{
 
     public void fillSelectAllergyComboBox(){
         try {
-            allergenListBeans = AllergiesController.getAllergens();
+            allergenListBeans = allergiesController.getAllergens();
             System.out.println("" + allergenListBeans.size());
         } catch (Exception e){
             e.printStackTrace();

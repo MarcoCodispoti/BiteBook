@@ -36,7 +36,8 @@ public class ClientHomePageControllerG{
 
     @FXML
     void clickedOnRequests(ActionEvent event) {
-        if(ExplorationController.isLoggedClient()){
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
             FxmlLoader.setPage("ClientRequestsPage");
         } else{
             errorLabel.setText("You must be logged in to access this page!");
@@ -45,7 +46,8 @@ public class ClientHomePageControllerG{
 
     @FXML
     void clickedOnAllergies(ActionEvent event) {
-        if(ExplorationController.isLoggedClient()){
+        ExplorationController explorationController = new ExplorationController();
+        if(explorationController.isLoggedClient()){
             FxmlLoader.setPage("AllergiesPage");
         } else{
             errorLabel.setText("You must be logged in to access this page!");

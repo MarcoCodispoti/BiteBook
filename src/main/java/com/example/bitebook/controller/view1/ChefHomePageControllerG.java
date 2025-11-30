@@ -60,7 +60,8 @@ public class ChefHomePageControllerG {
 
     public void initialize(){
         try {
-            this.approvedServiceRequestBeans = ExplorationController.getApprovedServiceRequests();
+            ExplorationController explorationController = new ExplorationController();
+            this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
         } catch (Exception e){
             this.approvedServiceRequestBeans = new Vector<>();
         }
