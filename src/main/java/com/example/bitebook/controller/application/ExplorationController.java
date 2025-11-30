@@ -4,52 +4,94 @@ import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.*;
-import com.example.bitebook.model.dao.persistence.ChefDbDao;
 import com.example.bitebook.model.singleton.LoggedUser;
 
-import java.sql.SQLException;
 import java.util.Vector;
 
 public class ExplorationController{
 
-    public Boolean checkCityChefs(ChefBean chefBean){
-        ChefDbDao chefDbDao = new ChefDbDao();
-        try{
-            chefDbDao.findCityChefs(chefBean.getCity());
+//    public Boolean checkCityChefs(ChefBean chefBean){
+//        ChefDao chefDbDao = DaoFactory.getChefDao();
+//        try{
+//            chefDbDao.findCityChefs(chefBean.getCity());
+//        } catch (NoChefInCityException e) {
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//
+//    public boolean isLoggedClient(){
+//        return LoggedUser.getInstance().getClient() != null ;
+//    }
+//
+//
+//    public Vector<ChefBean> getChefsInCity(ChefBean chefBean){
+//        Vector<Chef> chefsInCity;
+//        Vector<ChefBean> chefInCityBeans = new Vector<>();
+//        ChefDao chefDao = DaoFactory.getChefDao();
+//        try{
+//            chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
+//        if(chefsInCity == null || chefsInCity.isEmpty()){
+//            throw new SQLException();
+//        }
+//
+//        for(Chef chef : chefsInCity){
+//            ChefBean newChefbean = new ChefBean(chef);
+//            chefInCityBeans.add(newChefbean);
+//        }
+//
+//
+//        } catch(SQLException e){
+//            // to be handled
+//            return null;
+//        }
+//        return chefInCityBeans;
+//    }
+
+
+
+    public Boolean checkCityChefs(ChefBean chefBean) {
+        // CORRETTO: Uso DaoFactory invece di new ChefDbDao()
+        ChefDao chefDao = DaoFactory.getChefDao();
+        try {
+            chefDao.findCityChefs(chefBean.getCity());
         } catch (NoChefInCityException e) {
+            return false;
+        } catch (Exception e) {
+            // Gestione errori generici DB
             return false;
         }
         return true;
     }
 
-
-    public boolean isLoggedClient(){
-        return LoggedUser.getInstance().getClient() != null ;
+    public boolean isLoggedClient() {
+        return LoggedUser.getInstance().getClient() != null;
     }
 
-
-    public Vector<ChefBean> getChefsInCity(ChefBean chefBean){
-        Vector<Chef> chefsInCity;
+    public Vector<ChefBean> getChefsInCity(ChefBean chefBean) {
         Vector<ChefBean> chefInCityBeans = new Vector<>();
         ChefDao chefDao = DaoFactory.getChefDao();
-        try{
-            chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
-        if(chefsInCity == null || chefsInCity.isEmpty()){
-            throw new SQLException();
-        }
 
-        for(Chef chef : chefsInCity){
-            ChefBean newChefbean = new ChefBean(chef);
-            chefInCityBeans.add(newChefbean);
-        }
+        try {
+            Vector<Chef> chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
+            if (chefsInCity == null || chefsInCity.isEmpty()) {
+                // Non lanciare SQLException manualmente qui, ritorna lista vuota o gestisci diversamente
+                return chefInCityBeans;
+            }
 
+            for (Chef chef : chefsInCity) {
+                // Ottimo uso del costruttore del Bean!
+                chefInCityBeans.add(new ChefBean(chef));
+            }
 
-        } catch(SQLException e){
-            // to be handled
+        } catch (Exception e) {
             return null;
         }
         return chefInCityBeans;
     }
+
+
 
 
     public Vector<MenuBean> getChefMenus(ChefBean chefBean){
