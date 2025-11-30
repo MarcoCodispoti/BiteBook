@@ -60,11 +60,7 @@ public class ChefHomePageControllerG {
 
     public void initialize(){
         try {
-            // ExplorationController explorationController = new ExplorationController();
-
             RequestManagerController requestManagerController = new RequestManagerController();
-
-            // this.approvedServiceRequestBeans = explorationController.getApprovedServiceRequests();
 
             this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
 

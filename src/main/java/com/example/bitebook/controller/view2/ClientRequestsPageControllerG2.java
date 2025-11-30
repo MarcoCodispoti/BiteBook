@@ -42,9 +42,6 @@ public class ClientRequestsPageControllerG2{
     private void fillClientRequestsListView(){
         clientRequestsListView.getItems().clear();
 
-//        ExplorationController explorationController = new ExplorationController();
-//        Vector<ServiceRequestBean> clientRequestListBeans = explorationController.getClientRequests();
-
         RequestManagerController requestManagerController = new RequestManagerController();
         Vector<ServiceRequestBean> clientRequestListBeans = requestManagerController.getClientRequests();
 

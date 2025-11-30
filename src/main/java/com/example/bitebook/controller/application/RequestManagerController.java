@@ -54,7 +54,6 @@ public class RequestManagerController {
         try{
             ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
             chefServiceRequests = serviceRequestDao.getChefServiceRequests(LoggedUser.getInstance().getChef());
-//                if(!(chefServiceRequestBeans == null)){
 
             for(ServiceRequest chefServiceRequest : chefServiceRequests){
                 if(chefServiceRequest.getStatus().equals(RequestStatus.APPROVED)) {
@@ -70,10 +69,6 @@ public class RequestManagerController {
                     chefServiceRequestBeans.add(serviceRequestBean);
                 }
             }
-//                } else{
-//                    // throw new Exception();
-//                }
-
         } catch(Exception e){
             // to be handled
             // return null;
@@ -85,9 +80,6 @@ public class RequestManagerController {
 
 
 
-
-
-    // Da spostare in Exploration controller??
     public Vector<ServiceRequestBean> getChefRequests() throws Exception{
         Vector<ServiceRequestBean> chefServiceRequestBeans = new Vector<>();
         Vector<ServiceRequest> chefServiceRequests;
