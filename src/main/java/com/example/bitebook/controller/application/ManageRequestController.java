@@ -11,6 +11,7 @@ import java.util.Vector;
 
 public class ManageRequestController {
 
+    // Da spostare in Exploration controller??
     public Vector<ServiceRequestBean> getChefRequests() throws Exception{
         Vector<ServiceRequestBean> chefServiceRequestBeans = new Vector<>();
         Vector<ServiceRequest> chefServiceRequests;
@@ -18,7 +19,6 @@ public class ManageRequestController {
         try{
             ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
             chefServiceRequests = serviceRequestDao.getChefServiceRequests(LoggedUser.getInstance().getChef());
-            System.out.println( chefServiceRequests.size() + " richieste trovate dal DAO");
             if(!chefServiceRequests.isEmpty()){
 
                 for(ServiceRequest chefServiceRequest : chefServiceRequests){
@@ -30,9 +30,7 @@ public class ManageRequestController {
                     serviceRequestBean.setId(chefServiceRequest.getId());
                     client.setName(chefServiceRequest.getClient().getName());
                     client.setSurname(chefServiceRequest.getClient().getSurname());
-                    System.out.println("Controller dalla classe client request: " + chefServiceRequest.getMenu().getName());
                     menuBean.setName(chefServiceRequest.getMenu().getName());
-                    System.out.println("Controller MenuName: " + menuBean.getName());
                     reservationDetailsBeans.setSelectedMenuLevel(chefServiceRequest.getReservationDetails().getSelectedMenuLevel());
                     reservationDetailsBeans.setParticipantNumber(chefServiceRequest.getReservationDetails().getParticipantNumber());
                     serviceRequestBean.setTotalPrice(chefServiceRequest.getTotalPrice());
@@ -40,9 +38,6 @@ public class ManageRequestController {
                     reservationDetailsBeans.setTime(chefServiceRequest.getReservationDetails().getTime());
                     reservationDetailsBeans.setAddress(chefServiceRequest.getReservationDetails().getAddress());
                     serviceRequestBean.setStatus(chefServiceRequest.getStatus());
-                    // serviceRequestBean.setClient(chefServiceRequest.getClient());
-                    // prova
-                    // serviceRequestBean.setClient(client);
 
                     serviceRequestBean.setClientBean(new ClientBean(client.getName(), client.getSurname()));
 
@@ -52,14 +47,12 @@ public class ManageRequestController {
                 }
 
             } else{
-                System.out.println("Chef service requests empty");
-                // throw new Exception();
+                // System.out.println("Chef service requests empty");
+                throw new Exception();  // da togliere
             }
 
         } catch(Exception e){
-            e.printStackTrace();
-            e.getCause();
-            e.getMessage();
+            // to be handled
             throw new Exception();
         }
         return chefServiceRequestBeans;

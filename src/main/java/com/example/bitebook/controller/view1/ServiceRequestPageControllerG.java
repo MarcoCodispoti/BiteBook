@@ -14,16 +14,11 @@ import javafx.scene.text.TextFlow;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Vector;
 
 public class ServiceRequestPageControllerG{
     private boolean ignoreAllergenWarning = false;
 
-
-//    @FXML
-//    private AnchorPane serviceRequestPageAnchorPane;
-//    @FXML
 
     SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
 
@@ -126,7 +121,7 @@ public class ServiceRequestPageControllerG{
         reservationDetailsBean.setParticipantNumber(numberOfParticipants);
 
         SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
-        if(!sendServiceRequestController.checkAllergies(menuAllergenBeans) && !ignoreAllergenWarning){
+        if(sendServiceRequestController.clientAllergiesIncompatibility(menuAllergenBeans) && !ignoreAllergenWarning){
             backButton.setDisable(true);
             sendRequestButton.setDisable(true);
             allergenWarningAnchorPane.setVisible(true);
@@ -158,7 +153,6 @@ public class ServiceRequestPageControllerG{
         pricePerPersonLabel.setText(selectedMenuBean.getPricePerPerson() + " €");
         allergensLabel.setText(getAllergensAsString());
 
-        // selectedMenuBean = SendServiceRequestController.getMenuSurcharges(selectedMenuBean);
 
         fillTimeComboBox();
         fillNumberOfParticipantsComboBox();
@@ -174,45 +168,32 @@ public class ServiceRequestPageControllerG{
     }
 
     public void updateTotalPrice(){
-//        if(selectedMenuBean.getMenuLevel() != null && reservationDetailsBean.getParticipantNumber() > 1){
-//        calculateTotalPrice();
-//        totalPriceLabel.setVisible(true);
-//        totalPriceLabel.setText(String.valueOf(totalPrice));
-//        }
 
         String participantsStr = numberOfParticipantsComboBox.getValue();
         String levelStr = ingredientsLevelComboBox.getValue();
 
-        // 2. Controlla se entrambi i valori sono stati selezionati
+
         if (participantsStr == null || levelStr == null || selectedMenuBean == null) {
-            // Se uno dei campi è vuoto, non calcolare e resetta la label
             totalPriceLabel.setText("--");
             return;
         }
 
         try {
-            // 3. Converti i valori e AGGIORNA I BEAN
             int participants = Integer.parseInt(participantsStr);
-            MenuLevel level = extractMenuLevel(); // Usiamo il tuo helper
+            MenuLevel level = extractMenuLevel();
 
-            // Aggiorna gli oggetti POJO/Bean
             reservationDetailsBean.setParticipantNumber(participants);
-            // selectedMenuBean.setMenuLevel(level); // (Come da tuo metodo checkIngredientsLevelIsSelected) -> Spostato in reservation details
             reservationDetailsBean.setSelectedMenuLevel(level);
 
-            // 4. Ora che i bean sono aggiornati, esegui il calcolo
-            // (La tua condizione 'if' ora funzionerà, ma la rendiamo più robusta)
-            if (participants > 0 && level != null) {
-                calculateTotalPrice(); // Questo metodo aggiorna la variabile 'totalPrice'
 
-                // 5. Aggiorna la Label
+            if (participants > 0 && level != null) {
+                calculateTotalPrice();
                 totalPriceLabel.setText(String.valueOf(totalPrice));
             } else {
                 totalPriceLabel.setText("--");
             }
 
         } catch (NumberFormatException e) {
-            // Se l'utente seleziona un numero non validoxwxwx
             totalPriceLabel.setText("Error");
         }
     }
@@ -260,26 +241,23 @@ public class ServiceRequestPageControllerG{
     public Vector<LocalTime> generateTimeSlots(){
         Vector<LocalTime> timeSlots = new Vector<>();
 
-        // --- Intervallo Pranzo ---
+
         LocalTime lunchStart = LocalTime.of(12, 0); // 12:00
         LocalTime lunchEnd = LocalTime.of(14, 0);   // 14:00
 
-        // --- Intervallo Cena ---
         LocalTime dinnerStart = LocalTime.of(18, 0); // 18:00
         LocalTime dinnerEnd = LocalTime.of(23, 0);   // 23:00
 
-        // 1. Genera slot per il PRANZO
         LocalTime currentLunchTime = lunchStart;
         while (currentLunchTime.isBefore(lunchEnd) || currentLunchTime.equals(lunchEnd)) {
             timeSlots.add(currentLunchTime);
-            currentLunchTime = currentLunchTime.plus(30, ChronoUnit.MINUTES); // Aggiunge 30 minuti
+            currentLunchTime = currentLunchTime.plusMinutes(30); // Aggiunge 30 minuti
         }
 
-        // 2. Genera slot per la CENA
         LocalTime currentDinnerTime = dinnerStart;
         while (currentDinnerTime.isBefore(dinnerEnd) || currentDinnerTime.equals(dinnerEnd)) {
             timeSlots.add(currentDinnerTime);
-            currentDinnerTime = currentDinnerTime.plus(30, ChronoUnit.MINUTES); // Aggiunge 30 minuti
+            currentDinnerTime = currentDinnerTime.plusMinutes(30); // Aggiunge 30 minuti
         }
 
         return timeSlots;
@@ -328,7 +306,6 @@ public class ServiceRequestPageControllerG{
     private boolean checkIngredientsLevelIsSelected(){
         MenuLevel selectedMenuLevel = extractMenuLevel();
         if(selectedMenuLevel != MenuLevel.BASE && selectedMenuLevel != MenuLevel.PREMIUM && selectedMenuLevel != MenuLevel.LUXE){return false;}
-        // selectedMenuBean.setMenuLevel(selectedMenuLevel);
         reservationDetailsBean.setSelectedMenuLevel(selectedMenuLevel);
         return true;
     }
@@ -354,11 +331,9 @@ public class ServiceRequestPageControllerG{
         return menuLevel;
     }
 
-    private int calculateTotalPrice(){
-        // Da rimuovere il facade
+    private void calculateTotalPrice(){
         totalPrice = -1;
         totalPrice = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,selectedMenuBean);
-        return totalPrice;
     }
 
 }

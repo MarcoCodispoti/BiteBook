@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.SendServiceRequestController;
-import com.example.bitebook.controller.view1.FxmlLoader;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
@@ -115,7 +114,7 @@ public class ServiceRequestPageControllerG2{
         }
 
 
-        if(!sendServiceRequestController.checkAllergies(selectedMenuAllergenBeans) && !ignoreAllergenWarning){
+        if(sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans) && !ignoreAllergenWarning){
 //            sendRequestButton.setDisable(true);
 //            backButton.setDisable(true);
             serviceRequestAnchorPane.setDisable(true);

@@ -6,8 +6,6 @@ import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.MenuDao;
 import com.example.bitebook.model.dao.ServiceRequestDao;
-import com.example.bitebook.model.dao.persistence.ChefDbDao;
-import com.example.bitebook.model.dao.persistence.MenuDbDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
@@ -28,7 +26,6 @@ public class SendServiceRequestController{
     }
 
     public int calculateTotalPrice(ReservationDetailsBean reservationDetailsBean, MenuBean menuBean){
-        int totalPrice = -1;
         int singleMenuSurcharge = -1;
         switch (reservationDetailsBean.getSelectedMenuLevel()){
             case BASE: singleMenuSurcharge = 0; break;
@@ -36,25 +33,31 @@ public class SendServiceRequestController{
             case LUXE: singleMenuSurcharge = menuBean.getLuxeLevelSurcharge(); break;
             default: break;
         }
-        if(singleMenuSurcharge == -1){return -1;}
-        return totalPrice = reservationDetailsBean.getParticipantNumber() * (menuBean.getPricePerPerson() +  singleMenuSurcharge );
+        if(singleMenuSurcharge == -1){
+            return -1;
+        }
+        return reservationDetailsBean.getParticipantNumber() * (menuBean.getPricePerPerson() +  singleMenuSurcharge );
     }
 
 
-    public boolean checkAllergies(Vector<AllergenBean> menuAllergensBean) {
+    // allergiesIncompatibility
+    // da rinomincare
+
+    public boolean clientAllergiesIncompatibility(Vector<AllergenBean> menuAllergensBean){
         Vector<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
         if (clientAllergies == null || clientAllergies.isEmpty()) {
-            return true;
+            return false;
         }
         for (Allergen clientAllergen : clientAllergies) {
             for (AllergenBean menuAllergen : menuAllergensBean) {
                 if (clientAllergen.getName().equals(menuAllergen.getName())) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
+
 
     public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws Exception{
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
@@ -63,7 +66,6 @@ public class SendServiceRequestController{
         ChefBean chefBean =  new ChefBean();
         chefBean.setId(chef.getId());
         serviceRequestBean.setChefBean(chefBean);
-        // serviceRequestBean.setClient(LoggedUser.getInstance().getClient());
         ClientBean clientBean = new ClientBean(LoggedUser.getInstance().getClient().getName(), LoggedUser.getInstance().getClient().getSurname());
         clientBean.setId(LoggedUser.getInstance().getClient().getId());
         serviceRequestBean.setClientBean(clientBean);

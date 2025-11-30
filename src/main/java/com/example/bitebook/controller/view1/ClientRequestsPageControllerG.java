@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
-import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,7 +59,6 @@ public class ClientRequestsPageControllerG{
 
                 ClientRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
-                // controller.setCardUi(clientRequestCard);
                 controller.setParentController(this);
 
                 requestsVBox.getChildren().add(clientRequestCard);

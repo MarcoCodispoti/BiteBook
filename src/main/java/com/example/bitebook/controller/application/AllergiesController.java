@@ -17,8 +17,6 @@ public class AllergiesController{
         Vector<Allergen> clientAllergies;
 
         try{
-//            AllergenDao allergenDao = DaoFactory.getAllergenDao();
-//            clientAllergies = allergenDao.getClientAllergies(LoggedUser.getInstance().getClient());
             clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
             if( clientAllergies == null || clientAllergies.isEmpty() ){
                 return clientAllergyBeans;
@@ -30,9 +28,7 @@ public class AllergiesController{
                 clientAllergyBeans.add(allergenBean);
             }
         } catch(Exception e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
+            // to be handled
             throw new SQLException();
         }
         return clientAllergyBeans;
@@ -43,7 +39,6 @@ public class AllergiesController{
         try{
             AllergenDao allergenDao = DaoFactory.getAllergenDao();
             allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
-            // AllergenDbDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergenId);
         } catch (Exception e) {
             throw new Exception(e);
         }
@@ -56,7 +51,6 @@ public class AllergiesController{
 
         try{
             AllergenDao allergenDao = new AllergenDbDao();
-            // allergens = AllergenDbDao.getAllergens();
             allergens = allergenDao.getAllergens();     // le prendo dal database perché altrimenti dovrei inserire manualmente tutte le allergie
 
             for(Allergen allergen : allergens){
@@ -66,28 +60,13 @@ public class AllergiesController{
                 allergenBeans.add(allergenBean);
             }
         }  catch(Exception e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
+            // to be handled
             throw new SQLException();
         }
         return allergenBeans;
     }
 
     public void insertAllergy(AllergenBean allergenBean) throws Exception{
-//        Allergen allergen = new Allergen();
-//        allergen.setId(allergenBean.getId());
-//        allergen.setName(allergenBean.getName());
-//        try {
-//            AllergenDao allergenDao = DaoFactory.getAllergenDao();
-//            allergenDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
-//            // AllergenDbDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
-//        } catch (Exception e) {
-//            throw new Exception(e);
-//        }
-//        LoggedUser.getInstance().getClient().getAllergies().add(allergen);
-
-
         Allergen allergen = new Allergen();
         allergen.setId(allergenBean.getId());
         allergen.setName(allergenBean.getName());
