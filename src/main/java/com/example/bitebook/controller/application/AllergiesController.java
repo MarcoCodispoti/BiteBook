@@ -12,9 +12,11 @@ import com.example.bitebook.model.singleton.LoggedUser;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+// Pulita
+
 public class AllergiesController{
-
-
     public List<AllergenBean> getClientAllergies(){
         List<AllergenBean> clientAllergyBeans = new ArrayList<>();
 
