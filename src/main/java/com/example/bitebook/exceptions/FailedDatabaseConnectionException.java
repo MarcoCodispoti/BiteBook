@@ -7,6 +7,10 @@ public class FailedDatabaseConnectionException extends Exception {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    public FailedDatabaseConnectionException(String message){
+        super(message);
+    }
+
     // Costruttore completo
     public FailedDatabaseConnectionException(String message, Throwable cause) {
         super(message, cause); // Passa tutto al padre, molto più pulito di initCause

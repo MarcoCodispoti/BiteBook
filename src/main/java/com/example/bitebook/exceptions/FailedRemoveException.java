@@ -8,6 +8,10 @@ public class FailedRemoveException extends Exception {
     private static final long serialVersionUID = 3L;
 
 
+    public FailedRemoveException(String message, Throwable cause){
+        super(message, cause);
+    }
+
     public FailedRemoveException(Throwable cause){
         super(cause);
     }

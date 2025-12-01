@@ -55,10 +55,8 @@ public class AllergenDbDao implements AllergenDao{
 
     // Ok
     public void removeClientAllergy(int clientId, int allergenId) throws FailedRemoveException {
-        Connection conn;
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call removeClientAllergy(?,?)}");
+        try(Connection conn = Connector.getInstance().getConnection();
+            CallableStatement cstmt = conn.prepareCall("{call removeClientAllergy(?,?)}")){
             cstmt.setInt(1, clientId);
             cstmt.setInt(2, allergenId);
             cstmt.execute();
