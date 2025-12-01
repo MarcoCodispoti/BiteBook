@@ -5,7 +5,7 @@ import com.example.bitebook.model.bean.DishBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.util.Vector;
+import java.util.List;
 
 public class DishCardControllerG {
     private MenuDetailsPageControllerG parentController;
@@ -39,7 +39,7 @@ public class DishCardControllerG {
 
     private String getAllergensString() {
         String allergensString = "";
-        Vector<Allergen> allergensList = dishBean.getAllergens();
+        List<Allergen> allergensList = dishBean.getAllergens();
         int index = 0;
         for (Allergen allergen : allergensList) {
             if (index == 0) {

@@ -1,9 +1,8 @@
 package com.example.bitebook.model;
 
 import com.example.bitebook.model.enums.DietType;
-import com.example.bitebook.model.enums.MenuLevel;
 
-import java.util.Vector;
+import java.util.List;
 
 public class Menu {
     private int id;
@@ -11,7 +10,7 @@ public class Menu {
     private int numberOfCourses;
     private DietType dietType;
     private int pricePerPerson;
-    private Vector<Dish> courses;
+    private List<Dish> courses;
     // private MenuLevel menuLevel;  -> Spostato in ReservationDetails
     private int premiumLevelSurcharge;
     private int luxeLevelSurcharge;
@@ -26,8 +25,8 @@ public class Menu {
     public void setDietType(DietType dietType){this.dietType = dietType;}
     public int getPricePerPerson(){return pricePerPerson;}
     public void setPricePerPerson(int pricePerPerson){this.pricePerPerson = pricePerPerson;}
-    public Vector<Dish> getCourses(){return courses;}
-    public void setCourses(Vector<Dish> courses){this.courses = courses;}
+    public List<Dish> getCourses(){return courses;}
+    public void setCourses(List<Dish> courses){this.courses = courses;}
 
     // rimossi -> Spostati in Menu Level
 //    public MenuLevel getMenuLevel(){return menuLevel;}

@@ -9,6 +9,7 @@ import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.UserDao;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
+
 import javax.security.auth.login.FailedLoginException;
 
 import static com.example.bitebook.model.enums.Role.CHEF;

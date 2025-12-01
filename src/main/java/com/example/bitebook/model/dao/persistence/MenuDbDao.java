@@ -3,7 +3,6 @@ package com.example.bitebook.model.dao.persistence;
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.model.Dish;
 import com.example.bitebook.model.Menu;
-import com.example.bitebook.model.dao.DishDao;
 import com.example.bitebook.model.dao.MenuDao;
 import com.example.bitebook.model.enums.CourseType;
 import com.example.bitebook.model.enums.DietType;
@@ -13,13 +12,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 public class MenuDbDao implements MenuDao {
 
     // da spostare questo metodo in ChefDao?
-    public Vector<Menu> getChefMenus(int chefId) throws SQLException{
-        Vector<Menu> chefMenus = new Vector<>();
+    public List<Menu> getChefMenus(int chefId) throws SQLException{
+        List<Menu> chefMenus = new ArrayList<>();
         Connection conn = null;
 
         try{
@@ -52,8 +52,8 @@ public class MenuDbDao implements MenuDao {
         return chefMenus;
     }
 
-    public Vector<Dish> getMenuCourses(int menuId){
-        Vector<Dish> courses = new Vector<>();
+    public List<Dish> getMenuCourses(int menuId){
+        List<Dish> courses = new ArrayList<>();
         Connection conn = null;
 
         try{

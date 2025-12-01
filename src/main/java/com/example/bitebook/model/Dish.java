@@ -2,14 +2,14 @@ package com.example.bitebook.model;
 
 import com.example.bitebook.model.enums.CourseType;
 
-import java.util.Vector;
+import java.util.List;
 
 public class Dish{
     private int id;
     private String name;
     private CourseType courseType;
     private String description;
-    private Vector<Allergen> allergens;
+    private List<Allergen> allergens;
 
     public Dish(){}
 
@@ -28,6 +28,6 @@ public class Dish{
     public void setCourseType(CourseType courseType){this.courseType = courseType;}
     public String getDescription(){return description;}
     public void setDescription(String description){this.description = description;}
-    public Vector<Allergen> getAllergens() {return allergens;}
-    public void setAllergens(Vector<Allergen> allergens) {this.allergens = allergens;}
+    public List<Allergen> getAllergens() {return allergens;}
+    public void setAllergens(List<Allergen> allergens) {this.allergens = allergens;}
 }

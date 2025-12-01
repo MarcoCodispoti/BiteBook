@@ -9,13 +9,13 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
-import java.util.Vector;
+import java.util.List;
 
 public class AllergiesPageControllerG2{
 
     AllergiesController allergiesController = new AllergiesController();
-    Vector<AllergenBean> clientAllergyBeans;
-    Vector<AllergenBean> serverAllergyBeans;
+    List<AllergenBean> clientAllergyBeans;
+    List<AllergenBean> serverAllergyBeans;
     AllergenBean allergyToRemoveBean;
     AllergenBean allergyToAddBean;
 

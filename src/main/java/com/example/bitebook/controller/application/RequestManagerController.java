@@ -7,16 +7,17 @@ import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestManagerController {
 
 
-    public Vector<ServiceRequestBean> getClientRequests() {
-        Vector<ServiceRequestBean> resultBeans = new Vector<>();
+    public List<ServiceRequestBean> getClientRequests() {
+        List<ServiceRequestBean> resultBeans = new ArrayList<>();
         try {
             ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            Vector<ServiceRequest> requests = dao.getClientServiceRequests(LoggedUser.getInstance().getClient());
+            List<ServiceRequest> requests = dao.getClientServiceRequests(LoggedUser.getInstance().getClient());
 
             if (requests != null) {
                 for (ServiceRequest req : requests) {
@@ -30,11 +31,11 @@ public class RequestManagerController {
         return resultBeans;
     }
 
-    public Vector<ServiceRequestBean> getApprovedServiceRequests() throws Exception {
-        Vector<ServiceRequestBean> resultBeans = new Vector<>();
+    public List<ServiceRequestBean> getApprovedServiceRequests() throws Exception {
+        List<ServiceRequestBean> resultBeans = new ArrayList<>();
         try {
             ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            Vector<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
+            List<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
 
             if (requests != null) {
                 for (ServiceRequest req : requests) {
@@ -50,11 +51,11 @@ public class RequestManagerController {
         return resultBeans;
     }
 
-    public Vector<ServiceRequestBean> getChefRequests() throws Exception {
-        Vector<ServiceRequestBean> resultBeans = new Vector<>();
+    public List<ServiceRequestBean> getChefRequests() throws Exception {
+        List<ServiceRequestBean> resultBeans = new ArrayList<>();
         try {
             ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            Vector<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
+            List<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
 
             if (requests != null && !requests.isEmpty()) {
                 for (ServiceRequest req : requests) {

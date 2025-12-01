@@ -1,17 +1,13 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.RequestManagerController;
-import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
 
-import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
 
 public class ClientRequestsPageControllerG2{
 
@@ -43,7 +39,7 @@ public class ClientRequestsPageControllerG2{
         clientRequestsListView.getItems().clear();
 
         RequestManagerController requestManagerController = new RequestManagerController();
-        Vector<ServiceRequestBean> clientRequestListBeans = requestManagerController.getClientRequests();
+        List<ServiceRequestBean> clientRequestListBeans = requestManagerController.getClientRequests();
 
 
         for(ServiceRequestBean serviceRequestBean : clientRequestListBeans){

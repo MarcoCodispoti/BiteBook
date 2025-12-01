@@ -1,6 +1,5 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
@@ -12,10 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Vector;
+import java.util.List;
 
 public class ClientRequestsPageControllerG{
-    private Vector<ServiceRequestBean> serviceRequestBeans;
+    private List<ServiceRequestBean> serviceRequestBeans;
 
     @FXML
     private Hyperlink homepageHyperlink;

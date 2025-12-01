@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-
-
 <AnchorPane prefHeight="128.0" prefWidth="906.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ApprovedRequestCardControllerG">
    <children>
       <AnchorPane layoutX="1.0" layoutY="4.0" prefHeight="114.0" prefWidth="901.0" style="-fx-border-color: #383397; -fx-border-width: 4; -fx-border-radius: 6;">

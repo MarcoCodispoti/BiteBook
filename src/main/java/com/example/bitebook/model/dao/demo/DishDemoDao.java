@@ -3,16 +3,17 @@ package com.example.bitebook.model.dao.demo;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.dao.DishDao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 public class DishDemoDao implements DishDao {
 
     // 1. SIMULAZIONE TABELLA DI UNIONE "AllergensDish"
     // Key: DishID (l'ID del piatto)
-    // Value: Vector<Allergen> (la lista delle allergie di quel piatto)
-    private static Map<Integer, Vector<Allergen>> dishAllergensMap = new HashMap<>();
+    // Value: List<Allergen> (la lista delle allergie di quel piatto)
+    private static Map<Integer, List<Allergen>> dishAllergensMap = new HashMap<>();
 
     // ---------------------------------------------------------
     // POPOLAMENTO DATI INIZIALI (Coerente con MenuDemoDao)
@@ -28,7 +29,7 @@ public class DishDemoDao implements DishDao {
 
         // --- PIATTO 1001: "Carbonara Sbagliata" (dal Menu 210) ---
         // Contiene: Uova, Glutine (pasta), Lattosio (formaggio/panna)
-        Vector<Allergen> allergens1001 = new Vector<>();
+        List<Allergen> allergens1001 = new ArrayList<>();
         allergens1001.add(glutine);
         allergens1001.add(uova);
         allergens1001.add(lattosio);
@@ -37,14 +38,14 @@ public class DishDemoDao implements DishDao {
 
         // --- PIATTO 1002: "Saltimbocca 2.0" (dal Menu 210) ---
         // Contiene: Glutine (infarinatura)
-        Vector<Allergen> allergens1002 = new Vector<>();
+        List<Allergen> allergens1002 = new ArrayList<>();
         allergens1002.add(glutine);
 
         dishAllergensMap.put(1002, allergens1002);
 
         // --- PIATTO 2001: "Linguine allo scoglio" (dal Menu 300) ---
         // Contiene: Glutine (pasta), Crostacei
-        Vector<Allergen> allergens2001 = new Vector<>();
+        List<Allergen> allergens2001 = new ArrayList<>();
         allergens2001.add(glutine);
         allergens2001.add(crostacei);
 
@@ -52,7 +53,7 @@ public class DishDemoDao implements DishDao {
 
         // --- PIATTO 2002: "Babà al rum" (dal Menu 300) ---
         // Contiene: Glutine, Lattosio, Uova
-        Vector<Allergen> allergens2002 = new Vector<>();
+        List<Allergen> allergens2002 = new ArrayList<>();
         allergens2002.add(glutine);
         allergens2002.add(lattosio);
         allergens2002.add(uova);
@@ -65,11 +66,11 @@ public class DishDemoDao implements DishDao {
     // METODO: getDishAllergens
     // ---------------------------------------------------------
     @Override
-    public Vector<Allergen> getDishAllergens(int dishId){
+    public List<Allergen> getDishAllergens(int dishId){
         // Nel DB DAO facevi: CALL getDishAllergens(?) -> SELECT ... JOIN ... WHERE DishId = ?
         // Qui facciamo un lookup diretto nella mappa usando l'ID del piatto.
 
-        Vector<Allergen> allergens = dishAllergensMap.get(dishId);
+        List<Allergen> allergens = dishAllergensMap.get(dishId);
 
         if (allergens != null) {
             // Trovato! Restituiamo la lista
@@ -78,7 +79,7 @@ public class DishDemoDao implements DishDao {
             // Se il piatto non ha allergie (o l'ID non esiste nella mappa allergie),
             // restituiamo un vettore vuoto invece di null, così non crasha l'interfaccia.
             // È un comportamento sicuro.
-            return new Vector<>();
+            return new ArrayList<>();
         }
     }
 

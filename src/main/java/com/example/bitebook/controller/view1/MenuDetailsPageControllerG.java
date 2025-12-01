@@ -6,7 +6,6 @@ import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
-import com.example.bitebook.model.singleton.LoggedUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,16 +15,15 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextFlow;
 
-import java.util.Vector;
+import java.util.List;
 
 public class MenuDetailsPageControllerG{
     ChefBean menusChefBean;
     MenuBean selectedMenuBean;
-    Vector<DishBean> courseBeans;
-    Vector<Allergen> menuAllergens;         // da mettere Vector<AllergenBean> menuAllergenBeans
-    Vector<AllergenBean> menuAllergenBeans;
+    List<DishBean> courseBeans;
+    List<Allergen> menuAllergens;         // da mettere List<AllergenBean> menuAllergenBeans
+    List<AllergenBean> menuAllergenBeans;
 
     @FXML
     private ScrollPane menusScrollPane;

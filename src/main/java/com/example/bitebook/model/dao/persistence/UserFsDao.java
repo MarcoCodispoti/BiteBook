@@ -1,6 +1,5 @@
 package com.example.bitebook.model.dao.persistence;
 
-import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
@@ -10,10 +9,12 @@ import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.enums.SpecializationType;
 
 import javax.security.auth.login.FailedLoginException;
-
-import java.io.*;
-import java.util.Optional;
-import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserFsDao implements UserDao{
 
@@ -182,9 +183,9 @@ public class UserFsDao implements UserDao{
 
 
 
-    private Vector<Allergen> getClientAllergies(int id) throws IOException{
+    private List<Allergen> getClientAllergies(int id) throws IOException{
 
-        Vector<Allergen> allergies;
+        List<Allergen> allergies;
         try{
             InputStream is = getClass().getResourceAsStream(CLIENT_ALLERGIES_FILE_PATH);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -198,7 +199,7 @@ public class UserFsDao implements UserDao{
             System.out.println("Ho letto la prima riga e la salto");
             String line;
             System.out.println("Vado a scorrere tutte le righe del file per trovare una corrispondenza");
-            allergies = new Vector<>();
+            allergies = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(CSV_DELIMITER);
                 int fileUserId = Integer.parseInt(fields[0].trim());
@@ -216,8 +217,8 @@ public class UserFsDao implements UserDao{
         return allergies;
     }
 
-    private Vector<SpecializationType> getChefSpecializations(int id) throws IOException{
-        Vector<SpecializationType> specializations;
+    private List<SpecializationType> getChefSpecializations(int id) throws IOException{
+        List<SpecializationType> specializations;
         try{
             InputStream is = getClass().getResourceAsStream(CHEF_SPECIALIZATIONS_FILE_PATH);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -231,7 +232,7 @@ public class UserFsDao implements UserDao{
             System.out.println("Ho letto la prima riga e la salto");
             String line;
             System.out.println("Vado a scorrere tutte le righe del file per trovare una corrispondenza");
-            specializations = new Vector<>();
+            specializations = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(CSV_DELIMITER);
                 int fileChefId = Integer.parseInt(fields[0].trim());

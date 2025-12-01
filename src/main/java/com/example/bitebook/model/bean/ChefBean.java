@@ -4,11 +4,11 @@ import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.enums.CookingStyle;
 import com.example.bitebook.model.enums.SpecializationType;
 
-import java.util.Vector;
+import java.util.List;
 
 public class ChefBean extends UserBean{
     private CookingStyle cookingStyle;
-    private Vector<SpecializationType> specializationTypes;
+    private List<SpecializationType> specializationTypes;
     private String city;
 
     public ChefBean(){};
@@ -32,8 +32,8 @@ public class ChefBean extends UserBean{
 
     public CookingStyle getCookingStyle(){return cookingStyle;}
     public void setCookingStyle(CookingStyle cookingStyle){this.cookingStyle=cookingStyle;}
-    public Vector<SpecializationType> getSpecializationTypes(){return this.specializationTypes;}
-    public void setSpecializationTypes(Vector<SpecializationType> specializationTypes){this.specializationTypes = specializationTypes;}
+    public List<SpecializationType> getSpecializationTypes(){return this.specializationTypes;}
+    public void setSpecializationTypes(List<SpecializationType> specializationTypes){this.specializationTypes = specializationTypes;}
     public String getCity(){return city;}
     public void setCity(String inputCity){this.city=inputCity;}
 

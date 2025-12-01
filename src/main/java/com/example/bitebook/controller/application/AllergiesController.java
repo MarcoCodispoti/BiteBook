@@ -1,21 +1,22 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.dao.persistence.AllergenDbDao;
 import com.example.bitebook.model.singleton.LoggedUser;
 
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllergiesController{
 
     // Ok
-    public Vector<AllergenBean> getClientAllergies() throws SQLException{
-        Vector<AllergenBean> clientAllergyBeans = new Vector<>();
-        Vector<Allergen> clientAllergies;
+    public List<AllergenBean> getClientAllergies() throws SQLException{
+        List<AllergenBean> clientAllergyBeans = new ArrayList<>();
+        List<Allergen> clientAllergies;
         clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
          if( clientAllergies == null || clientAllergies.isEmpty() ){
              return clientAllergyBeans;
@@ -30,9 +31,8 @@ public class AllergiesController{
     }
 
 
-
+    // Ok -> Eccezioni pulite
     public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
-
         AllergenDao allergenDao = DaoFactory.getAllergenDao();
         try{
             allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
@@ -43,26 +43,25 @@ public class AllergiesController{
     }
 
 
-    public Vector<AllergenBean> getAllergens() throws Exception{
-        Vector<AllergenBean> allergenBeans = new Vector<>();
-        Vector<Allergen> allergens;
+    // Ok -> Eccezioni propagate direttamente al controller grafico
+    public List<AllergenBean> getAllergens() throws FailedSearchException{
+        List<AllergenBean> allergenBeans = new ArrayList<>();
 
-        try{
-            AllergenDao allergenDao = new AllergenDbDao();
-            allergens = allergenDao.getAllergens();     // le prendo dal database perché altrimenti dovrei inserire manualmente tutte le allergie
+        AllergenDao allergenDao = DaoFactory.getAllergenDao();
+        List<Allergen> allergens = allergenDao.getAllergens();
 
-            for(Allergen allergen : allergens){
+        if (allergens != null) {
+            for (Allergen allergen : allergens) {
                 AllergenBean allergenBean = new AllergenBean();
                 allergenBean.setId(allergen.getId());
                 allergenBean.setName(allergen.getName());
                 allergenBeans.add(allergenBean);
             }
-        }  catch(Exception e){
-            // to be handled
-            throw new SQLException();
         }
         return allergenBeans;
     }
+
+
 
     public void insertAllergy(AllergenBean allergenBean) throws Exception{
         Allergen allergen = new Allergen();
@@ -76,10 +75,10 @@ public class AllergiesController{
             throw new Exception(e);
         }
 
-        Vector<Allergen> currentList = LoggedUser.getInstance().getClient().getAllergies();
+        List<Allergen> currentList = LoggedUser.getInstance().getClient().getAllergies();
 
         if (currentList == null) {
-            currentList = new Vector<>();
+            currentList = new ArrayList<>();
             LoggedUser.getInstance().getClient().setAllergies(currentList);
         }
 

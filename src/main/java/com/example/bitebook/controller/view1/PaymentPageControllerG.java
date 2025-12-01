@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.text.TextFlow;
 
-import java.util.Vector;
+import java.util.List;
 
 public class PaymentPageControllerG {
     MenuBean requestMenuBean;
     ReservationDetailsBean requestReservationDetailsBean;
-    Vector<AllergenBean> reservationAllergenBeans;
+    List<AllergenBean> reservationAllergenBeans;
     ChefBean reservationChefBean;
     ServiceRequestBean serviceRequestBean;
 
@@ -101,7 +100,7 @@ public class PaymentPageControllerG {
     }
 
 
-    public void initData(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean, Vector<AllergenBean> menuAllergenBeans, ChefBean menuChefBean) {
+    public void initData(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean, List<AllergenBean> menuAllergenBeans, ChefBean menuChefBean) {
         this.requestMenuBean = menuBean;
         this.requestReservationDetailsBean = reservationDetailsBean;
         this.reservationAllergenBeans = menuAllergenBeans;

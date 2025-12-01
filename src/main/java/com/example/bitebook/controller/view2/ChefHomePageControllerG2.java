@@ -11,11 +11,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
-import java.util.Vector;
+import java.util.List;
 
 public class ChefHomePageControllerG2{
 
-    private Vector<ServiceRequestBean> approvedServiceRequestBeans;
+    private List<ServiceRequestBean> approvedServiceRequestBeans;
     ExplorationController explorationController =  new ExplorationController();
     RequestManagerController requestManagerController = new RequestManagerController();
 

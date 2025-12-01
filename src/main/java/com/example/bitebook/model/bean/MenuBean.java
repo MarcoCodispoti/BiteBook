@@ -2,7 +2,6 @@ package com.example.bitebook.model.bean;
 
 import com.example.bitebook.model.Menu;
 import com.example.bitebook.model.enums.DietType;
-import com.example.bitebook.model.enums.MenuLevel;
 
 public class MenuBean{
 

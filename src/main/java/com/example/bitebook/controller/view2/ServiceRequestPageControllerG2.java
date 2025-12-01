@@ -14,14 +14,15 @@ import javafx.scene.layout.AnchorPane;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ServiceRequestPageControllerG2{
 
     SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
-    private Vector<AllergenBean> selectedMenuAllergenBeans;
+    private List<AllergenBean> selectedMenuAllergenBeans;
     private ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
     private boolean ignoreAllergenWarning = false;
 
@@ -176,7 +177,7 @@ public class ServiceRequestPageControllerG2{
 
 
 
-    public void initData(ChefBean chefBean, MenuBean selectedMenuBean, Vector<AllergenBean> selectedMenuAllergenBeans){
+    public void initData(ChefBean chefBean, MenuBean selectedMenuBean, List<AllergenBean> selectedMenuAllergenBeans){
         this.selectedChefBean = chefBean;
         this.selectedMenuBean = selectedMenuBean;
         this.selectedMenuAllergenBeans = selectedMenuAllergenBeans;
@@ -229,9 +230,9 @@ public class ServiceRequestPageControllerG2{
     }
 
 
-    public String getAllergensAsString(Vector<AllergenBean> allergenBeans){
-        Vector<String> writteAllergenNames = new Vector<>();
-        Vector<AllergenBean> menuAllergenBeans = new Vector<>();
+    public String getAllergensAsString(List<AllergenBean> allergenBeans){
+        List<String> writteAllergenNames = new ArrayList<>();
+        List<AllergenBean> menuAllergenBeans = new ArrayList<>();
         int index = 0;
         String allergensAsString = "";
         for(AllergenBean allergenBean:allergenBeans){
@@ -258,7 +259,7 @@ public class ServiceRequestPageControllerG2{
         return allergensAsString;
     }
 
-    public boolean isAlredyPresent(Vector<String> writtenAllergenNames, String actualName){
+    public boolean isAlredyPresent(List<String> writtenAllergenNames, String actualName){
         for(String writtenAllergenName:writtenAllergenNames){
             if(writtenAllergenName.equals(actualName)){
                 return true;
@@ -278,8 +279,8 @@ public class ServiceRequestPageControllerG2{
         timeComboBox.getItems().addAll(generateTimeSlots());
     };
 
-    public Vector<LocalTime> generateTimeSlots(){
-        Vector<LocalTime> timeSlots = new Vector<>();
+    public List<LocalTime> generateTimeSlots(){
+        List<LocalTime> timeSlots = new ArrayList<>();
 
         // --- Intervallo Pranzo ---
         LocalTime lunchStart = LocalTime.of(12, 0); // 12:00

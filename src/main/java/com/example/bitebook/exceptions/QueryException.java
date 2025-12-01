@@ -1,7 +1,6 @@
 package com.example.bitebook.exceptions;
 
 import java.io.Serial;
-import java.sql.SQLException;
 
 public class QueryException extends Exception{
 

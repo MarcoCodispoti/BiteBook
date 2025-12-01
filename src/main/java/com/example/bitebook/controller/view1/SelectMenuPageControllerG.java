@@ -7,16 +7,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Vector;
-
-import static java.awt.SystemColor.menu;
+import java.util.List;
 
 public class SelectMenuPageControllerG{
     private ChefBean selectChefBean;
-    private Vector<MenuBean> chefMenuBeans;
+    private List<MenuBean> chefMenuBeans;
 
     private Parent selectedCardUI;
     private MenuBean menuBean;

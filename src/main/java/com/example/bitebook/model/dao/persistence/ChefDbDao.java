@@ -12,15 +12,16 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ChefDbDao implements ChefDao{
 
-    public Vector<Chef> findCityChefs(String cityName) throws FailedDatabaseConnectionException, NoChefInCityException {
+    public List<Chef> findCityChefs(String cityName) throws FailedDatabaseConnectionException, NoChefInCityException {
         Connection conn = null;
-        Vector<Chef> chefsFound = new Vector<>();
+        List<Chef> chefsFound = new ArrayList<>();
 
         try{
             conn = Connector.getInstance().getConnection();
@@ -55,9 +56,9 @@ public class ChefDbDao implements ChefDao{
     }
 
 
-    public Vector<Chef> getChefsInCity(String cityName) throws SQLException{
+    public List<Chef> getChefsInCity(String cityName) throws SQLException{
         Connection conn = null;
-        Vector<Chef> cityChefs = new Vector<>();
+        List<Chef> cityChefs = new ArrayList<>();
 
 
         try{
@@ -92,11 +93,11 @@ public class ChefDbDao implements ChefDao{
     }
 
 
-    public Vector<SpecializationType> convertSpecializationString(String specializationString) {
+    public List<SpecializationType> convertSpecializationString(String specializationString) {
         // 1. Gestione del caso nullo/vuoto
         if (specializationString == null || specializationString.trim().isEmpty()) {
-            // Restituisce un Vector vuoto se non ci sono specializzazioni
-            return new Vector<>();
+            // Restituisce un List vuoto se non ci sono specializzazioni
+            return new ArrayList<>();
         }
 
         // 2. Scomposizione della stringa
@@ -104,7 +105,7 @@ public class ChefDbDao implements ChefDao{
         String[] specializationsArray = specializationString.split(",\\s*");
         // Usiamo la regex ",\\s*" per gestire ', ' e ', ' o anche solo ','
 
-        // 3. Conversione in Vector<SpecializationType> usando lo Stream API
+        // 3. Conversione in List<SpecializationType> usando lo Stream API
         return Arrays.stream(specializationsArray)
                 .map(String::trim) // Rimuove eventuali spazi bianchi aggiuntivi
                 .filter(s -> !s.isEmpty()) // Rimuove eventuali stringhe vuote dopo il trim
@@ -120,7 +121,7 @@ public class ChefDbDao implements ChefDao{
                     }
                 })
                 .filter(s -> s != null) // Filtra via gli elementi nulli (quelli che hanno generato l'errore)
-                .collect(Collectors.toCollection(Vector::new)); // Colleziona il risultato in un Vector
+                .collect(Collectors.toCollection(ArrayList::new)); // Colleziona il risultato in un List
     }
 
     public Chef getChefFromMenu(int menuId) throws SQLException{

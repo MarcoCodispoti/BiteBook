@@ -2,17 +2,19 @@ package com.example.bitebook.model.dao.demo;
 
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
-import com.example.bitebook.model.User;
 import com.example.bitebook.model.dao.UserDao;
 import com.example.bitebook.model.enums.Role;
 
 import javax.security.auth.login.FailedLoginException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class UserDemoDao implements UserDao {
     // SEPARIAMO LE LISTE: Simuliamo due tabelle diverse
-    private static Vector<Client> fakeClients = new Vector<>();
-    private static Vector<Chef> fakeChefs = new Vector<>();
+    private static List<Client> fakeClients = new ArrayList<>();
+    private static List<Chef> fakeChefs = new ArrayList<>();
 
     static {
         // --- 1. CLIENTE DEMO ---

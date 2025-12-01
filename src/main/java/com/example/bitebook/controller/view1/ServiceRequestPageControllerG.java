@@ -14,7 +14,8 @@ import javafx.scene.text.TextFlow;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ServiceRequestPageControllerG{
     private boolean ignoreAllergenWarning = false;
@@ -24,7 +25,7 @@ public class ServiceRequestPageControllerG{
 
     private ChefBean menuChefBean;
     MenuBean selectedMenuBean;
-    Vector<AllergenBean> menuAllergenBeans;
+    List<AllergenBean> menuAllergenBeans;
     ReservationDetailsBean reservationDetailsBean =  new ReservationDetailsBean();
     private int totalPrice;
 
@@ -143,7 +144,7 @@ public class ServiceRequestPageControllerG{
 
 
 
-    public void initData(MenuBean selectedMenuBean,Vector<AllergenBean> menuAllergenBeans, ChefBean menuChefBean){
+    public void initData(MenuBean selectedMenuBean,List<AllergenBean> menuAllergenBeans, ChefBean menuChefBean){
         this.menuChefBean = menuChefBean;
         this.selectedMenuBean = selectedMenuBean;
         this.menuAllergenBeans = menuAllergenBeans;
@@ -238,8 +239,8 @@ public class ServiceRequestPageControllerG{
         timeComboBox.getItems().addAll(generateTimeSlots());
     };
 
-    public Vector<LocalTime> generateTimeSlots(){
-        Vector<LocalTime> timeSlots = new Vector<>();
+    public List<LocalTime> generateTimeSlots(){
+        List<LocalTime> timeSlots = new ArrayList<>();
 
 
         LocalTime lunchStart = LocalTime.of(12, 0); // 12:00

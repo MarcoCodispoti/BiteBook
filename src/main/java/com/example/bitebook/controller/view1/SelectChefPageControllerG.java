@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
-import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.bean.ChefBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,15 +12,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Vector;
+import java.util.List;
 
 public class SelectChefPageControllerG {
 
     private Parent selectedCardUI;
     private ChefBean cityChefBean;
     ChefBean selectedChefBean;
-    // private Vector<Chef>  chefsInCity;
-    private Vector<ChefBean> chefInCityBeans;
+    // private List<Chef>  chefsInCity;
+    private List<ChefBean> chefInCityBeans;
 
     @FXML
     private Hyperlink requestsHyperlink;

@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
-import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
@@ -9,15 +8,10 @@ import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.enums.SpecializationType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.String.valueOf;
 
@@ -65,12 +59,12 @@ public class SelectMenuPageControllerG2{
 
     ExplorationController explorationController = new ExplorationController();
     private String city;
-    private Vector<ChefBean> chefListBeans;
+    private List<ChefBean> chefListBeans;
     private ChefBean selectedChefBean;
-    private Vector<MenuBean> selectedChefMenuBeans;
+    private List<MenuBean> selectedChefMenuBeans;
     private MenuBean selectedMenuBean;
-    private Vector<DishBean> selectedMenuDishBeans;
-    private Vector<AllergenBean> menuAllergenBeans;
+    private List<DishBean> selectedMenuDishBeans;
+    private List<AllergenBean> menuAllergenBeans;
     private boolean ignoreAllergies = false;
 
 
@@ -198,7 +192,7 @@ public class SelectMenuPageControllerG2{
 
 
     public String getSpecializationsAsString(ChefBean chefBean){
-        Vector<SpecializationType> specializationTypes = chefBean.getSpecializationTypes();
+        List<SpecializationType> specializationTypes = chefBean.getSpecializationTypes();
         String specializationsString = "";
         int index = 0;
         for(SpecializationType specializationType:specializationTypes){
@@ -323,9 +317,9 @@ public class SelectMenuPageControllerG2{
         }
     }
 
-    public String getAllergensAsString(Vector<AllergenBean> allergenBeans){
-        Vector<String> writteAllergenNames = new Vector<>();
-        Vector<AllergenBean> menuAllergenBeans = new Vector<>();
+    public String getAllergensAsString(List<AllergenBean> allergenBeans){
+        List<String> writteAllergenNames = new ArrayList<>();
+        List<AllergenBean> menuAllergenBeans = new ArrayList<>();
         int index = 0;
         String allergensAsString = "";
         for(AllergenBean allergenBean:allergenBeans){
@@ -354,7 +348,7 @@ public class SelectMenuPageControllerG2{
 
 
 
-    public boolean isAlredyPresent(Vector<String> writtenAllergenNames, String actualName){
+    public boolean isAlredyPresent(List<String> writtenAllergenNames, String actualName){
         for(String writtenAllergenName:writtenAllergenNames){
             if(writtenAllergenName.equals(actualName)){
                 return true;

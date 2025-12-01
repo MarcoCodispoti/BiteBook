@@ -15,7 +15,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDbDao implements UserDao {
 
@@ -97,7 +98,7 @@ public class UserDbDao implements UserDao {
             System.out.println("Ho eseguito la seconda call a query");
             ResultSet rs2 = cstmt2.getResultSet();
 
-            Vector<SpecializationType> specializations = new Vector<>();
+            List<SpecializationType> specializations = new ArrayList<>();
 
             while(rs2.next()){
                 SpecializationType specialization = SpecializationType.fromString(rs2.getString("Specialization"));
@@ -159,7 +160,7 @@ public class UserDbDao implements UserDao {
 //            System.out.println("Ho eseguito la seconda call a query");
 //            ResultSet rs2 = cstmt2.getResultSet();
 //
-//            Vector<Allergen> allergies = new Vector<>();
+//            List<Allergen> allergies = new ArrayList<>();
 //
 //            while(rs2.next()){
 //                Allergen allergy = new Allergen(rs2.getInt("AllergenId"),rs2.getString("AllergenName"));
@@ -189,7 +190,7 @@ public class UserDbDao implements UserDao {
 
     }
 
-    public String OttieniAllergies(Vector<Allergen> allergies) {
+    public String OttieniAllergies(List<Allergen> allergies) {
         if (allergies == null || allergies.isEmpty()) {
             return "Nessuna allergia";
         }

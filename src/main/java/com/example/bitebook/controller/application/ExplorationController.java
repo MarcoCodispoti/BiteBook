@@ -1,12 +1,22 @@
 package com.example.bitebook.controller.application;
 
 import com.example.bitebook.exceptions.NoChefInCityException;
-import com.example.bitebook.model.*;
-import com.example.bitebook.model.bean.*;
-import com.example.bitebook.model.dao.*;
+import com.example.bitebook.model.Allergen;
+import com.example.bitebook.model.Chef;
+import com.example.bitebook.model.Dish;
+import com.example.bitebook.model.Menu;
+import com.example.bitebook.model.bean.AllergenBean;
+import com.example.bitebook.model.bean.ChefBean;
+import com.example.bitebook.model.bean.DishBean;
+import com.example.bitebook.model.bean.MenuBean;
+import com.example.bitebook.model.dao.ChefDao;
+import com.example.bitebook.model.dao.DaoFactory;
+import com.example.bitebook.model.dao.DishDao;
+import com.example.bitebook.model.dao.MenuDao;
 import com.example.bitebook.model.singleton.LoggedUser;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExplorationController{
 
@@ -27,12 +37,12 @@ public class ExplorationController{
         return LoggedUser.getInstance().getClient() != null;
     }
 
-    public Vector<ChefBean> getChefsInCity(ChefBean chefBean) {
-        Vector<ChefBean> chefInCityBeans = new Vector<>();
+    public List<ChefBean> getChefsInCity(ChefBean chefBean) {
+        List<ChefBean> chefInCityBeans = new ArrayList<>();
         ChefDao chefDao = DaoFactory.getChefDao();
 
         try {
-            Vector<Chef> chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
+            List<Chef> chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
             if (chefsInCity == null || chefsInCity.isEmpty()) {
                 // Non lanciare SQLException manualmente qui, ritorna lista vuota o gestisci diversamente
                 return chefInCityBeans;
@@ -52,10 +62,10 @@ public class ExplorationController{
 
 
 
-    public Vector<MenuBean> getChefMenus(ChefBean chefBean){
-        Vector<Menu> chefMenus;
+    public List<MenuBean> getChefMenus(ChefBean chefBean){
+        List<Menu> chefMenus;
         MenuDao menuDao = DaoFactory.getMenuDao();
-        Vector<MenuBean> chefMenuBeans = new Vector<>();
+        List<MenuBean> chefMenuBeans = new ArrayList<>();
         try{
             chefMenus = menuDao.getChefMenus(chefBean.getId());
 
@@ -71,11 +81,11 @@ public class ExplorationController{
     }
 
 
-    public Vector<DishBean> getCourses(MenuBean menuBean){
-        Vector<Dish> courses;
+    public List<DishBean> getCourses(MenuBean menuBean){
+        List<Dish> courses;
         MenuDao menuDao = DaoFactory.getMenuDao();
 
-        Vector<DishBean> coursesBean = new Vector<>();
+        List<DishBean> coursesBean = new ArrayList<>();
 
         try{
             courses = menuDao.getMenuCourses(menuBean.getId());
@@ -83,7 +93,7 @@ public class ExplorationController{
 
 
             for(Dish dish : courses){
-                Vector< Allergen> dishAllergens;
+                List< Allergen> dishAllergens;
                 DishDao dishDao = DaoFactory.getDishDao();
                 dishAllergens = dishDao.getDishAllergens(dish.getId());
                 dish.setAllergens(dishAllergens);
@@ -101,11 +111,11 @@ public class ExplorationController{
     }
 
 
-    public Vector<AllergenBean> getMenuAllergens(Vector<DishBean> courseBeans){
-        Vector<AllergenBean> menuAllergenBeans = new Vector<>();
+    public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans){
+        List<AllergenBean> menuAllergenBeans = new ArrayList<>();
 
         for (DishBean dish : courseBeans) {
-            Vector<Allergen> dishAllergens = dish.getAllergens();
+            List<Allergen> dishAllergens = dish.getAllergens();
             if (dishAllergens != null) {
                 for (Allergen newAllergen : dishAllergens) {
                     boolean alreadyExists = false;

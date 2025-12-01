@@ -1,14 +1,10 @@
 package com.example.bitebook.model.dao;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
-import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.dao.demo.*;
 import com.example.bitebook.model.dao.persistence.*;
 import com.example.bitebook.util.AppConfig;
 import com.example.bitebook.util.Connector;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public abstract class DaoFactory{
 

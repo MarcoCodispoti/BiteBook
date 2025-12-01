@@ -9,14 +9,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-import java.util.Vector;
+import java.util.List;
 
 public class AllergiesPageControllerG{
 
     private AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
-    private Vector<AllergenBean> clientAllergyBeans;
-    private Vector<AllergenBean> allergenListBeans;
+    private List<AllergenBean> clientAllergyBeans;
+    private List<AllergenBean> allergenListBeans;
     private AllergenBean selectedAllergenBean;
     private AllergenBean newAllergenBean;
 

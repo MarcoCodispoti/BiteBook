@@ -8,12 +8,13 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
 
 public class DishDbDao implements DishDao{
 
-    public Vector<Allergen> getDishAllergens(int dishId) throws SQLException {
-        Vector<Allergen> allergens = new Vector<>();
+    public List<Allergen> getDishAllergens(int dishId) throws SQLException {
+        List<Allergen> allergens = new ArrayList<>();
         Connection conn = null;
 
         try{

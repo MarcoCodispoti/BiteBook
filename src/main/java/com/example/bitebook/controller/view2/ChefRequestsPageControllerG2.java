@@ -10,11 +10,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
-import java.util.Vector;
+import java.util.List;
 
 public class ChefRequestsPageControllerG2{
 
-    private Vector<ServiceRequestBean> chefRequestBeans;
+    private List<ServiceRequestBean> chefRequestBeans;
     private RequestManagerController requestManagerController =  new RequestManagerController();
     private ServiceRequestBean selectedServiceRequestBean = null;
 
@@ -88,7 +88,7 @@ public class ChefRequestsPageControllerG2{
     }
 
 
-    // Questo metodo usa l'ID estratto per trovare l'oggetto originale nel tuo Vector
+    // Questo metodo usa l'ID estratto per trovare l'oggetto originale nel tuo List
     private ServiceRequestBean extractServiceRequestBean(String listViewRequestString){
         // 1. Ottieni l'ID dalla stringa
         int id = getRequestIdFromString(listViewRequestString);

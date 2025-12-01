@@ -1,6 +1,5 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.model.bean.ServiceRequestBean;
@@ -13,10 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChefHomePageControllerG {
-    private Vector<ServiceRequestBean> approvedServiceRequestBeans;
+    private List<ServiceRequestBean> approvedServiceRequestBeans;
 
     @FXML
     private Hyperlink menusHyperlink;
@@ -65,7 +65,7 @@ public class ChefHomePageControllerG {
             this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
 
         } catch (Exception e){
-            this.approvedServiceRequestBeans = new Vector<>();
+            this.approvedServiceRequestBeans = new ArrayList<>();
         }
         errorLabel.setText("Ho trovato " + approvedServiceRequestBeans.size() + " richieste accettate dal DAO");
         populateRequests();

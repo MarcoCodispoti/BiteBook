@@ -1,7 +1,5 @@
 package com.example.bitebook.model;
 
-import com.example.bitebook.model.enums.Role;
-
 public abstract class User {
     private int id;
     private String name;

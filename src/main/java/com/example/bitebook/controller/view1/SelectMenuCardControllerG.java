@@ -1,7 +1,6 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.model.bean.MenuBean;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;

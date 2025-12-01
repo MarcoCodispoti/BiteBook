@@ -1,6 +1,6 @@
 package com.example.bitebook.model;
 
-import java.util.Vector;
+import java.util.List;
 
 public class Client extends User {
 
@@ -10,10 +10,10 @@ public class Client extends User {
         super(id,name,surname);
     };
 
-    private Vector<Allergen> allergies;
+    private List<Allergen> allergies;
 
-    public Vector<Allergen> getAllergies() {return allergies;}
-    public void setAllergies(Vector<Allergen> allergies){this.allergies = allergies;}
+    public List<Allergen> getAllergies() {return allergies;}
+    public void setAllergies(List<Allergen> allergies){this.allergies = allergies;}
 
 
     public String GetAllergiesAsString(){

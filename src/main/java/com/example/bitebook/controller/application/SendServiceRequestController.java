@@ -9,7 +9,7 @@ import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
-import java.util.Vector;
+import java.util.List;
 
 public class SendServiceRequestController{
     public MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
@@ -43,8 +43,8 @@ public class SendServiceRequestController{
     // allergiesIncompatibility
     // da rinomincare
 
-    public boolean clientAllergiesIncompatibility(Vector<AllergenBean> menuAllergensBean){
-        Vector<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
+    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean){
+        List<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
         if (clientAllergies == null || clientAllergies.isEmpty()) {
             return false;
         }

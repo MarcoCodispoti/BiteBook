@@ -4,7 +4,6 @@ import com.example.bitebook.model.bean.ChefBean;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.text.TextFlow;
 
 public class SelectChefCardControllerG{
     private SelectChefPageControllerG parentController;

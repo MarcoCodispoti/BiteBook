@@ -8,8 +8,9 @@ import com.example.bitebook.model.enums.DietType;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Vector;
 
 public class MenuDemoDao implements MenuDao{
     // 1. SIMULAZIONE TABELLA "Menu"
@@ -18,11 +19,11 @@ public class MenuDemoDao implements MenuDao{
 
     // 2. SIMULAZIONE "Menu dello Chef" (Relazione Chef -> Menus)
     // Key: ChefID, Value: Lista dei Menu di quello chef
-    private static Map<Integer, Vector<Menu>> chefMenusMap = new HashMap<>();
+    private static Map<Integer, List<Menu>> chefMenusMap = new HashMap<>();
 
     // 3. SIMULAZIONE "Portate del Menu" (Relazione Menu -> Dishes)
     // Key: MenuID, Value: Lista dei Piatti di quel menu
-    private static Map<Integer, Vector<Dish>> menuCoursesMap = new HashMap<>();
+    private static Map<Integer, List<Dish>> menuCoursesMap = new HashMap<>();
 
 
     // ---------------------------------------------------------
@@ -44,7 +45,7 @@ public class MenuDemoDao implements MenuDao{
         menusMap.put(210, m1);
 
         // Salviamo nella mappa dello Chef 1
-        Vector<Menu> chef1Menus = new Vector<>();
+        List<Menu> chef1Menus = new ArrayList<>();
         chef1Menus.add(m1);
         chefMenusMap.put(1, chef1Menus);
 
@@ -55,7 +56,7 @@ public class MenuDemoDao implements MenuDao{
         Dish d2 = new Dish();
         d2.setId(1002); d2.setName("Saltimbocca 2.0"); d2.setCourseType(CourseType.FIRST_COURSE); d2.setDescription("Vitello cotto a bassa temperatura");
 
-        Vector<Dish> courses210 = new Vector<>();
+        List<Dish> courses210 = new ArrayList<>();
         courses210.add(d1);
         courses210.add(d2);
         m1.setNumberOfCourses(courses210.size()); // Impostiamo il numero di portate
@@ -76,7 +77,7 @@ public class MenuDemoDao implements MenuDao{
         menusMap.put(300, m2);
 
         // Salviamo nella mappa dello Chef 2
-        Vector<Menu> chef2Menus = new Vector<>();
+        List<Menu> chef2Menus = new ArrayList<>();
         chef2Menus.add(m2);
         chefMenusMap.put(2, chef2Menus);
 
@@ -87,7 +88,7 @@ public class MenuDemoDao implements MenuDao{
         Dish d4 = new Dish();
         d4.setId(2002); d4.setName("Babà al rum"); d4.setCourseType(CourseType.DESSERT); d4.setDescription("Classico napoletano");
 
-        Vector<Dish> courses300 = new Vector<>();
+        List<Dish> courses300 = new ArrayList<>();
         courses300.add(d3);
         courses300.add(d4);
         m2.setNumberOfCourses(courses300.size());
@@ -100,11 +101,11 @@ public class MenuDemoDao implements MenuDao{
     // METODO 1: getChefMenus
     // ---------------------------------------------------------
     @Override
-    public Vector<Menu> getChefMenus(int chefId) throws SQLException {
+    public List<Menu> getChefMenus(int chefId) throws SQLException {
         // Nel DB facevi: SELECT ... WHERE ChefId = ?
         // Qui recuperiamo direttamente la lista associata allo ChefID dalla mappa.
 
-        Vector<Menu> menus = chefMenusMap.get(chefId);
+        List<Menu> menus = chefMenusMap.get(chefId);
 
         if (menus != null) {
             System.out.println("[Demo] Trovati " + menus.size() + " menu per chef " + chefId);
@@ -115,7 +116,7 @@ public class MenuDemoDao implements MenuDao{
             return menus;
         } else {
             System.out.println("[Demo] Nessun menu trovato per chef " + chefId);
-            return new Vector<>(); // Restituisce lista vuota invece di null
+            return new ArrayList<>(); // Restituisce lista vuota invece di null
         }
     }
 
@@ -124,10 +125,10 @@ public class MenuDemoDao implements MenuDao{
     // METODO 2: getMenuCourses
     // ---------------------------------------------------------
     @Override
-    public Vector<Dish> getMenuCourses(int menuId) {
+    public List<Dish> getMenuCourses(int menuId) {
         // Nel DB facevi una JOIN complessa. Qui è un lookup immediato per Key.
 
-        Vector<Dish> courses = menuCoursesMap.get(menuId);
+        List<Dish> courses = menuCoursesMap.get(menuId);
 
         if (courses != null) {
             System.out.println("[Demo] Trovate " + courses.size() + " portate per menu " + menuId);
@@ -140,7 +141,7 @@ public class MenuDemoDao implements MenuDao{
             return courses;
         } else {
             System.out.println("[Demo] Nessuna portata trovata per menu " + menuId);
-            return null; // O new Vector<>()
+            return null; // O new ArrayList<>()
         }
     }
 

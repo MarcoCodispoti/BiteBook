@@ -6,10 +6,10 @@ import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.enums.CookingStyle;
 import com.example.bitebook.model.enums.SpecializationType;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 public class ChefDemoDao implements ChefDao{
     // 1. SIMULAZIONE TABELLA "Chef"
@@ -35,7 +35,7 @@ public class ChefDemoDao implements ChefDao{
         c1.setCity("Roma");
         c1.setStyle(CookingStyle.MODERN);
 
-        Vector<SpecializationType> specs1 = new Vector<>();
+        List<SpecializationType> specs1 = new ArrayList<>();
         specs1.add(SpecializationType.SEAFOOD);
         specs1.add(SpecializationType.VEGAN);
         c1.setSpecializations(specs1);
@@ -50,7 +50,7 @@ public class ChefDemoDao implements ChefDao{
         c2.setCity("Napoli");
         c2.setStyle(CookingStyle.CLASSIC);
 
-        Vector<SpecializationType> specs2 = new Vector<>();
+        List<SpecializationType> specs2 = new ArrayList<>();
         specs2.add(SpecializationType.ITALIAN);
         specs2.add(SpecializationType.SEAFOOD);
         c2.setSpecializations(specs2);
@@ -65,7 +65,7 @@ public class ChefDemoDao implements ChefDao{
         c3.setCity("Milano");
         c3.setStyle(CookingStyle.FUSION); // Per esempio
 
-        Vector<SpecializationType> specs3 = new Vector<>();
+        List<SpecializationType> specs3 = new ArrayList<>();
         specs3.add(SpecializationType.JAPANESE);
         c3.setSpecializations(specs3);
 
@@ -82,8 +82,8 @@ public class ChefDemoDao implements ChefDao{
     // METODO 1: findCityChefs (Restituisce solo ID parziali)
     // ---------------------------------------------------------
     @Override
-    public Vector<Chef> findCityChefs(String cityName) throws NoChefInCityException {
-        Vector<Chef> chefsFound = new Vector<>();
+    public List<Chef> findCityChefs(String cityName) throws NoChefInCityException {
+        List<Chef> chefsFound = new ArrayList<>();
 
         // Iteriamo sui valori della mappa (senza Stream)
         for (Chef c : chefsMap.values()) {
@@ -108,8 +108,8 @@ public class ChefDemoDao implements ChefDao{
     // METODO 2: getChefsInCity (Restituisce oggetti completi)
     // ---------------------------------------------------------
     @Override
-    public Vector<Chef> getChefsInCity(String cityName) {
-        Vector<Chef> cityChefs = new Vector<>();
+    public List<Chef> getChefsInCity(String cityName) {
+        List<Chef> cityChefs = new ArrayList<>();
         System.out.println("[Demo] Cerco chef a: " + cityName);
 
         // Iteriamo sui valori della mappa
@@ -151,6 +151,6 @@ public class ChefDemoDao implements ChefDao{
     }
 
     // NOTA: Il metodo convertSpecializationString non serve qui
-    // perché i dati in memoria sono già oggetti Java (Vector<SpecializationType>),
+    // perché i dati in memoria sono già oggetti Java (List<SpecializationType>),
     // non stringhe CSV da parsare.
 }

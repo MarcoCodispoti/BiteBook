@@ -6,7 +6,6 @@ import com.example.bitebook.model.Client;
 import com.example.bitebook.model.enums.Role;
 
 import javax.security.auth.login.FailedLoginException;
-import java.sql.SQLException;
 
 public interface UserDao{
 

@@ -2,6 +2,7 @@ package com.example.bitebook.model.dao.persistence;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.FailedRemoveException;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Client;
@@ -12,15 +13,16 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllergenDbDao implements AllergenDao{
 
     @Override
-    public Vector<Allergen> getClientAllergies(Client client) throws Exception {
+    public List<Allergen> getClientAllergies(Client client) throws Exception {
         // to be implemented
 
-        Vector<Allergen> allergies = new Vector<>();
+        List<Allergen> allergies = new ArrayList<>();
         Connection conn;
 
         try {
@@ -67,30 +69,26 @@ public class AllergenDbDao implements AllergenDao{
         }
     }
 
-    public Vector<Allergen>  getAllergens() throws SQLException {
-        Vector<Allergen> allergens = new Vector<>();
-        Connection conn;
 
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getAllergens()}");
+    public List<Allergen>  getAllergens() throws FailedSearchException {
+        List<Allergen> allergens = new ArrayList<>();
+
+        try(Connection conn = Connector.getInstance().getConnection();
+            CallableStatement cstmt = conn.prepareCall("{call getAllergens()}")){
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
 
-            while(rs.next()){
-                Allergen allergen = new Allergen();
-                allergen.setId(rs.getInt("IdAllergen"));
-                allergen.setName(rs.getString("Name"));
-                allergens.add(allergen);
+            try(ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    Allergen allergen = new Allergen();
+                    allergen.setId(rs.getInt("IdAllergen"));
+                    allergen.setName(rs.getString("Name"));
+                    allergens.add(allergen);
+                }
             }
-
-            cstmt.close();
-            rs.close();
-        } catch (Exception e) {
-            e.getMessage();
-            e.printStackTrace();
-            e.getCause();
-            throw new SQLException();
+        } catch(SQLException e) {
+            throw new FailedSearchException(new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedSearchException(e);
         }
         return allergens;
     }

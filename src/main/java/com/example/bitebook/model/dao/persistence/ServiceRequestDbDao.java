@@ -5,13 +5,13 @@ import com.example.bitebook.model.*;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.MenuLevel;
 import com.example.bitebook.model.enums.RequestStatus;
-import com.example.bitebook.model.singleton.LoggedUser;
 import com.example.bitebook.util.Connector;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceRequestDbDao implements ServiceRequestDao {
 
@@ -46,8 +46,8 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    public Vector<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
-        Vector<ServiceRequest> serviceRequests = new Vector<>();
+    public List<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
         Connection conn = null;
 
         try{
@@ -91,8 +91,8 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
     @Override
-    public Vector<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
-        Vector<ServiceRequest> serviceRequests = new Vector<>();
+    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
         Connection conn = null;
 
         try{
@@ -133,7 +133,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
             e.getMessage();
             e.getCause();
             e.printStackTrace();
-            return new Vector<>();
+            return new ArrayList<>();
         }
 
         return  serviceRequests;

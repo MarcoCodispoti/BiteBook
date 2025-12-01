@@ -1,6 +1,5 @@
 package com.example.bitebook.model.bean;
 
-import com.example.bitebook.model.*;
 import com.example.bitebook.model.enums.RequestStatus;
 
 public class ServiceRequestBean {

@@ -3,7 +3,7 @@ package com.example.bitebook.model;
 import com.example.bitebook.model.enums.CookingStyle;
 import com.example.bitebook.model.enums.SpecializationType;
 
-import java.util.Vector;
+import java.util.List;
 
 public class Chef extends User {
 
@@ -16,21 +16,21 @@ public class Chef extends User {
     }
 
     private CookingStyle style;
-    private Vector<SpecializationType> specializations;
-    private Vector<Menu> offeredMenus;
+    private List<SpecializationType> specializations;
+    private List<Menu> offeredMenus;
     private String city;
 
 
     public CookingStyle getStyle(){return style;}
-    public Vector<SpecializationType> getSpecializations(){return specializations;}
-    public Vector<Menu> getOfferedMenus(){return offeredMenus;}
+    public List<SpecializationType> getSpecializations(){return specializations;}
+    public List<Menu> getOfferedMenus(){return offeredMenus;}
     public String getCity(){return city;}
 
     public void setStyle(CookingStyle style){this.style = style;}
-    public void setSpecializations(Vector<SpecializationType> specializations){
+    public void setSpecializations(List<SpecializationType> specializations){
         this.specializations = specializations;
     }
-    public void setOfferedMenus(Vector<Menu> offeredMenus){
+    public void setOfferedMenus(List<Menu> offeredMenus){
         this.offeredMenus = offeredMenus;
     }
     public void setCity(String city){this.city = city;}

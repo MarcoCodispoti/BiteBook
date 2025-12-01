@@ -6,10 +6,10 @@ import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-import java.util.stream.Collectors;
 
 public class ServiceRequestDemoDao implements ServiceRequestDao {
 
@@ -43,15 +43,15 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
 
-    public Vector<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
+    public List<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
 //        // Simula: SELECT * FROM ... WHERE clientId = ?
 //        // + le JOIN per ottenere i nomi (ma qui abbiamo già gli oggetti completi!)
 //
 //        return fakeTable.values().stream()
 //                // 1. FILTRO (La clausola WHERE)
 //                .filter(req -> req.getClient() != null && req.getClient().getId() == client.getId())
-//                // 2. RACCOLTA (Mette i risultati in un Vector)
-//                .collect(Collectors.toCollection(Vector::new));
+//                // 2. RACCOLTA (Mette i risultati in un List)
+//                .collect(Collectors.toCollection(List::new));
 //
 //        /* NOTA:
 //           Nel DB DAO ricostruivi oggetti parziali (new Chef con solo il nome).
@@ -61,7 +61,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
 //        */
 
         // 1. Prepariamo il contenitore per i risultati
-        Vector<ServiceRequest> clientRequests = new Vector<>();
+        List<ServiceRequest> clientRequests = new ArrayList<>();
 
         // 2. Iteriamo su tutti i valori salvati nella Mappa
         // fakeTable.values() ci dà la collezione di tutte le ServiceRequest salvate
@@ -83,16 +83,16 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
     @Override
-    public Vector<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
+    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
 //        // Simula: SELECT * FROM ... WHERE chefId = ?
 //        return fakeTable.values().stream()
 //                // 1. FILTRO (La clausola WHERE)
 //                .filter(req -> req.getChef() != null && req.getChef().getId() == chef.getId())
 //                // 2. RACCOLTA
-//                .collect(Collectors.toCollection(Vector::new));
+//                .collect(Collectors.toCollection(List::new));
 
         // 1. Prepariamo il contenitore per i risultati
-        Vector<ServiceRequest> chefRequests = new Vector<>();
+        List<ServiceRequest> chefRequests = new ArrayList<>();
 
         // 2. Iteriamo su tutti i valori
         for (ServiceRequest req : fakeTable.values()) {

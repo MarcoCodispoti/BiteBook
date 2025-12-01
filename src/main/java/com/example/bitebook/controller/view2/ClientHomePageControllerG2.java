@@ -2,7 +2,6 @@ package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
-import com.example.bitebook.controller.view1.SelectChefPageControllerG;
 import com.example.bitebook.model.bean.ChefBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

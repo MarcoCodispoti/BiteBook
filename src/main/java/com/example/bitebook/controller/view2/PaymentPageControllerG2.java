@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.Vector;
+import java.util.List;
 
 public class PaymentPageControllerG2 {
 
@@ -17,7 +17,7 @@ public class PaymentPageControllerG2 {
     private ChefBean chefBean;
     private MenuBean selectedMenuBean;
     private ReservationDetailsBean reservationDetailsBean;
-    private Vector<AllergenBean> selectedMenuAllergenBeans;
+    private List<AllergenBean> selectedMenuAllergenBeans;
 
     private ServiceRequestBean serviceRequestBean;
 
@@ -111,7 +111,7 @@ public class PaymentPageControllerG2 {
     }
 
 
-    public void initData(ReservationDetailsBean reservationDetailsBean, MenuBean selectedMenuBean, Vector<AllergenBean> selectedMenuAllergenBeans, ChefBean chefBean) {
+    public void initData(ReservationDetailsBean reservationDetailsBean, MenuBean selectedMenuBean, List<AllergenBean> selectedMenuAllergenBeans, ChefBean chefBean) {
         this.reservationDetailsBean = reservationDetailsBean;
         this.selectedMenuBean = selectedMenuBean;
         this.selectedMenuAllergenBeans = selectedMenuAllergenBeans;
