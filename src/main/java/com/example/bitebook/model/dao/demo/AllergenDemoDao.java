@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedRemoveException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
@@ -67,24 +68,24 @@ public class AllergenDemoDao implements AllergenDao{
 
     @Override
     public List<Allergen> getAllergens() throws FailedSearchException {
-//        System.out.println("[Demo] Recupero tutte le allergie di sistema");
-//
-//        List<Allergen> allAllergensList = new ArrayList<>();
-//
-//        // Ciclo classico sui valori della Mappa globale
-//        for (Allergen a : allAllergensMap.values()) {
-//            allAllergensList.add(a);
-//        }
-//         return allAllergensList;
+        System.out.println("[Demo] Recupero tutte le allergie di sistema");
+
+        List<Allergen> allAllergensList = new ArrayList<>();
+
+        // Ciclo classico sui valori della Mappa globale
+        for (Allergen a : allAllergensMap.values()) {
+            allAllergensList.add(a);
+        }
+         return allAllergensList;
 
         // Dummy -> Si usa sempre il databae per i dati che voglio solo andare a leggere
         // e.c. -> Devo andare ad inserire manualmente tutti i dati in nella mia Mappa
 
-        return null;
+        // return null;
     }
 
     @Override
-    public void insertAllergy(Allergen allergen, int clientId) throws SQLException {
+    public void insertAllergy(Allergen allergen, int clientId) throws FailedInsertException {
         System.out.println("[Demo] Aggiunta allergia " + allergen.getName() + " a client " + clientId);
 
         // 1. Controlla se il cliente ha già una lista di allergie

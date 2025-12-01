@@ -1,5 +1,7 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedInsertException;
+import com.example.bitebook.exceptions.FailedRemoveException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
@@ -7,39 +9,40 @@ import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.singleton.LoggedUser;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AllergiesController{
 
-    // Ok
-    public List<AllergenBean> getClientAllergies() throws SQLException{
+
+    public List<AllergenBean> getClientAllergies(){
         List<AllergenBean> clientAllergyBeans = new ArrayList<>();
-        List<Allergen> clientAllergies;
-        clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
-         if( clientAllergies == null || clientAllergies.isEmpty() ){
-             return clientAllergyBeans;
-         }
-         for(Allergen allergen : clientAllergies){
-             AllergenBean allergenBean = new AllergenBean();
-             allergenBean.setId(allergen.getId());
-             allergenBean.setName(allergen.getName());
-             clientAllergyBeans.add(allergenBean);
-         }
+
+        if (LoggedUser.getInstance().getClient() == null) return clientAllergyBeans;
+
+        List<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
+        if (clientAllergies != null && !clientAllergies.isEmpty()) {
+            for (Allergen allergen : clientAllergies) {
+                AllergenBean allergenBean = new AllergenBean();
+                allergenBean.setId(allergen.getId());
+                allergenBean.setName(allergen.getName());
+                clientAllergyBeans.add(allergenBean);
+            }
+        }
         return clientAllergyBeans;
     }
 
 
     // Ok -> Eccezioni pulite
-    public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
-        AllergenDao allergenDao = DaoFactory.getAllergenDao();
-        try{
-            allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
-        LoggedUser.getInstance().getClient().getAllergies().removeIf(allergen -> allergen.getId() == allergyToRemoveBean.getId());
+    public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws FailedRemoveException {
+
+        DaoFactory.getAllergenDao().removeClientAllergy(
+                LoggedUser.getInstance().getClient().getId(),
+                allergyToRemoveBean.getId()
+        );
+
+        LoggedUser.getInstance().getClient().getAllergies()
+                .removeIf(allergen -> allergen.getId() == allergyToRemoveBean.getId());
     }
 
 
@@ -63,18 +66,24 @@ public class AllergiesController{
 
 
 
-    public void insertAllergy(AllergenBean allergenBean) throws Exception{
+    // Ok
+    public void insertAllergy(AllergenBean allergenBean) throws FailedInsertException{
+
         Allergen allergen = new Allergen();
         allergen.setId(allergenBean.getId());
         allergen.setName(allergenBean.getName());
 
-        try {
-            AllergenDao allergenDao = DaoFactory.getAllergenDao();
-            allergenDao.insertAllergy(allergen, LoggedUser.getInstance().getClient().getId());
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
+        DaoFactory.getAllergenDao().insertAllergy(
+                allergen,
+                LoggedUser.getInstance().getClient().getId()
+        );
 
+        updateLocalSessionList(allergen);
+    }
+
+
+    // Ok
+    private void updateLocalSessionList(Allergen newAllergen) {
         List<Allergen> currentList = LoggedUser.getInstance().getClient().getAllergies();
 
         if (currentList == null) {
@@ -84,14 +93,14 @@ public class AllergiesController{
 
         boolean alreadyExists = false;
         for (Allergen existing : currentList) {
-            if (existing.getId() == allergen.getId()) {
+            if (existing.getId() == newAllergen.getId()) {
                 alreadyExists = true;
                 break;
             }
         }
 
         if (!alreadyExists) {
-            currentList.add(allergen);
+            currentList.add(newAllergen);
         }
     }
 
