@@ -1,5 +1,7 @@
 package com.example.bitebook.model.dao;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.enums.SpecializationType;
 
@@ -8,7 +10,7 @@ import java.util.Vector;
 
 public interface ChefDao{
 
-    public Vector<Chef> findCityChefs(String cityName);
+    public Vector<Chef> findCityChefs(String cityName) throws NoChefInCityException, FailedDatabaseConnectionException;
 
     public Vector<Chef> getChefsInCity(String cityName) throws SQLException;
 

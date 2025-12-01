@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.persistence;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.MenuLevel;
@@ -36,7 +37,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
 
             cstmt.execute();
             cstmt.close();
-        } catch (SQLException e){
+        } catch (SQLException | FailedDatabaseConnectionException e){
             e.getMessage();
             e.getCause();
             e.printStackTrace();

@@ -12,38 +12,36 @@ import java.util.Vector;
 
 public class AllergiesController{
 
+    // Ok
     public Vector<AllergenBean> getClientAllergies() throws SQLException{
         Vector<AllergenBean> clientAllergyBeans = new Vector<>();
         Vector<Allergen> clientAllergies;
-
-        try{
-            clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
-            if( clientAllergies == null || clientAllergies.isEmpty() ){
-                return clientAllergyBeans;
-            }
-            for(Allergen allergen : clientAllergies){
-                AllergenBean allergenBean = new AllergenBean();
-                allergenBean.setId(allergen.getId());
-                allergenBean.setName(allergen.getName());
-                clientAllergyBeans.add(allergenBean);
-            }
-        } catch(Exception e){
-            // to be handled
-            throw new SQLException();
-        }
+        clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
+         if( clientAllergies == null || clientAllergies.isEmpty() ){
+             return clientAllergyBeans;
+         }
+         for(Allergen allergen : clientAllergies){
+             AllergenBean allergenBean = new AllergenBean();
+             allergenBean.setId(allergen.getId());
+             allergenBean.setName(allergen.getName());
+             clientAllergyBeans.add(allergenBean);
+         }
         return clientAllergyBeans;
     }
 
 
+
     public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws Exception{
+
+        AllergenDao allergenDao = DaoFactory.getAllergenDao();
         try{
-            AllergenDao allergenDao = DaoFactory.getAllergenDao();
             allergenDao.removeClientAllergy(LoggedUser.getInstance().getClient().getId(),allergyToRemoveBean.getId());
         } catch (Exception e) {
             throw new Exception(e);
         }
         LoggedUser.getInstance().getClient().getAllergies().removeIf(allergen -> allergen.getId() == allergyToRemoveBean.getId());
     }
+
 
     public Vector<AllergenBean> getAllergens() throws Exception{
         Vector<AllergenBean> allergenBeans = new Vector<>();

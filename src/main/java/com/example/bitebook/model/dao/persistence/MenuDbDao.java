@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.persistence;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.model.Dish;
 import com.example.bitebook.model.Menu;
 import com.example.bitebook.model.dao.DishDao;
@@ -108,7 +109,7 @@ public class MenuDbDao implements MenuDao {
             cstmt.close();
             rs.close();
 
-        } catch (SQLException e){
+        } catch (SQLException | FailedDatabaseConnectionException e){
             e.printStackTrace();
             e.getMessage();
             e.getCause();

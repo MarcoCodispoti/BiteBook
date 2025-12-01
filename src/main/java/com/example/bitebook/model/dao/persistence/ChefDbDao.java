@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.persistence;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.dao.ChefDao;
@@ -16,7 +17,8 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 public class ChefDbDao implements ChefDao{
-    public Vector<Chef> findCityChefs(String cityName){
+
+    public Vector<Chef> findCityChefs(String cityName) throws FailedDatabaseConnectionException, NoChefInCityException {
         Connection conn = null;
         Vector<Chef> chefsFound = new Vector<>();
 
@@ -41,7 +43,9 @@ public class ChefDbDao implements ChefDao{
                 throw new NoChefInCityException("No chef found");
             }
 
-        } catch (SQLException e) {
+        } catch ( FailedDatabaseConnectionException e ){
+            throw e;
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoChefInCityException e){
             throw e;
@@ -80,6 +84,8 @@ public class ChefDbDao implements ChefDao{
             e.getMessage();
             e.getCause();
             throw new SQLException();
+        } catch (FailedDatabaseConnectionException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("Ho trovato e sto restituendo: " + cityChefs.size() + " chefs nella tua città: " + cityChefs);
         return cityChefs;
@@ -144,6 +150,8 @@ public class ChefDbDao implements ChefDao{
             e.getMessage();
             e.getCause();
             throw new SQLException();
+        } catch (FailedDatabaseConnectionException e) {
+            throw new RuntimeException(e);
         }
         return chef;
     }

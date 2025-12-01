@@ -1,5 +1,8 @@
 package com.example.bitebook.model.dao.persistence;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedRemoveException;
+import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.dao.AllergenDao;
@@ -50,7 +53,8 @@ public class AllergenDbDao implements AllergenDao{
         return allergies;
     }
 
-    public void removeClientAllergy(int clientId, int allergenId) throws SQLException {
+    // Ok
+    public void removeClientAllergy(int clientId, int allergenId) throws FailedRemoveException {
         Connection conn;
         try{
             conn = Connector.getInstance().getConnection();
@@ -58,12 +62,10 @@ public class AllergenDbDao implements AllergenDao{
             cstmt.setInt(1, clientId);
             cstmt.setInt(2, allergenId);
             cstmt.execute();
-            cstmt.close();
-        } catch (Exception e) {
-            e.getMessage();
-            e.printStackTrace();
-            e.getCause();
-            throw new SQLException();
+        } catch (SQLException e){
+            throw new FailedRemoveException(new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedRemoveException(e);
         }
     }
 

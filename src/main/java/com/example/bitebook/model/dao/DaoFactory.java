@@ -29,7 +29,8 @@ public abstract class DaoFactory{
         try {
             // Proviamo a ottenere la connessione.
             // Se il DB è spento o irraggiungibile, questo metodo lancerà l'eccezione
-            Connection conn = Connector.getInstance().getConnection();
+            // Connection conn =
+            Connector.getInstance().getConnection();
 
             // Se siamo qui, la connessione c'è!
             // (Opzionale: puoi controllare if (conn != null && !conn.isClosed()))

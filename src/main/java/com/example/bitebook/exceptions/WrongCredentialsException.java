@@ -2,10 +2,10 @@ package com.example.bitebook.exceptions;
 
 import java.io.Serial;
 
-public class WrongCredentialsException extends RuntimeException {
+public class WrongCredentialsException extends Exception {
 
     @Serial
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 7L;
 
     public WrongCredentialsException(String message) {
         super(message);
