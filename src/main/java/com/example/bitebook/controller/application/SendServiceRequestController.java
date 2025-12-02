@@ -5,12 +5,13 @@ import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.dao.MenuDao;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SendServiceRequestController{
 
@@ -28,36 +29,39 @@ public class SendServiceRequestController{
     }
 
 
-
-
-    public int calculateTotalPrice(ReservationDetailsBean reservationDetailsBean, MenuBean menuBean){
-        int singleMenuSurcharge = -1;
-        switch (reservationDetailsBean.getSelectedMenuLevel()){
-            case BASE: singleMenuSurcharge = 0; break;
-            case PREMIUM: singleMenuSurcharge = menuBean.getPremiumLevelSurcharge(); break;
-            case LUXE: singleMenuSurcharge = menuBean.getLuxeLevelSurcharge(); break;
-            default: break;
+    // Okk -> Va bene
+    public int calculateTotalPrice(ReservationDetailsBean reservationDetails, MenuBean menuBean) {
+        if (reservationDetails == null || menuBean == null) {
+            throw new IllegalArgumentException("Error: Insufficient data to calculate total price");
         }
-        if(singleMenuSurcharge == -1){
-            return -1;
+        int singleMenuSurcharge;
+        switch (reservationDetails.getSelectedMenuLevel()) {
+            case BASE -> singleMenuSurcharge = 0;
+            case PREMIUM -> singleMenuSurcharge = menuBean.getPremiumLevelSurcharge();
+            case LUXE -> singleMenuSurcharge = menuBean.getLuxeLevelSurcharge();
+            default -> throw new IllegalArgumentException("Error: Level not supported " + reservationDetails.getSelectedMenuLevel());
         }
-        return reservationDetailsBean.getParticipantNumber() * (menuBean.getPricePerPerson() +  singleMenuSurcharge );
+        return reservationDetails.getParticipantNumber() * (menuBean.getPricePerPerson() + singleMenuSurcharge);
     }
 
 
-    // allergiesIncompatibility
-    // da rinominare
 
-    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean){
-        List<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
-        if (clientAllergies == null || clientAllergies.isEmpty()) {
+    // Okk -> Va bene
+    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) {
+        if (menuAllergensBean == null || menuAllergensBean.isEmpty()) {
             return false;
         }
-        for (Allergen clientAllergen : clientAllergies) {
-            for (AllergenBean menuAllergen : menuAllergensBean) {
-                if (clientAllergen.getName().equals(menuAllergen.getName())) {
-                    return true;
-                }
+        Client client = LoggedUser.getInstance().getClient();
+        if (client == null || client.getAllergies() == null || client.getAllergies().isEmpty()) {
+            return false;
+        }
+        Set<Integer> clientAllergyIds = new HashSet<>();
+        for (Allergen allergen : client.getAllergies()) {
+            clientAllergyIds.add(allergen.getId());
+        }
+        for (AllergenBean menuAllergen : menuAllergensBean){
+            if (clientAllergyIds.contains(menuAllergen.getId())) {
+                return true;
             }
         }
         return false;
@@ -88,7 +92,6 @@ public class SendServiceRequestController{
         ServiceRequest serviceRequest = ConvertServiceRequestBean(serviceRequestBean);
         ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
         serviceRequestDao.saveServiceRequest(serviceRequest);
-
     }
 
 
