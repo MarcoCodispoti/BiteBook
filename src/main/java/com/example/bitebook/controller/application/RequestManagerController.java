@@ -31,6 +31,8 @@ public class RequestManagerController {
         return resultBeans;
     }
 
+
+
     public List<ServiceRequestBean> getApprovedServiceRequests() throws Exception {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
         try {
@@ -50,6 +52,8 @@ public class RequestManagerController {
         }
         return resultBeans;
     }
+
+
 
     public List<ServiceRequestBean> getChefRequests() throws Exception {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
@@ -71,12 +75,16 @@ public class RequestManagerController {
         return resultBeans;
     }
 
+
+
     public void manageRequest(ServiceRequestBean serviceRequestBean) throws Exception {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
         DaoFactory.getServiceRequestDao().manageRequest(serviceRequest);
     }
+
+
 
 
     private ServiceRequestBean convertToBean(ServiceRequest entity) {
@@ -113,7 +121,6 @@ public class RequestManagerController {
             rdb.setAddress(entity.getReservationDetails().getAddress());
             bean.setReservationDetails(rdb);
         }
-
         return bean;
     }
 
