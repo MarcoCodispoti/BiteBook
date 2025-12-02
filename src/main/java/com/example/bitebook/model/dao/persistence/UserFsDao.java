@@ -37,7 +37,7 @@ public class UserFsDao implements UserDao{
                     String filePassword = fields[4].trim();
                     if (fileEmail.equals(email) && filePassword.equals(password)) {
                         try {
-                            return Role.fromString(fields[5].trim());
+                            return Role.valueOf(fields[5].trim());
                         } catch (IllegalArgumentException e) {
                             throw new FailedSearchException("Ruolo non valido nel CSV per utente: " + email);
                         }
@@ -138,7 +138,7 @@ public class UserFsDao implements UserDao{
                     int fileChefId = Integer.parseInt(fields[0].trim());
                     if (fileChefId == chefId) {
                         try {
-                            specs.add(SpecializationType.fromString(fields[1].trim()));
+                            specs.add(SpecializationType.valueOf(fields[1].trim()));
                         } catch (IllegalArgumentException ignored) {
                             // Ignore
                         }

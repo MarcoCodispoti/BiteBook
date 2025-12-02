@@ -33,7 +33,7 @@ public class UserDbDao implements UserDao {
             try (ResultSet rs = cstmt.getResultSet()) {
                 if (rs.next()) {
                     try {
-                        return Role.fromString(rs.getString("UserRole"));
+                        return Role.valueOf(rs.getString("UserRole"));
                     } catch (IllegalArgumentException e) {
                         throw new FailedSearchException("Ruolo non riconosciuto nel database per l'utente: " + email, e);
                     }
@@ -83,7 +83,7 @@ public class UserDbDao implements UserDao {
                 try (ResultSet rs2 = cstmt2.getResultSet()) {
                     while (rs2.next()) {
                         try {
-                            SpecializationType spec = SpecializationType.fromString(rs2.getString("Specialization"));
+                            SpecializationType spec = SpecializationType.valueOf(rs2.getString("Specialization"));
                             specializations.add(spec);
                         } catch (IllegalArgumentException e) {
                             // Ignore
