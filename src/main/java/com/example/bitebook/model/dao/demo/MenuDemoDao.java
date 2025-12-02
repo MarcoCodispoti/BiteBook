@@ -15,11 +15,9 @@ import java.util.Map;
 
 public class MenuDemoDao implements MenuDao{
 
-    // Manteniamo solo le mappe dei MENU
     private static Map<Integer, Menu> menusMap = new HashMap<>();
     private static Map<Integer, List<Menu>> chefMenusMap = new HashMap<>();
 
-    // RIMOSSO: private static Map<Integer, List<Dish>> menuCoursesMap...
 
     static {
         System.out.println("[MenuDemoDao] Pre-caricamento Menu finti...");
@@ -32,9 +30,6 @@ public class MenuDemoDao implements MenuDao{
         m1.setPricePerPerson(50);
         m1.setPremiumLevelSurcharge(10);
         m1.setLuxeLevelSurcharge(20);
-
-        // Piccolo trucco: Poiché i piatti sono gestiti altrove, qui hardcodiamo il numero
-        // per coerenza, oppure lo lasciamo a 0 (verrà riempito se serve).
         m1.setNumberOfCourses(2);
 
         menusMap.put(210, m1);
@@ -43,7 +38,6 @@ public class MenuDemoDao implements MenuDao{
         chef1Menus.add(m1);
         chefMenusMap.put(1, chef1Menus);
 
-        // --- MENU 2 (ID 300) ---
         Menu m2 = new Menu();
         m2.setId(300);
         m2.setName("Menu Napoli Classico");
@@ -59,7 +53,6 @@ public class MenuDemoDao implements MenuDao{
         chef2Menus.add(m2);
         chefMenusMap.put(2, chef2Menus);
 
-        // RIMOSSO: Tutta la creazione dei Dish
     }
 
     @Override
@@ -72,37 +65,6 @@ public class MenuDemoDao implements MenuDao{
         }
     }
 
-
-    // ---------------------------------------------------------
-    // METODO 2: getMenuCourses
-    // ---------------------------------------------------------
-
-    // Spostato in DishDao
-//    @Override
-//    public List<Dish> getMenuCourses(int menuId) throws FailedSearchException {
-//        // Nel DB facevi una JOIN complessa. Qui è un lookup immediato per Key.
-//
-//        List<Dish> courses = menuCoursesMap.get(menuId);
-//
-//        if (courses != null) {
-//            System.out.println("[Demo] Trovate " + courses.size() + " portate per menu " + menuId);
-//
-//            // Stampiamo per coerenza col tuo vecchio codice
-//            for(Dish d : courses) {
-//                System.out.println("Ho trovato il piatto:" + d.getName() + " con Id: " + d.getId());
-//            }
-//
-//            return courses;
-//        } else {
-//            System.out.println("[Demo] Nessuna portata trovata per menu " + menuId);
-//            return null; // O new ArrayList<>()
-//        }
-//    }
-
-
-    // ---------------------------------------------------------
-    // METODO 3: getMenuLevelsSurcharge
-    // ---------------------------------------------------------
     @Override
     public Menu getMenuLevelsSurcharge(int menuId) throws SQLException {
         // Recuperiamo l'oggetto Menu intero

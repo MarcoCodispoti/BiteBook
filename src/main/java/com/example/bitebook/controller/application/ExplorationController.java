@@ -13,12 +13,13 @@ import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.dao.DishDao;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExplorationController{
 
@@ -86,30 +87,21 @@ public class ExplorationController{
 
 
 
-
-    public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans){
-        List<AllergenBean> menuAllergenBeans = new ArrayList<>();
-
-        for (DishBean dish : courseBeans) {
-            List<Allergen> dishAllergens = dish.getAllergens();
-            if (dishAllergens != null) {
-                for (Allergen newAllergen : dishAllergens) {
-                    boolean alreadyExists = false;
-                    for (AllergenBean existingBean : menuAllergenBeans) {
-                        if (existingBean.getId() == newAllergen.getId()) {
-                            alreadyExists = true;
-                            break;
+    public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans) {
+        Map<Integer, AllergenBean> uniqueAllergensMap = new HashMap<>();
+        if (courseBeans != null) {
+            for (DishBean dish : courseBeans) {
+                List<Allergen> dishAllergens = dish.getAllergens();
+                if (dishAllergens != null) {
+                    for (Allergen entity : dishAllergens) {
+                        if (!uniqueAllergensMap.containsKey(entity.getId())) {
+                            uniqueAllergensMap.put(entity.getId(), new AllergenBean(entity));
                         }
-                    }
-                    if (!alreadyExists) {
-                        AllergenBean allergenBean = new AllergenBean(newAllergen);
-                        menuAllergenBeans.add(allergenBean);
                     }
                 }
             }
         }
-        return menuAllergenBeans;
+        return new ArrayList<>(uniqueAllergensMap.values());
     }
-
 
 }
