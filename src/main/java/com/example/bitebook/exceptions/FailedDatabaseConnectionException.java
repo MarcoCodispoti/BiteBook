@@ -11,14 +11,12 @@ public class FailedDatabaseConnectionException extends Exception {
         super(message);
     }
 
-    // Costruttore completo
     public FailedDatabaseConnectionException(String message, Throwable cause) {
-        super(message, cause); // Passa tutto al padre, molto più pulito di initCause
+        super(message, cause);
     }
 
-    // Costruttore rapido (messaggio default)
     public FailedDatabaseConnectionException(Throwable cause) {
-        super("Impossibile connettersi al database", cause);
+        super("Unable to connect to the database", cause);
     }
 
 }

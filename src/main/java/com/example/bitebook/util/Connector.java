@@ -31,7 +31,7 @@ public class Connector{
 
             conn = DriverManager.getConnection(connectionURL,username,password);
         } catch(Exception e) {
-            throw new FailedDatabaseConnectionException("Error while connecting to database", e);
+            throw new FailedDatabaseConnectionException(e);
         }
     }
 

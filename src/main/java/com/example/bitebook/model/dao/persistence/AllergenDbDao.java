@@ -54,7 +54,7 @@ public class AllergenDbDao implements AllergenDao{
         } catch (SQLException e){
             throw new FailedRemoveException(new QueryException(e));
         } catch (FailedDatabaseConnectionException e){
-            throw new FailedRemoveException(e);
+            throw new FailedRemoveException("Error occurred while trying to remove a client allergy",e);
         }
     }
 
