@@ -1,6 +1,5 @@
 package com.example.bitebook.controller.application;
 
-import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.Allergen;
@@ -11,10 +10,10 @@ import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
+import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.DishDao;
-import com.example.bitebook.model.dao.MenuDao;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
 
@@ -73,11 +72,11 @@ public class ExplorationController{
     // Okk -> Va bene
     public List<DishBean> getCourses(MenuBean menuBean) throws FailedSearchException {
         List<DishBean> coursesBean = new ArrayList<>();
-        List<Dish> courses = DaoFactory.getMenuDao().getMenuCourses(menuBean.getId());
+        List<Dish> courses = DaoFactory.getDishDao().getMenuCourses(menuBean.getId());
         if (courses != null) {
-            DishDao dishDao = DaoFactory.getDishDao();
+            AllergenDao allergenDao = DaoFactory.getAllergenDao();
             for (Dish dish : courses) {
-                List<Allergen> dishAllergens = dishDao.getDishAllergens(dish.getId());
+                List<Allergen> dishAllergens = allergenDao.getDishAllergens(dish.getId());
                 dish.setAllergens(dishAllergens);
                 coursesBean.add(new DishBean(dish));
             }

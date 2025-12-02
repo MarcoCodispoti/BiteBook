@@ -47,33 +47,6 @@ public class MenuDbDao implements MenuDao {
 
 
 
-    // Okk -> Va bene
-    public List<Dish> getMenuCourses(int menuId) throws FailedSearchException {
-        List<Dish> courses = new ArrayList<>();
-        try (Connection conn = Connector.getInstance().getConnection();
-             CallableStatement cstmt = conn.prepareCall("{call getMenuCourses(?)}")) {
-            cstmt.setInt(1, menuId);
-            cstmt.execute();
-            try (ResultSet rs = cstmt.getResultSet()) {
-                while (rs.next()) {
-                    Dish dish = new Dish();
-                    dish.setId(rs.getInt("IdDish"));
-                    dish.setName(rs.getString("Name"));
-                    dish.setCourseType(CourseType.valueOf(rs.getString("Type")));
-                    dish.setDescription(rs.getString("Description"));
-                    courses.add(dish);
-                }
-            }
-
-        } catch (SQLException e){
-            throw new FailedSearchException("Errore recupero portate per il menu " + menuId, new QueryException(e));
-        } catch (FailedDatabaseConnectionException e) {
-            throw new FailedSearchException(e);
-        }
-
-        return courses;
-    }
-
 
 
     public Menu getMenuLevelsSurcharge(int menuId) throws SQLException{

@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// pulita
-
 public class AllergenDbDao implements AllergenDao{
 
     @Override
@@ -67,16 +65,7 @@ public class AllergenDbDao implements AllergenDao{
 
         try(Connection conn = Connector.getInstance().getConnection();
             CallableStatement cstmt = conn.prepareCall("{call getAllergens()}")){
-            cstmt.execute();
-
-            try(ResultSet rs = cstmt.getResultSet()) {
-                while (rs.next()) {
-                    Allergen allergen = new Allergen();
-                    allergen.setId(rs.getInt("IdAllergen"));
-                    allergen.setName(rs.getString("Name"));
-                    allergens.add(allergen);
-                }
-            }
+            getResultAllergens(allergens, cstmt);
         } catch(SQLException e) {
             throw new FailedSearchException(new QueryException(e));
         } catch (FailedDatabaseConnectionException e){
@@ -101,4 +90,38 @@ public class AllergenDbDao implements AllergenDao{
             throw new FailedInsertException(e);
         }
     }
+
+
+
+    // Okk -> Preso da dishDao
+    public List<Allergen> getDishAllergens(int dishId) throws FailedSearchException {
+        List<Allergen> allergens = new ArrayList<>();
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getDishAllergens(?)}")) {
+            cstmt.setInt(1, dishId);
+            getResultAllergens(allergens, cstmt);
+        } catch (SQLException e){
+            throw new FailedSearchException("SQL query error while trying to acquire dish allergens", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException(e);
+        }
+
+        return allergens;
+    }
+
+
+    // metodo helper
+    private void getResultAllergens(List<Allergen> allergens, CallableStatement cstmt) throws SQLException {
+        cstmt.execute();
+        try (ResultSet rs = cstmt.getResultSet()) {
+            while (rs.next()) {
+                Allergen allergen = new Allergen();
+                allergen.setId(rs.getInt("IdAllergen"));
+                allergen.setName(rs.getString("Name"));
+                allergens.add(allergen);
+            }
+        }
+    }
+
+
 }
