@@ -64,20 +64,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
                     chef.setName(rs.getString("ChefName"));
                     chef.setSurname(rs.getString("ChefSurname"));
                     request.setChef(chef);
-                    request.setClient(client);
-                    Menu menu = new Menu();
-                    menu.setName(rs.getString("MenuName"));
-                    request.setMenu(menu);
-                    ReservationDetails details = new ReservationDetails();
-                    details.setAddress(rs.getString("Address"));
-                    details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
-                    details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
-                    java.sql.Date sqlDate = rs.getDate("Date");
-                    if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
-                    java.sql.Time sqlTime = rs.getTime("Time");
-                    if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
-                    request.setReservationDetails(details);
-                    serviceRequests.add(request);
+                    setRequestDetails(serviceRequests, rs, request, client);
                 }
             }
         } catch (SQLException e) {
@@ -111,20 +98,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
                     Client client = new Client();
                     client.setName(rs.getString("ClientName"));
                     client.setSurname(rs.getString("ClientSurname"));
-                    request.setClient(client);
-                    Menu menu = new Menu();
-                    menu.setName(rs.getString("MenuName"));
-                    request.setMenu(menu);
-                    ReservationDetails details = new ReservationDetails();
-                    details.setAddress(rs.getString("Address"));
-                    details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
-                    details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
-                    java.sql.Date sqlDate = rs.getDate("Date");
-                    if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
-                    java.sql.Time sqlTime = rs.getTime("Time");
-                    if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
-                    request.setReservationDetails(details);
-                    serviceRequests.add(request);
+                    setRequestDetails(serviceRequests, rs, request, client);
                 }
             }
         } catch (SQLException e) {
@@ -134,7 +108,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
         }
         return serviceRequests;
     }
-
 
 
 
@@ -161,6 +134,24 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
+
+    // helper
+    private void setRequestDetails(List<ServiceRequest> serviceRequests, ResultSet rs, ServiceRequest request, Client client) throws SQLException {
+        request.setClient(client);
+        Menu menu = new Menu();
+        menu.setName(rs.getString("MenuName"));
+        request.setMenu(menu);
+        ReservationDetails details = new ReservationDetails();
+        details.setAddress(rs.getString("Address"));
+        details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
+        details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
+        Date sqlDate = rs.getDate("Date");
+        if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
+        Time sqlTime = rs.getTime("Time");
+        if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
+        request.setReservationDetails(details);
+        serviceRequests.add(request);
+    }
 
 
 

@@ -12,8 +12,9 @@ import com.example.bitebook.model.singleton.LoggedUser;
 import java.util.List;
 
 public class SendServiceRequestController{
-    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
 
+
+    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
         try{
             MenuDao menuDao = DaoFactory.getMenuDao();
             Menu menu = menuDao.getMenuLevelsSurcharge(menuBean.getId());
