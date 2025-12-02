@@ -2,6 +2,7 @@ package com.example.bitebook.model.dao.persistence;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.dao.ServiceRequestDao;
@@ -10,8 +11,6 @@ import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.util.Connector;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,34 +138,30 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
 
 
 
-
-
-
-
-
+    // Okk -> Va bene
     @Override
-    public void manageRequest(ServiceRequest serviceRequest) throws Exception {
-        Connection conn = null;
-
-        try {
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt;
-            if (serviceRequest.getStatus().equals(RequestStatus.APPROVED)){
-                cstmt = conn.prepareCall("{call approveRequest(?)}");
-            } else if(serviceRequest.getStatus().equals(RequestStatus.REJECTED)){
-                cstmt = conn.prepareCall("{call rejectRequest(?)}");
-            } else{
-                throw new Exception("Invalid request status");
-            }
+    public void manageRequest(ServiceRequest serviceRequest) throws FailedUpdateException {
+        String sql;
+        if (serviceRequest.getStatus() == RequestStatus.APPROVED) {
+            sql = "{call approveRequest(?)}";
+        } else if (serviceRequest.getStatus() == RequestStatus.REJECTED) {
+            sql = "{call rejectRequest(?)}";
+        } else {
+            throw new FailedUpdateException("Request status not valid " + serviceRequest.getStatus(), null);
+        }
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall(sql)) {
             cstmt.setInt(1, serviceRequest.getId());
             cstmt.execute();
-
-            cstmt.close();
-        } catch(SQLException e){
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-            throw new SQLException(e);
+        } catch (SQLException e){
+            throw new FailedUpdateException("Request Error", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedUpdateException(e);
         }
     }
+
+
+
+
+
 }

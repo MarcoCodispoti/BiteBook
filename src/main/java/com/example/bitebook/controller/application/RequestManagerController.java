@@ -1,10 +1,10 @@
 package com.example.bitebook.controller.application;
 
 import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
@@ -28,8 +28,6 @@ public class RequestManagerController {
 
 
 
-
-
     // Okk -> Va bene
     public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
@@ -44,7 +42,6 @@ public class RequestManagerController {
         }
         return resultBeans;
     }
-
 
 
 
@@ -63,10 +60,8 @@ public class RequestManagerController {
 
 
 
-
-
-
-    public void manageRequest(ServiceRequestBean serviceRequestBean) throws Exception {
+    // Okk -> Va bene
+    public void manageRequest(ServiceRequestBean serviceRequestBean) throws FailedUpdateException {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
@@ -75,13 +70,12 @@ public class RequestManagerController {
 
 
 
-
+    // Okk -> Va bene
     private ServiceRequestBean convertToBean(ServiceRequest entity) {
         ServiceRequestBean bean = new ServiceRequestBean();
         bean.setId(entity.getId());
         bean.setStatus(entity.getStatus());
         bean.setTotalPrice(entity.getTotalPrice());
-
 
         if (entity.getChef() != null) {
             ChefBean cb = new ChefBean();
@@ -100,7 +94,6 @@ public class RequestManagerController {
             bean.setMenuBean(mb);
         }
 
-
         if (entity.getReservationDetails() != null) {
             ReservationDetailsBean rdb = new ReservationDetailsBean();
             rdb.setSelectedMenuLevel(entity.getReservationDetails().getSelectedMenuLevel());
@@ -112,8 +105,6 @@ public class RequestManagerController {
         }
         return bean;
     }
-
-
 
 
 }

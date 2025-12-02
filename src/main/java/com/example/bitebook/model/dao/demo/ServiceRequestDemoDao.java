@@ -1,6 +1,7 @@
 package com.example.bitebook.model.dao.demo;
 
 import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.ServiceRequest;
@@ -88,14 +89,15 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
     @Override
-    public void manageRequest(ServiceRequest serviceRequest) throws Exception {
+    public void manageRequest(ServiceRequest serviceRequest) throws FailedUpdateException{
         // Qui replichiamo la logica del tuo DbDao che distingue tra APPROVE e REJECT
 
         // 1. Cerchiamo la richiesta salvata nel "DB" usando l'ID
         ServiceRequest storedRequest = fakeTable.get(serviceRequest.getId());
 
         if (storedRequest == null) {
-            throw new Exception("Request not found in Demo DB");
+            // throw new Exception("Request not found in Demo DB");
+            // to handle later
         }
 
         // 2. Controlliamo cosa vuole fare il controller (APPROVE o REJECT)
@@ -122,7 +124,8 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
             }
 
         } else {
-            throw new Exception("[Modalità Demo] Invalid request status passed");
+            // throw new Exception("[Modalità Demo] Invalid request status passed");
+            // to handle later
         }
     }
 
