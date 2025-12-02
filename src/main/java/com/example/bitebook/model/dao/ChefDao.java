@@ -14,6 +14,6 @@ public interface ChefDao{
 
     List<Chef> getChefsInCity(String cityName) throws FailedSearchException;
 
-    Chef getChefFromMenu(int menuId) throws Exception;
+    Chef getChefFromMenu(int menuId) throws FailedSearchException;
 
 }

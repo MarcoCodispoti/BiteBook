@@ -34,14 +34,6 @@ public abstract class DaoFactory{
     }
 
 
-//    public static AllergenDao getAllergenDao(){
-//        if(AppConfig.getInstance().isDemoMode()){
-//            return new AllergenDemoDao();
-//        } else{
-//            return new AllergenDbDao();
-//        }
-//    };
-
     public static AllergenDao getAllergenDao() {
         if (AppConfig.getInstance().isDemoMode()) {
             return new AllergenDemoDao();
@@ -52,7 +44,6 @@ public abstract class DaoFactory{
 
         } catch (FailedDatabaseConnectionException e){
             // Dummy fallback on demoDao -> Allow only login without app crash
-            System.out.println("[Factory] DB AllergenDao irraggiungibile. Fallback -> Demo/Memory");
             return new AllergenDemoDao();
         }
     }

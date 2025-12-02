@@ -77,7 +77,7 @@ public class ChefDbDao implements ChefDao{
 
 
 
-    // Okk
+    // Okk -> Va bene
     public List<SpecializationType> convertSpecializationString(String specializationString) {
         List<SpecializationType> result = new ArrayList<>();
         if (specializationString == null || specializationString.trim().isEmpty()) {
@@ -99,41 +99,29 @@ public class ChefDbDao implements ChefDao{
 
 
 
-
-    public Chef getChefFromMenu(int menuId) throws SQLException{
-        Chef chef = new Chef();
-        Connection conn = null;
-
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getChefFromMenu(?)}");
-            cstmt.setInt(1,menuId);
-
+    // Okk -> Va bene
+    @Override
+    public Chef getChefFromMenu(int menuId) throws FailedSearchException {
+        Chef chef = null;
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getChefFromMenu(?)}")) {
+            cstmt.setInt(1, menuId);
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
-
-            if(rs.next()){
-                chef.setId(rs.getInt("ChefId"));
-                chef.setName(rs.getString("ChefName"));
-                chef.setSurname(rs.getString("ChefSurname"));
-                System.out.println("ChefID: " + chef.getId() + " " + chef.getName() + " " + chef.getSurname());
-            } else{
-                throw new SQLException();
+            try (ResultSet rs = cstmt.getResultSet()) {
+                if (rs.next()) {
+                    chef = new Chef();
+                    chef.setId(rs.getInt("ChefId"));
+                    chef.setName(rs.getString("ChefName"));
+                    chef.setSurname(rs.getString("ChefSurname"));
+                }
             }
-            cstmt.close();
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
-            throw new SQLException();
-        } catch (FailedDatabaseConnectionException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e){
+            throw new FailedSearchException("Error obtaining chef from Menu ID: " + menuId, new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedSearchException(e);
         }
         return chef;
     }
-
-
 
 
 }

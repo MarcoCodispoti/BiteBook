@@ -1,9 +1,6 @@
 package com.example.bitebook.model.dao.persistence;
 
-import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
-import com.example.bitebook.exceptions.FailedSearchException;
-import com.example.bitebook.exceptions.FailedUpdateException;
-import com.example.bitebook.exceptions.QueryException;
+import com.example.bitebook.exceptions.*;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.MenuLevel;
@@ -16,34 +13,28 @@ import java.util.List;
 
 public class ServiceRequestDbDao implements ServiceRequestDao {
 
-    public void saveServiceRequest(ServiceRequest serviceRequest) throws SQLException{
-        System.out.println("[Modalità persistenza] richiesta di servizio salvata");
-        Connection conn = null;
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call saveServiceRequest(?,?,?,?,?,?,?,?,?,?)}");
+    // Okk -> Va bene
+    @Override
+    public void saveServiceRequest(ServiceRequest serviceRequest) throws FailedInsertException {
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call saveServiceRequest(?,?,?,?,?,?,?,?,?,?)}")){
             cstmt.setInt(1, serviceRequest.getClient().getId());
             cstmt.setInt(2, serviceRequest.getChef().getId());
             cstmt.setInt(3, serviceRequest.getMenu().getId());
             cstmt.setString(4, serviceRequest.getReservationDetails().getSelectedMenuLevel().toString());
             cstmt.setInt(5, serviceRequest.getTotalPrice());
             cstmt.setString(6, serviceRequest.getStatus().toString());
-            cstmt.setDate(7, Date.valueOf(serviceRequest.getReservationDetails().getDate()));
-            cstmt.setTime(8, Time.valueOf(serviceRequest.getReservationDetails().getTime()));
+            cstmt.setDate(7, java.sql.Date.valueOf(serviceRequest.getReservationDetails().getDate()));
+            cstmt.setTime(8, java.sql.Time.valueOf(serviceRequest.getReservationDetails().getTime()));
             cstmt.setString(9, serviceRequest.getReservationDetails().getAddress());
             cstmt.setInt(10, serviceRequest.getReservationDetails().getParticipantNumber());
-
             cstmt.execute();
-            cstmt.close();
-        } catch (SQLException | FailedDatabaseConnectionException e){
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-            throw new SQLException(e);
+        } catch (SQLException e){
+            throw new FailedInsertException("Error while saving the request", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedInsertException(e);
         }
     }
-
-
 
 
     // Okk -> Va bene
@@ -76,10 +67,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-
-
-
-
     // Okk -> Va bene
     @Override
     public List<ServiceRequest> getChefServiceRequests(Chef chef) throws FailedSearchException {
@@ -110,7 +97,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-
     // Okk -> Va bene
     @Override
     public void manageRequest(ServiceRequest serviceRequest) throws FailedUpdateException {
@@ -134,7 +120,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-
     // helper
     private void setRequestDetails(List<ServiceRequest> serviceRequests, ResultSet rs, ServiceRequest request, Client client) throws SQLException {
         request.setClient(client);
@@ -152,7 +137,5 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
         request.setReservationDetails(details);
         serviceRequests.add(request);
     }
-
-
 
 }

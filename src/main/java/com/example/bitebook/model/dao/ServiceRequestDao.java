@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao;
 
+import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.Chef;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface ServiceRequestDao{
 
-    void saveServiceRequest(ServiceRequest serviceRequest) throws Exception;
+    void saveServiceRequest(ServiceRequest serviceRequest) throws FailedInsertException;
 
     List<ServiceRequest> getClientServiceRequests(Client client) throws FailedSearchException;
 

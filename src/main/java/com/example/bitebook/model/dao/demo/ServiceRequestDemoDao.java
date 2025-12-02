@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.Chef;
@@ -25,7 +26,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
 
 
     @Override
-    public void saveServiceRequest(ServiceRequest serviceRequest) {
+    public void saveServiceRequest(ServiceRequest serviceRequest) throws FailedInsertException {
         System.out.println("[Modalità Demo] Salvataggio richiesta in Map...");
 
         // A. Simula l'assegnazione dell'ID (come il DB)

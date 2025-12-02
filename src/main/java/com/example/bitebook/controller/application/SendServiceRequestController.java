@@ -1,11 +1,10 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
-import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.singleton.LoggedUser;
 
@@ -69,17 +68,23 @@ public class SendServiceRequestController{
 
 
 
-    public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws Exception{
-        ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
-        ChefDao chefDao = DaoFactory.getChefDao();
-        Chef chef = chefDao.getChefFromMenu(menuBean.getId());
-        ChefBean chefBean =  new ChefBean();
-        chefBean.setId(chef.getId());
-        serviceRequestBean.setChefBean(chefBean);
-        ClientBean clientBean = new ClientBean(LoggedUser.getInstance().getClient().getName(), LoggedUser.getInstance().getClient().getSurname());
-        clientBean.setId(LoggedUser.getInstance().getClient().getId());
-        serviceRequestBean.setClientBean(clientBean);
 
+    // Okk -> Va bene
+    public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
+        ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
+        Chef chef = DaoFactory.getChefDao().getChefFromMenu(menuBean.getId());
+        if(chef == null) {
+            throw new FailedSearchException("Unable to find the chef of the menu");
+        }
+        ChefBean chefBean = new ChefBean();
+        chefBean.setId(chef.getId());
+        chefBean.setName(chef.getName());
+        chefBean.setSurname(chef.getSurname());
+        serviceRequestBean.setChefBean(chefBean);
+        Client loggedClient = LoggedUser.getInstance().getClient();
+        ClientBean clientBean = new ClientBean(loggedClient.getName(), loggedClient.getSurname());
+        clientBean.setId(loggedClient.getId());
+        serviceRequestBean.setClientBean(clientBean);
         serviceRequestBean.setMenuBean(menuBean);
         serviceRequestBean.setReservationDetails(reservationDetailsBean);
         serviceRequestBean.setStatus(RequestStatus.PENDING);
@@ -88,35 +93,47 @@ public class SendServiceRequestController{
 
 
 
-    public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws Exception{
-        ServiceRequest serviceRequest = ConvertServiceRequestBean(serviceRequestBean);
-        ServiceRequestDao serviceRequestDao = DaoFactory.getServiceRequestDao();
-        serviceRequestDao.saveServiceRequest(serviceRequest);
+    // Okk -> Va bene
+    public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws FailedInsertException {
+        ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
+        DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
     }
 
 
 
-
-    private ServiceRequest ConvertServiceRequestBean(ServiceRequestBean serviceRequestBean){
+    private ServiceRequest convertServiceRequestBean(ServiceRequestBean serviceRequestBean) {
+        if (serviceRequestBean == null) {
+            return null;
+        }
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
-        Client client = new  Client();
-        client.setId(serviceRequestBean.getClientBean().getId());
-        client.setName(serviceRequestBean.getClientBean().getName());
-        client.setSurname(serviceRequestBean.getClientBean().getSurname());
-
-        serviceRequest.setClient(client);
+        serviceRequest.setClient(convertClientBean(serviceRequestBean.getClientBean()));
         serviceRequest.setChef(convertChefBean(serviceRequestBean.getChefBean()));
         serviceRequest.setMenu(convertMenuBean(serviceRequestBean.getMenuBean()));
         serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetails()));
         serviceRequest.setStatus(serviceRequestBean.getStatus());
-        serviceRequest.setTotalPrice(calculateTotalPrice(serviceRequestBean.getReservationDetails(), serviceRequestBean.getMenuBean()));
+        if (serviceRequestBean.getReservationDetails() != null && serviceRequestBean.getMenuBean() != null) {
+            serviceRequest.setTotalPrice(calculateTotalPrice(
+                    serviceRequestBean.getReservationDetails(),
+                    serviceRequestBean.getMenuBean()
+            ));
+        }
         return serviceRequest;
     }
 
 
+    private Client convertClientBean(ClientBean clientBean) {
+        if (clientBean == null) return null;
+        Client client = new Client();
+        client.setId(clientBean.getId());
+        client.setName(clientBean.getName());
+        client.setSurname(clientBean.getSurname());
+        return client;
+    }
 
-    private Chef convertChefBean(ChefBean chefBean){
+
+    private Chef convertChefBean(ChefBean chefBean) {
+        if (chefBean == null) return null;
         Chef chef = new Chef();
         chef.setId(chefBean.getId());
         chef.setName(chefBean.getName());
@@ -125,27 +142,28 @@ public class SendServiceRequestController{
     }
 
 
-
-    private Menu convertMenuBean(MenuBean menuBean){
+    private Menu convertMenuBean(MenuBean menuBean) {
+        if (menuBean == null) return null;
         Menu menu = new Menu();
         menu.setId(menuBean.getId());
         menu.setName(menuBean.getName());
         menu.setNumberOfCourses(menuBean.getNumberOfCourses());
         menu.setDietType(menuBean.getDietType());
+        menu.setPremiumLevelSurcharge(menuBean.getPremiumLevelSurcharge());
+        menu.setLuxeLevelSurcharge(menuBean.getLuxeLevelSurcharge());
         return menu;
     }
 
 
-
-    private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){
-        ReservationDetails reservationDetails = new ReservationDetails();
-        reservationDetails.setDate(reservationDetailsBean.getDate());
-        reservationDetails.setTime(reservationDetailsBean.getTime());
-        reservationDetails.setParticipantNumber(reservationDetailsBean.getParticipantNumber());
-        reservationDetails.setAddress(reservationDetailsBean.getAddress());
-        reservationDetails.setSelectedMenuLevel(reservationDetailsBean.getSelectedMenuLevel());
-        return reservationDetails;
+    private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean bean) {
+        if (bean == null) return null;
+        ReservationDetails entity = new ReservationDetails();
+        entity.setDate(bean.getDate());
+        entity.setTime(bean.getTime());
+        entity.setParticipantNumber(bean.getParticipantNumber());
+        entity.setAddress(bean.getAddress());
+        entity.setSelectedMenuLevel(bean.getSelectedMenuLevel());
+        return entity;
     }
-
-
+    
 }

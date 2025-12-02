@@ -132,7 +132,7 @@ public class ChefDemoDao implements ChefDao{
     // METODO 3: getChefFromMenu
     // ---------------------------------------------------------
     @Override
-    public Chef getChefFromMenu(int menuId) throws Exception {
+    public Chef getChefFromMenu(int menuId) throws FailedSearchException {
         // 1. Cerchiamo l'ID dello chef associato a quel menu
         Integer chefId = menuToChefMap.get(menuId);
 
@@ -148,10 +148,8 @@ public class ChefDemoDao implements ChefDao{
 
         // Se non troviamo l'associazione o lo chef, simuliamo l'errore SQL o restituiamo null
         // Nel tuo DbDao lanciavi SQLException se rs.next() era false.
-        throw new Exception("Chef not found for menu ID: " + menuId);
+        // throw new Exception("Chef not found for menu ID: " + menuId);
+        return null;  // da gestire dopo
     }
 
-    // NOTA: Il metodo convertSpecializationString non serve qui
-    // perché i dati in memoria sono già oggetti Java (List<SpecializationType>),
-    // non stringhe CSV da parsare.
 }
