@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AllergenDao {
 
-    public List<Allergen> getClientAllergies(Client client) throws Exception;
+    public List<Allergen> getClientAllergies(Client client) throws FailedSearchException;
 
     public void removeClientAllergy(int clientId,int allergenId) throws FailedRemoveException;
 

@@ -13,4 +13,8 @@ public class FailedSearchException extends Exception{
     public FailedSearchException(Throwable cause){
         super(cause);
     }
+
+    public FailedSearchException(String message){
+        super(message);
+    }
 }

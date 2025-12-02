@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.LoginController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.enums.Role;
@@ -59,8 +60,12 @@ public class LoginPageControllerG {
         } catch (WrongCredentialsException e){
             errorLabel.setText("Credentials are incorrect.");
             return;
-        } catch (FailedLoginException e){
+        } catch (FailedSearchException e){
+            e.printStackTrace();
+            e.getMessage();
+            e.getCause();
             errorLabel.setText("Login Error");
+            return;
         }
         if(actualRole == CLIENT ){
             FxmlLoader.setPage("ClientHomePage");

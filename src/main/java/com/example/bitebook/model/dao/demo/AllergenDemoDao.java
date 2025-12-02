@@ -20,7 +20,7 @@ public class AllergenDemoDao implements AllergenDao{
     private static Map<Integer, List<Allergen>> clientAllergiesMap = new HashMap<>();
 
     @Override
-    public List<Allergen> getClientAllergies(Client client) throws Exception {
+    public List<Allergen> getClientAllergies(Client client) throws FailedSearchException{
         int clientId = client.getId();
         System.out.println("[Demo] Recupero allergie per client ID: " + clientId);
 

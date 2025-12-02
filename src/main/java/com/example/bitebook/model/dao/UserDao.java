@@ -1,17 +1,17 @@
 package com.example.bitebook.model.dao;
 
-import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.enums.Role;
 
-import javax.security.auth.login.FailedLoginException;
-
+// Okk
 public interface UserDao{
 
-    public Role getCredentialsRole(String email, String password) throws FailedDatabaseConnectionException, FailedDatabaseConnectionException, FailedLoginException;
+    Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException;
 
-    public Chef getChefInfo(String email, String password);
+    Chef getChefInfo(String email, String password) throws FailedSearchException;
 
-    public Client getClientInfo(String email, String password);
+    Client getClientInfo(String email, String password) throws FailedSearchException;
 }

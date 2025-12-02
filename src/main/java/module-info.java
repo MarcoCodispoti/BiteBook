@@ -16,6 +16,7 @@ module com.example.bitebook {
     requires javafx.base;
     // requires com.example.bitebook;
     // requires com.example.bitebook;
+    // requires com.example.bitebook;
 
     exports com.example.bitebook.controller.view1;
     exports com.example.bitebook.controller.view2;
