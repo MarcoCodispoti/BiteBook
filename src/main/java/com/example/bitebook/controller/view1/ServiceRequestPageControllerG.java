@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
@@ -224,7 +225,12 @@ public class ServiceRequestPageControllerG{
     }
 
     private void fillIngredientsLevelComboBox(){
-        selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+        try {
+            selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+        }catch(FailedSearchException e){
+            errorLabel.setText("Error while filling ingredients level");
+            return;
+        }
         for(int i = 1; i <= 3; i++){
             switch(i){
                 case 1: ingredientsLevelComboBox.getItems().add("1: Base        Surcharge: +0 €"); break;
@@ -232,6 +238,7 @@ public class ServiceRequestPageControllerG{
                 case 3: ingredientsLevelComboBox.getItems().add("3: Luxe        Surcharge: +" + selectedMenuBean.getLuxeLevelSurcharge() + " €"); break;
             }
         }
+
     }
 
     private void fillTimeComboBox(){

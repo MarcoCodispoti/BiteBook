@@ -10,12 +10,10 @@ import java.util.List;
 
 public interface ChefDao{
 
-    public void findCityChefs(String cityName) throws FailedSearchException, NoChefInCityException;
+    void findCityChefs(String cityName) throws FailedSearchException, NoChefInCityException;
 
-    public List<Chef> getChefsInCity(String cityName) throws FailedSearchException;
+    List<Chef> getChefsInCity(String cityName) throws FailedSearchException;
 
-    // public List<SpecializationType> convertSpecializationString(String specializationString);
-
-    public Chef getChefFromMenu(int menuId) throws Exception;
+    Chef getChefFromMenu(int menuId) throws Exception;
 
 }

@@ -7,7 +7,7 @@ import com.example.bitebook.model.Menu;
 import java.util.List;
 
 public interface MenuDao {
-    public List<Menu> getChefMenus(int chefId) throws FailedSearchException;
+    List<Menu> getChefMenus(int chefId) throws FailedSearchException;
 
-    public Menu getMenuLevelsSurcharge(int menuId) throws Exception;
+    Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException;
 }

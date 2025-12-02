@@ -3,10 +3,8 @@ package com.example.bitebook.model.dao.persistence;
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.QueryException;
-import com.example.bitebook.model.Dish;
 import com.example.bitebook.model.Menu;
 import com.example.bitebook.model.dao.MenuDao;
-import com.example.bitebook.model.enums.CourseType;
 import com.example.bitebook.model.enums.DietType;
 import com.example.bitebook.util.Connector;
 
@@ -19,11 +17,11 @@ import java.util.ArrayList;
 
 public class MenuDbDao implements MenuDao {
 
-    // Okk
+    // Okk -> Va bene
     public List<Menu> getChefMenus(int chefId) throws FailedSearchException{
         List<Menu> chefMenus = new ArrayList<>();
         try(Connection conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getChefMenus(?)}");){
+            CallableStatement cstmt = conn.prepareCall("{call getChefMenus(?)}")){
             cstmt.setInt(1, chefId);
             cstmt.execute();
             try (ResultSet rs = cstmt.getResultSet()) {
@@ -46,37 +44,27 @@ public class MenuDbDao implements MenuDao {
     }
 
 
-
-
-
-    public Menu getMenuLevelsSurcharge(int menuId) throws SQLException{
-        Menu menu = new Menu();
-        Connection conn = null;
-
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getMenuLevelsSurcharge(?)}");
-            cstmt.setInt(1,menuId);
-
+    //  Okk -> Va bene
+    @Override
+    public Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException {
+        Menu menu = null;
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getMenuLevelsSurcharge(?)}")){
+            cstmt.setInt(1, menuId);
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
-
-            if(rs.next()){
-                menu.setPremiumLevelSurcharge(rs.getInt("PremiumSurcharge"));
-                menu.setLuxeLevelSurcharge(rs.getInt("LuxeSurcharge"));
-            }else{
-                throw new SQLException();
+            try (ResultSet rs = cstmt.getResultSet()) {
+                if (rs.next()) {
+                    menu = new Menu();
+                    menu.setPremiumLevelSurcharge(rs.getInt("PremiumSurcharge"));
+                    menu.setLuxeLevelSurcharge(rs.getInt("LuxeSurcharge"));
+                }
             }
-
-            cstmt.close();
-            rs.close();
-
-        } catch (SQLException | FailedDatabaseConnectionException e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
-            throw new SQLException(e);
+        } catch (SQLException e){
+            throw new FailedSearchException("Error while recovering menu level surcharges", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedSearchException(e);
         }
+
         return menu;
     }
 

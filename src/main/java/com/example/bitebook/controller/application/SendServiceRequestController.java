@@ -1,5 +1,6 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.ChefDao;
@@ -14,17 +15,20 @@ import java.util.List;
 public class SendServiceRequestController{
 
 
-    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean){
-        try{
-            MenuDao menuDao = DaoFactory.getMenuDao();
-            Menu menu = menuDao.getMenuLevelsSurcharge(menuBean.getId());
+    // Okk -> Va bene
+    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean) throws FailedSearchException {
+        Menu menu = DaoFactory.getMenuDao().getMenuLevelsSurcharge(menuBean.getId());
+        if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
             menuBean.setLuxeLevelSurcharge(menu.getLuxeLevelSurcharge());
-        } catch(Exception e){
-            throw new RuntimeException(e);
+        } else {
+            throw new FailedSearchException("Menu levels surcharge not found");
         }
         return menuBean;
     }
+
+
+
 
     public int calculateTotalPrice(ReservationDetailsBean reservationDetailsBean, MenuBean menuBean){
         int singleMenuSurcharge = -1;
@@ -42,7 +46,7 @@ public class SendServiceRequestController{
 
 
     // allergiesIncompatibility
-    // da rinomincare
+    // da rinominare
 
     public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean){
         List<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
@@ -58,6 +62,7 @@ public class SendServiceRequestController{
         }
         return false;
     }
+
 
 
     public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws Exception{
@@ -88,7 +93,8 @@ public class SendServiceRequestController{
 
 
 
-    public ServiceRequest ConvertServiceRequestBean(ServiceRequestBean serviceRequestBean){
+
+    private ServiceRequest ConvertServiceRequestBean(ServiceRequestBean serviceRequestBean){
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
         Client client = new  Client();
@@ -106,7 +112,8 @@ public class SendServiceRequestController{
     }
 
 
-    public Chef convertChefBean(ChefBean chefBean){
+
+    private Chef convertChefBean(ChefBean chefBean){
         Chef chef = new Chef();
         chef.setId(chefBean.getId());
         chef.setName(chefBean.getName());
@@ -114,7 +121,9 @@ public class SendServiceRequestController{
         return chef;
     }
 
-    public Menu convertMenuBean(MenuBean menuBean){
+
+
+    private Menu convertMenuBean(MenuBean menuBean){
         Menu menu = new Menu();
         menu.setId(menuBean.getId());
         menu.setName(menuBean.getName());
@@ -123,7 +132,9 @@ public class SendServiceRequestController{
         return menu;
     }
 
-    public ReservationDetails convertReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){
+
+
+    private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){
         ReservationDetails reservationDetails = new ReservationDetails();
         reservationDetails.setDate(reservationDetailsBean.getDate());
         reservationDetails.setTime(reservationDetailsBean.getTime());

@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
@@ -191,7 +192,12 @@ public class ServiceRequestPageControllerG2{
         premiumLevelRadioButton.setToggleGroup(levelToggleGroup);
         luxeLevelRadioButton.setToggleGroup(levelToggleGroup);
         baseLevelRadioButton.setSelected(true);
-        selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+
+        try {
+            selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+        }catch(FailedSearchException e){
+            errorLabel.setText("Error while filling menu ingredients level");
+        }
         premiumLevelLabel.setText("+ "+selectedMenuBean.getPremiumLevelSurcharge()+" €");
         luxeLevelLabel.setText("+ "+selectedMenuBean.getLuxeLevelSurcharge()+" €");
 

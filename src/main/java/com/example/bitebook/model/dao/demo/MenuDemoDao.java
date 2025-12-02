@@ -66,7 +66,7 @@ public class MenuDemoDao implements MenuDao{
     }
 
     @Override
-    public Menu getMenuLevelsSurcharge(int menuId) throws SQLException {
+    public Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException{
         // Recuperiamo l'oggetto Menu intero
         Menu fullMenu = menusMap.get(menuId);
 
@@ -84,7 +84,9 @@ public class MenuDemoDao implements MenuDao{
             return surchargeInfo;
         } else {
             // Nel tuo DB DAO lanciavi SQLException se non trovava nulla
-            throw new SQLException("[Demo] Menu ID " + menuId + " non trovato.");
+            // throw new SQLException("[Demo] Menu ID " + menuId + " non trovato.");
+            // da modificare dopo
+            return null;
         }
     }
 
