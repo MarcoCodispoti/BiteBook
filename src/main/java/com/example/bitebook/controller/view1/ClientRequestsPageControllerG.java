@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,9 +48,12 @@ public class ClientRequestsPageControllerG{
 //        this.serviceRequestBeans = explorationController.getClientRequests();
 
         RequestManagerController requestManagerController = new RequestManagerController();
-        this.serviceRequestBeans = requestManagerController.getClientRequests();
-
-        populateRequests();
+        try {
+            this.serviceRequestBeans = requestManagerController.getClientRequests();
+            populateRequests();
+        } catch (FailedSearchException e){
+            errorLabel.setText("Error while obtaining requests");
+        }
     }
 
 

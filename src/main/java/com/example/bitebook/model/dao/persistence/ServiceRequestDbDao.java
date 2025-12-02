@@ -1,6 +1,8 @@
 package com.example.bitebook.model.dao.persistence;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.dao.ServiceRequestDao;
 import com.example.bitebook.model.enums.MenuLevel;
@@ -17,9 +19,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
 
     public void saveServiceRequest(ServiceRequest serviceRequest) throws SQLException{
         System.out.println("[Modalità persistenza] richiesta di servizio salvata");
-
-        // Da modificare il database -> MenuLevel dovrebbe essere un attributo di ReservationDetails o SendRequest e non del menu
-
         Connection conn = null;
         try{
             conn = Connector.getInstance().getConnection();
@@ -46,98 +45,104 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    public List<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
-        List<ServiceRequest> serviceRequests = new ArrayList<>();
-        Connection conn = null;
 
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getClientRequests(?)}");
-            cstmt.setInt(1, client.getId());
 
-            cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
-
-            while(rs.next()){
-                ServiceRequest serviceRequest = new ServiceRequest();
-                Chef chef = new Chef();
-                Menu menu = new Menu();
-                ReservationDetails reservationDetails = new ReservationDetails();
-                serviceRequest.setId(rs.getInt("RequestId"));
-                chef.setName(rs.getString("ChefName"));
-                chef.setSurname(rs.getString("ChefSurname"));
-                menu.setName(rs.getString("MenuName"));
-                System.out.println("Dao Nomemenu: " + menu.getName());
-                reservationDetails.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
-                reservationDetails.setParticipantNumber(rs.getInt("ParticipantsNumber"));
-                serviceRequest.setTotalPrice(rs.getInt("TotalPrice"));
-                reservationDetails.setDate(rs.getObject("Date", LocalDate.class));
-                reservationDetails.setTime(rs.getObject("Time", LocalTime.class));
-                reservationDetails.setAddress(rs.getString("Address"));
-                serviceRequest.setStatus(RequestStatus.valueOf(rs.getString("Status")));
-                serviceRequest.setClient(client);
-                serviceRequest.setChef(chef);
-                serviceRequest.setMenu(menu);
-                serviceRequest.setReservationDetails(reservationDetails);
-                serviceRequests.add(serviceRequest);
-            }
-            cstmt.close();
-            rs.close();
-        } catch(SQLException e){
-            return  null;
-        }
-
-        return  serviceRequests;
-    }
-
+    // Okk -> Va bene
     @Override
-    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
+    public List<ServiceRequest> getClientServiceRequests(Client client) throws FailedSearchException {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        Connection conn = null;
-
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getChefRequests(?)}");
-            cstmt.setInt(1, chef.getId());
-
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getClientRequests(?)}")) {
+            cstmt.setInt(1, client.getId());
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
-
-            while(rs.next()){
-                ServiceRequest serviceRequest = new ServiceRequest();
-                Client client = new Client();
-                Menu menu = new Menu();
-                ReservationDetails reservationDetails = new ReservationDetails();
-                serviceRequest.setId(rs.getInt("RequestId"));
-                client.setName(rs.getString("ClientName"));
-                client.setSurname(rs.getString("ClientSurname"));
-                menu.setName(rs.getString("MenuName"));
-                System.out.println("Dao Nomemenu: " + menu.getName());
-                reservationDetails.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
-                reservationDetails.setParticipantNumber(rs.getInt("ParticipantsNumber"));
-                serviceRequest.setTotalPrice(rs.getInt("TotalPrice"));
-                reservationDetails.setDate(rs.getObject("Date", LocalDate.class));
-                reservationDetails.setTime(rs.getObject("Time", LocalTime.class));
-                reservationDetails.setAddress(rs.getString("Address"));
-                serviceRequest.setStatus(RequestStatus.valueOf(rs.getString("Status")));
-                serviceRequest.setClient(client);
-                serviceRequest.setChef(chef);
-                serviceRequest.setMenu(menu);
-                serviceRequest.setReservationDetails(reservationDetails);
-                serviceRequests.add(serviceRequest);
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    ServiceRequest request = new ServiceRequest();
+                    request.setId(rs.getInt("RequestId"));
+                    request.setTotalPrice(rs.getInt("TotalPrice"));
+                    request.setStatus(RequestStatus.valueOf(rs.getString("Status")));
+                    Chef chef = new Chef();
+                    chef.setName(rs.getString("ChefName"));
+                    chef.setSurname(rs.getString("ChefSurname"));
+                    request.setChef(chef);
+                    request.setClient(client);
+                    Menu menu = new Menu();
+                    menu.setName(rs.getString("MenuName"));
+                    request.setMenu(menu);
+                    ReservationDetails details = new ReservationDetails();
+                    details.setAddress(rs.getString("Address"));
+                    details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
+                    details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
+                    java.sql.Date sqlDate = rs.getDate("Date");
+                    if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
+                    java.sql.Time sqlTime = rs.getTime("Time");
+                    if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
+                    request.setReservationDetails(details);
+                    serviceRequests.add(request);
+                }
             }
-            cstmt.close();
-            rs.close();
-
-        } catch(Exception e){
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-            return new ArrayList<>();
+        } catch (SQLException e) {
+            throw new FailedSearchException("Errore recupero richieste del cliente", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException(e);
         }
-
-        return  serviceRequests;
+        return serviceRequests;
     }
+
+
+
+
+
+
+    // Okk -> Va bene
+    @Override
+    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws FailedSearchException {
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getChefRequests(?)}")) {
+            cstmt.setInt(1, chef.getId());
+            cstmt.execute();
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    ServiceRequest request = new ServiceRequest();
+                    request.setId(rs.getInt("RequestId"));
+                    request.setTotalPrice(rs.getInt("TotalPrice"));
+                    request.setStatus(RequestStatus.valueOf(rs.getString("Status")));
+                    request.setChef(chef);
+                    Client client = new Client();
+                    client.setName(rs.getString("ClientName"));
+                    client.setSurname(rs.getString("ClientSurname"));
+                    request.setClient(client);
+                    Menu menu = new Menu();
+                    menu.setName(rs.getString("MenuName"));
+                    request.setMenu(menu);
+                    ReservationDetails details = new ReservationDetails();
+                    details.setAddress(rs.getString("Address"));
+                    details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
+                    details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
+                    java.sql.Date sqlDate = rs.getDate("Date");
+                    if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
+                    java.sql.Time sqlTime = rs.getTime("Time");
+                    if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
+                    request.setReservationDetails(details);
+                    serviceRequests.add(request);
+                }
+            }
+        } catch (SQLException e) {
+            throw new FailedSearchException("Error while recovering chefs requests", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException(e);
+        }
+        return serviceRequests;
+    }
+
+
+
+
+
+
+
+
 
     @Override
     public void manageRequest(ServiceRequest serviceRequest) throws Exception {

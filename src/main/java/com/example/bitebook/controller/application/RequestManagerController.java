@@ -1,5 +1,6 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
@@ -12,68 +13,56 @@ import java.util.List;
 
 public class RequestManagerController {
 
-
-    public List<ServiceRequestBean> getClientRequests() {
+    // Okk -> Va bene
+    public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
-        try {
-            ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            List<ServiceRequest> requests = dao.getClientServiceRequests(LoggedUser.getInstance().getClient());
+        List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
+                .getClientServiceRequests(LoggedUser.getInstance().getClient());
+        if (requests != null) {
+            for (ServiceRequest req : requests) {
+                resultBeans.add(convertToBean(req));
+            }
+        }
+        return resultBeans;
+    }
 
-            if (requests != null) {
-                for (ServiceRequest req : requests) {
+
+
+
+
+    // Okk -> Va bene
+    public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
+        List<ServiceRequestBean> resultBeans = new ArrayList<>();
+        List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
+                .getChefServiceRequests(LoggedUser.getInstance().getChef());
+        if (requests != null) {
+            for (ServiceRequest req : requests){
+                if (req.getStatus() == RequestStatus.APPROVED) {
                     resultBeans.add(convertToBean(req));
                 }
             }
-        } catch (Exception e) {
-            // to be handled
-            return null;
         }
         return resultBeans;
     }
 
 
 
-    public List<ServiceRequestBean> getApprovedServiceRequests() throws Exception {
+
+    // Okk -> Va bene
+    public List<ServiceRequestBean> getChefRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
-        try {
-            ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            List<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
-
-            if (requests != null) {
-                for (ServiceRequest req : requests) {
-                    if (req.getStatus().equals(RequestStatus.APPROVED)) {
-                        resultBeans.add(convertToBean(req));
-                    }
-                }
+        List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
+                .getChefServiceRequests(LoggedUser.getInstance().getChef());
+        if (requests != null) {
+            for (ServiceRequest req : requests) {
+                resultBeans.add(convertToBean(req));
             }
-        } catch (Exception e) {
-            // to be handled
-            throw new Exception();
         }
         return resultBeans;
     }
 
 
 
-    public List<ServiceRequestBean> getChefRequests() throws Exception {
-        List<ServiceRequestBean> resultBeans = new ArrayList<>();
-        try {
-            ServiceRequestDao dao = DaoFactory.getServiceRequestDao();
-            List<ServiceRequest> requests = dao.getChefServiceRequests(LoggedUser.getInstance().getChef());
-
-            if (requests != null && !requests.isEmpty()) {
-                for (ServiceRequest req : requests) {
-                    resultBeans.add(convertToBean(req));
-                }
-            } else {
-                return resultBeans;
-            }
-        } catch (Exception e) {
-            // to be handled
-            throw new Exception();
-        }
-        return resultBeans;
-    }
 
 
 

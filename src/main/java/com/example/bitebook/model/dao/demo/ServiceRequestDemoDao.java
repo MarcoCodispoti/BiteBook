@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.ServiceRequest;
@@ -43,47 +44,22 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
 
-    public List<ServiceRequest> getClientServiceRequests(Client client) throws Exception{
-//        // Simula: SELECT * FROM ... WHERE clientId = ?
-//        // + le JOIN per ottenere i nomi (ma qui abbiamo già gli oggetti completi!)
-//
-//        return fakeTable.values().stream()
-//                // 1. FILTRO (La clausola WHERE)
-//                .filter(req -> req.getClient() != null && req.getClient().getId() == client.getId())
-//                // 2. RACCOLTA (Mette i risultati in un List)
-//                .collect(Collectors.toCollection(List::new));
-//
-//        /* NOTA:
-//           Nel DB DAO ricostruivi oggetti parziali (new Chef con solo il nome).
-//           Qui restituiamo l'oggetto COMPLETO salvato in memoria.
-//           Al Controller va benissimo uguale, perché i metodi .getName() funzionano
-//           sia su oggetti parziali che completi.
-//        */
 
-        // 1. Prepariamo il contenitore per i risultati
+    public List<ServiceRequest> getClientServiceRequests(Client client) throws FailedSearchException {
         List<ServiceRequest> clientRequests = new ArrayList<>();
-
-        // 2. Iteriamo su tutti i valori salvati nella Mappa
-        // fakeTable.values() ci dà la collezione di tutte le ServiceRequest salvate
         for (ServiceRequest req : fakeTable.values()) {
-
-            // 3. Filtriamo: controlliamo se la richiesta appartiene a QUESTO cliente
-            // È buona norma controllare che req.getClient() non sia null per evitare crash
             if (req.getClient() != null && req.getClient().getId() == client.getId()) {
-
-                // 4. Se corrisponde, aggiungiamo al vettore
                 clientRequests.add(req);
             }
         }
-
-        // 5. Restituiamo il vettore popolato
         return clientRequests;
-
-
     }
 
+
+
+
     @Override
-    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws Exception {
+    public List<ServiceRequest> getChefServiceRequests(Chef chef) throws FailedSearchException{
 //        // Simula: SELECT * FROM ... WHERE chefId = ?
 //        return fakeTable.values().stream()
 //                // 1. FILTRO (La clausola WHERE)
