@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
@@ -73,7 +74,12 @@ public class SelectMenuPageControllerG2{
         this.city = chefBean.getCity();
 
         // ExplorationController explorationController = new ExplorationController();
-        chefListBeans = explorationController.getChefsInCity(chefBean);
+        try {
+            chefListBeans = explorationController.getChefsInCity(chefBean);
+        } catch (FailedSearchException e) {
+            errorLabel.setText("System Error: Unable to retrieve chefs in city, please try again ");
+            return;
+        }
 
         fillChefComboBox();
 

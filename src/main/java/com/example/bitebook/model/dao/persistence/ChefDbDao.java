@@ -1,7 +1,9 @@
 package com.example.bitebook.model.dao.persistence;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.NoChefInCityException;
+import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.enums.CookingStyle;
@@ -19,78 +21,63 @@ import java.util.stream.Collectors;
 
 public class ChefDbDao implements ChefDao{
 
-    public List<Chef> findCityChefs(String cityName) throws FailedDatabaseConnectionException, NoChefInCityException {
-        Connection conn = null;
-        List<Chef> chefsFound = new ArrayList<>();
 
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call FindCityChefs(?)}");
+    // Ok -> Va bene
+    public void findCityChefs(String cityName) throws FailedSearchException, NoChefInCityException {
+        try(Connection conn = Connector.getInstance().getConnection();
+            CallableStatement cstmt = conn.prepareCall("{call FindCityChefs(?)}")){
             cstmt.setString(1, cityName);
-
             cstmt.execute();
 
-            ResultSet rs = cstmt.getResultSet();
-            while(rs.next()){
-                Chef chef = new Chef();
-                chef.setId(rs.getInt("IdChef"));
-                chefsFound.add(chef);
+            try (ResultSet rs = cstmt.getResultSet()) {
+                if (!rs.next()){
+                    throw new NoChefInCityException(cityName);
+                }
+                // arrivati qui vuol dire che c'è uno chef -> il metodo prosegue senza eccezioni
             }
-
-            rs.close();
-            cstmt.close();
-
-            if(chefsFound.size()<=0){
-                throw new NoChefInCityException("No chef found");
-            }
-
-        } catch ( FailedDatabaseConnectionException e ){
-            throw e;
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoChefInCityException e){
-            throw e;
+        } catch (SQLException e){
+            throw new FailedSearchException("Query error while searching for chefs in " + cityName, new QueryException(e));
+        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException(e);
         }
-
-        return chefsFound;
     }
 
 
-    public List<Chef> getChefsInCity(String cityName) throws SQLException{
-        Connection conn = null;
+
+
+    // Okk -> Va bene
+    public List<Chef> getChefsInCity(String cityName) throws FailedSearchException {
         List<Chef> cityChefs = new ArrayList<>();
 
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getChefsInCity(?)}")) {
 
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getChefsInCity(?)}");
-            cstmt.setString(1,cityName);
+            cstmt.setString(1, cityName);
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    Chef chef = new Chef();
+                    chef.setId(rs.getInt("IdChef"));
+                    chef.setName(rs.getString("Name"));
+                    chef.setSurname(rs.getString("Surname"));
+                    chef.setCity(cityName);
 
-            while(rs.next()){
-                Chef chef = new Chef();
-                chef.setId(rs.getInt("IdChef"));
-                chef.setName(rs.getString("Name"));
-                chef.setSurname(rs.getString("Surname"));
-                chef.setCity(cityName);
-                chef.setStyle(CookingStyle.fromString(rs.getString("CookingStyle")));
-                chef.setSpecializations(convertSpecializationString(rs.getString("Specializations")));
-                cityChefs.add(chef);
-                System.out.println("Lo chef trovato è: " + chef.getId() + " " + chef.getName() + " " + chef.getSurname()
-                        + " " + chef.getStyle() + " " + chef.getSpecializations());
+                    chef.setStyle(CookingStyle.fromString(rs.getString("CookingStyle")));
+                    chef.setSpecializations(convertSpecializationString(rs.getString("Specializations")));
+
+                    cityChefs.add(chef);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
-            throw new SQLException();
+            throw new FailedSearchException("SQL query error occurred ", new QueryException(e));
+
         } catch (FailedDatabaseConnectionException e) {
-            throw new RuntimeException(e);
+            throw new FailedSearchException(e);
         }
-        System.out.println("Ho trovato e sto restituendo: " + cityChefs.size() + " chefs nella tua città: " + cityChefs);
         return cityChefs;
     }
+
+
 
 
     public List<SpecializationType> convertSpecializationString(String specializationString) {
@@ -123,6 +110,8 @@ public class ChefDbDao implements ChefDao{
                 .filter(s -> s != null) // Filtra via gli elementi nulli (quelli che hanno generato l'errore)
                 .collect(Collectors.toCollection(ArrayList::new)); // Colleziona il risultato in un List
     }
+
+
 
     public Chef getChefFromMenu(int menuId) throws SQLException{
         Chef chef = new Chef();

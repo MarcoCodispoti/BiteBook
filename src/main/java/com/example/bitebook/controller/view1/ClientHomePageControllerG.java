@@ -2,6 +2,8 @@ package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.bean.ChefBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,20 +75,30 @@ public class ClientHomePageControllerG{
             return;
         }
         errorLabel.setText("You inserted a valid city");
-        ExplorationController explorationController = new ExplorationController();
-        explorationController.checkCityChefs(chefBean);
 
-        if(explorationController.checkCityChefs(chefBean)){
-            System.out.println("Ci sono chef nella città di: " + chefBean.getCity());
-            SelectChefPageControllerG selectChefPageControllerG = FxmlLoader.setPageAndReturnController("SelectChefPage");
-            if(selectChefPageControllerG != null){
-                System.out.println(("Passo alla schermata di scelta degli chef il bean: " + chefBean));
-                selectChefPageControllerG.initData(chefBean);
-            }
-        } else{
-            errorLabel.setText("No chef found in the selected city");
+        ExplorationController explorationController = new ExplorationController();
+        boolean chefFound;
+
+        try{
+            chefFound = explorationController.checkCityChefs(chefBean);
+        } catch(FailedSearchException e){
+            errorLabel.setText("Error occurred while searching for chefs city!");
+            return;
         }
+
+        if(!chefFound){
+            errorLabel.setText("No chef found in the inserted city!");
+            return;
+        }
+        SelectChefPageControllerG selectChefPageControllerG = FxmlLoader.setPageAndReturnController("SelectChefPage");
+        if(selectChefPageControllerG != null){
+            System.out.println(("Passo alla schermata di scelta degli chef il bean: " + chefBean));
+            selectChefPageControllerG.initData(chefBean);
+        }
+
     }
+
+
 
     public boolean checkCityField(){
         if(insertCityTextField.getText().isEmpty()){

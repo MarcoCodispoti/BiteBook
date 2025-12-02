@@ -1,5 +1,7 @@
 package com.example.bitebook.controller.application;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Chef;
@@ -13,6 +15,7 @@ import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.DishDao;
 import com.example.bitebook.model.dao.MenuDao;
+import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
 
 import java.util.ArrayList;
@@ -20,41 +23,33 @@ import java.util.List;
 
 public class ExplorationController{
 
-    public Boolean checkCityChefs(ChefBean chefBean) {
+    // Ok -> va bene
+    public boolean checkCityChefs(ChefBean chefBean) throws FailedSearchException {
         ChefDao chefDao = DaoFactory.getChefDao();
         try {
             chefDao.findCityChefs(chefBean.getCity());
-        } catch (NoChefInCityException e) {
-            return false;
-        } catch (Exception e) {
-            // Gestione errori generici DB
+            return true;
+        } catch (NoChefInCityException e){
             return false;
         }
-        return true;
     }
 
+
+    // Okk -> Va bene così
     public boolean isLoggedClient() {
-        return LoggedUser.getInstance().getClient() != null;
+        return LoggedUser.getInstance().getRole() == Role.CLIENT;
     }
 
-    public List<ChefBean> getChefsInCity(ChefBean chefBean) {
+
+    // Okk -> Va bene
+    public List<ChefBean> getChefsInCity(ChefBean chefBean) throws FailedSearchException {
         List<ChefBean> chefInCityBeans = new ArrayList<>();
-        ChefDao chefDao = DaoFactory.getChefDao();
 
-        try {
-            List<Chef> chefsInCity = chefDao.getChefsInCity(chefBean.getCity());
-            if (chefsInCity == null || chefsInCity.isEmpty()) {
-                // Non lanciare SQLException manualmente qui, ritorna lista vuota o gestisci diversamente
-                return chefInCityBeans;
-            }
-
+        List<Chef> chefsInCity = DaoFactory.getChefDao().getChefsInCity(chefBean.getCity());
+        if (chefsInCity != null) {
             for (Chef chef : chefsInCity) {
-                // Ottimo uso del costruttore del Bean!
                 chefInCityBeans.add(new ChefBean(chef));
             }
-
-        } catch (Exception e) {
-            return null;
         }
         return chefInCityBeans;
     }
@@ -79,6 +74,8 @@ public class ExplorationController{
         }
         return chefMenuBeans;
     }
+
+
 
 
     public List<DishBean> getCourses(MenuBean menuBean){
@@ -109,6 +106,8 @@ public class ExplorationController{
 
         return coursesBean;
     }
+
+
 
 
     public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans){

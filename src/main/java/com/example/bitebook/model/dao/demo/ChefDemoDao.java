@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.dao.ChefDao;
@@ -82,7 +83,7 @@ public class ChefDemoDao implements ChefDao{
     // METODO 1: findCityChefs (Restituisce solo ID parziali)
     // ---------------------------------------------------------
     @Override
-    public List<Chef> findCityChefs(String cityName) throws NoChefInCityException {
+    public void findCityChefs(String cityName) throws NoChefInCityException {
         List<Chef> chefsFound = new ArrayList<>();
 
         // Iteriamo sui valori della mappa (senza Stream)
@@ -101,14 +102,14 @@ public class ChefDemoDao implements ChefDao{
             throw new NoChefInCityException("No chef found in " + cityName);
         }
 
-        return chefsFound;
+        // return chefsFound;
     }
 
     // ---------------------------------------------------------
     // METODO 2: getChefsInCity (Restituisce oggetti completi)
     // ---------------------------------------------------------
     @Override
-    public List<Chef> getChefsInCity(String cityName) {
+    public List<Chef> getChefsInCity(String cityName) throws FailedSearchException {
         List<Chef> cityChefs = new ArrayList<>();
         System.out.println("[Demo] Cerco chef a: " + cityName);
 

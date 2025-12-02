@@ -2,6 +2,9 @@ package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
+import com.example.bitebook.controller.view1.FxmlLoader;
+import com.example.bitebook.controller.view1.SelectChefPageControllerG;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,16 +76,26 @@ public class ClientHomePageControllerG2{
         if(!chefBean.validateCity()){
             errorLabel.setText("You inserted an invalid city");
         }
+
         ExplorationController explorationController = new ExplorationController();
-        SelectMenuPageControllerG2 selectMenuPageControllerG2 = null;
-        if(explorationController.checkCityChefs(chefBean)){
-            selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        boolean chefFound;
+
+        try{
+            chefFound = explorationController.checkCityChefs(chefBean);
+        } catch(FailedSearchException e){
+            errorLabel.setText("System Error: Unable to search. Please try again later");
+            return;
         }
-        if(selectMenuPageControllerG2!=null){
+
+        if(!chefFound){
+            errorLabel.setText("No chef found in the inserted city!");
+            return;
+        }
+        SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        if(selectMenuPageControllerG2 != null){
             selectMenuPageControllerG2.initData(chefBean);
         }
 
-        chefBean.setCity(cityTextField.getText());
     }
 
 }

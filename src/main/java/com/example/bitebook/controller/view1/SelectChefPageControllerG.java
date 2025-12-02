@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,7 +54,12 @@ public class SelectChefPageControllerG {
         ExplorationController explorationController = new ExplorationController();
         System.out.println("Vado a prendere gli chef a: "  + chefBean.getCity());
         // this.chefsInCity = explorationController.getChefsInCity(this.cityChefBean);
-        this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
+        try {
+            this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
+        } catch (FailedSearchException e) {
+            errorLabel.setText("System Error: Unable to retrieve chefs in city, please try again ");
+            return;
+        }
         System.out.println("Ho inizializato: " + chefInCityBeans.size() + " chefs in the selected city: " + chefInCityBeans);
 
 
