@@ -302,9 +302,14 @@ public class SelectMenuPageControllerG2{
     public void fillMenuComboBox(ChefBean chefBean){
         menuComboBox.getItems().clear();
         if(chefBean == null){
-            errorLabel.setText("Error occured while searching menus"); return;
+            errorLabel.setText("Error occurred while obtaining chef"); return;
         }
-        selectedChefMenuBeans = explorationController.getChefMenus(chefBean);
+        try {
+            selectedChefMenuBeans = explorationController.getChefMenus(chefBean);
+        } catch (FailedSearchException e){
+            errorLabel.setText("Error occured while searching menus");
+            return;
+        }
         for(MenuBean menuBean:selectedChefMenuBeans){
             menuComboBox.getItems().add("ID: " + menuBean.getId()  + "     Name: " + menuBean.getName() + "      Diet Type: " + String.valueOf(menuBean.getDietType()).toLowerCase() + "        Number of courses:  " + menuBean.getNumberOfCourses() + "      Price per person: " + menuBean.getPricePerPerson() + "€ ");
         }

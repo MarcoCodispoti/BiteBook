@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
 import javafx.event.ActionEvent;
@@ -53,7 +54,13 @@ public class SelectMenuPageControllerG{
         this.selectChefBean = chefBean;
         errorLabel.setText("Menu dello chef con ID: " + chefBean.getId());
         ExplorationController explorationController = new ExplorationController();
-        this.chefMenuBeans = explorationController.getChefMenus(chefBean);
+
+        try {
+            this.chefMenuBeans = explorationController.getChefMenus(chefBean);
+        } catch (FailedSearchException e) {
+            errorLabel.setText("System Error while getting Menus for Chef, please try later");
+            return;
+        }
         errorLabel.setText("Ho trovato il menu con" + chefMenuBeans.size() + " piatti");
 
         if(this.chefMenuBeans == null || this.chefMenuBeans.isEmpty()){

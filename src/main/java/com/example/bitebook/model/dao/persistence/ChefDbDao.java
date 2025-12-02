@@ -15,9 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ChefDbDao implements ChefDao{
 
@@ -79,37 +77,26 @@ public class ChefDbDao implements ChefDao{
 
 
 
-
+    // Okk
     public List<SpecializationType> convertSpecializationString(String specializationString) {
-        // 1. Gestione del caso nullo/vuoto
+        List<SpecializationType> result = new ArrayList<>();
         if (specializationString == null || specializationString.trim().isEmpty()) {
-            // Restituisce un List vuoto se non ci sono specializzazioni
-            return new ArrayList<>();
+            return result;
         }
-
-        // 2. Scomposizione della stringa
-        // La stringa è separata da ", " come definito in GROUP_CONCAT(..., ', ')
-        String[] specializationsArray = specializationString.split(",\\s*");
-        // Usiamo la regex ",\\s*" per gestire ', ' e ', ' o anche solo ','
-
-        // 3. Conversione in List<SpecializationType> usando lo Stream API
-        return Arrays.stream(specializationsArray)
-                .map(String::trim) // Rimuove eventuali spazi bianchi aggiuntivi
-                .filter(s -> !s.isEmpty()) // Rimuove eventuali stringhe vuote dopo il trim
-                .map(s -> {
-                    try {
-                        // Utilizza il tuo metodo fromString per la conversione
-                        return SpecializationType.fromString(s);
-                    } catch (IllegalArgumentException e) {
-                        // Gestione di una specializzazione non valida (non mappata nell'Enum)
-                        // Puoi loggare l'errore o ignorare l'elemento. Qui, lo ignoriamo (ritorna null)
-                        System.err.println("Specializzazione non riconosciuta nel DB: " + s);
-                        return null;
-                    }
-                })
-                .filter(s -> s != null) // Filtra via gli elementi nulli (quelli che hanno generato l'errore)
-                .collect(Collectors.toCollection(ArrayList::new)); // Colleziona il risultato in un List
+        String[] parts = specializationString.split(",\\s*");
+        for (String part : parts) {
+            String cleaned = part.trim();
+          if (!cleaned.isEmpty()) {
+                try {
+                  result.add(SpecializationType.fromString(cleaned));
+              } catch (IllegalArgumentException e) {
+                 // ignore
+             }
+         }
+     }
+     return result;
     }
+
 
 
 

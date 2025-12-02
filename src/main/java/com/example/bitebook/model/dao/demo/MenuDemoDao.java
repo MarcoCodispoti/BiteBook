@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Dish;
 import com.example.bitebook.model.Menu;
 import com.example.bitebook.model.dao.MenuDao;
@@ -101,7 +102,7 @@ public class MenuDemoDao implements MenuDao{
     // METODO 1: getChefMenus
     // ---------------------------------------------------------
     @Override
-    public List<Menu> getChefMenus(int chefId) throws SQLException {
+    public List<Menu> getChefMenus(int chefId) throws FailedSearchException{
         // Nel DB facevi: SELECT ... WHERE ChefId = ?
         // Qui recuperiamo direttamente la lista associata allo ChefID dalla mappa.
 

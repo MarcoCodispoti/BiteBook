@@ -55,22 +55,14 @@ public class ExplorationController{
     }
 
 
-
-
-    public List<MenuBean> getChefMenus(ChefBean chefBean){
-        List<Menu> chefMenus;
-        MenuDao menuDao = DaoFactory.getMenuDao();
+    // Okk -> Va bene
+    public List<MenuBean> getChefMenus(ChefBean chefBean) throws FailedSearchException {
         List<MenuBean> chefMenuBeans = new ArrayList<>();
-        try{
-            chefMenus = menuDao.getChefMenus(chefBean.getId());
-
-            for(Menu menu : chefMenus){
-                MenuBean menuBean;
-                menuBean = new MenuBean(menu);
-                chefMenuBeans.add(menuBean);
+        List<Menu> chefMenus = DaoFactory.getMenuDao().getChefMenus(chefBean.getId());
+        if (chefMenus != null) {
+            for (Menu menu : chefMenus) {
+                chefMenuBeans.add(new MenuBean(menu));
             }
-        } catch (Exception e){
-            return null;
         }
         return chefMenuBeans;
     }
@@ -78,6 +70,7 @@ public class ExplorationController{
 
 
 
+    //
     public List<DishBean> getCourses(MenuBean menuBean){
         List<Dish> courses;
         MenuDao menuDao = DaoFactory.getMenuDao();

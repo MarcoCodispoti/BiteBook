@@ -1,6 +1,8 @@
 package com.example.bitebook.model.dao.persistence;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.Dish;
 import com.example.bitebook.model.Menu;
 import com.example.bitebook.model.dao.MenuDao;
@@ -17,40 +19,33 @@ import java.util.ArrayList;
 
 public class MenuDbDao implements MenuDao {
 
-    // da spostare questo metodo in ChefDao?
-    public List<Menu> getChefMenus(int chefId) throws SQLException{
+    // Okk
+    public List<Menu> getChefMenus(int chefId) throws FailedSearchException{
         List<Menu> chefMenus = new ArrayList<>();
-        Connection conn = null;
-
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getChefMenus(?)}");
+        try(Connection conn = Connector.getInstance().getConnection();
+            CallableStatement cstmt = conn.prepareCall("{call getChefMenus(?)}");){
             cstmt.setInt(1, chefId);
-
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
-
-            while(rs.next()){
-                Menu menu = new Menu();
-                menu.setId(rs.getInt("Idmenu"));
-                menu.setName(rs.getString("Name"));
-                menu.setDietType(DietType.valueOf(rs.getString("DietType")));
-                menu.setNumberOfCourses(rs.getInt("NumberOfCourses"));
-                menu.setPricePerPerson(rs.getInt("PricePerPerson"));
-                chefMenus.add(menu);
-                System.out.println("Ho trovato il menu " + menu.getId() + " " + menu.getName() + " " + menu.getDietType() + " " + menu.getNumberOfCourses() + " " + menu.getPricePerPerson());
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    Menu menu = new Menu();
+                    menu.setId(rs.getInt("Idmenu"));
+                    menu.setName(rs.getString("Name"));
+                    menu.setDietType(DietType.valueOf(rs.getString("DietType")));
+                    menu.setNumberOfCourses(rs.getInt("NumberOfCourses"));
+                    menu.setPricePerPerson(rs.getInt("PricePerPerson"));
+                    chefMenus.add(menu);
+                }
             }
-            cstmt.close();  rs.close();
-
-        } catch (Exception e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getStackTrace();
-            throw new SQLException(e);
+        } catch (SQLException e) {
+            throw new FailedSearchException("Error occurred while obtaining menus for chef whit Id:" + chefId, new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
+            throw new FailedSearchException(e);
         }
-        System.out.println("Ho trovato " + chefMenus.size() + " menu per lo chef selezionato");
         return chefMenus;
     }
+
+
 
     public List<Dish> getMenuCourses(int menuId){
         List<Dish> courses = new ArrayList<>();
