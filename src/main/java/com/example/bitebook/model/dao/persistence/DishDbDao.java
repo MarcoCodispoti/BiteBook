@@ -1,5 +1,8 @@
 package com.example.bitebook.model.dao.persistence;
 
+import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.QueryException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.dao.DishDao;
 import com.example.bitebook.util.Connector;
@@ -13,32 +16,33 @@ import java.util.ArrayList;
 
 public class DishDbDao implements DishDao{
 
-    public List<Allergen> getDishAllergens(int dishId) throws SQLException {
+    //  Okk -> Va bene
+    public List<Allergen> getDishAllergens(int dishId) throws FailedSearchException {
         List<Allergen> allergens = new ArrayList<>();
-        Connection conn = null;
 
-        try{
-            conn = Connector.getInstance().getConnection();
-            CallableStatement cstmt = conn.prepareCall("{call getDishAllergens(?)}");
+        try (Connection conn = Connector.getInstance().getConnection();
+             CallableStatement cstmt = conn.prepareCall("{call getDishAllergens(?)}")) {
+
             cstmt.setInt(1, dishId);
-
             cstmt.execute();
-            ResultSet rs = cstmt.getResultSet();
+            // Da gestire questaa duplicazione
 
-            while(rs.next()){
-                Allergen allergen = new Allergen();
-                allergen.setId(rs.getInt("IdAllergen"));
-                allergen.setName(rs.getString("Name"));
-                allergens.add(allergen);
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    Allergen allergen = new Allergen();
+                    allergen.setId(rs.getInt("IdAllergen"));
+                    allergen.setName(rs.getString("Name"));
+                    allergens.add(allergen);
+                }
             }
-            cstmt.close(); rs.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getMessage();
-            e.getStackTrace();
-            throw new SQLException(e);
+        } catch (SQLException e){
+            throw new FailedSearchException("SQL query error while tryingo to acquire dish allergens", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException(e);
         }
+
         return allergens;
     }
+
+
 }

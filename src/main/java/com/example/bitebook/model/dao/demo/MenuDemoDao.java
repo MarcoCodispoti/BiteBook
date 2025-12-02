@@ -126,7 +126,7 @@ public class MenuDemoDao implements MenuDao{
     // METODO 2: getMenuCourses
     // ---------------------------------------------------------
     @Override
-    public List<Dish> getMenuCourses(int menuId) {
+    public List<Dish> getMenuCourses(int menuId) throws FailedSearchException {
         // Nel DB facevi una JOIN complessa. Qui è un lookup immediato per Key.
 
         List<Dish> courses = menuCoursesMap.get(menuId);

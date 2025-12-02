@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
@@ -108,7 +109,12 @@ public class MenuDetailsPageControllerG{
         errorLabel.setText("Menu: " + selectedMenuBean.getName() + " " +  selectedMenuBean.getId());
         ExplorationController explorationController = new ExplorationController();
 
-        courseBeans = explorationController.getCourses(selectedMenuBean);
+        try {
+            courseBeans = explorationController.getCourses(selectedMenuBean);
+        } catch (FailedSearchException e) {
+            errorLabel.setText("Error while getting courses info, please try again! ");
+            return;
+        }
         errorLabel.setText("trovate " + courseBeans.size() + " courses");
         populateCourses();
 

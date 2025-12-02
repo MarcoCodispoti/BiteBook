@@ -70,33 +70,18 @@ public class ExplorationController{
 
 
 
-    //
-    public List<DishBean> getCourses(MenuBean menuBean){
-        List<Dish> courses;
-        MenuDao menuDao = DaoFactory.getMenuDao();
-
+    // Okk -> Va bene
+    public List<DishBean> getCourses(MenuBean menuBean) throws FailedSearchException {
         List<DishBean> coursesBean = new ArrayList<>();
-
-        try{
-            courses = menuDao.getMenuCourses(menuBean.getId());
-            DishBean dishBean;
-
-
-            for(Dish dish : courses){
-                List< Allergen> dishAllergens;
-                DishDao dishDao = DaoFactory.getDishDao();
-                dishAllergens = dishDao.getDishAllergens(dish.getId());
+        List<Dish> courses = DaoFactory.getMenuDao().getMenuCourses(menuBean.getId());
+        if (courses != null) {
+            DishDao dishDao = DaoFactory.getDishDao();
+            for (Dish dish : courses) {
+                List<Allergen> dishAllergens = dishDao.getDishAllergens(dish.getId());
                 dish.setAllergens(dishAllergens);
+                coursesBean.add(new DishBean(dish));
             }
-
-            for(Dish dish : courses){
-                dishBean = new DishBean(dish);
-                coursesBean.add(dishBean);
-            }
-        } catch (Exception e){
-            return null;
         }
-
         return coursesBean;
     }
 

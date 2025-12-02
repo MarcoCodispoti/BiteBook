@@ -9,7 +9,7 @@ import java.util.List;
 public interface MenuDao {
     public List<Menu> getChefMenus(int chefId) throws FailedSearchException;
 
-    public List<Dish> getMenuCourses(int menuId);
+    public List<Dish> getMenuCourses(int menuId) throws FailedSearchException;
 
     public Menu getMenuLevelsSurcharge(int menuId) throws Exception;
 }

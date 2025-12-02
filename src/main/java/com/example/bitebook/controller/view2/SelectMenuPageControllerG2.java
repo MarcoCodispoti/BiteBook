@@ -321,8 +321,12 @@ public class SelectMenuPageControllerG2{
         if(selectedMenuBean == null){
             errorLabel.setText("Error occurred while obtaining menu detals"); return;
         }
-        selectedMenuDishBeans = explorationController.getCourses(selectedMenuBean);
-
+        try {
+            selectedMenuDishBeans = explorationController.getCourses(selectedMenuBean);
+        } catch (FailedSearchException e){
+            errorLabel.setText("Error occurred while searching menu details, please try again.");
+            return;
+        }
         for(DishBean dishBean:selectedMenuDishBeans){
             menuDetailsListView.getItems().add(String.valueOf(dishBean.getCourseType()).toLowerCase().replace("_"," ") + ":  " + dishBean.getName()  + ":  " + dishBean.getDescription());
         }

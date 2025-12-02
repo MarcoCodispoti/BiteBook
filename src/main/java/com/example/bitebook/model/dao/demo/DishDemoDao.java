@@ -1,5 +1,6 @@
 package com.example.bitebook.model.dao.demo;
 
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.dao.DishDao;
 
@@ -66,7 +67,7 @@ public class DishDemoDao implements DishDao {
     // METODO: getDishAllergens
     // ---------------------------------------------------------
     @Override
-    public List<Allergen> getDishAllergens(int dishId){
+    public List<Allergen> getDishAllergens(int dishId) throws FailedSearchException{
         // Nel DB DAO facevi: CALL getDishAllergens(?) -> SELECT ... JOIN ... WHERE DishId = ?
         // Qui facciamo un lookup diretto nella mappa usando l'ID del piatto.
 
