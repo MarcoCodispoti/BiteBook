@@ -7,13 +7,12 @@ import com.example.bitebook.model.enums.CourseType;
 import java.util.List;
 
 public class DishBean{
-    private int id;
-    private String name;
-    private CourseType courseType;
-    private String description;
-    private List<Allergen> allergens;
+    private final int id;
+    private final String name;
+    private final CourseType courseType;
+    private final String description;
+    private final List<Allergen> allergens;
 
-    public DishBean(){}
 
     public DishBean(Dish dish){
         this.id = dish.getId();
@@ -24,13 +23,12 @@ public class DishBean{
     }
 
     public int  getId() {return id;}
-    public void setId(int id) {this.id = id;}
     public String getName(){return name;}
-    public void setName(String name){this.name = name;}
     public CourseType getCourseType(){return courseType;}
-    public void setCourseType(CourseType courseType){this.courseType = courseType;}
     public String getDescription(){return description;}
-    public void setDescription(String description){this.description = description;}
     public List<Allergen> getAllergens() {return allergens;}
-    public void setAllergens(List<Allergen> allergens) {this.allergens = allergens;}
+
+    public boolean validate(){
+        return id>0 && name!=null && !name.isEmpty() && courseType!=null && description != null && description.length()>10;
+    }
 }

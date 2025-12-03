@@ -101,7 +101,7 @@ public class RequestManagerController {
             rdb.setDate(entity.getReservationDetails().getDate());
             rdb.setTime(entity.getReservationDetails().getTime());
             rdb.setAddress(entity.getReservationDetails().getAddress());
-            bean.setReservationDetails(rdb);
+            bean.setReservationDetailsBean(rdb);
         }
         return bean;
     }

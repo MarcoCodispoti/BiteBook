@@ -4,7 +4,6 @@ import com.example.bitebook.model.enums.RequestStatus;
 
 public class ServiceRequestBean {
     private int id;
-    // private Client client;
 
     private ClientBean clientBean;
 
@@ -12,15 +11,12 @@ public class ServiceRequestBean {
     private MenuBean menu;
     private int totalPrice;
     private RequestStatus requestStatus;
-    private ReservationDetailsBean reservationDetails;
+    private ReservationDetailsBean reservationDetailsBean;
 
     public ServiceRequestBean(){}
 
     public int getId(){return id;}
     public void setId(int id){this.id = id;}
-
-    // public Client getClient(){return client;}
-    // public void setClient(Client client){this.client = client;}
 
     public ClientBean getClientBean(){return clientBean;}
     public void setClientBean(ClientBean clientBean){this.clientBean = clientBean;}
@@ -36,11 +32,18 @@ public class ServiceRequestBean {
     public RequestStatus getStatus(){return requestStatus;}
     public void setStatus(RequestStatus requestStatus){this.requestStatus = requestStatus;}
 
-    public ReservationDetailsBean getReservationDetails(){return reservationDetails;}
-    public void setReservationDetails(ReservationDetailsBean reservationDetails){this.reservationDetails = reservationDetails;}
+    public ReservationDetailsBean getReservationDetailsBean(){return reservationDetailsBean;}
+    public void setReservationDetailsBean(ReservationDetailsBean reservationDetailsBean){this.reservationDetailsBean = reservationDetailsBean;}
+
+
+    public boolean validateWithId(){
+        return id > 0 && clientBean != null && chef != null && menu != null && totalPrice > 0
+                && requestStatus != null && reservationDetailsBean.validate();
+    }
 
     public boolean validate(){
-        return true;
+        return clientBean != null && chef != null && menu != null && totalPrice > 0
+                && requestStatus != null && reservationDetailsBean != null && reservationDetailsBean.validate();
     }
 
 }

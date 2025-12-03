@@ -5,7 +5,15 @@ import com.example.bitebook.model.enums.DietType;
 
 public class MenuBean{
 
-    public MenuBean(){};
+    private int id;
+    private String name;
+    private int numberOfCourses;
+    private DietType dietType;
+    private int pricePerPerson;
+    private int premiumLevelSurcharge;
+    private int luxeLevelSurcharge;
+
+    public MenuBean(){}
 
     public MenuBean(Menu menu){
         this.id = menu.getId();
@@ -15,34 +23,20 @@ public class MenuBean{
         this.pricePerPerson = menu.getPricePerPerson();
     }
 
-    private int id;
-    private String name;
-    private int numberOfCourses;
-    private DietType dietType;
-    private int pricePerPerson;
-
-    // private MenuLevel menuLevel; -> Spostato nel reservation details
-    private int premiumLevelSurcharge;
-    private int luxeLevelSurcharge;
-
     public int getId() {return id;}
-    public void setId(int id) {}
+    public void setId(int id){this.id = id;}
     public String getName() {return name;}
     public void setName(String name){this.name = name;}
     public int getNumberOfCourses() {return numberOfCourses;}
-    public void setNumberOfCourses(int numberOfCourses) {}
     public DietType getDietType() {return dietType;}
-    public void setDietType(DietType dietType) {}
     public int getPricePerPerson() {return pricePerPerson;}
-    public void setPricePerPerson(int pricePerPerson){this.pricePerPerson=pricePerPerson;}
-
-    // Spostati in ReservationDetailsBean
-//    public MenuLevel getMenuLevel() {return menuLevel;}
-//    public void setMenuLevel(MenuLevel menuLevel) {this.menuLevel=menuLevel;}
-
     public int getPremiumLevelSurcharge() {return premiumLevelSurcharge;}
     public int getLuxeLevelSurcharge() {return luxeLevelSurcharge;}
     public void setPremiumLevelSurcharge(int premiumLevelSurcharge) {this.premiumLevelSurcharge = premiumLevelSurcharge;}
     public void setLuxeLevelSurcharge(int luxeLevelSurcharge) {this.luxeLevelSurcharge = luxeLevelSurcharge;}
 
+    public boolean validate(){
+        return id > 0 && name != null && !name.isEmpty() && numberOfCourses > 0 && dietType != null && pricePerPerson > 0
+                && premiumLevelSurcharge > 0 && luxeLevelSurcharge > 0 && luxeLevelSurcharge > premiumLevelSurcharge;
+    }
 }

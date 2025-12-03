@@ -85,11 +85,11 @@ public class ChefHomePageControllerG2{
     private String convertRequestAsString(ServiceRequestBean serviceRequestBean){
         return "Client: " + serviceRequestBean.getClientBean().getName() + " " + serviceRequestBean.getClientBean().getSurname() + "  "
                 + "Menu: " + serviceRequestBean.getMenuBean().getName() + "  "
-                + "Level: " + String.valueOf(serviceRequestBean.getReservationDetails().getSelectedMenuLevel()).toLowerCase() + "  "
-                + "Participants: " + serviceRequestBean.getReservationDetails().getParticipantNumber()+ "  "
-                + "Date: " + serviceRequestBean.getReservationDetails().getDate() + "  "
-                + "Time: " + serviceRequestBean.getReservationDetails().getTime() + "  "
-                + "Address: " + serviceRequestBean.getReservationDetails().getAddress() ;
+                + "Level: " + String.valueOf(serviceRequestBean.getReservationDetailsBean().getSelectedMenuLevel()).toLowerCase() + "  "
+                + "Participants: " + serviceRequestBean.getReservationDetailsBean().getParticipantNumber()+ "  "
+                + "Date: " + serviceRequestBean.getReservationDetailsBean().getDate() + "  "
+                + "Time: " + serviceRequestBean.getReservationDetailsBean().getTime() + "  "
+                + "Address: " + serviceRequestBean.getReservationDetailsBean().getAddress() ;
     }
 
 

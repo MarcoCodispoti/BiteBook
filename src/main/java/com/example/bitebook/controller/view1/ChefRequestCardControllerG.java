@@ -58,12 +58,12 @@ public class ChefRequestCardControllerG{
         requestIdLabel.setText(String.valueOf(serviceRequestBean.getId()));
         clientLabel.setText(serviceRequestBean.getClientBean().getName() + " " + serviceRequestBean.getClientBean().getSurname());
         menuLabel.setText(serviceRequestBean.getMenuBean().getName());
-        menuLevelLabel.setText(String.valueOf(serviceRequestBean.getReservationDetails().getSelectedMenuLevel()));
-        numberOfParticipantsLabel.setText(String.valueOf(serviceRequestBean.getReservationDetails().getParticipantNumber()));
+        menuLevelLabel.setText(String.valueOf(serviceRequestBean.getReservationDetailsBean().getSelectedMenuLevel()));
+        numberOfParticipantsLabel.setText(String.valueOf(serviceRequestBean.getReservationDetailsBean().getParticipantNumber()));
         totalPriceLabel.setText(serviceRequestBean.getTotalPrice() + " €");
-        dateLabel.setText(String.valueOf(serviceRequestBean.getReservationDetails().getDate()));
-        timeLabel.setText(String.valueOf(serviceRequestBean.getReservationDetails().getTime()));
-        addressLabel.setText(serviceRequestBean.getReservationDetails().getAddress());
+        dateLabel.setText(String.valueOf(serviceRequestBean.getReservationDetailsBean().getDate()));
+        timeLabel.setText(String.valueOf(serviceRequestBean.getReservationDetailsBean().getTime()));
+        addressLabel.setText(serviceRequestBean.getReservationDetailsBean().getAddress());
         statusLabel.setText(String.valueOf(serviceRequestBean.getStatus()));
     }
 

@@ -11,7 +11,7 @@ public class ChefBean extends UserBean{
     private List<SpecializationType> specializationTypes;
     private String city;
 
-    public ChefBean(){};
+    public ChefBean(){}
 
     public ChefBean(Chef chef){
         super();
@@ -23,17 +23,9 @@ public class ChefBean extends UserBean{
         this.city = chef.getCity();
     }
 
-//    public int getId(){return id;}
-//    public void setId(int id){this.id=id;}
-//    public void setName(String name){this.name=name;}
-//    public String getName(){return name;}
-//    public void setSurname(String surname){this.surname=surname;}
-//    public String getSurname(){return surname;}
 
     public CookingStyle getCookingStyle(){return cookingStyle;}
-    public void setCookingStyle(CookingStyle cookingStyle){this.cookingStyle=cookingStyle;}
     public List<SpecializationType> getSpecializationTypes(){return this.specializationTypes;}
-    public void setSpecializationTypes(List<SpecializationType> specializationTypes){this.specializationTypes = specializationTypes;}
     public String getCity(){return city;}
     public void setCity(String inputCity){this.city=inputCity;}
 
@@ -42,17 +34,22 @@ public class ChefBean extends UserBean{
         if (city == null || city.trim().isEmpty()) {
             return false;
         }
-        // Rimuove spazi iniziali e finali
         city = city.trim();
-        // Controlla che contenga solo lettere e spazi (es. "New York")
-        if (!city.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s'-]+$")) {
+        if (!city.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s'-]+$")){
             return false;
         }
-        // Controlla lunghezza minima
         if (city.length() < 2){
             return false;
         }
-        // Controlla che inizi con lettera maiuscola
         return Character.isUpperCase(city.charAt(0));
     }
+
+    @Override
+    public boolean validate(){
+        if(!super.validate()){
+            return false;
+        }
+        return cookingStyle != null && specializationTypes != null && validateCity();
+    }
+
 }

@@ -49,9 +49,9 @@ public class ClientRequestsPageControllerG2{
             for (ServiceRequestBean serviceRequestBean : clientRequestListBeans) {
                 String serviceRequestString = "";
                 serviceRequestString = serviceRequestString.concat("ID: " + serviceRequestBean.getId() + "    " + " Chef:  " + serviceRequestBean.getChefBean().getName() + " " + serviceRequestBean.getChefBean().getSurname() + "      ");
-                serviceRequestString = serviceRequestString.concat("Menu: " + serviceRequestBean.getMenuBean().getName() + "      Menu Level: " + serviceRequestBean.getReservationDetails().getSelectedMenuLevel().toString().toLowerCase() + "    ");
-                serviceRequestString = serviceRequestString.concat("Total Price: " + serviceRequestBean.getTotalPrice() + " €      Date: " + serviceRequestBean.getReservationDetails().getDate() + "       Time: " + serviceRequestBean.getReservationDetails().getTime() + "    ");
-                serviceRequestString = serviceRequestString.concat("Address: " + serviceRequestBean.getReservationDetails().getAddress() + "     Status: " + String.valueOf(serviceRequestBean.getStatus())).toLowerCase();
+                serviceRequestString = serviceRequestString.concat("Menu: " + serviceRequestBean.getMenuBean().getName() + "      Menu Level: " + serviceRequestBean.getReservationDetailsBean().getSelectedMenuLevel().toString().toLowerCase() + "    ");
+                serviceRequestString = serviceRequestString.concat("Total Price: " + serviceRequestBean.getTotalPrice() + " €      Date: " + serviceRequestBean.getReservationDetailsBean().getDate() + "       Time: " + serviceRequestBean.getReservationDetailsBean().getTime() + "    ");
+                serviceRequestString = serviceRequestString.concat("Address: " + serviceRequestBean.getReservationDetailsBean().getAddress() + "     Status: " + String.valueOf(serviceRequestBean.getStatus())).toLowerCase();
 
                 clientRequestsListView.getItems().add(serviceRequestString);
             }

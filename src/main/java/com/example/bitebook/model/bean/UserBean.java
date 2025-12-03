@@ -13,4 +13,8 @@ public class UserBean{
     public String getSurname(){return surname;}
     public void setSurname(String surname){this.surname=surname;}
 
+
+    public boolean validate(){
+        return name!=null && !name.isEmpty() && surname!=null && !surname.isEmpty();
+    }
 }

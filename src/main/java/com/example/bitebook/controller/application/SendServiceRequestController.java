@@ -86,7 +86,7 @@ public class SendServiceRequestController{
         clientBean.setId(loggedClient.getId());
         serviceRequestBean.setClientBean(clientBean);
         serviceRequestBean.setMenuBean(menuBean);
-        serviceRequestBean.setReservationDetails(reservationDetailsBean);
+        serviceRequestBean.setReservationDetailsBean(reservationDetailsBean);
         serviceRequestBean.setStatus(RequestStatus.PENDING);
         return serviceRequestBean;
     }
@@ -110,11 +110,11 @@ public class SendServiceRequestController{
         serviceRequest.setClient(convertClientBean(serviceRequestBean.getClientBean()));
         serviceRequest.setChef(convertChefBean(serviceRequestBean.getChefBean()));
         serviceRequest.setMenu(convertMenuBean(serviceRequestBean.getMenuBean()));
-        serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetails()));
+        serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetailsBean()));
         serviceRequest.setStatus(serviceRequestBean.getStatus());
-        if (serviceRequestBean.getReservationDetails() != null && serviceRequestBean.getMenuBean() != null) {
+        if (serviceRequestBean.getReservationDetailsBean() != null && serviceRequestBean.getMenuBean() != null) {
             serviceRequest.setTotalPrice(calculateTotalPrice(
-                    serviceRequestBean.getReservationDetails(),
+                    serviceRequestBean.getReservationDetailsBean(),
                     serviceRequestBean.getMenuBean()
             ));
         }
@@ -165,5 +165,5 @@ public class SendServiceRequestController{
         entity.setSelectedMenuLevel(bean.getSelectedMenuLevel());
         return entity;
     }
-    
+
 }

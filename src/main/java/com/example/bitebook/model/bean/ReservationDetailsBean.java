@@ -21,7 +21,11 @@ public class ReservationDetailsBean{
     public int getParticipantNumber(){return participantNumber;}
     public void setParticipantNumber(int participantNumber){this.participantNumber = participantNumber;}
 
-    // Aggiunto dopo dal MenuBean
     public MenuLevel getSelectedMenuLevel(){return selectedMenuLevel;}
     public void setSelectedMenuLevel(MenuLevel selectedMenuLevel){this.selectedMenuLevel = selectedMenuLevel;}
+
+    public boolean validate(){
+        return date != null && time != null &&  address != null && !address.isEmpty() && participantNumber > 0 && selectedMenuLevel != null;
+    }
+
 }
