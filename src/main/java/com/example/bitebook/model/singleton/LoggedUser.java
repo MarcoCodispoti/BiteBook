@@ -5,36 +5,55 @@ import com.example.bitebook.model.Client;
 import com.example.bitebook.model.enums.Role;
 
 public class LoggedUser{
+
+    private static volatile LoggedUser instance = null;
+
     private Client client;
     private Chef chef;
     private Role role;
 
-    private LoggedUser(){}
 
-    public static LoggedUser getInstance(){
-        if(instance==null){
-            instance = new LoggedUser();
+    private LoggedUser() {}
+
+    public static LoggedUser getInstance() {
+        if (instance == null) {
+            synchronized (LoggedUser.class) {
+                if (instance == null) {
+                    instance = new LoggedUser();
+                }
+            }
         }
         return instance;
     }
 
-    public static void logout(){
-        if(instance!=null) {
-            instance.client = null;
-            instance.chef = null;
-            instance.role = null;
+    public void logout() {
+        this.client = null;
+        this.chef = null;
+        this.role = null;
+    }
+
+    public static void clear() {
+        if (instance != null) {
+            instance.logout();
         }
     }
 
+    public void setChef(Chef chef) {
+        this.chef = chef;
+        this.client = null;
+        this.role = Role.CHEF;
+    }
 
-    public void setRole(Role role){this.role=role;}
-    public Role getRole(){return role;}
+    public void setClient(Client client) {
+        this.client = client;
+        this.chef = null;
+        this.role = Role.CLIENT;
+    }
 
-    public Chef getChef(){return chef;}
-    public void setChef(Chef chef){this.chef=chef;}
+    public Chef getChef() { return chef; }
+    public Client getClient() { return client; }
 
-    public Client getClient(){return client;}
-    public void setClient(Client client){this.client=client;}
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 
-    private static LoggedUser instance;
 }

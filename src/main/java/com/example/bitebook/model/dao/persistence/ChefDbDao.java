@@ -60,7 +60,7 @@ public class ChefDbDao implements ChefDao{
                     chef.setSurname(rs.getString("Surname"));
                     chef.setCity(cityName);
 
-                    chef.setStyle(CookingStyle.fromString(rs.getString("CookingStyle")));
+                    chef.setStyle(CookingStyle.valueOf(rs.getString("CookingStyle")));
                     chef.setSpecializations(convertSpecializationString(rs.getString("Specializations")));
 
                     cityChefs.add(chef);

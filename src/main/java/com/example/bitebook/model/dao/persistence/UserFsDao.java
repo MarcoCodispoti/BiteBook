@@ -98,7 +98,7 @@ public class UserFsDao implements UserDao{
                                 Integer.parseInt(fields[0].trim()),
                                 fields[1].trim(),
                                 fields[2].trim(),
-                                CookingStyle.fromString(fields[7].trim()),
+                                CookingStyle.valueOf(fields[7].trim()),
                                 fields[6].trim()
                         );
                         chef.setEmail(email);

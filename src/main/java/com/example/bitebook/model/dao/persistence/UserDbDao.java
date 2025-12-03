@@ -65,7 +65,7 @@ public class UserDbDao implements UserDao {
                                 rs.getInt("IdUser"),
                                 rs.getString("Name"),
                                 rs.getString("Surname"),
-                                CookingStyle.fromString(rs.getString("CookingStyle")), // Gestione Enum
+                                CookingStyle.valueOf(rs.getString("CookingStyle")), // Gestione Enum
                                 rs.getString("City")
                         );
                         chef.setEmail(email);
