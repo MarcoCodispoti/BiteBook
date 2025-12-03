@@ -2,39 +2,26 @@ package com.example.bitebook.util;
 
 public class AppConfig{
     private static AppConfig instance;
+    private final boolean demoMode;
 
-    private boolean demoMode;
-
-//    private AppConfig(){
-//        this.demoMode = false;
-//    }
+    private static final String PROPERTY_KEY = "bitebook.mode";
+    private static final String MODE_DEMO = "demo";
+    private static final String MODE_PERSISTENCE = "persistence";
 
     private AppConfig() {
-        // 1. Definisci il nome della tua proprietà
-        String propertyName = "bitebook.mode";
-
-        String mode = System.getProperty(propertyName, "persistence");
-        this.demoMode = mode.equalsIgnoreCase("demo");
-
-        System.out.println("--- BiteBook avviato in modalità: " +
-                (this.demoMode ? "DEMO" : "PERSISTENCE") + " ---");
+        String mode = System.getProperty(PROPERTY_KEY, MODE_PERSISTENCE);
+        this.demoMode = MODE_DEMO.equalsIgnoreCase(mode);
     }
 
-
-    public static AppConfig getInstance(){
-        if(instance == null){
+    public static synchronized AppConfig getInstance() {
+        if (instance == null) {
             instance = new AppConfig();
         }
         return instance;
     }
 
-    public boolean isDemoMode(){
+    public boolean isDemoMode() {
         return this.demoMode;
     }
-
-    public void setDemoMode(boolean demoMode){
-        this.demoMode = demoMode;
-    }
-
 
 }
