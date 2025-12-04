@@ -4,7 +4,9 @@ import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.dao.UserDao;
+import com.example.bitebook.model.enums.CookingStyle;
 import com.example.bitebook.model.enums.Role;
+import com.example.bitebook.model.enums.SpecializationType;
 
 
 import java.util.ArrayList;
@@ -33,6 +35,8 @@ public class UserDemoDao implements UserDao {
         chef.setCity("Roma");
         chef.setEmail("aborghe@chef.it");
         chef.setPassword("password12");
+        chef.setStyle(CookingStyle.MODERN);
+        chef.setSpecializations(List.of(SpecializationType.SEAFOOD, SpecializationType.VEGAN));
 
         demoChefs.add(chef);
     }
