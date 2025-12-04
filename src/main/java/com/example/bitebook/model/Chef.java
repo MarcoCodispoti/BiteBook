@@ -7,7 +7,13 @@ import java.util.List;
 
 public class Chef extends User {
 
-    public Chef(){};
+    private CookingStyle style;
+    private List<SpecializationType> specializations;
+    private List<Menu> offeredMenus;
+    private String city;
+
+
+    public Chef(){}
 
     public Chef(int id, String name, String surname, CookingStyle cookingStyle, String city) {
         super(id,name,surname);
@@ -15,23 +21,19 @@ public class Chef extends User {
         this.city = city;
     }
 
-    private CookingStyle style;
-    private List<SpecializationType> specializations;
-    private List<Menu> offeredMenus;
-    private String city;
-
 
     public CookingStyle getStyle(){return style;}
-    public List<SpecializationType> getSpecializations(){return specializations;}
-    public List<Menu> getOfferedMenus(){return offeredMenus;}
-    public String getCity(){return city;}
-
     public void setStyle(CookingStyle style){this.style = style;}
+
+    public List<SpecializationType> getSpecializations(){return specializations;}
     public void setSpecializations(List<SpecializationType> specializations){
         this.specializations = specializations;
     }
-    public void setOfferedMenus(List<Menu> offeredMenus){
-        this.offeredMenus = offeredMenus;
-    }
+
+    public List<Menu> getOfferedMenus(){return offeredMenus;}
+    public void setOfferedMenus(List<Menu> offeredMenus){this.offeredMenus = offeredMenus;}
+
+    public String getCity(){return city;}
     public void setCity(String city){this.city = city;}
+
 }
