@@ -65,7 +65,7 @@ public class ChefHomePageControllerG {
 
     private void populateRequests() {
         if (approvedServiceRequestBeans == null || approvedServiceRequestBeans.isEmpty()) {
-            errorLabel.setText("Nessuna richiesta attiva al momento.");
+            errorLabel.setText("No active request at the moment.");
             return;
         }
         for (ServiceRequestBean serviceRequestBean : approvedServiceRequestBeans) {

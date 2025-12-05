@@ -1,111 +1,71 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.exceptions.FailedSearchException;
+import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import com.example.bitebook.model.enums.RequestStatus;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ChefRequestsPageControllerG{
+
+    private final RequestManagerController requestManagerController = new RequestManagerController();
+
     private Parent selectedCardUi;
-    private List<ServiceRequestBean> chefServiceRequestBeans;
     private ServiceRequestBean selectedServiceRequestBean;
 
-    @FXML
-    private Hyperlink homepageHyperlink;
+    private List<ServiceRequestBean> chefServiceRequestBeans;
 
-    @FXML
-    private Hyperlink menusHyperlink;
-
-    @FXML
-    private VBox requestsVBox;
-
-    @FXML
-    private ScrollPane requestsScrollPane;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private Button rejectRequestButton;
-
-    @FXML
-    private Button approveRequestButton;
+    @FXML private VBox requestsVBox;
+    @FXML private Label errorLabel;
 
 
     @FXML
-    void clickedOnHomePage(ActionEvent event) {
+    void clickedOnHomePage() {
         FxmlLoader.setPage("ChefHomePage");
     }
 
     @FXML
-    void clickedOnMenus(ActionEvent event) {
-        errorLabel.setText("Not implemented yet :");
-        errorLabel.setVisible(true);
+    void clickedOnMenus() {
+        errorLabel.setText("Coming soon!");
     }
 
     @FXML
-    void clickedOnRejectRequest(ActionEvent event) {
-//        if(selectedServiceRequestBean==null){
-//            errorLabel.setText("Select a request first");
-//            return;
-//        }
-//        selectedServiceRequestBean.setStatus(RequestStatus.REJECTED);
-//        try {
-//            ManageRequestController.manageRequest(selectedServiceRequestBean);
-//        } catch (Exception e) {
-//            errorLabel.setText("Unable to reject request");
-//        }
-        manageRequest(RequestStatus.REJECTED);
-        initialize();
+    void initialize() {
+        refreshPage();
     }
 
-    @FXML
-    void clickedOnApproveRequest(ActionEvent event){
-//        if(selectedServiceRequestBean==null){
-//            errorLabel.setText("Select a request first");
-//            return;
-//        }
-//        selectedServiceRequestBean.setStatus(RequestStatus.APPROVED);
-//        try {
-//            ManageRequestController.manageRequest(selectedServiceRequestBean);
-//        } catch (Exception e) {
-//            errorLabel.setText("Unable to manage request");
-//        }
-        manageRequest(RequestStatus.APPROVED);
-        initialize();
-    }
+    private void refreshPage(){
+        errorLabel.setText("");
+        requestsVBox.getChildren().clear();
+        selectedServiceRequestBean = null;
+        selectedCardUi = null;
 
-
-    public void initialize(){
         try {
-            RequestManagerController requestManagerController = new RequestManagerController();
             this.chefServiceRequestBeans = requestManagerController.getChefRequests();
-            selectedServiceRequestBean = null;
-            errorLabel.setText( "caricate " + chefServiceRequestBeans.size() + " richieste ottenute ");
             populateRequests();
-        } catch (Exception e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
-            errorLabel.setText("Error :");
+
+        } catch (FailedSearchException e) {
+            errorLabel.setText("Unable to load requests");
         }
     }
 
-    public void populateRequests(){
-        requestsVBox.getChildren().clear();
 
-        for(ServiceRequestBean serviceRequestBean : chefServiceRequestBeans){
-            try{
+    private void populateRequests() {
+        if (chefServiceRequestBeans == null || chefServiceRequestBeans.isEmpty()) {
+            errorLabel.setText("No incoming requests found.");
+            return;
+        }
+
+        for (ServiceRequestBean serviceRequestBean : chefServiceRequestBeans) {
+            try {
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/ChefRequestCard.fxml"));
                 Parent chefRequestCard = cardLoader.load();
 
@@ -115,37 +75,47 @@ public class ChefRequestsPageControllerG{
                 controller.setParentController(this);
 
                 requestsVBox.getChildren().add(chefRequestCard);
-            } catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-                e.getMessage();
-                errorLabel.setText("Error ");
+
+            } catch (IOException e){
+                System.err.println("Error loading request ID: " + serviceRequestBean.getId());
             }
         }
     }
 
-    public void setSelectedSequest(ServiceRequestBean serviceRequestBean, Parent cardUi){
-        this.selectedServiceRequestBean = serviceRequestBean;
 
-        if(selectedCardUi !=null){
+    @FXML
+    void clickedOnApproveRequest() {
+        updateRequestStatus(RequestStatus.APPROVED);
+    }
+
+    @FXML
+    void clickedOnRejectRequest() {
+        updateRequestStatus(RequestStatus.REJECTED);
+    }
+
+
+    private void updateRequestStatus(RequestStatus newStatus) {
+        if (selectedServiceRequestBean == null) {
+            errorLabel.setText("Seleziona una richiesta dalla lista prima di procedere.");
+            return;
+        }
+        try {
+            selectedServiceRequestBean.setStatus(newStatus);
+            requestManagerController.manageRequest(selectedServiceRequestBean);
+            refreshPage();
+        } catch (FailedUpdateException e) {
+            errorLabel.setText("Error occurred while managing the request: " + e.getMessage());
+        }
+    }
+
+
+    public void setSelectedRequest(ServiceRequestBean serviceRequestBean, Parent cardUi) {
+        this.selectedServiceRequestBean = serviceRequestBean;
+        if (selectedCardUi != null) {
             selectedCardUi.setStyle("");
         }
         selectedCardUi = cardUi;
         selectedCardUi.setStyle("-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;");
-    }
-
-    public void manageRequest(RequestStatus requestStatus){
-        if(selectedServiceRequestBean==null){
-            errorLabel.setText("Select a request first");
-            return;
-        }
-        selectedServiceRequestBean.setStatus(requestStatus);
-        try {
-            RequestManagerController requestManagerController = new RequestManagerController();
-            requestManagerController.manageRequest(selectedServiceRequestBean);
-        } catch (Exception e) {
-            errorLabel.setText("Unable to manage request");
-        }
     }
 
 }

@@ -48,7 +48,7 @@ public class ChefRequestCardControllerG{
     @FXML
     private void handleClick(){
         if(parentController!=null){
-            parentController.setSelectedSequest(cardServiceRequestBean,cardUi);
+            parentController.setSelectedRequest(cardServiceRequestBean,cardUi);
         }
     }
 

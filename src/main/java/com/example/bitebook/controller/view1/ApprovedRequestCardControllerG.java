@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 public class ApprovedRequestCardControllerG{
     private ChefHomePageControllerG parentController;
     private ServiceRequestBean approvedRequestRequestBean;
-    private Parent cardUi;
+    // private Parent cardUi;
 
     @FXML
     private Label dateLabel;
