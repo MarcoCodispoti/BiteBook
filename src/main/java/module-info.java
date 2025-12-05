@@ -14,10 +14,8 @@ module com.example.bitebook {
     requires java.desktop;
     requires java.sql;
     requires javafx.base;
-    // requires com.example.bitebook;
-    // requires com.example.bitebook;
-    // requires com.example.bitebook;
 
+    exports com.example.bitebook.model.bean;
     exports com.example.bitebook.controller.view1;
     exports com.example.bitebook.controller.view2;
     opens com.example.bitebook.controller.view1 to javafx.fxml;

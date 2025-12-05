@@ -1,110 +1,119 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.AllergiesController;
+import com.example.bitebook.exceptions.FailedInsertException;
+import com.example.bitebook.exceptions.FailedRemoveException;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AllergiesPageControllerG{
 
     private final AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
-    private List<AllergenBean> clientAllergyBeans;
-    private List<AllergenBean> allergenListBeans;
     private AllergenBean selectedAllergenBean;
 
-    @FXML
-    private Hyperlink homepageHyperlink;
 
     @FXML
     private VBox allergiesVBox;
 
-    @FXML
-    private Button insertAllergyButton;
 
     @FXML
-    private Hyperlink requestsHyperlink;
+    private ComboBox<AllergenBean> selectAllergyComboBox;
 
-    @FXML
-    private ComboBox selectAllergyComboBox;
-
-    @FXML
-    private Button removeAllergyButton;
-
-    @FXML
-    private ScrollPane allergiesScrollPane;
 
     @FXML
     private Label errorLabel;
 
 
     @FXML
-    void clickedOnHomepage(ActionEvent event) {
+    void clickedOnHomepage() {
         FxmlLoader.setPage("ClientHomePage");
     }
 
     @FXML
-    void clickedOnRequests(ActionEvent event){
+    void clickedOnRequests(){
         FxmlLoader.setPage("ClientRequestsPage");
     }
 
+
+
     @FXML
-    void clickedOnRemoveAllergy(ActionEvent event){
-        if(selectedAllergenBean!=null){
+    void clickedOnRemoveAllergy() {
+        if (selectedAllergenBean != null) {
             try {
                 allergiesController.removeClientAllergy(selectedAllergenBean);
-            } catch (Exception e) {
+                errorLabel.setText("Allergia rimossa.");
+                refreshPage();
+
+            } catch (FailedRemoveException e) {
                 errorLabel.setText("Error while removing allergy");
             }
-        } else{
+        } else {
             errorLabel.setText("Please select the allergy to remove first");
         }
-        initialize();
     }
 
-    @FXML
-    void insertAllergyTextField(ActionEvent event) {
-
-    }
 
     @FXML
-    void clickedOnInsertAllergy(ActionEvent event) {
-        AllergenBean newAllergenBean = getNewAllergenBean();
-        if(newAllergenBean !=null){
-            errorLabel.setText("hai selezionato: ID " +  newAllergenBean.getId() + "  " + newAllergenBean.getName());
-        } else {
+    void clickedOnInsertAllergy() {
+        AllergenBean newAllergyBean = selectAllergyComboBox.getValue();
+
+        if (newAllergyBean == null) {
             errorLabel.setText("Please select the allergy to add first");
             return;
         }
+
         try {
-            allergiesController.insertAllergy(newAllergenBean);
-        } catch (Exception e) {
-            errorLabel.setText("Error while inserting allergy");
+            allergiesController.insertAllergy(newAllergyBean);
+
+            errorLabel.setText("Allergy inserted successfully");
+            refreshPage();
+
+        } catch (FailedInsertException e) { // Usa FailedInsertException se preferisci
+            errorLabel.setText("Error while inserting allergy: " + e.getMessage());
         }
-        initialize();
     }
+
+
+
+
+
+
 
 
     @FXML
     void initialize(){
-        try {
-            this.clientAllergyBeans = allergiesController.getClientAllergies();
-        } catch (Exception e){
-            e.printStackTrace();
-            errorLabel.setText("Error while getting allergies, please try again");
-            return;
-        }
-        populateClientAllergies();
-        fillSelectAllergyComboBox();
+        refreshPage();
     }
 
+
+    private void refreshPage(){
+        errorLabel.setText("");
+        allergiesVBox.getChildren().clear(); // Pulisce la grafica vecchia
+        populateClientAllergies();           // Ricarica le card
+        fillSelectAllergyComboBox();         // Ricarica il menu a tendina
+
+        // Reset selezioni
+        selectedAllergenBean = null;
+        selectedCardUi = null;
+    }
+
+
+
     private void populateClientAllergies(){
+
+        allergiesVBox.getChildren().clear();
+
+        List<AllergenBean> clientAllergyBeans = allergiesController.getClientAllergies();
+
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
             errorLabel.setText("The client has no allergies");
             return;
@@ -122,11 +131,8 @@ public class AllergiesPageControllerG{
 
                 allergiesVBox.getChildren().add(allergyCard);
 
-            } catch (Exception e){
-                e.printStackTrace();
-                e.getCause();
-                e.getMessage();
-                errorLabel.setText(e.getMessage());
+            } catch (IOException e){
+                errorLabel.setText("Error while loading client allergy");
                 return;
             }
         }
@@ -144,43 +150,21 @@ public class AllergiesPageControllerG{
     }
 
 
-    public void fillSelectAllergyComboBox(){
+
+
+    public void fillSelectAllergyComboBox() {
         try {
-            allergenListBeans = allergiesController.getAllergens();
-            System.out.println("" + allergenListBeans.size());
-        } catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
-            e.getMessage();
-            errorLabel.setText("Unable to load allergies");
-            return;
-        }
+            List<AllergenBean> allergenListBeans = allergiesController.getAllergens();
 
-        selectAllergyComboBox.getItems().clear();
-        for(AllergenBean allergyBean : allergenListBeans) {
-            selectAllergyComboBox.getItems().add("  " + allergyBean.getName());
-        }
-    }
+            selectAllergyComboBox.getItems().clear();
 
-
-    private AllergenBean getNewAllergenBean() {
-        String selectedString = String.valueOf(selectAllergyComboBox.getValue());
-
-        if (selectedString == null || selectedString.isEmpty()) {
-            return null; // Nessuna selezione
-        }
-        String cleanName = selectedString.trim();
-        if (allergenListBeans != null) {
-            for (AllergenBean bean : allergenListBeans) {
-                if (bean.getName().equalsIgnoreCase(cleanName)) {
-                    return bean; // Trovato!
-                }
+            if (allergenListBeans != null){
+                selectAllergyComboBox.getItems().addAll(allergenListBeans);
             }
+        } catch (FailedSearchException e) {
+            errorLabel.setText("Error while searching for allergens list");
         }
-        return null; // Non trovato (caso di errore)
     }
-
-
 
 
 }

@@ -21,4 +21,9 @@ public class AllergenBean{
     public boolean validate(){
         return  this.id > 0 && this.name != null && !this.name.isEmpty();
     }
+
+
+
+    public String toString(){return this.name;}
+
 }
