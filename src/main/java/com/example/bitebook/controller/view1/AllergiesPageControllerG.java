@@ -13,12 +13,11 @@ import java.util.List;
 
 public class AllergiesPageControllerG{
 
-    private AllergiesController allergiesController = new AllergiesController();
+    private final AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
     private List<AllergenBean> clientAllergyBeans;
     private List<AllergenBean> allergenListBeans;
     private AllergenBean selectedAllergenBean;
-    private AllergenBean newAllergenBean;
 
     @FXML
     private Hyperlink homepageHyperlink;
@@ -76,8 +75,8 @@ public class AllergiesPageControllerG{
 
     @FXML
     void clickedOnInsertAllergy(ActionEvent event) {
-        newAllergenBean = getNewAllergenBean();
-        if(newAllergenBean!=null){
+        AllergenBean newAllergenBean = getNewAllergenBean();
+        if(newAllergenBean !=null){
             errorLabel.setText("hai selezionato: ID " +  newAllergenBean.getId() + "  " + newAllergenBean.getName());
         } else {
             errorLabel.setText("Please select the allergy to add first");
