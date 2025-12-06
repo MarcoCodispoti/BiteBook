@@ -3,101 +3,83 @@ package com.example.bitebook.controller.view1;
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
-import com.example.bitebook.exceptions.NoChefInCityException;
 import com.example.bitebook.model.bean.ChefBean;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
 public class ClientHomePageControllerG{
 
-    @FXML
-    private Hyperlink requestsHyperlink;
+
+    private final ExplorationController explorationController = new ExplorationController();
+    private final LoginController loginController = new LoginController();
+
+    @FXML private TextField insertCityTextField;
+    @FXML private Label errorLabel;
+
+
 
     @FXML
-    private Hyperlink profileHyperlink;
-
-    @FXML
-    private Hyperlink logoutHyperlink;
-
-    @FXML
-    private Hyperlink allergiesHyperlink;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private Button findChefsButton;
-
-    @FXML
-    private TextField insertCityTextField;
-
-    @FXML
-    void clickedOnRequests(ActionEvent event) {
-        ExplorationController explorationController = new ExplorationController();
-        if(explorationController.isLoggedClient()){
+    void clickedOnRequests() {
+        if (checkLoginStatus()) {
             FxmlLoader.setPage("ClientRequestsPage");
-        } else{
-            errorLabel.setText("You must be logged in to access this page!");
         }
     }
 
     @FXML
-    void clickedOnAllergies(ActionEvent event) {
-        ExplorationController explorationController = new ExplorationController();
-        if(explorationController.isLoggedClient()){
+    void clickedOnAllergies() {
+        if (checkLoginStatus()) {
             FxmlLoader.setPage("AllergiesPage");
-        } else{
-            errorLabel.setText("You must be logged in to access this page!");
         }
     }
 
     @FXML
-    void clickedOnLogout(ActionEvent event) {
-        LoginController loginController = new LoginController();
+    void clickedOnLogout() {
         loginController.logout();
         FxmlLoader.setPage("WelcomePage");
     }
 
+
+
     @FXML
-    void clickedOnFindChefs(ActionEvent event){
+    void clickedOnFindChefs() {
+        errorLabel.setText("");
+
         ChefBean chefBean = new ChefBean();
         chefBean.setCity(insertCityTextField.getText());
+
         if(!checkCityField()){
             return;
         }
-        if(!chefBean.validateCity()){
-            errorLabel.setText("You inserted an invalid city!");
+        if (!chefBean.validateCity()){
+            errorLabel.setText("Please insert a valid city");
             return;
         }
-        errorLabel.setText("You inserted a valid city");
-
-        ExplorationController explorationController = new ExplorationController();
-        boolean chefFound;
-
-        try{
-            chefFound = explorationController.checkCityChefs(chefBean);
-        } catch(FailedSearchException e){
-            errorLabel.setText("Error occurred while searching for chefs city!");
-            return;
+        try {
+            boolean chefFound = explorationController.checkCityChefs(chefBean);
+            if (!chefFound) {
+                errorLabel.setText("No chef found in " + chefBean.getCity() + "!");
+                return;
+            }
+            SelectChefPageControllerG nextController = FxmlLoader.setPageAndReturnController("SelectChefPage");
+            if (nextController != null){
+                nextController.initData(chefBean);
+            }
+        } catch (FailedSearchException e){
+            errorLabel.setText("System Error while searching.");
         }
-
-        if(!chefFound){
-            errorLabel.setText("No chef found in the inserted city!");
-            return;
-        }
-        SelectChefPageControllerG selectChefPageControllerG = FxmlLoader.setPageAndReturnController("SelectChefPage");
-        if(selectChefPageControllerG != null){
-            System.out.println(("Passo alla schermata di scelta degli chef il bean: " + chefBean));
-            selectChefPageControllerG.initData(chefBean);
-        }
-
     }
 
+
+    private boolean checkLoginStatus() {
+        if (explorationController.isLoggedClient()) {
+            return true;
+        } else {
+            errorLabel.setText("You must be logged in");
+            return false;
+        }
+    }
 
 
     public boolean checkCityField(){
@@ -107,7 +89,6 @@ public class ClientHomePageControllerG{
         }
         return true;
     }
-
 
 
 }
