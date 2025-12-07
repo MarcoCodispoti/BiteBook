@@ -2,13 +2,11 @@ package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 public class ApprovedRequestCardControllerG{
     private ChefHomePageControllerG parentController;
     private ServiceRequestBean approvedRequestRequestBean;
-    // private Parent cardUi;
 
     @FXML
     private Label dateLabel;

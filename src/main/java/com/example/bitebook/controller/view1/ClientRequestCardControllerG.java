@@ -2,13 +2,11 @@ package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 public class ClientRequestCardControllerG{
-    private ClientRequestsPageControllerG parentController;
-    private Parent cardUi;
 
+    private ClientRequestsPageControllerG parentController;
     private ServiceRequestBean serviceRequestBean;
 
     @FXML
@@ -56,8 +54,9 @@ public class ClientRequestCardControllerG{
     }
 
 
+    public void setParentController(ClientRequestsPageControllerG parentController){
+        this.parentController = parentController;
+    }
 
-    public void setParentController(ClientRequestsPageControllerG parentController){this.parentController = parentController;}
 
-    // public void setCardUi(Parent cardUi){this.cardUi = cardUi;}
 }
