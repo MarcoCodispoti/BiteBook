@@ -3,8 +3,10 @@ package com.example.bitebook.model.bean;
 import com.example.bitebook.model.Allergen;
 
 public class AllergenBean{
+
     private int id;
     private String name;
+
 
     public AllergenBean(){}
 

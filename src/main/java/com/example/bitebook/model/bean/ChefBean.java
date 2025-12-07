@@ -7,10 +7,12 @@ import com.example.bitebook.model.enums.SpecializationType;
 import java.util.List;
 
 public class ChefBean extends UserBean{
+
     private CookingStyle cookingStyle;
     private List<SpecializationType> specializationTypes;
     private String city;
 
+    
     public ChefBean(){}
 
     public ChefBean(Chef chef){
