@@ -15,7 +15,7 @@ public class FxmlLoader2 extends Application {
 
     private static Stage stage;
     private static final String VIEW_PATH = "/com/example/bitebook/view2/";
-    private static final String ICON_PATH = "/com/example/bitebook/images/icon1.png";
+    private static final String ICON_PATH = "/com/example/bitebook/images/icon2.png";
 
     @Override
     public void start(Stage primaryStage) {

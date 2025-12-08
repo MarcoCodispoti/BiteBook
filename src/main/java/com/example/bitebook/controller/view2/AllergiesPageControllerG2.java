@@ -1,6 +1,9 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.AllergiesController;
+import com.example.bitebook.exceptions.FailedInsertException;
+import com.example.bitebook.exceptions.FailedRemoveException;
+import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -39,7 +42,7 @@ public class AllergiesPageControllerG2{
 
             populateLists();
 
-        } catch (Exception e){
+        } catch (FailedSearchException e){
             showError("Error while getting allergies, please try again");
         }
     }
@@ -74,7 +77,7 @@ public class AllergiesPageControllerG2{
         try {
             allergiesController.removeClientAllergy(selectedBean);
             refreshData();
-        } catch (Exception e) {
+        } catch (FailedRemoveException e) {
             showError("Error occurred while removing allergy");
         }
     }
@@ -94,7 +97,7 @@ public class AllergiesPageControllerG2{
         try {
             allergiesController.insertAllergy(selectedBean);
             refreshData();
-        } catch (Exception e) {
+        } catch (FailedInsertException e) {
             showError("Error occurred while adding allergy");
         }
     }
