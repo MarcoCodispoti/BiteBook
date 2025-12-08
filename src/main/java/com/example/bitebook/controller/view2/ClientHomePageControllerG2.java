@@ -4,97 +4,91 @@ import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
 public class ClientHomePageControllerG2{
 
-    @FXML
-    private Hyperlink requestsHyperlink;
+
+    private final ExplorationController explorationController = new ExplorationController();
+
+    @FXML private TextField cityTextField;
+    @FXML private Label errorLabel;
 
     @FXML
-    private TextField cityTextField;
-
-    @FXML
-    private Button bookButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
-    private Hyperlink allergiesHyperlink;
-
-    @FXML
-    private Label errorLabel;
-
-
-    ChefBean chefBean;
-
-
-    @FXML
-    void clickedOnAllergies(ActionEvent event) {
-        ExplorationController explorationController = new ExplorationController();
-        if(explorationController.isLoggedClient()){
-            FxmlLoader2.setPage("AllergiesPage2");
-        }
-        else{
-            errorLabel.setText("You must be logged in to view Allergies");
-        }
+    void clickedOnAllergies() {
+        navigateToIfLogged("AllergiesPage2", "You must be logged in to view Allergies");
     }
 
     @FXML
-    void clickedOnRequests(ActionEvent event) {
-        ExplorationController explorationController = new ExplorationController();
-        if(explorationController.isLoggedClient()){
-            FxmlLoader2.setPage("ClientRequestsPage2");
-        }
-        else{
-            errorLabel.setText("You must be logged in to view Requests");
-        }
+    void clickedOnRequests() {
+        navigateToIfLogged("ClientRequestsPage2", "You must be logged in to view Requests");
     }
 
     @FXML
-    void clickedOnLogout(ActionEvent event) {
+    void clickedOnLogout() {
         LoginController loginController = new LoginController();
         loginController.logout();
         FxmlLoader2.setPage("LoginPage2");
     }
 
     @FXML
-    void clickedOnBook(ActionEvent event) {
-        chefBean = new ChefBean();
-        if(!cityTextField.getText().isEmpty()){
-            errorLabel.setText("Please insert a city first");
-        }
-        chefBean.setCity(cityTextField.getText());
-        if(!chefBean.validateCity()){
-            errorLabel.setText("You inserted an invalid city");
-        }
+    void clickedOnBook(){
+        errorLabel.setText("");
+        errorLabel.setVisible(false);
 
-        ExplorationController explorationController = new ExplorationController();
-        boolean chefFound;
+        String cityInput = cityTextField.getText().trim();
 
-        try{
-            chefFound = explorationController.checkCityChefs(chefBean);
-        } catch(FailedSearchException e){
-            errorLabel.setText("System Error: Unable to search. Please try again later");
+        if (cityInput.isEmpty()) {
+            showError("Please insert a city first");
             return;
         }
 
-        if(!chefFound){
-            errorLabel.setText("No chef found in the inserted city!");
+        ChefBean searchBean = new ChefBean();
+        searchBean.setCity(cityInput);
+
+        if (!searchBean.validateCity()) {
+            showError("You inserted an invalid city name");
             return;
         }
-        SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
-        if(selectMenuPageControllerG2 != null){
-            selectMenuPageControllerG2.initData(chefBean);
-        }
 
+
+        try {
+            boolean chefFound = explorationController.checkCityChefs(searchBean);
+
+            if (!chefFound) {
+                showError("No chef found in the inserted city!");
+                return;
+            }
+
+            SelectMenuPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+            if (controller != null) {
+                controller.initData(searchBean);
+            }
+
+        } catch (FailedSearchException e) {
+            showError("System Error: Unable to search. Please try again later");
+        }
     }
+
+
+    private void navigateToIfLogged(String pageName, String errorMessage) {
+        errorLabel.setVisible(false);
+        if (explorationController.isLoggedClient()) {
+            FxmlLoader2.setPage(pageName);
+        } else {
+            showError(errorMessage);
+        }
+    }
+
+
+    private void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
+    }
+
+
 
 }
