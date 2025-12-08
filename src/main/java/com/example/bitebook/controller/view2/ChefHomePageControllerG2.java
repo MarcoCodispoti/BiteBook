@@ -6,6 +6,7 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class ChefHomePageControllerG2{
                 if (empty || item == null) {
                     setText(null);
                 } else {
+                    setFont(Font.font("Monospaced", 12));
                     setText(formatRequestString(item));
                 }
             }
@@ -58,9 +60,8 @@ public class ChefHomePageControllerG2{
     }
 
     private String formatRequestString(ServiceRequestBean bean){
-        return String.format("Client: %-15s %-15s | Menu: %-20s | Level: %-10s | Part.: %-3d  | Date: %-12s | Time: %-6s | Address: %s",
-                truncate(bean.getClientBean().getName(), 15),    // Helper per evitare che nomi lunghi rompano l'allineamento
-                truncate(bean.getClientBean().getSurname(), 15),
+        return String.format(" %-22s %-23s %-10s %-11d  %-12s  %-9s %s",
+                truncate(bean.getClientBean().getName() + " " + bean.getClientBean().getSurname(), 22),    // Helper per evitare che nomi lunghi rompano l'allineamento
                 truncate(bean.getMenuBean().getName(), 20),
                 bean.getReservationDetailsBean().getSelectedMenuLevel().toString().toLowerCase(),
                 bean.getReservationDetailsBean().getParticipantNumber(),
