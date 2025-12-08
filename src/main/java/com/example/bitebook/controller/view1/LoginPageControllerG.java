@@ -6,93 +6,101 @@ import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.singleton.LoggedUser;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import javax.security.auth.login.FailedLoginException;
 
 import static com.example.bitebook.model.enums.Role.CHEF;
 import static com.example.bitebook.model.enums.Role.CLIENT;
 
 public class LoginPageControllerG {
 
-    LoginBean loginBean =  new LoginBean();
-    LoginController loginController = new LoginController();
+    private final LoginBean loginBean = new LoginBean();
+    private final LoginController loginController = new LoginController();
 
-    @FXML
-    private TextField passwordTextField;
-
-    @FXML
-    private TextField emailTextField;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private Button backButton;
-
-
-    @FXML
-    private Label errorLabel;
-
+    @FXML private TextField emailTextField;
+    @FXML private TextField passwordTextField;
+    @FXML private Label errorLabel;
 
     @FXML
     public void clickedOnBack() {
         FxmlLoader.setPage("WelcomePage");
     }
 
-
     @FXML
-    public void clickedOnLogin(ActionEvent actionEvent){
-        Role actualRole = null;
-        if(!checkInput()){
+    public void clickedOnLogin() {
+
+        errorLabel.setVisible(false);
+        errorLabel.setText("");
+
+        if(!checkEmptyFields()){
             return;
         }
-        // errorLabel.setText("Input format is valid");
+
+        bindDataToBean();
+
+        if (!validateBeanData()) {
+            return;
+        }
+
+
         try {
-            // LoginController loginController = new LoginController();
             loginController.authenticate(loginBean);
-            actualRole = LoggedUser.getInstance().getRole();
-            errorLabel.setText("Il tuo ruolo è: " + actualRole);
-        } catch (WrongCredentialsException e){
-            errorLabel.setText("Credentials are incorrect.");
-            return;
+            Role actualRole = LoggedUser.getInstance().getRole();
+            handleNavigation(actualRole);
+        } catch (WrongCredentialsException e) {
+            showError("Incorrect Username or Password.");
         } catch (FailedSearchException e){
-            e.printStackTrace();
-            e.getMessage();
-            e.getCause();
-            errorLabel.setText("Login Error");
-            return;
+            System.err.println("System Error while login: " + e.getMessage());
+            showError("System Error: Try again later");
+        } catch (Exception e){
+            showError("Unknown Error");
         }
-        if(actualRole == CLIENT ){
+    }
+
+
+    private void bindDataToBean(){
+        loginBean.setEmail(emailTextField.getText().trim());
+        loginBean.setPassword(passwordTextField.getText());
+    }
+
+
+
+    private boolean validateBeanData(){
+
+
+        if (!loginBean.validateEmail()) {
+            showError("Invalid email format");
+            return false;
+        }
+
+
+        if (!loginBean.validatePassword()) {
+            showError("Invalid password format");
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void handleNavigation(Role role) {
+        if (role == CLIENT) {
             FxmlLoader.setPage("ClientHomePage");
-        } else if(actualRole == CHEF){
+        } else if (role == CHEF) {
             FxmlLoader.setPage("ChefHomePage");
-        } else{
-            errorLabel.setText("Something went wrong :(");
+        } else {
+            showError("Unrecognized role");
         }
     }
 
-    private boolean checkInput(){
-        if(checkEmptyFields()){
-            loginBean.setEmail(emailTextField.getText());
-            loginBean.setPassword(passwordTextField.getText());
 
-            if(!loginBean.validateEmail()){
-                errorLabel.setVisible(true); errorLabel.setText("Invalid email format");
-                return false;
-            }
-            if(!loginBean.validatePassword()){
-                errorLabel.setVisible(true); errorLabel.setText("Invalid password format");
-                return false;
-            }
-            return true;
-        }
-        return false;
+    private void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
+
 
 
     private boolean checkEmptyFields(){
@@ -106,5 +114,6 @@ public class LoginPageControllerG {
         }
         return true;
     }
+
 
 }
