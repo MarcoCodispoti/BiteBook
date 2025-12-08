@@ -42,5 +42,5 @@ public class SelectChefCardControllerG{
 
     public void setParentController(SelectChefPageControllerG parentController){this.parentController=parentController;}
 
-    public void setCardUI(Parent cardUi){this.cardUi = cardUi;};
+    public void setCardUI(Parent cardUi){this.cardUi = cardUi;}
 }
