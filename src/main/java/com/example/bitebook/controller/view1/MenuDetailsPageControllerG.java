@@ -123,6 +123,7 @@ public class MenuDetailsPageControllerG{
             }
         }
     }
+    
 
 
     private String formatAllergensList() {
