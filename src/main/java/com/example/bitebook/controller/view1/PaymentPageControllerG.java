@@ -2,103 +2,69 @@ package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
 import java.util.List;
 
 public class PaymentPageControllerG {
-    MenuBean requestMenuBean;
-    ReservationDetailsBean requestReservationDetailsBean;
-    List<AllergenBean> reservationAllergenBeans;
-    ChefBean reservationChefBean;
-    ServiceRequestBean serviceRequestBean;
+private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
 
-    @FXML
-    private Button sendRequestButton;
+    private MenuBean requestMenuBean;
+    private ReservationDetailsBean requestReservationDetailsBean;
+    private List<AllergenBean> reservationAllergenBeans;
+    private ChefBean reservationChefBean;
 
-    @FXML
-    private Hyperlink requestsHyperlink;
+    @FXML private Label errorLabel;
 
+    @FXML private Label nameLabel;
 
-    @FXML
-    private Button backButton;
+    @FXML private Label numberOfCoursesLabel;
 
+    @FXML private Label dietTypeLabel;
 
-    @FXML
-    private Hyperlink allergiesHyperlink;
+    @FXML private Label pricePerPersonLabel;
 
-    @FXML
-    private Label errorLabel;
+    @FXML private Label totalPriceLabel;
 
+    @FXML private Label dateLabel;
 
+    @FXML private Label timeLabel;
 
-    @FXML
-    private Label nameLabel;
+    @FXML private Label addressLabel;
 
-    @FXML
-    private Label numberOfCoursesLabel;
+    @FXML private Label numberOfParticipantsLabel;
 
-    @FXML
-    private Label themeLabel;
-
-    @FXML
-    private Label dietTypeLabel;
-
-    @FXML
-    private Label pricePerPersonLabel;
-
-    @FXML
-    private Label totalPriceLabel;
-
-    @FXML
-    private Label dateLabel;
-
-    @FXML
-    private Label timeLabel;
-
-    @FXML
-    private Label addressLabel;
-
-    @FXML
-    private Label numberOfParticipantsLabel;
-
-    @FXML
-    private Label ingredientsLevelLabel;
+    @FXML private Label ingredientsLevelLabel;
 
 
     @FXML
-    void clickedOnSendRequest(ActionEvent event) {
-
-        try{
-            SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
-            serviceRequestBean = sendServiceRequestController.fillServiceRequest(requestMenuBean,requestReservationDetailsBean);
-            serviceRequestBean.validate();  // è dummy -> Implementare dopo
-            System.out.println("Mando la SendServiceRequest");
+    void clickedOnSendRequest(){
+        errorLabel.setText("");
+        try {
+            ServiceRequestBean serviceRequestBean = sendServiceRequestController.fillServiceRequest(
+                    requestMenuBean,
+                    requestReservationDetailsBean
+            );
+            if (serviceRequestBean != null) {
+                serviceRequestBean.validate();
+            }
             sendServiceRequestController.sendServiceRequest(serviceRequestBean);
-        } catch (Exception e){
-            errorLabel.setText("Error completing the request");
-            e.getMessage();
-            e.getCause();
-            e.printStackTrace();
-            return;
-        }
+            FxmlLoader.setPage("ConfirmationPage");
 
-        FxmlLoader.setPage("ConfirmationPage");
+        } catch (Exception e) {
+
+            errorLabel.setText("Error completing the request: ");
+        }
     }
 
     @FXML
-    void clickedOnBack(ActionEvent event) {
-        ServiceRequestPageControllerG serviceRequestPageControllerG = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
-        if (serviceRequestPageControllerG != null) {
-            serviceRequestPageControllerG.initData(requestMenuBean,reservationAllergenBeans,reservationChefBean);
+    void clickedOnBack() {
+        ServiceRequestPageControllerG controller = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
+        if (controller != null) {
+            controller.initData(requestMenuBean, reservationAllergenBeans, reservationChefBean);
         }
-        // FxmlLoader.setPage("ServiceRequestPage");
     }
-
 
     public void initData(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean, List<AllergenBean> menuAllergenBeans, ChefBean menuChefBean) {
         this.requestMenuBean = menuBean;
@@ -108,16 +74,30 @@ public class PaymentPageControllerG {
 
         nameLabel.setText(menuBean.getName());
         numberOfCoursesLabel.setText(String.valueOf(menuBean.getNumberOfCourses()));
-        dietTypeLabel.setText(menuBean.getDietType().toString().toLowerCase());
-        pricePerPersonLabel.setText(String.valueOf(menuBean.getPricePerPerson()) + " €");
-        dateLabel.setText(reservationDetailsBean.getDate().toString());
-        timeLabel.setText(reservationDetailsBean.getTime().toString());
+
+        if (menuBean.getDietType() != null) {
+            dietTypeLabel.setText(menuBean.getDietType().toString().toLowerCase());
+        }
+
+        pricePerPersonLabel.setText(menuBean.getPricePerPerson() + " €");
+
+        if (reservationDetailsBean.getDate() != null) {
+            dateLabel.setText(reservationDetailsBean.getDate().toString());
+        }
+
+        if (reservationDetailsBean.getTime() != null) {
+            timeLabel.setText(reservationDetailsBean.getTime().toString());
+        }
+
         addressLabel.setText(reservationDetailsBean.getAddress());
         numberOfParticipantsLabel.setText(String.valueOf(reservationDetailsBean.getParticipantNumber()));
-        ingredientsLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
-        SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
-        totalPriceLabel.setText(String.valueOf(sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,menuBean)));
 
+        if (reservationDetailsBean.getSelectedMenuLevel() != null) {
+            ingredientsLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
+        }
+
+        double totalPrice = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, menuBean);
+        totalPriceLabel.setText(String.valueOf(totalPrice));
     }
 
 
