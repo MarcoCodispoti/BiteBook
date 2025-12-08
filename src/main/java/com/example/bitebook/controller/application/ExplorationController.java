@@ -90,12 +90,12 @@ public class ExplorationController{
     public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans) {
         Map<Integer, AllergenBean> uniqueAllergensMap = new HashMap<>();
         if (courseBeans != null) {
-            for (DishBean dish : courseBeans) {
-                List<Allergen> dishAllergens = dish.getAllergens();
+            for (DishBean dish : courseBeans){
+                List<AllergenBean> dishAllergens = dish.getAllergens();
                 if (dishAllergens != null) {
-                    for (Allergen entity : dishAllergens) {
+                    for (AllergenBean entity : dishAllergens) {
                         if (!uniqueAllergensMap.containsKey(entity.getId())) {
-                            uniqueAllergensMap.put(entity.getId(), new AllergenBean(entity));
+                            uniqueAllergensMap.put(entity.getId(), entity);
                         }
                     }
                 }

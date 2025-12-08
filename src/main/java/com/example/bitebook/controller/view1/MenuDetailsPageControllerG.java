@@ -167,7 +167,7 @@ public class MenuDetailsPageControllerG{
                 DishCardControllerG controller = cardLoader.getController();
                 controller.initData(dishBean);
                 // controller.setCardUI(dishCard);
-                controller.setParentController(this);
+                // controller.setParentController(this);
 
                 coursesVBox.getChildren().add(dishCard);
 

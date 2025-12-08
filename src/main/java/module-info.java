@@ -15,6 +15,8 @@ module com.example.bitebook {
     requires java.sql;
     requires javafx.base;
 
+    exports com.example.bitebook.model;
+    exports com.example.bitebook.model.enums;
     exports com.example.bitebook.model.bean;
     exports com.example.bitebook.controller.view1;
     exports com.example.bitebook.controller.view2;
