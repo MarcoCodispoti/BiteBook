@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 public class SelectChefCardControllerG{
     private SelectChefPageControllerG parentController;
     private Parent cardUi;
-    ChefBean cardChefBean;
+    private ChefBean cardChefBean;
 
     @FXML
     private Label styleLabel;
