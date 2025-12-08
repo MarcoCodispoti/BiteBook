@@ -10,6 +10,7 @@ import com.example.bitebook.model.enums.MenuLevel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ServiceRequestPageControllerG{
-    
+
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
 
@@ -44,14 +45,26 @@ public class ServiceRequestPageControllerG{
     @FXML private ComboBox<LocalTime> timeComboBox;
     @FXML private TextField addressTextField;
     @FXML private ComboBox<String> numberOfParticipantsComboBox;
-    @FXML private ComboBox<String> ingredientsLevelComboBox;
+    @FXML private ComboBox<MenuLevel> ingredientsLevelComboBox;
 
     @FXML private AnchorPane allergenWarningAnchorPane;
-
 
     @FXML
     public void initialize() {
         resetUIState();
+
+        ingredientsLevelComboBox.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(MenuLevel level) {
+                if (level == null) return null;
+                return formatMenuLevelLabel(level);
+            }
+
+            @Override
+            public MenuLevel fromString(String string) {
+                return null;
+            }
+        });
 
         numberOfParticipantsComboBox.valueProperty().addListener((_) -> updateTotalPrice());
         ingredientsLevelComboBox.valueProperty().addListener((_) -> updateTotalPrice());
@@ -84,7 +97,6 @@ public class ServiceRequestPageControllerG{
         errorLabel.setText("");
     }
 
-
     @FXML
     void clickedOnSendRequest() {
         errorLabel.setVisible(false);
@@ -92,7 +104,6 @@ public class ServiceRequestPageControllerG{
         if (!validateAndCollectFormData()) {
             return;
         }
-
 
         boolean hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(menuAllergenBeans);
 
@@ -124,7 +135,6 @@ public class ServiceRequestPageControllerG{
         }
     }
 
-
     private boolean validateAndCollectFormData() {
 
         LocalDate selectedDate = serviceDatePicker.getValue();
@@ -133,7 +143,6 @@ public class ServiceRequestPageControllerG{
             return false;
         }
 
-
         LocalTime selectedTime = timeComboBox.getValue();
         if (selectedTime == null) {
             showError("Please select a time.");
@@ -141,7 +150,7 @@ public class ServiceRequestPageControllerG{
         }
 
         String address = addressTextField.getText();
-        if (address == null || address.trim().length() < 5) { // Un indirizzo realistico ha almeno 5 caratteri
+        if (address == null || address.trim().length() < 5) {
             showError("Please enter a valid address.");
             return false;
         }
@@ -152,8 +161,9 @@ public class ServiceRequestPageControllerG{
         }
         int participants = Integer.parseInt(numberOfParticipantsComboBox.getValue());
 
-        MenuLevel level = extractMenuLevel();
+        MenuLevel level = ingredientsLevelComboBox.getValue();
         if (level == null) {
+            showError("Please select a menu level.");
             return false;
         }
 
@@ -175,7 +185,7 @@ public class ServiceRequestPageControllerG{
 
     public void updateTotalPrice() {
         String participantsStr = numberOfParticipantsComboBox.getValue();
-        MenuLevel level = extractMenuLevelQuietly();
+        MenuLevel level = ingredientsLevelComboBox.getValue();
 
         if (participantsStr != null && level != null && selectedMenuBean != null) {
             try {
@@ -194,7 +204,6 @@ public class ServiceRequestPageControllerG{
             totalPriceLabel.setText("--");
         }
     }
-
 
     private String formatAllergensList() {
         if (menuAllergenBeans == null || menuAllergenBeans.isEmpty()) return "None";
@@ -215,13 +224,23 @@ public class ServiceRequestPageControllerG{
             selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
 
             ingredientsLevelComboBox.getItems().clear();
-            ingredientsLevelComboBox.getItems().add("1: Base        (Surcharge: +0 €)");
-            ingredientsLevelComboBox.getItems().add("2: Premium     (Surcharge: +" + selectedMenuBean.getPremiumLevelSurcharge() + " €)");
-            ingredientsLevelComboBox.getItems().add("3: Luxe        (Surcharge: +" + selectedMenuBean.getLuxeLevelSurcharge() + " €)");
+            ingredientsLevelComboBox.getItems().addAll(MenuLevel.BASE, MenuLevel.PREMIUM, MenuLevel.LUXE);
+            ingredientsLevelComboBox.getSelectionModel().select(MenuLevel.BASE);
 
         } catch (FailedSearchException e) {
             showError("Unable to load menu pricing levels.");
         }
+    }
+
+    private String formatMenuLevelLabel(MenuLevel level) {
+        if (selectedMenuBean == null) return level.toString();
+
+        double surcharge = switch (level) {
+            case BASE -> 0.0;
+            case PREMIUM -> selectedMenuBean.getPremiumLevelSurcharge();
+            case LUXE -> selectedMenuBean.getLuxeLevelSurcharge();
+        };
+        return level + " (Surcharge: +" + surcharge + " €)";
     }
 
     private void fillTimeComboBox() {
@@ -244,30 +263,6 @@ public class ServiceRequestPageControllerG{
         }
     }
 
-
-    private MenuLevel extractMenuLevel() {
-        String val = ingredientsLevelComboBox.getValue();
-        if (val == null) {
-            showError("Please select a menu level.");
-            return null;
-        }
-        if (val.contains("Base")) return MenuLevel.BASE;
-        if (val.contains("Premium")) return MenuLevel.PREMIUM;
-        if (val.contains("Luxe")) return MenuLevel.LUXE;
-
-        showError("Invalid menu level selected.");
-        return null;
-    }
-
-    private MenuLevel extractMenuLevelQuietly() {
-        String val = ingredientsLevelComboBox.getValue();
-        if (val == null) return null;
-        if (val.contains("Base")) return MenuLevel.BASE;
-        if (val.contains("Premium")) return MenuLevel.PREMIUM;
-        if (val.contains("Luxe")) return MenuLevel.LUXE;
-        return null;
-    }
-
     private void showAllergenWarning() {
         backButton.setDisable(true);
         sendRequestButton.setDisable(true);
@@ -284,6 +279,10 @@ public class ServiceRequestPageControllerG{
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
+
+
+
+
 
 
 
