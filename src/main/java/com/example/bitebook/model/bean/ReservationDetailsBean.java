@@ -26,7 +26,7 @@ public class ReservationDetailsBean{
 
     public boolean validate(){
         return date != null && time != null &&  address != null && !address.isEmpty()
-                && address.length() >= 10 && participantNumber > 0 && selectedMenuLevel != null;
+                && address.length() >= 6 && participantNumber > 0 && selectedMenuLevel != null;
     }
 
 }

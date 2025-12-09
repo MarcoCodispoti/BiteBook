@@ -157,7 +157,7 @@ public class ServiceRequestPageControllerG{
         }
 
         String address = addressTextField.getText();
-        if (address == null || address.trim().length() < 5) {
+        if (address == null || address.trim().length() < 6) {
             showError("Please enter a valid address.");
             return false;
         }
