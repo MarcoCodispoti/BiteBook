@@ -115,4 +115,31 @@ public class TestServiceRequestBeanValidate{
 
         assertFalse(bean.validate(), "Se i dettagli interni sono invalidi, tutto il bean deve essere invalido");
     }
+
+
+    @Test
+    @DisplayName("VALIDATION: Dati Numerici Invalidi (Prezzo/Partecipanti) -> FALSE")
+    void testValidate_InvalidNumbers() {
+        ServiceRequestBean bean = createValidBean();
+
+        // Test Prezzo Negativo
+        bean.setTotalPrice(-10);
+        assertFalse(bean.validate(), "Prezzo negativo non accettabile");
+
+        // Test Partecipanti Zero (Resetto il bean prima)
+        bean = createValidBean();
+        bean.getReservationDetailsBean().setParticipantNumber(0);
+        assertFalse(bean.validate(), "0 Partecipanti non accettabile");
+    }
+
+    @Test
+    @DisplayName("VALIDATION: Indirizzo troppo corto -> FALSE")
+    void testValidate_ShortAddress() {
+        ServiceRequestBean bean = createValidBean();
+        // Mettiamo un indirizzo di 3 lettere (il minimo è 5)
+        bean.getReservationDetailsBean().setAddress("Via");
+
+        assertFalse(bean.validate(), "Indirizzo < 5 caratteri deve essere rifiutato");
+    }
+
 }

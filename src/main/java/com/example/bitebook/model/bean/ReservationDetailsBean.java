@@ -25,7 +25,8 @@ public class ReservationDetailsBean{
     public void setSelectedMenuLevel(MenuLevel selectedMenuLevel){this.selectedMenuLevel = selectedMenuLevel;}
 
     public boolean validate(){
-        return date != null && time != null &&  address != null && !address.isEmpty() && participantNumber > 0 && selectedMenuLevel != null;
+        return date != null && time != null &&  address != null && !address.isEmpty()
+                && address.length() >= 10 && participantNumber > 0 && selectedMenuLevel != null;
     }
 
 }
