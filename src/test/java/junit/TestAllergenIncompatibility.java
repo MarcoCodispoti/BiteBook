@@ -10,7 +10,7 @@ import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.AllergenBean;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

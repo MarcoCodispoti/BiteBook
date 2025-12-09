@@ -6,7 +6,7 @@ import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +47,7 @@ public class SendServiceRequestController{
         return reservationDetails.getParticipantNumber() * (menuBean.getPricePerPerson() + singleMenuSurcharge);
     }
 
-    
+
 
     public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
         if(menuAllergensBean == null){

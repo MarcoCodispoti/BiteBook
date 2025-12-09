@@ -1,4 +1,4 @@
-package com.example.bitebook.model.singleton;
+package com.example.bitebook.model.session;
 
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;

@@ -7,7 +7,7 @@ import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.DaoFactory;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 
 import java.util.ArrayList;
 import java.util.List;

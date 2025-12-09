@@ -6,7 +6,7 @@ import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 
 import java.util.ArrayList;
 import java.util.List;

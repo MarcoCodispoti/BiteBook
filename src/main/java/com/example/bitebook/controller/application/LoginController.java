@@ -8,7 +8,7 @@ import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.UserDao;
 import com.example.bitebook.model.enums.Role;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 
 public class LoginController{
 

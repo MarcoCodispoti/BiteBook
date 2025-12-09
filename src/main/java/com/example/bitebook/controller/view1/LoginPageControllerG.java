@@ -5,7 +5,7 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.bean.LoginBean;
 import com.example.bitebook.model.enums.Role;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

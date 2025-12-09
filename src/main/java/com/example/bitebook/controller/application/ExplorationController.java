@@ -14,7 +14,7 @@ import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.ChefDao;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.enums.Role;
-import com.example.bitebook.model.singleton.LoggedUser;
+import com.example.bitebook.model.session.LoggedUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
