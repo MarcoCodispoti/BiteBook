@@ -30,9 +30,13 @@ public class SendServiceRequestController{
 
     // Okk -> Va bene
     public int calculateTotalPrice(ReservationDetailsBean reservationDetails, MenuBean menuBean) {
-        if (reservationDetails == null || menuBean == null) {
-            throw new IllegalArgumentException("Error: Insufficient data to calculate total price");
+        if (reservationDetails.getParticipantNumber() <= 0 || reservationDetails.getSelectedMenuLevel() == null) {
+            throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong reservation details data");
         }
+        if (menuBean == null || menuBean.getPricePerPerson() <= 0  || menuBean.getPremiumLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= menuBean.getPremiumLevelSurcharge()) {
+            throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong menu details data");
+        }
+
         int singleMenuSurcharge;
         switch (reservationDetails.getSelectedMenuLevel()) {
             case BASE -> singleMenuSurcharge = 0;

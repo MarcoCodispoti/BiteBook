@@ -30,6 +30,7 @@ public class MenuBean{
     public int getNumberOfCourses() {return numberOfCourses;}
     public DietType getDietType() {return dietType;}
     public int getPricePerPerson() {return pricePerPerson;}
+    public void setPricePerPerson(int pricePerPerson) {this.pricePerPerson = pricePerPerson;}
     public int getPremiumLevelSurcharge() {return premiumLevelSurcharge;}
     public int getLuxeLevelSurcharge() {return luxeLevelSurcharge;}
     public void setPremiumLevelSurcharge(int premiumLevelSurcharge) {this.premiumLevelSurcharge = premiumLevelSurcharge;}
