@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view2.ServiceRequestPageControllerG2">
    <children>
       <AnchorPane prefHeight="65.0" prefWidth="1200.0" style="-fx-background-color: #7cb518;">
@@ -53,7 +56,6 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" layoutX="585.0" layoutY="360.0" prefHeight="17.0" prefWidth="205.0" />
             <AnchorPane layoutX="22.0" layoutY="75.0" prefHeight="2.0" prefWidth="755.0" style="-fx-background-color: #7cb518;" />
             <AnchorPane layoutX="22.0" layoutY="189.0" prefHeight="2.0" prefWidth="755.0" style="-fx-background-color: #7cb518;" />
             <Label layoutX="24.0" layoutY="85.0" text="Menu Name:">
@@ -95,17 +97,17 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <RadioButton fx:id="baseLevelRadioButton" layoutX="146.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBase" text="Base: ">
+            <RadioButton fx:id="baseLevelRadioButton" layoutX="146.0" layoutY="466.0" mnemonicParsing="false" text="Base: ">
                <font>
                   <Font size="20.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="premiumLevelRadioButton" layoutX="146.0" layoutY="506.0" mnemonicParsing="false" onAction="#clickedOnPremium" text="Premium: ">
+            <RadioButton fx:id="premiumLevelRadioButton" layoutX="146.0" layoutY="506.0" mnemonicParsing="false" text="Premium: ">
                <font>
                   <Font size="20.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="luxeLevelRadioButton" layoutX="146.0" layoutY="546.0" mnemonicParsing="false" onAction="#clickedOnLuxe" text="Luxe: ">
+            <RadioButton fx:id="luxeLevelRadioButton" layoutX="146.0" layoutY="546.0" mnemonicParsing="false" text="Luxe: ">
                <font>
                   <Font size="20.0" />
                </font>

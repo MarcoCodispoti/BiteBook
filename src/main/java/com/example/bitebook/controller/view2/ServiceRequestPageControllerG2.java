@@ -7,342 +7,248 @@ import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.bean.ReservationDetailsBean;
 import com.example.bitebook.model.enums.MenuLevel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ServiceRequestPageControllerG2{
 
-    SendServiceRequestController sendServiceRequestController =  new SendServiceRequestController();
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+    private final ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
+
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> selectedMenuAllergenBeans;
-    private ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
     private boolean ignoreAllergenWarning = false;
 
+    @FXML private AnchorPane serviceRequestAnchorPane;
+    @FXML private AnchorPane allergyWarningAnchorPane;
 
-    @FXML
-    private Button sendRequestButton;
+    @FXML private Label menuNameLabel;
+    @FXML private Label numberOfCoursesLabel;
+    @FXML private Label dietTypeLabel;
+    @FXML private Label pricePerPersonLabel;
+    @FXML private Label menuAllergensLabel;
 
-    @FXML
-    private Label numberOfCoursesLabel;
+    @FXML private Label premiumLevelLabel;
+    @FXML private Label luxeLevelLabel;
+    @FXML private Label totalPriceLabel;
+    @FXML private Label errorLabel;
 
-    @FXML
-    private Slider participantsNumberSlider;
+    @FXML private DatePicker datePicker;
+    @FXML private ComboBox<LocalTime> timeComboBox;
+    @FXML private TextField addressTextField;
+    @FXML private Slider participantsNumberSlider;
+    @FXML private Label participantsNumberLabel;
 
-    @FXML
-    private RadioButton premiumLevelRadioButton;
-
-    @FXML
-    private Label totalPriceLabel;
-
-    @FXML
-    private RadioButton baseLevelRadioButton;
-
-    @FXML
-    private AnchorPane allergyWarningAnchorPane;
-
-    @FXML
-    private Button proceedButton;
-
-    @FXML
-    private Label participantsNumberLabel;
-
-    @FXML
-    private Label luxeLevelLabel;
-
-    @FXML
-    private Label premiumLevelLabel;
-
-    @FXML
-    private RadioButton luxeLevelRadioButton;
-
-    @FXML
-    private Label pricePerPersonLabel;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Label menuNameLabel;
-
-    @FXML
-    private Label menuAllergensLabel;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private Label dietTypeLabel;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private ComboBox<LocalTime> timeComboBox;
-
-    @FXML
-    private TextField addressTextField;
-
-    @FXML
-    private DatePicker datePicker;
-
-    @FXML
-    private AnchorPane serviceRequestAnchorPane;
+    @FXML private RadioButton baseLevelRadioButton;
+    @FXML private RadioButton premiumLevelRadioButton;
+    @FXML private RadioButton luxeLevelRadioButton;
+    private ToggleGroup levelToggleGroup;
 
 
     @FXML
-    void clickedOnSendRequest(ActionEvent event) {
-        if(!(isSelectedDate())){return;}
-        LocalDate selectedDate = datePicker.getValue();
-        if(!(isSelectedTime())){return;}
-        LocalTime selectedTime = timeComboBox.getValue();
-        if(!(isInsertedAddress())){return;}
-        String selectedAddress = addressTextField.getText();
-
-        reservationDetailsBean.setDate(selectedDate);
-        reservationDetailsBean.setTime(selectedTime);
-        reservationDetailsBean.setAddress(selectedAddress);
-
-        for(AllergenBean allergyBean : selectedMenuAllergenBeans){
-            System.out.println("Allergia trovata:" + allergyBean.getName());
-        }
-
-
-        if(sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans) && !ignoreAllergenWarning){
-//            sendRequestButton.setDisable(true);
-//            backButton.setDisable(true);
-            serviceRequestAnchorPane.setDisable(true);
-            allergyWarningAnchorPane.setVisible(true);
-            allergyWarningAnchorPane.setDisable(false);
-            return;
-        }
-
-        PaymentPageControllerG2  paymentPageControllerG2 = FxmlLoader2.setPageAndReturnController("PaymentPage2");
-        if(paymentPageControllerG2 != null){
-            paymentPageControllerG2.initData(reservationDetailsBean,selectedMenuBean, selectedMenuAllergenBeans, selectedChefBean);
-        }
-
-    }
-
-    @FXML
-    void clickedOnBack(ActionEvent event) {
-        SelectMenuPageControllerG2 selectMenuPageControllerG2 = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
-        if(selectMenuPageControllerG2 != null){
-            selectMenuPageControllerG2.initData(selectedChefBean);
-        }
-    }
-
-
-    @FXML
-    void clickedOnCancel(ActionEvent event) {
-        FxmlLoader2.setPage("ClientHomePage2");
-    }
-
-    @FXML
-    void clickedOnProceed(ActionEvent event) {
-//        sendRequestButton.setDisable(false);
-//        backButton.setDisable(false);
-        ignoreAllergenWarning = true;
-        serviceRequestAnchorPane.setDisable(false);
+    public void initialize(){
+        setupMenuLevelToggles();
+        setupParticipantsSlider();
         allergyWarningAnchorPane.setVisible(false);
-        allergyWarningAnchorPane.setDisable(true);
-        clickedOnSendRequest(event);
+        errorLabel.setVisible(false);
     }
 
-    @FXML
-    void clickedOnBase(ActionEvent event) {
-        reservationDetailsBean.setSelectedMenuLevel(MenuLevel.BASE);
-        updateTotalPrice();
-    }
-
-    @FXML
-    void clickedOnPremium(ActionEvent event) {
-        reservationDetailsBean.setSelectedMenuLevel(MenuLevel.PREMIUM);
-        updateTotalPrice();
-    }
-
-    @FXML
-    void clickedOnLuxe(ActionEvent event) {
-        reservationDetailsBean.setSelectedMenuLevel(MenuLevel.LUXE);
-        updateTotalPrice();
-    }
-
-
-
-
-    public void initData(ChefBean chefBean, MenuBean selectedMenuBean, List<AllergenBean> selectedMenuAllergenBeans){
+    public void initData(ChefBean chefBean, MenuBean selectedMenuBean, List<AllergenBean> selectedMenuAllergenBeans) {
         this.selectedChefBean = chefBean;
         this.selectedMenuBean = selectedMenuBean;
         this.selectedMenuAllergenBeans = selectedMenuAllergenBeans;
 
+        loadMenuSurcharges();
+
         fillMenuDetails();
         fillTimeComboBox();
 
+        reservationDetailsBean.setParticipantNumber(1);
+        reservationDetailsBean.setSelectedMenuLevel(MenuLevel.BASE);
+        levelToggleGroup.selectToggle(baseLevelRadioButton);
 
-        ToggleGroup levelToggleGroup = new ToggleGroup();
+        updateTotalPrice();
+    }
+
+
+    private void setupMenuLevelToggles() {
+        levelToggleGroup = new ToggleGroup();
         baseLevelRadioButton.setToggleGroup(levelToggleGroup);
         premiumLevelRadioButton.setToggleGroup(levelToggleGroup);
         luxeLevelRadioButton.setToggleGroup(levelToggleGroup);
-        baseLevelRadioButton.setSelected(true);
 
-        try {
-            selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
-        }catch(FailedSearchException e){
-            errorLabel.setText("Error while filling menu ingredients level");
-        }
-        premiumLevelLabel.setText("+ "+selectedMenuBean.getPremiumLevelSurcharge()+" €");
-        luxeLevelLabel.setText("+ "+selectedMenuBean.getLuxeLevelSurcharge()+" €");
+        baseLevelRadioButton.setUserData(MenuLevel.BASE);
+        premiumLevelRadioButton.setUserData(MenuLevel.PREMIUM);
+        luxeLevelRadioButton.setUserData(MenuLevel.LUXE);
 
-        participantsNumberLabel.setText("1");
-        reservationDetailsBean.setParticipantNumber(1);
-        reservationDetailsBean.setSelectedMenuLevel(MenuLevel.BASE);
+        levelToggleGroup.selectedToggleProperty().addListener((_, _, newVal) -> {
+            if (newVal != null) {
+                MenuLevel selectedLevel = (MenuLevel) newVal.getUserData();
+                reservationDetailsBean.setSelectedMenuLevel(selectedLevel);
+                updateTotalPrice();
+            }
+        });
+    }
 
+    private void setupParticipantsSlider() {
         participantsNumberSlider.setMin(1);
         participantsNumberSlider.setMax(10);
-        participantsNumberSlider.setBlockIncrement(1);
-        participantsNumberSlider.setMajorTickUnit(1);
-        participantsNumberSlider.setMinorTickCount(0);
-        participantsNumberSlider.setSnapToTicks(true);
         participantsNumberSlider.setValue(1);
         participantsNumberLabel.setText("1");
 
-        participantsNumberSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            participantsNumberLabel.setText(String.valueOf(newValue.intValue()));
-            reservationDetailsBean.setParticipantNumber(newValue.intValue());
-            // Chiama la funzione di aggiornamento del prezzo
-        updateTotalPrice();
+        participantsNumberSlider.valueProperty().addListener((_, _, newVal) -> {
+            int participants = newVal.intValue();
+            participantsNumberLabel.setText(String.valueOf(participants));
+            reservationDetailsBean.setParticipantNumber(participants);
+            updateTotalPrice();
         });
-
-        updateTotalPrice();
     }
 
+    private void loadMenuSurcharges() {
+        try {
+            this.selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+            premiumLevelLabel.setText("+ " + selectedMenuBean.getPremiumLevelSurcharge() + " €");
+            luxeLevelLabel.setText("+ " + selectedMenuBean.getLuxeLevelSurcharge() + " €");
+        } catch (FailedSearchException e) {
+            errorLabel.setText("Warning: Unable to load updated prices.");
+            errorLabel.setVisible(true);
+        }
+    }
 
-
-
-    private void fillMenuDetails(){
+    private void fillMenuDetails() {
         menuNameLabel.setText(selectedMenuBean.getName());
         numberOfCoursesLabel.setText(String.valueOf(selectedMenuBean.getNumberOfCourses()));
-        dietTypeLabel.setText(String.valueOf(selectedMenuBean.getDietType()).toLowerCase());
-        pricePerPersonLabel.setText(String.valueOf(selectedMenuBean.getPricePerPerson()) + " €");
-        menuAllergensLabel.setText(getAllergensAsString(selectedMenuAllergenBeans));
-    }
-
-
-    public String getAllergensAsString(List<AllergenBean> allergenBeans){
-        List<String> writteAllergenNames = new ArrayList<>();
-        List<AllergenBean> menuAllergenBeans = new ArrayList<>();
-        int index = 0;
-        String allergensAsString = "";
-        for(AllergenBean allergenBean:allergenBeans){
-            if(index == 0){
-                if(!isAlredyPresent(writteAllergenNames,allergenBean.getName())){
-                    allergensAsString = allergensAsString.concat(allergenBean.getName());
-                    menuAllergenBeans.add(allergenBean);
-
-                    index++;
-                    writteAllergenNames.add(allergenBean.getName());
-                }
-            } else {
-                if(!isAlredyPresent(writteAllergenNames,allergenBean.getName())){
-                    allergensAsString = allergensAsString.concat(", ").concat(allergenBean.getName());
-                    menuAllergenBeans.add(allergenBean);
-
-                    index++;
-                    writteAllergenNames.add(allergenBean.getName());
-                }
-            }
+        if (selectedMenuBean.getDietType() != null) {
+            dietTypeLabel.setText(selectedMenuBean.getDietType().toString().toLowerCase());
         }
-        this.selectedMenuAllergenBeans = menuAllergenBeans;
-        System.out.println("menuAllergenBeans.size(): " + menuAllergenBeans.size());
-        return allergensAsString;
+        pricePerPersonLabel.setText(selectedMenuBean.getPricePerPerson() + " €");
+
+        menuAllergensLabel.setText(formatAllergensList(selectedMenuAllergenBeans));
     }
 
-    public boolean isAlredyPresent(List<String> writtenAllergenNames, String actualName){
-        for(String writtenAllergenName:writtenAllergenNames){
-            if(writtenAllergenName.equals(actualName)){
-                return true;
-            }
+
+    @FXML
+    void clickedOnSendRequest() {
+        errorLabel.setVisible(false);
+
+        if (!validateAndBindData()) {
+            return;
         }
-        return false;
+
+        boolean hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans);
+
+        if (hasIncompatibility && !ignoreAllergenWarning) {
+            toggleWarningPane(true);
+            return;
+        }
+        PaymentPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("PaymentPage2");
+        if (controller != null) {
+            controller.initData(reservationDetailsBean, selectedMenuBean, selectedMenuAllergenBeans, selectedChefBean);
+        }
     }
 
 
-    public void updateTotalPrice(){
-        totalPriceLabel.setText(String.valueOf(sendServiceRequestController.calculateTotalPrice(reservationDetailsBean,selectedMenuBean)) + " €");
+    @FXML
+    void clickedOnProceed() {
+        ignoreAllergenWarning = true;
+        toggleWarningPane(false);
+        clickedOnSendRequest();
+    }
+
+    @FXML
+    void clickedOnBack() {
+        SelectMenuPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        if (controller != null) {
+            controller.initData(selectedChefBean);
+        }
+    }
+
+    @FXML
+    void clickedOnCancel() {
+        FxmlLoader2.setPage("ClientHomePage2");
     }
 
 
-    private void fillTimeComboBox(){
+    private boolean validateAndBindData() {
+        LocalDate date = datePicker.getValue();
+        if (date == null || !date.isAfter(LocalDate.now())) {
+            showError("Please select a valid date after today.");
+            return false;
+        }
+
+        LocalTime time = timeComboBox.getValue();
+        if (time == null) {
+            showError("Please select a time.");
+            return false;
+        }
+
+        String address = addressTextField.getText();
+        if (address == null || address.trim().length() < 5) {
+            showError("Please enter a valid address.");
+            return false;
+        }
+        reservationDetailsBean.setDate(date);
+        reservationDetailsBean.setTime(time);
+        reservationDetailsBean.setAddress(address.trim());
+        return true;
+    }
+
+    private void updateTotalPrice() {
+        if (selectedMenuBean != null) {
+            int price = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
+            totalPriceLabel.setText(price + " €");
+        }
+    }
+
+    private String formatAllergensList(List<AllergenBean> allergens) {
+        if (allergens == null || allergens.isEmpty()) return "None";
+        return allergens.stream()
+                .map(AllergenBean::getName)
+                .distinct()
+                .collect(Collectors.joining(", "));
+    }
+
+    private void fillTimeComboBox() {
         timeComboBox.getItems().clear();
         timeComboBox.getItems().addAll(generateTimeSlots());
-    };
-
-    public List<LocalTime> generateTimeSlots(){
-        List<LocalTime> timeSlots = new ArrayList<>();
-
-        // --- Intervallo Pranzo ---
-        LocalTime lunchStart = LocalTime.of(12, 0); // 12:00
-        LocalTime lunchEnd = LocalTime.of(14, 0);   // 14:00
-
-        // --- Intervallo Cena ---
-        LocalTime dinnerStart = LocalTime.of(18, 0); // 18:00
-        LocalTime dinnerEnd = LocalTime.of(23, 0);   // 23:00
-
-        // 1. Genera slot per il PRANZO
-        LocalTime currentLunchTime = lunchStart;
-        while (currentLunchTime.isBefore(lunchEnd) || currentLunchTime.equals(lunchEnd)) {
-            timeSlots.add(currentLunchTime);
-            currentLunchTime = currentLunchTime.plus(30, ChronoUnit.MINUTES); // Aggiunge 30 minuti
-        }
-        LocalTime currentDinnerTime = dinnerStart;
-        while (currentDinnerTime.isBefore(dinnerEnd) || currentDinnerTime.equals(dinnerEnd)) {
-            timeSlots.add(currentDinnerTime);
-            currentDinnerTime = currentDinnerTime.plus(30, ChronoUnit.MINUTES); // Aggiunge 30 minuti
-        }
-
-        return timeSlots;
     }
 
-    public boolean isSelectedDate(){
-        LocalDate requestDate = datePicker.getValue();
-        if (requestDate == null) {
-            errorLabel.setText("Please Select a Date");
-            return false;
-        } else if (requestDate.isBefore(LocalDate.now()) || requestDate.equals(LocalDate.now())){
-            errorLabel.setText("Select a date after today");
-            return false;
-        } else{
-            return true;
+    private List<LocalTime> generateTimeSlots() {
+        List<LocalTime> slots = new ArrayList<>();
+        // Lunch 12:00 - 14:00
+        addTimeSlots(slots, LocalTime.of(12, 0), LocalTime.of(14, 0));
+        // Dinner 18:00 - 23:00
+        addTimeSlots(slots, LocalTime.of(18, 0), LocalTime.of(23, 0));
+        return slots;
+    }
+
+    private void addTimeSlots(List<LocalTime> slots, LocalTime start, LocalTime end) {
+        LocalTime current = start;
+        while (!current.isAfter(end)) {
+            slots.add(current);
+            current = current.plusMinutes(30);
         }
     }
 
-    public boolean isSelectedTime(){
-        LocalTime selectedTime = timeComboBox.getValue();
-        if(selectedTime == null){
-            errorLabel.setText("Please Select a Time"); return false;
-        }
-        return true;
+    private void toggleWarningPane(boolean show) {
+        allergyWarningAnchorPane.setVisible(show);
+        allergyWarningAnchorPane.setDisable(!show);
+        serviceRequestAnchorPane.setDisable(show);
     }
 
-    public boolean isInsertedAddress(){
-        String address = addressTextField.getText();
-        if(address == null || address.isEmpty()){
-            errorLabel.setText("Please Enter Address");
-            return false;
-        }
-        if(address.length() < 10 ){
-            errorLabel.setText("Please insert a valid address");
-            return false;
-        }
-        return true;
+    private void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
+
+
 
 }
