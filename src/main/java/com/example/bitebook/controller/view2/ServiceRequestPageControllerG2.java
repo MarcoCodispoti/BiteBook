@@ -143,7 +143,14 @@ public class ServiceRequestPageControllerG2{
             return;
         }
 
-        boolean hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans);
+        boolean hasIncompatibility;
+        try{
+            hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans);
+        } catch (IllegalStateException e){
+            errorLabel.setVisible(true);
+            errorLabel.setText("System Error: Unable to check incompatibility");
+            return;
+        }
 
         if (hasIncompatibility && !ignoreAllergenWarning) {
             toggleWarningPane(true);

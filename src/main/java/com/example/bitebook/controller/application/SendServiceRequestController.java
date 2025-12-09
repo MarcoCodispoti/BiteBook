@@ -47,28 +47,39 @@ public class SendServiceRequestController{
         return reservationDetails.getParticipantNumber() * (menuBean.getPricePerPerson() + singleMenuSurcharge);
     }
 
+    
 
-
-    // Okk -> Va bene
-    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) {
-        if (menuAllergensBean == null || menuAllergensBean.isEmpty()) {
+    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
+        if(menuAllergensBean == null){
+            throw new IllegalStateException("Error: Error while obtaining menu allergens");
+        }
+        if (menuAllergensBean.isEmpty()) {
             return false;
         }
         Client client = LoggedUser.getInstance().getClient();
-        if (client == null || client.getAllergies() == null || client.getAllergies().isEmpty()) {
+        if (client == null) {
+            throw new IllegalStateException("Unable to get client info");
+        }
+        List<Allergen> clientAllergies = client.getAllergies();
+        if (clientAllergies == null) {
+            throw new IllegalStateException("User data error: Unable to get client allergies info");
+        }
+        if (clientAllergies.isEmpty()) {
             return false;
         }
         Set<Integer> clientAllergyIds = new HashSet<>();
-        for (Allergen allergen : client.getAllergies()) {
+        for (Allergen allergen : clientAllergies) {
             clientAllergyIds.add(allergen.getId());
         }
-        for (AllergenBean menuAllergen : menuAllergensBean){
+        for (AllergenBean menuAllergen : menuAllergensBean) {
             if (clientAllergyIds.contains(menuAllergen.getId())) {
                 return true;
             }
         }
         return false;
     }
+
+
 
 
 

@@ -10,6 +10,11 @@ public class AllergenBean{
 
     public AllergenBean(){}
 
+    public AllergenBean(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public AllergenBean(Allergen allergen){
         this.id = allergen.getId();
         this.name = allergen.getName();
