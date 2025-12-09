@@ -3,6 +3,8 @@ package com.example.bitebook.model.bean;
 public class ClientBean extends UserBean{
 
 
+    public ClientBean(){}
+
     public ClientBean(String name, String surname){
         this.name = name;
         this.surname = surname;
