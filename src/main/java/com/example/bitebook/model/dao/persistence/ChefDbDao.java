@@ -86,7 +86,7 @@ public class ChefDbDao implements ChefDao{
           if (!cleaned.isEmpty()) {
                 try {
                   result.add(SpecializationType.valueOf(cleaned));
-              } catch (IllegalArgumentException _) {
+              } catch (IllegalArgumentException _){
                  // ignore
              }
          }
