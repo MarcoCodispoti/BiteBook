@@ -78,12 +78,12 @@ public class AllergiesPageControllerG{
 
         try {
             allergiesController.insertAllergy(newAllergyBean);
-
             errorLabel.setText("Allergy inserted successfully");
             refreshPage();
 
-        } catch (FailedInsertException e) { // Usa FailedInsertException se preferisci
-            errorLabel.setText("Error while inserting allergy: " + e.getMessage());
+        } catch (FailedInsertException e) {
+            errorLabel.setText("Error while inserting allergy: ");
+            logger.log(Level.SEVERE, "Error while inserting allergy" , e);
         }
     }
 
@@ -98,11 +98,9 @@ public class AllergiesPageControllerG{
 
     private void refreshPage(){
         errorLabel.setText("");
-        allergiesVBox.getChildren().clear(); // Pulisce la grafica vecchia
-        populateClientAllergies();           // Ricarica le card
-        fillSelectAllergyComboBox();         // Ricarica il menu a tendina
-
-        // Reset selezioni
+        allergiesVBox.getChildren().clear();
+        populateClientAllergies();
+        fillSelectAllergyComboBox();
         selectedAllergenBean = null;
         selectedCardUi = null;
     }
@@ -110,11 +108,8 @@ public class AllergiesPageControllerG{
 
 
     private void populateClientAllergies(){
-
         allergiesVBox.getChildren().clear();
-
         List<AllergenBean> clientAllergyBeans = allergiesController.getClientAllergies();
-
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
             errorLabel.setText("The client has no allergies");
             return;
@@ -124,7 +119,6 @@ public class AllergiesPageControllerG{
             try{
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/AllergyCard.fxml"));
                 Parent allergyCard = cardLoader.load();
-
                 AllergyCardControllerG controller = cardLoader.getController();
                 controller.initData(allergyBean);
                 controller.setCardUi(allergyCard);
@@ -134,6 +128,7 @@ public class AllergiesPageControllerG{
 
             } catch (IOException e){
                 errorLabel.setText("Error while loading client allergy");
+                logger.log(Level.SEVERE, "Error while loading client allergy" , e);
                 return;
             }
         }
@@ -156,14 +151,13 @@ public class AllergiesPageControllerG{
     public void fillSelectAllergyComboBox() {
         try {
             List<AllergenBean> allergenListBeans = allergiesController.getAllergens();
-
             selectAllergyComboBox.getItems().clear();
-
             if (allergenListBeans != null){
                 selectAllergyComboBox.getItems().addAll(allergenListBeans);
             }
         } catch (FailedSearchException e) {
             errorLabel.setText("Error while searching for allergens list");
+            logger.log(Level.SEVERE, "Error while searching for allergens list" , e);
         }
     }
 
