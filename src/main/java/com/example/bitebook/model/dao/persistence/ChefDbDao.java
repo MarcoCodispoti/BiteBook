@@ -20,7 +20,7 @@ import java.util.List;
 public class ChefDbDao implements ChefDao{
 
 
-    // Ok -> Va bene
+
     public void findCityChefs(String cityName) throws FailedSearchException, NoChefInCityException {
         try(Connection conn = Connector.getInstance().getConnection();
             CallableStatement cstmt = conn.prepareCall("{call FindCityChefs(?)}")){
@@ -31,7 +31,6 @@ public class ChefDbDao implements ChefDao{
                 if (!rs.next()){
                     throw new NoChefInCityException(cityName);
                 }
-                // arrivati qui vuol dire che c'è uno chef -> il metodo prosegue senza eccezioni
             }
         } catch (SQLException e){
             throw new FailedSearchException("Query error while searching for chefs in " + cityName, new QueryException(e));
@@ -68,7 +67,6 @@ public class ChefDbDao implements ChefDao{
             }
         } catch (SQLException e) {
             throw new FailedSearchException("SQL query error occurred ", new QueryException(e));
-
         } catch (FailedDatabaseConnectionException e) {
             throw new FailedSearchException(e);
         }
@@ -77,7 +75,6 @@ public class ChefDbDao implements ChefDao{
 
 
 
-    // Okk -> Va bene
     public List<SpecializationType> convertSpecializationString(String specializationString) {
         List<SpecializationType> result = new ArrayList<>();
         if (specializationString == null || specializationString.trim().isEmpty()) {
@@ -89,7 +86,7 @@ public class ChefDbDao implements ChefDao{
           if (!cleaned.isEmpty()) {
                 try {
                   result.add(SpecializationType.valueOf(cleaned));
-              } catch (IllegalArgumentException e) {
+              } catch (IllegalArgumentException _) {
                  // ignore
              }
          }
