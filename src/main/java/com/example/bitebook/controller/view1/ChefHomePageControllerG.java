@@ -4,6 +4,7 @@ import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
+import com.example.bitebook.util.View1Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -76,7 +77,7 @@ public class ChefHomePageControllerG {
         }
         for (ServiceRequestBean serviceRequestBean : approvedServiceRequestBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/ApprovedRequestCard.fxml"));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.CHEF_APPROVED_REQUEST_CARD_PATH));
                 Parent approvedRequestCard = cardLoader.load();
                 ApprovedRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
