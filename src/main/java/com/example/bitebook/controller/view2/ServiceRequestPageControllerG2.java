@@ -15,9 +15,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ServiceRequestPageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(ServiceRequestPageControllerG2.class.getName());
+
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private final ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
@@ -117,9 +122,9 @@ public class ServiceRequestPageControllerG2{
             this.selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
             premiumLevelLabel.setText("+ " + selectedMenuBean.getPremiumLevelSurcharge() + " €");
             luxeLevelLabel.setText("+ " + selectedMenuBean.getLuxeLevelSurcharge() + " €");
-        } catch (FailedSearchException e) {
-            errorLabel.setText("Warning: Unable to load updated prices.");
-            errorLabel.setVisible(true);
+        } catch (FailedSearchException e){
+            logger.log(Level.SEVERE, "Error while loading menu level surcharges" , e);
+            displayError("Warning: Unable to load levels surcharges");
         }
     }
 
@@ -147,8 +152,8 @@ public class ServiceRequestPageControllerG2{
         try{
             hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans);
         } catch (IllegalStateException e){
-            errorLabel.setVisible(true);
-            errorLabel.setText("System Error: Unable to check incompatibility");
+            logger.log(Level.SEVERE, "Safety Warning: Error while confronting ", e);
+            displayError("System Error: Unable to check allergies incompatibility");
             return;
         }
 
@@ -187,19 +192,19 @@ public class ServiceRequestPageControllerG2{
     private boolean validateAndBindData() {
         LocalDate date = datePicker.getValue();
         if (date == null || !date.isAfter(LocalDate.now())) {
-            showError("Please select a valid date after today.");
+            displayError("Please select a valid date after today.");
             return false;
         }
 
         LocalTime time = timeComboBox.getValue();
         if (time == null) {
-            showError("Please select a time.");
+            displayError("Please select a time.");
             return false;
         }
 
         String address = addressTextField.getText();
         if (address == null || address.trim().length() < 5) {
-            showError("Please enter a valid address.");
+            displayError("Please enter a valid address.");
             return false;
         }
         reservationDetailsBean.setDate(date);
@@ -251,7 +256,7 @@ public class ServiceRequestPageControllerG2{
         serviceRequestAnchorPane.setDisable(show);
     }
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
