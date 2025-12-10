@@ -8,8 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ClientHomePageControllerG{
+
+    private static final Logger logger = Logger.getLogger(ClientHomePageControllerG.class.getName());
 
 
     private final ExplorationController explorationController = new ExplorationController();
@@ -43,12 +48,9 @@ public class ClientHomePageControllerG{
 
 
     @FXML
-    void clickedOnFindChefs() {
-        errorLabel.setText("");
-
+    void clickedOnFindChefs(){
         ChefBean chefBean = new ChefBean();
         chefBean.setCity(insertCityTextField.getText());
-
         if(!checkCityField()){
             return;
         }
@@ -68,6 +70,7 @@ public class ClientHomePageControllerG{
             }
         } catch (FailedSearchException e){
             errorLabel.setText("System Error while searching.");
+            logger.log(Level.SEVERE, "System Error while searching.", e);
         }
     }
 

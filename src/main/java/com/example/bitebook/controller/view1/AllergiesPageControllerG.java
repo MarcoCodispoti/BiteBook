@@ -56,15 +56,15 @@ public class AllergiesPageControllerG{
         if (selectedAllergenBean != null) {
             try {
                 allergiesController.removeClientAllergy(selectedAllergenBean);
-                errorLabel.setText("Allergia rimossa.");
+                displayError("Allergia rimossa.");
                 refreshPage();
 
             } catch (FailedRemoveException e) {
-                errorLabel.setText("Error while removing allergy");
+                displayError("Error while removing allergy");
                 logger.log(Level.SEVERE, "Error while removing allergy" , e);
             }
         } else {
-            errorLabel.setText("Please select the allergy to remove first");
+            displayError("Please select the allergy to remove first");
         }
     }
 
@@ -74,17 +74,16 @@ public class AllergiesPageControllerG{
         AllergenBean newAllergyBean = selectAllergyComboBox.getValue();
 
         if (newAllergyBean == null) {
-            errorLabel.setText("Please select the allergy to add first");
+            displayError("Please select the allergy to add first");
             return;
         }
 
         try {
             allergiesController.insertAllergy(newAllergyBean);
-            errorLabel.setText("Allergy inserted successfully");
+            displayError("Allergy inserted successfully");
             refreshPage();
-
         } catch (FailedInsertException e) {
-            errorLabel.setText("Error while inserting allergy: ");
+            displayError("Error while inserting allergy: ");
             logger.log(Level.SEVERE, "Error while inserting allergy" , e);
         }
     }
@@ -113,7 +112,7 @@ public class AllergiesPageControllerG{
         allergiesVBox.getChildren().clear();
         List<AllergenBean> clientAllergyBeans = allergiesController.getClientAllergies();
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
-            errorLabel.setText("The client has no allergies");
+            displayError("The client has no allergies");
             return;
         }
         allergiesVBox.getChildren().clear();
@@ -129,7 +128,7 @@ public class AllergiesPageControllerG{
                 allergiesVBox.getChildren().add(allergyCard);
 
             } catch (IOException e){
-                errorLabel.setText("Error while loading client allergy");
+                displayError("Error while loading client allergy");
                 logger.log(Level.SEVERE, "Error while loading client allergy" , e);
                 return;
             }
@@ -158,10 +157,15 @@ public class AllergiesPageControllerG{
                 selectAllergyComboBox.getItems().addAll(allergenListBeans);
             }
         } catch (FailedSearchException e) {
-            errorLabel.setText("Error while searching for allergens list");
+            displayError("Error while searching for allergens list");
             logger.log(Level.SEVERE, "Error while searching for allergens list" , e);
         }
     }
 
+
+    private void displayError(String errorMessage){
+        errorLabel.setText(errorMessage);
+        errorLabel.setVisible(true);
+    }
 
 }
