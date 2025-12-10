@@ -83,7 +83,7 @@ public class ChefHomePageControllerG {
                 controller.setParentController(this);
                 approvedRequestsVBox.getChildren().add(approvedRequestCard);
             } catch (IOException e){
-                logger.log(Level.SEVERE, "Error while loading the card for the request with ID: " + serviceRequestBean.getId(), e);
+                logger.log(Level.SEVERE, "Error while loading a card for a request ", e);
             }
         }
     }
