@@ -4,6 +4,7 @@ import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
+import com.example.bitebook.util.View1Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,8 +14,12 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SelectMenuPageControllerG{
+
+    private static final Logger logger = Logger.getLogger(SelectMenuPageControllerG.class.getName());
 
 
 private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
@@ -38,13 +43,14 @@ private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-bor
         try {
             this.chefMenuBeans = explorationController.getChefMenus(chefBean);
             if (this.chefMenuBeans == null || this.chefMenuBeans.isEmpty()) {
-                showError("This chef has no menus available.");
+                displayError("This chef has no menus available.");
                 return;
             }
             populateMenus();
         } catch (FailedSearchException e) {
             System.err.println("System Error: Unable to retrieve menus: " + e.getMessage());
-            showError("System Error: Unable to retrieve menus.");
+            logger.log(Level.SEVERE, "System Error: Unable to retrieve menus: ", e);
+            displayError("System Error: Unable to retrieve menus.");
         }
     }
 
@@ -53,18 +59,17 @@ private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-bor
 
         for (MenuBean menuBean : chefMenuBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/SelectMenuCard.fxml"));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.MENU_CARD_PATH));
                 Parent menuCard = cardLoader.load();
 
                 SelectMenuCardControllerG controller = cardLoader.getController();
                 controller.initData(menuBean);
                 controller.setCardUi(menuCard);
                 controller.setParentController(this);
-
                 menusVBox.getChildren().add(menuCard);
-
-            } catch (IOException e) {
-                System.err.println("Error loadinf card menu: " + menuBean.getName());
+            } catch (IOException e){
+                logger.log(Level.SEVERE, "Error loading card menu ", e);
+                displayError("Error loading a menu ");
             }
         }
     }
@@ -84,7 +89,7 @@ private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-bor
     @FXML
     void clickedOnSelectMenu() {
         if (selectedMenuBean == null) {
-            showError("Please select a menu first");
+            displayError("Please select a menu first");
             return;
         }
 
@@ -121,11 +126,11 @@ private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-bor
         if (explorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
-            showError("You must be logged in to access this page!");
+            displayError("You must be logged in to access this page!");
         }
     }
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }

@@ -62,7 +62,7 @@ public class SelectChefPageControllerG {
 
         for (ChefBean chefBean : chefInCityBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.SELECT_CHEF_CARD_PATH));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.CHEF_CARD_PATH));
                 Parent chefCard = cardLoader.load();
 
                 SelectChefCardControllerG controller = cardLoader.getController();
