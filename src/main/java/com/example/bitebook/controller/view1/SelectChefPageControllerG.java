@@ -3,6 +3,7 @@ package com.example.bitebook.controller.view1;
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
+import com.example.bitebook.util.View1Paths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,12 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SelectChefPageControllerG {
+
+    private static final Logger logger = Logger.getLogger(SelectChefPageControllerG.class.getName());
 
 
     private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
@@ -41,15 +46,14 @@ public class SelectChefPageControllerG {
             this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
 
             if (this.chefInCityBeans == null || this.chefInCityBeans.isEmpty()) {
-                showError("No chefs found in this city.");
+                displayError("No chefs found in this city.");
                 return;
             }
-
             populateChefs();
 
-        } catch (FailedSearchException e) {
-            System.err.println("System Error: Unable to retrieve chefs: " + e.getMessage());
-            showError("System Error: Unable to retrieve chefs.");
+        } catch (FailedSearchException e){
+            logger.log(Level.SEVERE, "System Error: Unable to retrieve chefs: ", e);
+            displayError("System Error: Unable to retrieve chefs.");
         }
     }
 
@@ -58,7 +62,7 @@ public class SelectChefPageControllerG {
 
         for (ChefBean chefBean : chefInCityBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/SelectChefCard.fxml"));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.SELECT_CHEF_CARD_PATH));
                 Parent chefCard = cardLoader.load();
 
                 SelectChefCardControllerG controller = cardLoader.getController();
@@ -67,9 +71,9 @@ public class SelectChefPageControllerG {
                 controller.setParentController(this);
 
                 chefsVBox.getChildren().add(chefCard);
-
             } catch (IOException e){
-                System.err.println("Error loading the card for the chef: " + chefBean.getName());
+                logger.log(Level.WARNING, "Error loading come chef " , e);
+                displayError("Error loading come chef");
             }
         }
     }
@@ -87,7 +91,7 @@ public class SelectChefPageControllerG {
     @FXML
     void clickedOnViewMenus() {
         if (selectedChefBean == null) {
-            showError("Please select a chef first");
+            displayError("Please select a chef first");
             return;
         }
 
@@ -119,11 +123,11 @@ public class SelectChefPageControllerG {
         if (explorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
-            showError("You must be logged in to access this page!");
+            displayError("You must be logged in to access this page!");
         }
     }
 
-    private void showError(String message){
+    private void displayError(String message){
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }

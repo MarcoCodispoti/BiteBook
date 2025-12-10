@@ -16,4 +16,6 @@ public class View1Paths{
     public static final String VIEW_PACKAGE_PATH = "/com/example/bitebook/view1/";
 
     public static final String VIEW_ICON_PATH = "/com/example/bitebook/images/icon1.png";
+
+    public static final String SELECT_CHEF_CARD_PATH = "/com/example/bitebook/view1/SelectChefCard.fxml";
 }
