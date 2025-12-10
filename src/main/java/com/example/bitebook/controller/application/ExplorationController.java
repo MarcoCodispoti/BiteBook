@@ -29,7 +29,7 @@ public class ExplorationController{
         try {
             chefDao.findCityChefs(chefBean.getCity());
             return true;
-        } catch (NoChefInCityException e){
+        } catch (NoChefInCityException _){
             return false;
         }
     }
