@@ -75,8 +75,6 @@ public class LoginPageControllerG {
 
 
     private boolean validateBeanData(){
-
-
         if (!loginBean.validateEmail()) {
             displayError("Invalid email format");
             return false;
@@ -92,13 +90,11 @@ public class LoginPageControllerG {
     }
 
 
-    private void handleNavigation(Role role) {
-        if (role == CLIENT) {
-            FxmlLoader.setPage("ClientHomePage");
-        } else if (role == CHEF) {
-            FxmlLoader.setPage("ChefHomePage");
-        } else {
-            displayError("Unrecognized role");
+    private void handleNavigation(Role role){
+        switch (role){
+            case CLIENT: FxmlLoader.setPage("ClientHomePage"); break;
+            case CHEF: FxmlLoader.setPage("ChefHomePage"); break;
+            default: displayError("Unrecognized role");
         }
     }
 
