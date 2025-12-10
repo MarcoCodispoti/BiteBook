@@ -6,10 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PaymentPageControllerG {
-private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
 
+    private static final Logger logger = Logger.getLogger(PaymentPageControllerG.class.getName());
+
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private MenuBean requestMenuBean;
     private ReservationDetailsBean requestReservationDetailsBean;
     private List<AllergenBean> reservationAllergenBeans;
@@ -51,9 +55,8 @@ private final SendServiceRequestController sendServiceRequestController = new Se
             }
             sendServiceRequestController.sendServiceRequest(serviceRequestBean);
             FxmlLoader.setPage("ConfirmationPage");
-
         } catch (Exception e) {
-
+            logger.log(Level.SEVERE, "Error while sending request!", e);
             errorLabel.setText("Error completing the request: ");
         }
     }
