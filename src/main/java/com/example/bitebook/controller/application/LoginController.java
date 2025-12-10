@@ -32,7 +32,7 @@ public class LoginController{
                 throw new FailedSearchException("Chef profile not found for the logged user");
             }
         }
-        LoggedUser.getInstance().logout(); // Resetta istanza precedente
+        LoggedUser.getInstance().logout();
         LoggedUser.getInstance().setRole(role);
         if (role == Role.CLIENT) {
             LoggedUser.getInstance().setClient(client);
