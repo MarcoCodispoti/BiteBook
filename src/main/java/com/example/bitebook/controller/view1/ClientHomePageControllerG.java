@@ -55,13 +55,13 @@ public class ClientHomePageControllerG{
             return;
         }
         if (!chefBean.validateCity()){
-            errorLabel.setText("Please insert a valid city");
+            displayError("Please insert a valid city");
             return;
         }
         try {
             boolean chefFound = explorationController.checkCityChefs(chefBean);
             if (!chefFound) {
-                errorLabel.setText("No chef found in " + chefBean.getCity() + "!");
+                displayError("No chef found in " + chefBean.getCity() + "!");
                 return;
             }
             SelectChefPageControllerG nextController = FxmlLoader.setPageAndReturnController("SelectChefPage");
@@ -69,7 +69,7 @@ public class ClientHomePageControllerG{
                 nextController.initData(chefBean);
             }
         } catch (FailedSearchException e){
-            errorLabel.setText("System Error while searching.");
+            displayError("System Error while searching.");
             logger.log(Level.SEVERE, "System Error while searching.", e);
         }
     }
@@ -79,7 +79,7 @@ public class ClientHomePageControllerG{
         if (explorationController.isLoggedClient()) {
             return true;
         } else {
-            errorLabel.setText("You must be logged in");
+            displayError("You must be logged in");
             return false;
         }
     }
@@ -87,10 +87,16 @@ public class ClientHomePageControllerG{
 
     public boolean checkCityField(){
         if(insertCityTextField.getText().isEmpty()){
-            errorLabel.setText("Please enter a city");
+            displayError("Please enter a city");
             return false;
         }
         return true;
+    }
+
+
+    private void displayError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 

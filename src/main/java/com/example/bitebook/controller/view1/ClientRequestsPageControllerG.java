@@ -11,10 +11,15 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientRequestsPageControllerG{
 
-private static final String REQUEST_CARD_PATH = "/com/example/bitebook/view1/ClientRequestCard.fxml";
+    private static final String REQUEST_CARD_PATH = "/com/example/bitebook/view1/ClientRequestCard.fxml";   // NOSONAR
+
+    private static final Logger logger = Logger.getLogger(ClientRequestsPageControllerG.class.getName());
+
 
     private List<ServiceRequestBean> serviceRequestBeans;
 
@@ -43,18 +48,17 @@ private static final String REQUEST_CARD_PATH = "/com/example/bitebook/view1/Cli
 
         try {
             this.serviceRequestBeans = requestManagerController.getClientRequests();
-
-
             if (this.serviceRequestBeans != null && !this.serviceRequestBeans.isEmpty()) {
                 populateRequests();
             } else {
-                errorLabel.setText("No active request at the moment.");
+                displayError("No active request at the moment.");
             }
-
         } catch (FailedSearchException e) {
-            errorLabel.setText("Error while obtaining request");
+            displayError("Error while obtaining request");
+            logger.log(Level.WARNING, "Error while obtainig request", e);
         } catch (Exception e) {
-            errorLabel.setText("Unexpected error while obtaining request");
+            displayError("Unexpected error while obtaining request");
+            logger.log(Level.SEVERE, "Unexpected error while obtaining request", e);
         }
     }
 
@@ -66,19 +70,22 @@ private static final String REQUEST_CARD_PATH = "/com/example/bitebook/view1/Cli
             try {
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(REQUEST_CARD_PATH));
                 Parent clientRequestCard = cardLoader.load();
-
-
                 ClientRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
                 controller.setParentController(this);
-
                 requestsVBox.getChildren().add(clientRequestCard);
 
             } catch (IOException e){
-                System.err.println("Error while loading request: " + serviceRequestBean.getId());
-
+                displayError("Error while loading request");
+                logger.log(Level.WARNING, "Error while loading some requests" , e);
             }
         }
+    }
+
+
+    private void displayError(String message){
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 
