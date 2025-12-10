@@ -8,8 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class ClientHomePageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(ClientHomePageControllerG2.class.getName());
 
 
     private final ExplorationController explorationController = new ExplorationController();
@@ -42,7 +47,7 @@ public class ClientHomePageControllerG2{
         String cityInput = cityTextField.getText().trim();
 
         if (cityInput.isEmpty()) {
-            showError("Please insert a city first");
+            displayError("Please insert a city first");
             return;
         }
 
@@ -50,16 +55,14 @@ public class ClientHomePageControllerG2{
         searchBean.setCity(cityInput);
 
         if (!searchBean.validateCity()) {
-            showError("You inserted an invalid city name");
+            displayError("You inserted an invalid city name");
             return;
         }
-
-
         try {
             boolean chefFound = explorationController.checkCityChefs(searchBean);
 
             if (!chefFound) {
-                showError("No chef found in the inserted city!");
+                displayError("No chef found in the inserted city!");
                 return;
             }
 
@@ -67,9 +70,9 @@ public class ClientHomePageControllerG2{
             if (controller != null) {
                 controller.initData(searchBean);
             }
-
-        } catch (FailedSearchException e) {
-            showError("System Error: Unable to search. Please try again later");
+        } catch (FailedSearchException e){
+            logger.log(Level.SEVERE, "Error while searching chefs in city" ,e);
+            displayError("System Error: Unable to search. Please try again later");
         }
     }
 
@@ -79,12 +82,12 @@ public class ClientHomePageControllerG2{
         if (explorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
-            showError(errorMessage);
+            displayError(errorMessage);
         }
     }
 
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
