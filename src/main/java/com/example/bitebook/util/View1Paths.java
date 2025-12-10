@@ -19,5 +19,5 @@ public class View1Paths{
 
     public static final String CHEF_CARD_PATH = "/com/example/bitebook/view1/SelectChefCard.fxml";
 
-    public static final String MENU_CARD_PATH = "/com/example/bitebook/view1/MenuCard.fxml";
+    public static final String MENU_CARD_PATH = "/com/example/bitebook/view1/SelectMenuCard.fxml";
 }
