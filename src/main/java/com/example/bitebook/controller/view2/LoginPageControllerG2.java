@@ -10,8 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class LoginPageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(LoginPageControllerG2.class.getName());
 
 
     private final LoginController loginController = new LoginController();
@@ -34,12 +39,14 @@ public class LoginPageControllerG2{
             loginController.authenticate(loginBean);
             Role actualRole = LoggedUser.getInstance().getRole();
             navigateByRole(actualRole);
-        } catch (WrongCredentialsException e) {
-            showError("Incorrect username or password.");
+        } catch (WrongCredentialsException _) {
+            displayError("Incorrect username or password.");
         } catch (FailedSearchException e) {
-            showError("System error during login. Please try again.");
+            logger.log(Level.SEVERE, "Error while logging in" ,e);
+            displayError("System error during login. Please try again.");
         } catch (Exception e) {
-            showError("An unexpected error occurred.");
+            logger.log(Level.SEVERE, "Unexpected system error",e.getCause());
+            displayError("An unexpected error occurred.");
         }
     }
 
@@ -54,24 +61,23 @@ public class LoginPageControllerG2{
         String password = passwordTextField.getText();
 
         if (email.isEmpty()) {
-            showError("Please enter your email.");
+            displayError("Please enter your email.");
             return false;
         }
         if (password.isEmpty()) {
-            showError("Please enter your password.");
+            displayError("Please enter your password.");
             return false;
         }
-
 
         loginBean.setEmail(email.trim());
         loginBean.setPassword(password);
 
         if (!loginBean.validateEmail()) {
-            showError("Please insert a valid email format.");
+            displayError("Please insert a valid email format.");
             return false;
         }
         if (!loginBean.validatePassword()) {
-            showError("Password format is invalid.");
+            displayError("Password format is invalid.");
             return false;
         }
 
@@ -80,18 +86,17 @@ public class LoginPageControllerG2{
 
     private void navigateByRole(Role role) {
         if (role == null) {
-            showError("Login system error: Role not found.");
+            displayError("Login system error: Role not found.");
             return;
         }
-
         switch (role) {
             case CLIENT -> FxmlLoader2.setPage("ClientHomePage2");
             case CHEF -> FxmlLoader2.setPage("ChefHomePage2");
-            default -> showError("Unknown user role.");
+            default -> displayError("Unknown user role.");
         }
     }
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
