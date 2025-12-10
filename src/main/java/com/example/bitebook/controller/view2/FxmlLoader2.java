@@ -88,7 +88,7 @@ public class FxmlLoader2 extends Application {
                     }
                 }
             } else {
-                System.err.println("Icon not found in path: " + ViewsResourcesPaths.ICON2_ICON_PATH);
+                logger.log(Level.WARNING, "Icon not found in the specified path");
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, "Error while loading icon", e);
