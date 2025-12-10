@@ -75,7 +75,7 @@ public class ChefDbDao implements ChefDao{
 
 
 
-    public List<SpecializationType> convertSpecializationString(String specializationString) {
+    private List<SpecializationType> convertSpecializationString(String specializationString) {
         List<SpecializationType> result = new ArrayList<>();
         if (specializationString == null || specializationString.trim().isEmpty()) {
             return result;
