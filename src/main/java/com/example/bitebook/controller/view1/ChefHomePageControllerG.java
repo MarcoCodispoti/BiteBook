@@ -12,8 +12,13 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChefHomePageControllerG {
+
+
+    private static final Logger logger = Logger.getLogger(ChefHomePageControllerG.class.getName());
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
@@ -59,6 +64,7 @@ public class ChefHomePageControllerG {
             populateRequests();
         } catch (FailedSearchException e) {
             errorLabel.setText("System Error: Unable to load requests.");
+            logger.log(Level.SEVERE, "Unable to load requets", e.getMessage());
         }
     }
 
@@ -77,7 +83,7 @@ public class ChefHomePageControllerG {
                 controller.setParentController(this);
                 approvedRequestsVBox.getChildren().add(approvedRequestCard);
             } catch (IOException e){
-                System.err.println("Error while loading the card for the request with ID: " + serviceRequestBean.getId());
+                logger.log(Level.SEVERE, "Error while loading the card for the request with ID: " + serviceRequestBean.getId(), e);
             }
         }
     }

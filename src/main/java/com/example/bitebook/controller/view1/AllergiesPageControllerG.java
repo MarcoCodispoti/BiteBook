@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 
 public class AllergiesPageControllerG{
 
+
     private static final Logger logger = Logger.getLogger(AllergiesPageControllerG.class.getName());
+
 
     private final AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
