@@ -57,7 +57,7 @@ public class ChefRequestsPageControllerG{
             populateRequests();
         } catch (FailedSearchException e) {
             errorLabel.setText("Unable to load requests");
-            logger.log(Level.WARNING,"Unable to load requests",e);
+            logger.log(Level.SEVERE,"Unable to load requests",e);
         }
     }
 
@@ -77,11 +77,10 @@ public class ChefRequestsPageControllerG{
                 controller.initData(serviceRequestBean);
                 controller.setCardUi(chefRequestCard);
                 controller.setParentController(this);
-
                 requestsVBox.getChildren().add(chefRequestCard);
 
             } catch (IOException e){
-                System.err.println("Error loading request ID: " + serviceRequestBean.getId());
+                logger.log(Level.WARNING,"Error loading a request", e );
             }
         }
     }
