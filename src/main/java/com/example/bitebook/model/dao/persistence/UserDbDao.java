@@ -67,58 +67,6 @@ public class UserDbDao implements UserDao {
 
 
 
-
-//    @Override
-//    public Chef getChefInfo(String email, String password) throws FailedSearchException {
-//        Chef chef = null;
-//        try (Connection conn = Connector.getInstance().getConnection()) {
-//            try (CallableStatement cstmt = conn.prepareCall("{call GetChefInfo(?,?)}")) {
-//                cstmt.setString(1, email);
-//                cstmt.setString(2, password);
-//                cstmt.execute();
-//                try (ResultSet rs = cstmt.getResultSet()) {
-//                    if (rs.next()) {
-//                        chef = new Chef(
-//                                rs.getInt("IdUser"),
-//                                rs.getString("Name"),
-//                                rs.getString("Surname"),
-//                                CookingStyle.valueOf(rs.getString("CookingStyle")), // Gestione Enum
-//                                rs.getString("City")
-//                        );
-//                        chef.setEmail(email);
-//                        chef.setPassword(password);
-//                    }
-//                }
-//            }
-//            if (chef == null) {
-//                return null;
-//            }
-//            try (CallableStatement cstmt2 = conn.prepareCall("{call GetChefSpecializations(?)}")) {
-//                cstmt2.setInt(1, chef.getId());
-//                cstmt2.execute();
-//                List<SpecializationType> specializations = new ArrayList<>();
-//                try (ResultSet rs2 = cstmt2.getResultSet()) {
-//                    while (rs2.next()) {
-//                        try {
-//                            SpecializationType spec = SpecializationType.valueOf(rs2.getString("Specialization"));
-//                            specializations.add(spec);
-//                        } catch (IllegalArgumentException _) {
-//                            // Ignore
-//                        }
-//                    }
-//                }
-//                chef.setSpecializations(specializations);
-//            }
-//            chef.setOfferedMenus(null);
-//        } catch (SQLException e) {
-//            throw new FailedSearchException("DB Error while recovering chef profile", new QueryException(e));
-//        } catch (FailedDatabaseConnectionException e) {
-//            throw new FailedSearchException(e);
-//        }
-//        return chef;
-//    }
-
-
     @Override
     public Chef getChefInfo(String email, String password) throws FailedSearchException {
         try (Connection conn = Connector.getInstance().getConnection()){
@@ -169,8 +117,6 @@ public class UserDbDao implements UserDao {
 
 
 
-
-
     private List<SpecializationType> fetchChefSpecializations(Connection conn, int chefId) throws SQLException {
         List<SpecializationType> specializations = new ArrayList<>();
         String sql = "{call GetChefSpecializations(?)}";
@@ -200,8 +146,6 @@ public class UserDbDao implements UserDao {
             return null;
         }
     }
-
-
 
 
 
