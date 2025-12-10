@@ -10,9 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChefRequestsPageControllerG2{
-    
+
+    private static final Logger logger = Logger.getLogger(ChefRequestsPageControllerG2.class.getName());
+
     private final RequestManagerController requestManagerController = new RequestManagerController();
 
     @FXML private ListView<ServiceRequestBean> chefRequestsListView;
@@ -49,10 +53,11 @@ public class ChefRequestsPageControllerG2{
             if (chefRequestBeans != null && !chefRequestBeans.isEmpty()) {
                 chefRequestsListView.getItems().addAll(chefRequestBeans);
             } else {
-                errorLabel.setText("No pending requests found.");
+                displayError("No pending requests found.");
             }
         } catch (FailedSearchException e){
-            errorLabel.setText("Error occurred while getting chef requests");
+            logger.log(Level.SEVERE, "Error occurred while getting chef requests",e);
+            displayError("Error occurred while getting chef requests");
         }
     }
 
@@ -92,18 +97,19 @@ public class ChefRequestsPageControllerG2{
             try {
                 requestManagerController.manageRequest(selectedBean);
                 refreshRequests();
-            } catch (FailedUpdateException e) {
-                errorLabel.setText("Error occurred while trying to update the request");
+            } catch (FailedUpdateException e){
+                logger.log(Level.SEVERE, "Error occurred while managing request",e);
+                displayError("Error occurred while trying to update the request");
             }
         } else {
-            errorLabel.setText("Please select a request first.");
+            displayError("Please select a request first.");
         }
     }
 
 
     @FXML
     void clickedOnMenus() {
-        errorLabel.setText("Not implemented yet, sorry :(");
+        displayError("Not implemented yet, sorry :(");
     }
 
 
@@ -115,6 +121,12 @@ public class ChefRequestsPageControllerG2{
     private String truncate(String input, int width) {
         if (input == null) return "";
         return input.length() > width ? input.substring(0, width - 1) + "." : input;
+    }
+
+
+    private void displayError(String message){
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 
