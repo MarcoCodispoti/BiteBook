@@ -1,5 +1,6 @@
 package com.example.bitebook.controller.view1;
 
+import com.example.bitebook.util.View1Paths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,14 +10,17 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FxmlLoader extends Application {
-    
-    private static Stage stage;
-    private static final String VIEW_PATH = "/com/example/bitebook/view1/";
-    private static final String ICON_PATH = "/com/example/bitebook/images/icon1.png"; // Percorso icona
 
+    private static final Logger logger = Logger.getLogger(FxmlLoader.class.getName());
+
+
+    private static Stage stage;
     @Override
+    @SuppressWarnings("java:S2696")
     public void start(Stage primaryStage) {
         try {
             stage = primaryStage;
@@ -29,7 +33,7 @@ public class FxmlLoader extends Application {
 
             stage.show();
         } catch (Exception e) {
-            System.err.println("Critical error while starting the application:" + e.getMessage());
+            logger.log(Level.SEVERE, "Critical Error: Unable to start the application", e);
         }
     }
 
@@ -41,7 +45,7 @@ public class FxmlLoader extends Application {
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
         } catch (IOException e){
-            System.err.println("Error while changing page: " + fileName);
+            logger.log(Level.SEVERE, "Error: Unable to change page", e);
         }
     }
 
@@ -55,8 +59,8 @@ public class FxmlLoader extends Application {
 
             return loader.getController();
 
-        } catch (IOException e) {
-            System.err.println("Error while changing page with controller: " + fileName);
+        } catch (IOException e){
+            logger.log(Level.SEVERE, "Error while changing page with controller ", e);
             return null;
         }
     }
@@ -67,7 +71,7 @@ public class FxmlLoader extends Application {
             throw new IllegalArgumentException("xmfl file name cannot be null or empty");
         }
 
-        String fullPath = VIEW_PATH + fileName + ".fxml";
+        String fullPath = View1Paths.VIEW_PACKAGE_PATH + fileName + ".fxml";
         URL fileUrl = FxmlLoader.class.getResource(fullPath);
 
         if (fileUrl == null) {
@@ -78,7 +82,7 @@ public class FxmlLoader extends Application {
 
     private void loadDockIcon() {
         try {
-            URL iconUrl = getClass().getResource(ICON_PATH);
+            URL iconUrl = getClass().getResource(View1Paths.VIEW_ICON_PATH);
             if (iconUrl != null){
                 if (Taskbar.isTaskbarSupported()) {
                     var taskbar = Taskbar.getTaskbar();
@@ -89,10 +93,10 @@ public class FxmlLoader extends Application {
                     }
                 }
             } else {
-                System.err.println("Icon not found in the path: " + ICON_PATH);
+                logger.warning("Icon not found in the path: " + View1Paths.VIEW_ICON_PATH);
             }
         } catch (Exception e){
-            // ignore
+            logger.log(Level.WARNING, "Error while loading icon", e);
         }
     }
 

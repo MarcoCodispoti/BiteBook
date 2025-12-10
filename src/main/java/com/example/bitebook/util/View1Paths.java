@@ -12,4 +12,8 @@ public class View1Paths{
     public static final String CHEF_APPROVED_REQUEST_CARD_PATH = "/com/example/bitebook/view1/ApprovedRequestCard.fxml";
 
     public static final String CHEF_REQUEST_CARD_PATH = "/com/example/bitebook/view1/ChefRequestCard.fxml";
+
+    public static final String VIEW_PACKAGE_PATH = "/com/example/bitebook/view1/";
+
+    public static final String VIEW_ICON_PATH = "/com/example/bitebook/images/icon1.png";
 }
