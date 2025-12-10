@@ -18,9 +18,14 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     private static final Map<Integer, ServiceRequest> fakeTable = new HashMap<>();
     private static int autoIncrementId = 1;
 
+    private static synchronized int getNextId() {
+        return autoIncrementId++;
+    }
+
+
     @Override
     public void saveServiceRequest(ServiceRequest serviceRequest){
-        serviceRequest.setId(autoIncrementId++);
+        serviceRequest.setId(getNextId());
         if (serviceRequest.getStatus() == null) {
             serviceRequest.setStatus(RequestStatus.PENDING);
         }

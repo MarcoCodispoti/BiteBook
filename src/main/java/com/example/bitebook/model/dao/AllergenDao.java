@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface AllergenDao {
 
-    public List<Allergen> getClientAllergies(Client client) throws FailedSearchException;
+    List<Allergen> getClientAllergies(Client client) throws FailedSearchException;
 
-    public void removeClientAllergy(int clientId,int allergenId) throws FailedRemoveException;
+    void removeClientAllergy(int clientId,int allergenId) throws FailedRemoveException;
 
-    public List<Allergen> getAllergens() throws FailedSearchException;
+    List<Allergen> getAllergens() throws FailedSearchException;
 
-    public void insertAllergy(Allergen allergen, int clientId) throws FailedInsertException;
+    void insertAllergy(Allergen allergen, int clientId) throws FailedInsertException;
 
-    public List<Allergen> getDishAllergens(int dishId) throws FailedSearchException;
+    List<Allergen> getDishAllergens(int dishId) throws FailedSearchException;
 }
