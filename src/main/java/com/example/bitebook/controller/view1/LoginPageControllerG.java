@@ -11,10 +11,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static com.example.bitebook.model.enums.Role.CHEF;
 import static com.example.bitebook.model.enums.Role.CLIENT;
 
 public class LoginPageControllerG {
+
+    private static final Logger logger = Logger.getLogger(LoginPageControllerG.class.getName());
+
 
     private final LoginBean loginBean = new LoginBean();
     private final LoginController loginController = new LoginController();
@@ -49,13 +55,14 @@ public class LoginPageControllerG {
             loginController.authenticate(loginBean);
             Role actualRole = LoggedUser.getInstance().getRole();
             handleNavigation(actualRole);
-        } catch (WrongCredentialsException e) {
-            showError("Incorrect Username or Password.");
+        } catch (WrongCredentialsException _) {
+            displayError("Incorrect Username or Password.");
         } catch (FailedSearchException e){
-            System.err.println("System Error while login: " + e.getMessage());
-            showError("System Error: Try again later");
+            logger.log(Level.WARNING, "Error while finding user with such credentials", e);
+            displayError("System Error: Try again later");
         } catch (Exception e){
-            showError("Unknown Error");
+            logger.log(Level.WARNING, "Systen error occurred", e);
+            displayError("Unknown Error");
         }
     }
 
@@ -71,13 +78,13 @@ public class LoginPageControllerG {
 
 
         if (!loginBean.validateEmail()) {
-            showError("Invalid email format");
+            displayError("Invalid email format");
             return false;
         }
 
 
         if (!loginBean.validatePassword()) {
-            showError("Invalid password format");
+            displayError("Invalid password format");
             return false;
         }
 
@@ -91,25 +98,24 @@ public class LoginPageControllerG {
         } else if (role == CHEF) {
             FxmlLoader.setPage("ChefHomePage");
         } else {
-            showError("Unrecognized role");
+            displayError("Unrecognized role");
         }
     }
 
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
 
 
-
     private boolean checkEmptyFields(){
         if(emailTextField.getText().isEmpty()){
-            errorLabel.setVisible(true); errorLabel.setText("email field is empty");
+            displayError("email field is empty");
             return false;
         }
         if(passwordTextField.getText().isEmpty()){
-            errorLabel.setVisible(true); errorLabel.setText("password field is empty");
+            displayError("password field is empty");
             return false;
         }
         return true;
