@@ -6,19 +6,27 @@ import com.example.bitebook.model.dao.persistence.*;
 import com.example.bitebook.util.AppConfig;
 import com.example.bitebook.util.Connector;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class DaoFactory{
 
+    private static final Logger logger = Logger.getLogger(DaoFactory.class.getName());
+
+    private DaoFactory(){
+        // Default constructor
+    }
 
     public static UserDao getUserDao() {
 
-        if (AppConfig.getInstance().isDemoMode()) {
-            System.out.println("[Factory] Richiesto UserDao in modalità DEMO");
+        if (AppConfig.getInstance().isDemoMode()){
             return new UserDemoDao();
         }
         try {
             Connector.getInstance().getConnection();
             return new UserDbDao();
-        } catch (FailedDatabaseConnectionException e) {
+        } catch (FailedDatabaseConnectionException e){
+            logger.log(Level.INFO, "Database connection error: Login via File System", e);
             return new UserFsDao();
         }
     }
@@ -42,7 +50,7 @@ public abstract class DaoFactory{
             Connector.getInstance().getConnection();
             return new AllergenDbDao();
 
-        } catch (FailedDatabaseConnectionException e){
+        } catch (FailedDatabaseConnectionException _){
             // Dummy fallback on demoDao -> Allow only login without app crash
             return new AllergenDemoDao();
         }

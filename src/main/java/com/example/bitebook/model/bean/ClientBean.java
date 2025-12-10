@@ -10,6 +10,7 @@ public class ClientBean extends UserBean{
         this.surname = surname;
     }
 
+    @Override
     public boolean validate(){
         if(!super.validate()){
             return false;
