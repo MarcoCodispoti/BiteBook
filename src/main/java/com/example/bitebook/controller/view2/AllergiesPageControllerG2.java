@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AllergiesPageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(AllergiesPageControllerG2.class.getName());
 
 
     private final AllergiesController allergiesController = new AllergiesController();
@@ -43,7 +47,8 @@ public class AllergiesPageControllerG2{
             populateLists();
 
         } catch (FailedSearchException e){
-            showError("Error while getting allergies, please try again");
+            logger.log(Level.SEVERE, "Error while getting allergens list.", e);
+            displayError("Error while getting allergies, please try again");
         }
     }
 
@@ -70,15 +75,16 @@ public class AllergiesPageControllerG2{
         AllergenBean selectedBean = clientAllergiesListView.getSelectionModel().getSelectedItem();
 
         if (selectedBean == null) {
-            showError("Please select an allergy to remove first");
+            displayError("Please select an allergy to remove first");
             return;
         }
 
         try {
             allergiesController.removeClientAllergy(selectedBean);
             refreshData();
-        } catch (FailedRemoveException e) {
-            showError("Error occurred while removing allergy");
+        } catch (FailedRemoveException e){
+            logger.log(Level.WARNING, "Error while removing allergy.", e);
+            displayError("Error occurred while removing allergy");
         }
     }
 
@@ -90,15 +96,16 @@ public class AllergiesPageControllerG2{
         AllergenBean selectedBean = allergensListView.getSelectionModel().getSelectedItem();
 
         if (selectedBean == null) {
-            showError("Please select an allergen to add first");
+            displayError("Please select an allergen to add first");
             return;
         }
 
         try {
             allergiesController.insertAllergy(selectedBean);
             refreshData();
-        } catch (FailedInsertException e) {
-            showError("Error occurred while adding allergy");
+        } catch (FailedInsertException e){
+            logger.log(Level.WARNING, "Error while adding allergy.", e);
+            displayError("Error occurred while adding allergy");
         }
     }
 
@@ -143,7 +150,8 @@ public class AllergiesPageControllerG2{
         FxmlLoader2.setPage("ClientHomePage2");
     }
 
-    private void showError(String message) {
+
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }

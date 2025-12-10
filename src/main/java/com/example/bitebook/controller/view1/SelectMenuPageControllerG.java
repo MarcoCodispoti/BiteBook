@@ -22,7 +22,7 @@ public class SelectMenuPageControllerG{
     private static final Logger logger = Logger.getLogger(SelectMenuPageControllerG.class.getName());
 
 
-private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
+    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
     private static final String DEFAULT_STYLE = "";
 
     private final ExplorationController explorationController = new ExplorationController();
