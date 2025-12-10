@@ -1,6 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,14 +11,17 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FxmlLoader2 extends Application {
 
+    private static final Logger logger = Logger.getLogger(FxmlLoader2.class.getName());
+
     private static Stage stage;
-    private static final String VIEW_PATH = "/com/example/bitebook/view2/";
-    private static final String ICON_PATH = "/com/example/bitebook/images/icon2.png";
 
     @Override
+    @SuppressWarnings("java:S2696")
     public void start(Stage primaryStage) {
         try {
             stage = primaryStage;
@@ -27,8 +31,8 @@ public class FxmlLoader2 extends Application {
             setPage("LoginPage2");
 
             stage.show();
-        } catch (Exception e) {
-            System.err.println("Critical error while starting application v2: " + e.getMessage());
+        } catch (Exception e){
+            logger.log(Level.SEVERE, "Critical error while starting the application", e);
         }
     }
 
@@ -40,20 +44,20 @@ public class FxmlLoader2 extends Application {
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
         } catch (IOException e) {
-            System.err.println("Error while changing page in v2: " + fileName);
+            logger.log(Level.SEVERE, "Error while changing page", e);
         }
     }
 
 
     public static <T> T setPageAndReturnController(String fileName) {
-        try {
+        try{
             FXMLLoader loader = loadFxml(fileName);
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
             return loader.getController();
-        } catch (IOException e) {
-            System.err.println("Error while changing page with controller in v2: " + fileName);
+        } catch (IOException e){
+            logger.log(Level.SEVERE, "Error while changing page with controller ", e);
             return null;
         }
     }
@@ -63,7 +67,7 @@ public class FxmlLoader2 extends Application {
         if (fileName == null || fileName.trim().isEmpty()) {
             throw new IllegalArgumentException("FXML file name cannot be null or empty");
         }
-        String fullPath = VIEW_PATH + fileName + ".fxml";
+        String fullPath = ViewsResourcesPaths.VIEW2_PACKAGE_PATH + fileName + ".fxml";
         URL fileUrl = FxmlLoader2.class.getResource(fullPath);
         if (fileUrl == null) {
             throw new IOException("FXML file not found: " + fullPath);
@@ -74,7 +78,7 @@ public class FxmlLoader2 extends Application {
 
     private void loadDockIcon() {
         try {
-            URL iconUrl = getClass().getResource(ICON_PATH);
+            URL iconUrl = getClass().getResource(ViewsResourcesPaths.ICON2_ICON_PATH);
             if (iconUrl != null) {
                 if (Taskbar.isTaskbarSupported()) {
                     var taskbar = Taskbar.getTaskbar();
@@ -84,10 +88,10 @@ public class FxmlLoader2 extends Application {
                     }
                 }
             } else {
-                System.err.println("Icon not found in path: " + ICON_PATH);
+                System.err.println("Icon not found in path: " + ViewsResourcesPaths.ICON2_ICON_PATH);
             }
         } catch (Exception e) {
-            // Ignore
+            logger.log(Level.WARNING, "Error while loading icon", e);
         }
     }
 

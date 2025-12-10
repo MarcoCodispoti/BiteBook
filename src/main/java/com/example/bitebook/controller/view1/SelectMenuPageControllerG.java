@@ -4,7 +4,7 @@ import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
-import com.example.bitebook.util.View1Paths;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -58,7 +58,7 @@ public class SelectMenuPageControllerG{
 
         for (MenuBean menuBean : chefMenuBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.MENU_CARD_PATH));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.MENU_CARD_PATH));
                 Parent menuCard = cardLoader.load();
 
                 SelectMenuCardControllerG controller = cardLoader.getController();

@@ -1,10 +1,12 @@
 package com.example.bitebook.util;
 
 @SuppressWarnings("java:S1075")
-public class View1Paths{
+public class ViewsResourcesPaths {
 
-    private View1Paths(){}
+    private ViewsResourcesPaths(){}
 
+
+    // View 1
     public static final String CLIENT_REQUEST_CARD_PATH = "/com/example/bitebook/view1/ClientRequestCard.fxml";
 
     public static final String ALLERGY_CARD_PATH = "/com/example/bitebook/view1/AllergyCard.fxml";
@@ -20,4 +22,9 @@ public class View1Paths{
     public static final String CHEF_CARD_PATH = "/com/example/bitebook/view1/SelectChefCard.fxml";
 
     public static final String MENU_CARD_PATH = "/com/example/bitebook/view1/SelectMenuCard.fxml";
+
+
+    // View 2
+    public static final String VIEW2_PACKAGE_PATH = "/com/example/bitebook/view2/";
+    public static final String ICON2_ICON_PATH = "/com/example/bitebook/images/icon2.png";
 }

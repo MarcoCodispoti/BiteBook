@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.util.View1Paths;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -71,7 +71,7 @@ public class FxmlLoader extends Application {
             throw new IllegalArgumentException("xmfl file name cannot be null or empty");
         }
 
-        String fullPath = View1Paths.VIEW_PACKAGE_PATH + fileName + ".fxml";
+        String fullPath = ViewsResourcesPaths.VIEW_PACKAGE_PATH + fileName + ".fxml";
         URL fileUrl = FxmlLoader.class.getResource(fullPath);
 
         if (fileUrl == null) {
@@ -82,7 +82,7 @@ public class FxmlLoader extends Application {
 
     private void loadDockIcon() {
         try {
-            URL iconUrl = getClass().getResource(View1Paths.VIEW_ICON_PATH);
+            URL iconUrl = getClass().getResource(ViewsResourcesPaths.VIEW_ICON_PATH);
             if (iconUrl != null){
                 if (Taskbar.isTaskbarSupported()) {
                     var taskbar = Taskbar.getTaskbar();
@@ -93,7 +93,7 @@ public class FxmlLoader extends Application {
                     }
                 }
             } else {
-                logger.warning("Icon not found in the path: " + View1Paths.VIEW_ICON_PATH);
+                logger.warning("Icon not found in the path: " + ViewsResourcesPaths.VIEW_ICON_PATH);
             }
         } catch (Exception e){
             logger.log(Level.WARNING, "Error while loading icon", e);

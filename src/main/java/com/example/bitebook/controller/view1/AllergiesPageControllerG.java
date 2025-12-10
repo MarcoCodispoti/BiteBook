@@ -5,7 +5,7 @@ import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedRemoveException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
-import com.example.bitebook.util.View1Paths;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,7 +119,7 @@ public class AllergiesPageControllerG{
         allergiesVBox.getChildren().clear();
         for(AllergenBean allergyBean : clientAllergyBeans){
             try{
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.ALLERGY_CARD_PATH));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.ALLERGY_CARD_PATH));
                 Parent allergyCard = cardLoader.load();
                 AllergyCardControllerG controller = cardLoader.getController();
                 controller.initData(allergyBean);

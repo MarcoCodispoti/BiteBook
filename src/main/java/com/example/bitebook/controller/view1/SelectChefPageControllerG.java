@@ -3,7 +3,7 @@ package com.example.bitebook.controller.view1;
 import com.example.bitebook.controller.application.ExplorationController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
-import com.example.bitebook.util.View1Paths;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -62,7 +62,7 @@ public class SelectChefPageControllerG {
 
         for (ChefBean chefBean : chefInCityBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.CHEF_CARD_PATH));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.CHEF_CARD_PATH));
                 Parent chefCard = cardLoader.load();
 
                 SelectChefCardControllerG controller = cardLoader.getController();

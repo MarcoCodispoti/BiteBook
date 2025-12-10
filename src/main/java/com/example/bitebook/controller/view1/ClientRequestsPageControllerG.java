@@ -3,7 +3,7 @@ package com.example.bitebook.controller.view1;
 import com.example.bitebook.controller.application.RequestManagerController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
-import com.example.bitebook.util.View1Paths;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -67,7 +67,7 @@ public class ClientRequestsPageControllerG{
 
         for (ServiceRequestBean serviceRequestBean : serviceRequestBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(View1Paths.CLIENT_REQUEST_CARD_PATH));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.CLIENT_REQUEST_CARD_PATH));
                 Parent clientRequestCard = cardLoader.load();
                 ClientRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
