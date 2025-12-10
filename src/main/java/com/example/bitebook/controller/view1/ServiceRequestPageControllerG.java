@@ -16,9 +16,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ServiceRequestPageControllerG{
+
+
+    private static final Logger logger = Logger.getLogger(ServiceRequestPageControllerG.class.getName());
 
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
@@ -146,31 +151,31 @@ public class ServiceRequestPageControllerG{
 
         LocalDate selectedDate = serviceDatePicker.getValue();
         if (selectedDate == null || !selectedDate.isAfter(LocalDate.now())) {
-            showError("Please select a valid date after today.");
+            displayError("Please select a valid date after today.");
             return false;
         }
 
         LocalTime selectedTime = timeComboBox.getValue();
         if (selectedTime == null) {
-            showError("Please select a time.");
+            displayError("Please select a time.");
             return false;
         }
 
         String address = addressTextField.getText();
         if (address == null || address.trim().length() < 6) {
-            showError("Please enter a valid address.");
+            displayError("Please enter a valid address.");
             return false;
         }
 
         if (numberOfParticipantsComboBox.getValue() == null) {
-            showError("Please select the number of participants.");
+            displayError("Please select the number of participants.");
             return false;
         }
         int participants = Integer.parseInt(numberOfParticipantsComboBox.getValue());
 
         MenuLevel level = ingredientsLevelComboBox.getValue();
         if (level == null) {
-            showError("Please select a menu level.");
+            displayError("Please select a menu level.");
             return false;
         }
 
@@ -204,7 +209,7 @@ public class ServiceRequestPageControllerG{
 
                 int price = sendServiceRequestController.calculateTotalPrice(tempBean, selectedMenuBean);
                 totalPriceLabel.setText(price + " €");
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException _) {
                 totalPriceLabel.setText("--");
             }
         } else {
@@ -234,8 +239,9 @@ public class ServiceRequestPageControllerG{
             ingredientsLevelComboBox.getItems().addAll(MenuLevel.BASE, MenuLevel.PREMIUM, MenuLevel.LUXE);
             ingredientsLevelComboBox.getSelectionModel().select(MenuLevel.BASE);
 
-        } catch (FailedSearchException e) {
-            showError("Unable to load menu pricing levels.");
+        } catch (FailedSearchException e){
+            logger.log(Level.SEVERE, "Error while loading pricing levels", e);
+            displayError("Unable to load menu pricing levels.");
         }
     }
 
@@ -282,7 +288,7 @@ public class ServiceRequestPageControllerG{
         allergenWarningAnchorPane.setVisible(false);
     }
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
