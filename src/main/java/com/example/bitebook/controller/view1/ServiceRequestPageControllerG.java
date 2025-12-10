@@ -114,8 +114,8 @@ public class ServiceRequestPageControllerG{
         try {
             hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(menuAllergenBeans);
         }catch(IllegalStateException e){
-            errorLabel.setVisible(true);
-            errorLabel.setText("System Error: Unable to check incompatibility");
+            logger.log(Level.SEVERE, "System Error: Unable to check imcompatibilities", e);
+            displayError("Error: Unable to check incompatibility");
             return;
         }
 
