@@ -15,8 +15,13 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MenuDetailsPageControllerG{
+
+    private static final Logger logger = Logger.getLogger(MenuDetailsPageControllerG.class.getName());
+
 
     private final ExplorationController explorationController = new ExplorationController();
 
@@ -69,7 +74,7 @@ public class MenuDetailsPageControllerG{
                 controller.initData(selectedMenuBean, menuAllergenBeans, menusChefBean);
             }
         } else {
-            errorLabel.setText("You must be logged in to proceed");
+            displayError("You must be logged in to proceed");
         }
     }
 
@@ -85,7 +90,6 @@ public class MenuDetailsPageControllerG{
         pricePerPersonLabel.setText(menuBean.getPricePerPerson() + " €");
 
         errorLabel.setText("");
-        errorLabel.setVisible(true);
 
 
         try {
@@ -95,8 +99,8 @@ public class MenuDetailsPageControllerG{
             populateCourses();
             allergensLabel.setText(formatAllergensList());
         } catch (FailedSearchException e){
-            System.err.println("Error recovering menu details: " + e.getMessage());
-            errorLabel.setText("Error recovering menu details");
+            displayError("Error recovering menu details");
+            logger.log(Level.SEVERE, "Error recovering menu details", e);
         }
     }
 
@@ -118,8 +122,8 @@ public class MenuDetailsPageControllerG{
                 coursesVBox.getChildren().add(dishCard);
 
             } catch (IOException e){
-                System.err.println("Unable to load a the card for the dish: " + dishBean.getName());
-
+                logger.log(Level.WARNING, "Error recovering some menu details", e);
+                displayError("Error recovering some menu details");
             }
         }
     }
@@ -130,7 +134,6 @@ public class MenuDetailsPageControllerG{
         if (menuAllergenBeans == null || menuAllergenBeans.isEmpty()) {
             return "No Allergens";
         }
-
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < menuAllergenBeans.size(); i++) {
             sb.append(menuAllergenBeans.get(i).getName());
@@ -147,10 +150,15 @@ public class MenuDetailsPageControllerG{
         if (explorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
-            errorLabel.setText("You must be logged in to access this page!");
+            displayError("You must be logged in to access this page!");
         }
     }
 
+
+    private void displayError(String message){
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
+    }
 
 
 }
