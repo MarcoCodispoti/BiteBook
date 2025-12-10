@@ -14,7 +14,9 @@ public class ReservationDetails{
     private MenuLevel selectedMenuLevel;
 
 
-    public ReservationDetails(){}
+    public ReservationDetails(){
+        // Default constructor
+    }
 
 
     public LocalDate getDate() {return date;}

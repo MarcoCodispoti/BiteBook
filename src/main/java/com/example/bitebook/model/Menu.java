@@ -16,7 +16,9 @@ public class Menu {
     private int luxeLevelSurcharge;
 
 
-    public Menu(){}
+    public Menu(){
+        // Default constructor
+    }
 
 
     public int getId(){return id;}

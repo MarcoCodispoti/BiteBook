@@ -13,7 +13,9 @@ public class Dish{
     private List<Allergen> allergens;
 
 
-    public Dish(){}
+    public Dish(){
+        // Default constructor
+    }
 
 
     public int  getId() {return id;}
