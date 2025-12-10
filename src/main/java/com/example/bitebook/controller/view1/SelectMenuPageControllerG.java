@@ -47,8 +47,7 @@ private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-bor
                 return;
             }
             populateMenus();
-        } catch (FailedSearchException e) {
-            System.err.println("System Error: Unable to retrieve menus: " + e.getMessage());
+        } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "System Error: Unable to retrieve menus: ", e);
             displayError("System Error: Unable to retrieve menus.");
         }
