@@ -13,8 +13,13 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChefRequestsPageControllerG{
+
+    private static final Logger logger = Logger.getLogger(ChefRequestsPageControllerG.class.getName());
+
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
 
@@ -47,13 +52,12 @@ public class ChefRequestsPageControllerG{
         requestsVBox.getChildren().clear();
         selectedServiceRequestBean = null;
         selectedCardUi = null;
-
         try {
             this.chefServiceRequestBeans = requestManagerController.getChefRequests();
             populateRequests();
-
         } catch (FailedSearchException e) {
             errorLabel.setText("Unable to load requests");
+            logger.log(Level.WARNING,"Unable to load requests",e);
         }
     }
 
