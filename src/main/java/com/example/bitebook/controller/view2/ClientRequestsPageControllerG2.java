@@ -10,8 +10,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Font;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientRequestsPageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(ClientRequestsPageControllerG2.class.getName());
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
@@ -34,7 +38,6 @@ public class ClientRequestsPageControllerG2{
             @Override
             protected void updateItem(ServiceRequestBean item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty || item == null) {
                     setText(null);
                 } else {
@@ -55,13 +58,15 @@ public class ClientRequestsPageControllerG2{
             if (clientRequests != null && !clientRequests.isEmpty()) {
                 clientRequestsListView.getItems().addAll(clientRequests);
             } else {
-                showError("No requests found.");
+                displayError("No requests found.");
             }
 
         } catch (FailedSearchException e){
-            showError("System Error: Unable to retrieve requests.");
+            logger.log(Level.SEVERE, "Unable to retrive requests" ,e);
+            displayError("System Error: Unable to retrieve requests.");
         } catch (Exception e) {
-            showError("An unexpected error occurred.");
+            logger.log(Level.SEVERE, "Unexpected system error" ,e.getCause());
+            displayError("An unexpected error occurred.");
         }
     }
 
@@ -98,11 +103,9 @@ public class ClientRequestsPageControllerG2{
         FxmlLoader2.setPage("ClientHomePage2");
     }
 
-    private void showError(String message) {
-        if (errorLabel != null) {
-            errorLabel.setText(message);
-            errorLabel.setVisible(true);
-        }
+    private void displayError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 
