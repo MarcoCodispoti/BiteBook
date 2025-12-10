@@ -18,9 +18,10 @@ import java.util.List;
 
 public class UserFsDao implements UserDao{
 
-    String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/ChefsSpecializations.csv";
-    private final String USERS_FILE_PATH = "/com/example/bitebook/Users.csv";
-    private final String CSV_DELIMITER = ",";
+    @SuppressWarnings("java:S1075")
+    private static final String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/ChefsSpecializations.csv";
+    private static final String USERS_FILE_PATH = "/com/example/bitebook/Users.csv";
+    private static final String CSV_DELIMITER = ",";
 
 
     @Override
@@ -28,7 +29,7 @@ public class UserFsDao implements UserDao{
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
             if (is == null) throw new FailedSearchException("File Users.csv non trovato");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                br.readLine(); // Salta header
+                br.readLine();
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(CSV_DELIMITER);
