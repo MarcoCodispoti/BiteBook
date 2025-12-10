@@ -142,7 +142,7 @@ public class UserDbDao implements UserDao {
     private CookingStyle parseCookingStyle(String styleName) {
         try {
             return CookingStyle.valueOf(styleName);
-        } catch (IllegalArgumentException | NullPointerException e){
+        } catch (IllegalArgumentException | NullPointerException _){
             return null;
         }
     }
