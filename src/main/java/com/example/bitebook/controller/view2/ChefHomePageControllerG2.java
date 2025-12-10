@@ -9,8 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ChefHomePageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(ChefHomePageControllerG2.class.getName());
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
@@ -49,13 +53,14 @@ public class ChefHomePageControllerG2{
             List<ServiceRequestBean> approvedRequests = requestManagerController.getApprovedServiceRequests();
 
             if (approvedRequests == null || approvedRequests.isEmpty()) {
-                errorLabel.setText("No approved requests found");
+                displayError("No approved requests found");
                 return;
             }
             approvedRequestsListView.getItems().addAll(approvedRequests);
 
-        } catch (FailedSearchException e) {
-            errorLabel.setText("Error occurred while obtaining approved requests");
+        } catch (FailedSearchException e){
+            logger.log(Level.SEVERE, "Error occurred while obtaining approved requests" , e);
+            displayError("Error occurred while obtaining approved requests");
         }
     }
 
@@ -79,7 +84,7 @@ public class ChefHomePageControllerG2{
 
     @FXML
     void clickedOnMenus() {
-        errorLabel.setText("Not implemented yet, sorry :(");
+        displayError("Not implemented yet, sorry :(");
     }
 
     @FXML
@@ -92,6 +97,12 @@ public class ChefHomePageControllerG2{
         LoginController loginController = new LoginController();
         loginController.logout();
         FxmlLoader2.setPage("LoginPage2");
+    }
+
+
+    private void displayError(String message){
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 
