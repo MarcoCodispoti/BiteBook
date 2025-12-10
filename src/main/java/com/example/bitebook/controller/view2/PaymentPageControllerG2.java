@@ -7,8 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PaymentPageControllerG2 {
+
+    private static final Logger logger = Logger.getLogger(PaymentPageControllerG2.class.getName());
 
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
@@ -86,7 +90,8 @@ public class PaymentPageControllerG2 {
                 paymentAnchorPane.setDisable(true);
             }
         } catch (Exception e) {
-            errorLabel.setText("Error occurred while processing payment");
+            logger.log(Level.SEVERE, "Error while sending the request" , e );
+            errorLabel.setText("Error occurred while processing request");
             errorLabel.setVisible(true);
         }
     }
