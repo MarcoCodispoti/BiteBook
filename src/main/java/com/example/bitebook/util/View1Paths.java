@@ -1,5 +1,6 @@
 package com.example.bitebook.util;
 
+@SuppressWarnings("java:S1075")
 public class View1Paths{
 
     private View1Paths(){}
