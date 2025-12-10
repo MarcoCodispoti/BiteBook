@@ -39,7 +39,7 @@ public class ChefHomePageControllerG {
 
     @FXML
     void clickedOnMenus(){
-        errorLabel.setText("Coming soon!");
+        displayError("Coming soon!");
     }
 
     @FXML
@@ -63,7 +63,7 @@ public class ChefHomePageControllerG {
             this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
             populateRequests();
         } catch (FailedSearchException e) {
-            errorLabel.setText("System Error: Unable to load requests.");
+            displayError("System Error: Unable to load requests.");
             logger.log(Level.SEVERE, "Unable to load requets", e);
         }
     }
@@ -71,7 +71,7 @@ public class ChefHomePageControllerG {
 
     private void populateRequests() {
         if (approvedServiceRequestBeans == null || approvedServiceRequestBeans.isEmpty()) {
-            errorLabel.setText("No active request at the moment.");
+            displayError("No active request at the moment.");
             return;
         }
         for (ServiceRequestBean serviceRequestBean : approvedServiceRequestBeans) {
@@ -87,5 +87,12 @@ public class ChefHomePageControllerG {
             }
         }
     }
+
+
+    private void displayError(String error){
+        errorLabel.setText(error);
+        errorLabel.setVisible(true);
+    }
+
 
 }

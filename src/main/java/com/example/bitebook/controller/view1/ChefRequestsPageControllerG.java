@@ -39,7 +39,7 @@ public class ChefRequestsPageControllerG{
 
     @FXML
     void clickedOnMenus() {
-        errorLabel.setText("Coming soon!");
+        displayError("Coming soon!");
     }
 
     @FXML
@@ -56,7 +56,7 @@ public class ChefRequestsPageControllerG{
             this.chefServiceRequestBeans = requestManagerController.getChefRequests();
             populateRequests();
         } catch (FailedSearchException e) {
-            errorLabel.setText("Unable to load requests");
+            displayError("Unable to load requests");
             logger.log(Level.SEVERE,"Unable to load requests",e);
         }
     }
@@ -64,7 +64,7 @@ public class ChefRequestsPageControllerG{
 
     private void populateRequests() {
         if (chefServiceRequestBeans == null || chefServiceRequestBeans.isEmpty()) {
-            errorLabel.setText("No incoming requests found.");
+            displayError("No incoming requests found.");
             return;
         }
 
@@ -80,6 +80,7 @@ public class ChefRequestsPageControllerG{
                 requestsVBox.getChildren().add(chefRequestCard);
 
             } catch (IOException e){
+                displayError("Error loading a request");
                 logger.log(Level.WARNING,"Error loading a request", e );
             }
         }
@@ -99,7 +100,7 @@ public class ChefRequestsPageControllerG{
 
     private void updateRequestStatus(RequestStatus newStatus) {
         if (selectedServiceRequestBean == null) {
-            errorLabel.setText("Seleziona una richiesta dalla lista prima di procedere.");
+            displayError("Seleziona una richiesta dalla lista prima di procedere.");
             return;
         }
         try {
@@ -107,7 +108,8 @@ public class ChefRequestsPageControllerG{
             requestManagerController.manageRequest(selectedServiceRequestBean);
             refreshPage();
         } catch (FailedUpdateException e) {
-            errorLabel.setText("Error occurred while managing the request: " + e.getMessage());
+            displayError("Error occurred while managing the request: ");
+            logger.log(Level.WARNING,"Error occurred while managing the request",e);
         }
     }
 
@@ -119,6 +121,12 @@ public class ChefRequestsPageControllerG{
         }
         selectedCardUi = cardUi;
         selectedCardUi.setStyle("-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;");
+    }
+
+
+    private void displayError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
 }
