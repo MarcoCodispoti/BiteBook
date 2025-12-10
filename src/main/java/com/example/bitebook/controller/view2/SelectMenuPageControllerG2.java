@@ -12,9 +12,13 @@ import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class SelectMenuPageControllerG2{
+
+    private static final Logger logger = Logger.getLogger(SelectMenuPageControllerG2.class.getName());
 
 
     private final ExplorationController explorationController = new ExplorationController();
@@ -50,7 +54,8 @@ public class SelectMenuPageControllerG2{
                 chefComboBox.getItems().addAll(chefsInCity);
             }
         } catch (FailedSearchException e) {
-            showError("System Error: Unable to retrieve chefs in city.");
+            logger.log(Level.SEVERE, "Error while getting chefs list.", e);
+            displayError("System Error: Unable to retrieve chefs in city.");
         }
     }
 
@@ -69,7 +74,8 @@ public class SelectMenuPageControllerG2{
                     menuComboBox.getItems().addAll(chefMenus);
                 }
             } catch (FailedSearchException e) {
-                showError("Error occurred while searching menus.");
+                logger.log(Level.SEVERE, "Error while getting menus list.", e);
+                displayError("Error occurred while searching menus.");
             }
         }
     }
@@ -87,8 +93,9 @@ public class SelectMenuPageControllerG2{
                     this.menuAllergenBeans = explorationController.getMenuAllergens(dishes);
                     allergensLabel.setText(formatAllergensList(menuAllergenBeans));
                 }
-            } catch (FailedSearchException e) {
-                showError("Error occurred while getting menu details.");
+            } catch (FailedSearchException e){
+                logger.log(Level.SEVERE, "Error while getting menu details.", e);
+                displayError("Error occurred while getting menu details.");
             }
         }
     }
@@ -146,12 +153,12 @@ public class SelectMenuPageControllerG2{
     @FXML
     void clickedOnBook() {
         if (!explorationController.isLoggedClient()) {
-            showError("You must be logged in to proceed!");
+            displayError("You must be logged in to proceed!");
             return;
         }
 
         if (selectedChefBean == null || selectedMenuBean == null) {
-            showError("Please select a chef and a menu first.");
+            displayError("Please select a chef and a menu first.");
             return;
         }
 
@@ -193,12 +200,12 @@ public class SelectMenuPageControllerG2{
         if (explorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
-            showError(errorMsg);
+            displayError(errorMsg);
         }
     }
 
 
-    private void showError(String message) {
+    private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
