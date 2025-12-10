@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RequestManagerController {
 
-    // Okk -> Va bene
+
     public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
@@ -28,7 +28,6 @@ public class RequestManagerController {
 
 
 
-    // Okk -> Va bene
     public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
@@ -45,7 +44,6 @@ public class RequestManagerController {
 
 
 
-    // Okk -> Va bene
     public List<ServiceRequestBean> getChefRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
@@ -60,7 +58,6 @@ public class RequestManagerController {
 
 
 
-    // Okk -> Va bene
     public void manageRequest(ServiceRequestBean serviceRequestBean) throws FailedUpdateException {
         ServiceRequest serviceRequest = new ServiceRequest();
         serviceRequest.setId(serviceRequestBean.getId());
@@ -70,7 +67,6 @@ public class RequestManagerController {
 
 
 
-    // Okk -> Va bene
     private ServiceRequestBean convertToBean(ServiceRequest entity) {
         ServiceRequestBean bean = new ServiceRequestBean();
         bean.setId(entity.getId());

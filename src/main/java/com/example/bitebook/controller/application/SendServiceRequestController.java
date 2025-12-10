@@ -15,7 +15,6 @@ import java.util.Set;
 public class SendServiceRequestController{
 
 
-    // Okk -> Va bene
     public MenuBean getMenuLevelsSurcharge(MenuBean menuBean) throws FailedSearchException {
         Menu menu = DaoFactory.getMenuDao().getMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
@@ -28,7 +27,6 @@ public class SendServiceRequestController{
     }
 
 
-    // Okk -> Va bene
     public int calculateTotalPrice(ReservationDetailsBean reservationDetails, MenuBean menuBean) {
         if (reservationDetails.getParticipantNumber() <= 0 || reservationDetails.getSelectedMenuLevel() == null) {
             throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong reservation details data");
@@ -36,7 +34,6 @@ public class SendServiceRequestController{
         if (menuBean == null || menuBean.getPricePerPerson() <= 0  || menuBean.getPremiumLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= menuBean.getPremiumLevelSurcharge()) {
             throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong menu details data");
         }
-
         int singleMenuSurcharge;
         switch (reservationDetails.getSelectedMenuLevel()) {
             case BASE -> singleMenuSurcharge = 0;
@@ -46,7 +43,6 @@ public class SendServiceRequestController{
         }
         return reservationDetails.getParticipantNumber() * (menuBean.getPricePerPerson() + singleMenuSurcharge);
     }
-
 
 
     public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
@@ -81,10 +77,6 @@ public class SendServiceRequestController{
 
 
 
-
-
-
-    // Okk -> Va bene
     public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
         Chef chef = DaoFactory.getChefDao().getChefFromMenu(menuBean.getId());
@@ -107,13 +99,10 @@ public class SendServiceRequestController{
     }
 
 
-
-    // Okk -> Va bene
     public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws FailedInsertException {
         ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
         DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
     }
-
 
 
     private ServiceRequest convertServiceRequestBean(ServiceRequestBean serviceRequestBean) {

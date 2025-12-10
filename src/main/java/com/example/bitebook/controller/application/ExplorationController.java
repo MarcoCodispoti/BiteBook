@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class ExplorationController{
 
-    // Ok -> va bene
+
     public boolean checkCityChefs(ChefBean chefBean) throws FailedSearchException {
         ChefDao chefDao = DaoFactory.getChefDao();
         try {
@@ -35,13 +35,11 @@ public class ExplorationController{
     }
 
 
-    // Okk -> Va bene così
     public boolean isLoggedClient() {
         return LoggedUser.getInstance().getRole() == Role.CLIENT;
     }
 
 
-    // Okk -> Va bene
     public List<ChefBean> getChefsInCity(ChefBean chefBean) throws FailedSearchException {
         List<ChefBean> chefInCityBeans = new ArrayList<>();
 
@@ -55,7 +53,6 @@ public class ExplorationController{
     }
 
 
-    // Okk -> Va bene
     public List<MenuBean> getChefMenus(ChefBean chefBean) throws FailedSearchException {
         List<MenuBean> chefMenuBeans = new ArrayList<>();
         List<Menu> chefMenus = DaoFactory.getMenuDao().getChefMenus(chefBean.getId());
@@ -70,7 +67,6 @@ public class ExplorationController{
 
 
 
-    // Okk -> Va bene
     public List<DishBean> getCourses(MenuBean menuBean) throws FailedSearchException {
         List<DishBean> coursesBean = new ArrayList<>();
         List<Dish> courses = DaoFactory.getDishDao().getMenuCourses(menuBean.getId());
@@ -84,7 +80,6 @@ public class ExplorationController{
         }
         return coursesBean;
     }
-
 
 
     public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans) {
