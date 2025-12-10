@@ -26,7 +26,7 @@ public class LoginController{
                 throw new FailedSearchException("Client profile not found for the logged user");
             }
             client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client));
-        } else if (role == Role.CHEF) {
+        } else if (role == Role.CHEF){
             chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
             if (chef == null) {
                 throw new FailedSearchException("Chef profile not found for the logged user");

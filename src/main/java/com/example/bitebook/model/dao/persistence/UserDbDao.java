@@ -25,81 +25,183 @@ public class UserDbDao implements UserDao {
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
         String sql = "{call GetCredentialsRole(?,?)}";
+
         try (Connection conn = Connector.getInstance().getConnection();
-             CallableStatement cstmt = conn.prepareCall(sql)){
+             CallableStatement cstmt = conn.prepareCall(sql)) {
+
             cstmt.setString(1, email);
             cstmt.setString(2, password);
             cstmt.execute();
-            try (ResultSet rs = cstmt.getResultSet()) {
-                if (rs.next()) {
-                    try {
-                        return Role.valueOf(rs.getString("UserRole"));
-                    } catch (IllegalArgumentException e) {
-                        throw new FailedSearchException("Ruolo non riconosciuto nel database per l'utente: " + email, e);
-                    }
-                } else {
-                    throw new WrongCredentialsException("Nessun utente trovato con queste credenziali.");
-                }
+
+            try (ResultSet rs = cstmt.getResultSet()){
+                return extractRoleFromResultSet(rs);
             }
 
         } catch (SQLException e) {
-            throw new FailedSearchException("Errore DB durante verifica credenziali", new QueryException(e));
-        } catch (FailedDatabaseConnectionException e) {
+            throw new FailedSearchException("DB Error while verifying credentials", new QueryException(e));
+        } catch (FailedDatabaseConnectionException e){
             throw new FailedSearchException(e);
         }
     }
 
+
+
+
+    private Role extractRoleFromResultSet(ResultSet rs) throws SQLException, WrongCredentialsException, FailedSearchException {
+        if (rs.next()) {
+            String roleString = rs.getString("UserRole");
+            return parseRole(roleString);
+        } else {
+            throw new WrongCredentialsException("No user found with such credentials");
+        }
+    }
+
+
+    private Role parseRole(String roleName) throws FailedSearchException {
+        try {
+            return Role.valueOf(roleName);
+        } catch (IllegalArgumentException | NullPointerException e){
+            throw new FailedSearchException("Role not recognized or corrupted ", e);
+        }
+    }
+
+
+
+
+//    @Override
+//    public Chef getChefInfo(String email, String password) throws FailedSearchException {
+//        Chef chef = null;
+//        try (Connection conn = Connector.getInstance().getConnection()) {
+//            try (CallableStatement cstmt = conn.prepareCall("{call GetChefInfo(?,?)}")) {
+//                cstmt.setString(1, email);
+//                cstmt.setString(2, password);
+//                cstmt.execute();
+//                try (ResultSet rs = cstmt.getResultSet()) {
+//                    if (rs.next()) {
+//                        chef = new Chef(
+//                                rs.getInt("IdUser"),
+//                                rs.getString("Name"),
+//                                rs.getString("Surname"),
+//                                CookingStyle.valueOf(rs.getString("CookingStyle")), // Gestione Enum
+//                                rs.getString("City")
+//                        );
+//                        chef.setEmail(email);
+//                        chef.setPassword(password);
+//                    }
+//                }
+//            }
+//            if (chef == null) {
+//                return null;
+//            }
+//            try (CallableStatement cstmt2 = conn.prepareCall("{call GetChefSpecializations(?)}")) {
+//                cstmt2.setInt(1, chef.getId());
+//                cstmt2.execute();
+//                List<SpecializationType> specializations = new ArrayList<>();
+//                try (ResultSet rs2 = cstmt2.getResultSet()) {
+//                    while (rs2.next()) {
+//                        try {
+//                            SpecializationType spec = SpecializationType.valueOf(rs2.getString("Specialization"));
+//                            specializations.add(spec);
+//                        } catch (IllegalArgumentException _) {
+//                            // Ignore
+//                        }
+//                    }
+//                }
+//                chef.setSpecializations(specializations);
+//            }
+//            chef.setOfferedMenus(null);
+//        } catch (SQLException e) {
+//            throw new FailedSearchException("DB Error while recovering chef profile", new QueryException(e));
+//        } catch (FailedDatabaseConnectionException e) {
+//            throw new FailedSearchException(e);
+//        }
+//        return chef;
+//    }
 
 
     @Override
     public Chef getChefInfo(String email, String password) throws FailedSearchException {
-        Chef chef = null;
-        try (Connection conn = Connector.getInstance().getConnection()) {
-            try (CallableStatement cstmt = conn.prepareCall("{call GetChefInfo(?,?)}")) {
-                cstmt.setString(1, email);
-                cstmt.setString(2, password);
-                cstmt.execute();
-                try (ResultSet rs = cstmt.getResultSet()) {
-                    if (rs.next()) {
-                        chef = new Chef(
-                                rs.getInt("IdUser"),
-                                rs.getString("Name"),
-                                rs.getString("Surname"),
-                                CookingStyle.valueOf(rs.getString("CookingStyle")), // Gestione Enum
-                                rs.getString("City")
-                        );
-                        chef.setEmail(email);
-                        chef.setPassword(password);
-                    }
-                }
+        try (Connection conn = Connector.getInstance().getConnection()){
+            Chef chef = fetchChefBasicData(conn, email, password);
+            if (chef != null) {
+                List<SpecializationType> specs = fetchChefSpecializations(conn, chef.getId());
+                chef.setSpecializations(specs);
+                chef.setOfferedMenus(null);
             }
-            if (chef == null) {
-                return null;
-            }
-            try (CallableStatement cstmt2 = conn.prepareCall("{call GetChefSpecializations(?)}")) {
-                cstmt2.setInt(1, chef.getId()); // Qui chef è sicuro non null
-                cstmt2.execute();
-                List<SpecializationType> specializations = new ArrayList<>();
-                try (ResultSet rs2 = cstmt2.getResultSet()) {
-                    while (rs2.next()) {
-                        try {
-                            SpecializationType spec = SpecializationType.valueOf(rs2.getString("Specialization"));
-                            specializations.add(spec);
-                        } catch (IllegalArgumentException e) {
-                            // Ignore
-                        }
-                    }
-                }
-                chef.setSpecializations(specializations);
-            }
-            chef.setOfferedMenus(null);
+
+            return chef;
+
         } catch (SQLException e) {
-            throw new FailedSearchException("Errore DB recupero profilo Chef", new QueryException(e));
+            throw new FailedSearchException("DB Error while searching chef info", new QueryException(e));
         } catch (FailedDatabaseConnectionException e) {
             throw new FailedSearchException(e);
         }
-        return chef;
     }
+
+
+    private Chef fetchChefBasicData(Connection conn, String email, String password) throws SQLException {
+        String sql = "{call GetChefInfo(?,?)}";
+
+        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+            cstmt.setString(1, email);
+            cstmt.setString(2, password);
+            cstmt.execute();
+
+            try (ResultSet rs = cstmt.getResultSet()) {
+                if (rs.next()){
+                    CookingStyle style = parseCookingStyle(rs.getString("CookingStyle"));
+
+                    Chef chef = new Chef(
+                            rs.getInt("IdUser"),
+                            rs.getString("Name"),
+                            rs.getString("Surname"),
+                            style,
+                            rs.getString("City")
+                    );
+                    chef.setEmail(email);
+                    chef.setPassword(password);
+                    return chef;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
+
+
+    private List<SpecializationType> fetchChefSpecializations(Connection conn, int chefId) throws SQLException {
+        List<SpecializationType> specializations = new ArrayList<>();
+        String sql = "{call GetChefSpecializations(?)}";
+        try (CallableStatement cstmt = conn.prepareCall(sql)) {
+            cstmt.setInt(1, chefId);
+            cstmt.execute();
+            try (ResultSet rs = cstmt.getResultSet()) {
+                while (rs.next()) {
+                    try {
+                        SpecializationType spec = SpecializationType.valueOf(rs.getString("Specialization"));
+                        specializations.add(spec);
+                    } catch (IllegalArgumentException | NullPointerException _) {
+                        // Ignore
+                    }
+                }
+            }
+        }
+        return specializations;
+    }
+
+
+
+    private CookingStyle parseCookingStyle(String styleName) {
+        try {
+            return CookingStyle.valueOf(styleName);
+        } catch (IllegalArgumentException | NullPointerException e){
+            return null;
+        }
+    }
+
+
 
 
 
@@ -123,7 +225,7 @@ public class UserDbDao implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new FailedSearchException("Errore DB recupero profilo Client", new QueryException(e));
+            throw new FailedSearchException("DB Error while recovering client profile", new QueryException(e));
         } catch (FailedDatabaseConnectionException e) {
             throw new FailedSearchException(e);
         }
