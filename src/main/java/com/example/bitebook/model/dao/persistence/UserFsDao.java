@@ -16,9 +16,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S1075")
 public class UserFsDao implements UserDao{
 
-    @SuppressWarnings("java:S1075")
     private static final String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/ChefsSpecializations.csv";
     private static final String USERS_FILE_PATH = "/com/example/bitebook/Users.csv";
     private static final String CSV_DELIMITER = ",";
@@ -27,7 +27,7 @@ public class UserFsDao implements UserDao{
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
-            if (is == null) throw new FailedSearchException("File Users.csv non trovato");
+            if (is == null) throw new FailedSearchException("File Users.csv not found");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 br.readLine();
                 String line;
@@ -40,13 +40,13 @@ public class UserFsDao implements UserDao{
                         try {
                             return Role.valueOf(fields[5].trim());
                         } catch (IllegalArgumentException e) {
-                            throw new FailedSearchException("Ruolo non valido nel CSV per utente: " + email);
+                            throw new FailedSearchException("Role not valid in the CSV for the user: " + email);
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            throw new FailedSearchException("Errore lettura file utenti", e);
+            throw new FailedSearchException("User file reading error", e);
         }
         throw new WrongCredentialsException("Error finding user info with inserted credentials");
     }
@@ -57,7 +57,7 @@ public class UserFsDao implements UserDao{
     @Override
     public Client getClientInfo(String email, String password) throws FailedSearchException {
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
-            if (is == null) throw new FailedSearchException("File Users.csv non trovato");
+            if (is == null) throw new FailedSearchException("CSV file not found");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 br.readLine(); // Header
                 String line;
@@ -77,7 +77,7 @@ public class UserFsDao implements UserDao{
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            throw new FailedSearchException("Errore recupero dati Cliente da File System", e);
+            throw new FailedSearchException("Error recovering client info in the CSV file", e);
         }
         return null;
     }
@@ -87,7 +87,7 @@ public class UserFsDao implements UserDao{
     @Override
     public Chef getChefInfo(String email, String password) throws FailedSearchException {
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
-            if (is == null) throw new FailedSearchException("File Users.csv non trovato");
+            if (is == null) throw new FailedSearchException("File Users.csv not found");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 br.readLine();
                 String line;
@@ -110,7 +110,7 @@ public class UserFsDao implements UserDao{
                 }
             }
         } catch (IOException | IllegalArgumentException e) {
-            throw new FailedSearchException("Errore recupero dati Chef da File System", e);
+            throw new FailedSearchException("Error recovering chef info from CSV file", e);
         }
         return null;
     }
