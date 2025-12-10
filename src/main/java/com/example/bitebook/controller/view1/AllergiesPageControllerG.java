@@ -13,8 +13,12 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AllergiesPageControllerG{
+
+    private static final Logger logger = Logger.getLogger(AllergiesPageControllerG.class.getName());
 
     private final AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
@@ -55,6 +59,7 @@ public class AllergiesPageControllerG{
 
             } catch (FailedRemoveException e) {
                 errorLabel.setText("Error while removing allergy");
+                logger.log(Level.SEVERE, "Error while removing allergy" , e);
             }
         } else {
             errorLabel.setText("Please select the allergy to remove first");
