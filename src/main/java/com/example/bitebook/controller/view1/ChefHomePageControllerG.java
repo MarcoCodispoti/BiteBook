@@ -64,7 +64,7 @@ public class ChefHomePageControllerG {
             populateRequests();
         } catch (FailedSearchException e) {
             errorLabel.setText("System Error: Unable to load requests.");
-            logger.log(Level.SEVERE, "Unable to load requets", e.getMessage());
+            logger.log(Level.SEVERE, "Unable to load requets", e);
         }
     }
 
