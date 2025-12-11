@@ -13,7 +13,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestServiceRequestBeanValidate{
+class TestServiceRequestBeanValidate{
 
     private ServiceRequestBean createValidBean() {
         ServiceRequestBean bean = new ServiceRequestBean();

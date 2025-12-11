@@ -1,5 +1,6 @@
 package com.example.bitebook.util;
 
+@SuppressWarnings("java:S6548")
 public class AppConfig{
     private static AppConfig instance;
     private final boolean demoMode;

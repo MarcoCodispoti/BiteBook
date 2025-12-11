@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     this class tests the calculateTotalPrice method in the SendServiceRequestController
  */
 
-public class TestCalculateTotalPrice{
+class TestCalculateTotalPrice{
 
 
     private final SendServiceRequestController controller = new SendServiceRequestController();

@@ -36,8 +36,13 @@ public abstract class DaoFactory{
     public static ServiceRequestDao getServiceRequestDao(){
         if(AppConfig.getInstance().isDemoMode()){
             return new ServiceRequestDemoDao();
-        } else{
+        }
+        try{
+            Connector.getInstance().getConnection();
             return new ServiceRequestDbDao();
+        }  catch (FailedDatabaseConnectionException _){
+            // Dummy fallback on demoDao -> Allow only login without app crash
+            return new ServiceRequestDemoDao();
         }
     }
 
