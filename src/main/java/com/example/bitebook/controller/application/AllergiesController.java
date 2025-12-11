@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+// Da ricontrollare tutto e ripulire tutto
 
 public class AllergiesController{
     public List<AllergenBean> getClientAllergies(){
