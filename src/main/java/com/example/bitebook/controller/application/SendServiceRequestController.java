@@ -28,6 +28,7 @@ public class SendServiceRequestController{
     }
 
 
+
     public int calculateTotalPrice(ReservationDetailsBean reservationDetails, MenuBean menuBean) {
 
         if (reservationDetails.getParticipantNumber() <= 0 || reservationDetails.getSelectedMenuLevel() == null) {
@@ -47,6 +48,7 @@ public class SendServiceRequestController{
         }
         return reservationDetails.getParticipantNumber() * (menuBean.getPricePerPerson() + singleMenuSurcharge);
     }
+
 
 
     public boolean hasAllergyConflict(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
@@ -116,10 +118,12 @@ public class SendServiceRequestController{
     }
 
 
+
     public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws FailedInsertException {
         ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
         DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
     }
+
 
 
     private ServiceRequest convertServiceRequestBean(ServiceRequestBean serviceRequestBean) {
@@ -145,6 +149,7 @@ public class SendServiceRequestController{
     }
 
 
+
     private Client convertClientBean(ClientBean clientBean) {
         if (clientBean == null) return null;
         Client client = new Client();
@@ -157,6 +162,7 @@ public class SendServiceRequestController{
     }
 
 
+
     private Chef convertChefBean(ChefBean chefBean) {
         if (chefBean == null) return null;
         Chef chef = new Chef();
@@ -167,6 +173,7 @@ public class SendServiceRequestController{
 
         return chef;
     }
+
 
 
     private Menu convertMenuBean(MenuBean menuBean) {
@@ -182,6 +189,7 @@ public class SendServiceRequestController{
 
         return menu;
     }
+
 
 
     private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean bean) {
