@@ -7,7 +7,6 @@ import com.example.bitebook.model.bean.*;
 import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.session.LoggedUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +103,6 @@ public class RequestManagerController {
             rdb.setDate(entity.getReservationDetails().getDate());
             rdb.setTime(entity.getReservationDetails().getTime());
             rdb.setAddress(entity.getReservationDetails().getAddress());
-
             bean.setReservationDetailsBean(rdb);
         }
         return bean;
