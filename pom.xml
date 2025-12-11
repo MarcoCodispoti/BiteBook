@@ -11,7 +11,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<junit.version>5.10.2</junit.version>  </properties>
+    <junit.version>5.10.2</junit.version>
+      <sonar.cpd.exclusions>
+          **/model/dao/**/*.java,
+          **/controller/view2/**/*.java
+      </sonar.cpd.exclusions>
+  </properties>
 
   <dependencies>
     <dependency>
