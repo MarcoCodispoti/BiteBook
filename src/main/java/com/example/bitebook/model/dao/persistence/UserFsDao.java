@@ -24,24 +24,72 @@ public class UserFsDao implements UserDao{
     private static final String CSV_DELIMITER = ",";
 
 
+//    @Override
+//    public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
+//        try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
+//            if (is == null) throw new FailedSearchException("File Users.csv not found");
+//            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+//                br.readLine();
+//                if (br.readLine() == null) {
+//                    throw new FailedSearchException("Empty or corrupted csv file");
+//                }
+//                String line;
+//                while ((line = br.readLine()) != null) {
+//                    String[] fields = line.split(CSV_DELIMITER);
+//                    if (fields.length < 6) continue;
+//                    String fileEmail = fields[3].trim();
+//                    String filePassword = fields[4].trim();
+//                    if (fileEmail.equals(email) && filePassword.equals(password)) {
+//                        try {
+//                            return Role.valueOf(fields[5].trim());
+//                        } catch (IllegalArgumentException e) {
+//                            throw new FailedSearchException("Role not valid in the CSV for the user: " + email);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            throw new FailedSearchException("User file reading error", e);
+//        }
+//        throw new WrongCredentialsException("Error finding user info with inserted credentials");
+//    }
+
+
+
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
+
+        // 1. Apertura Stream
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
-            if (is == null) throw new FailedSearchException("File Users.csv not found");
+
+            if (is == null) {
+                throw new FailedSearchException("File Users.csv not found");
+            }
+
+            // 2. Lettura File
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                br.readLine();
+
+                // FIX per "Use value returned from readLine":
+                // Controlliamo se il file è vuoto saltando l'header
+                if (br.readLine() == null) {
+                    throw new FailedSearchException("Users database file is empty or corrupted");
+                }
+
                 String line;
                 while ((line = br.readLine()) != null) {
+
                     String[] fields = line.split(CSV_DELIMITER);
+
+                    // Controllo integrità riga CSV
                     if (fields.length < 6) continue;
+
                     String fileEmail = fields[3].trim();
                     String filePassword = fields[4].trim();
+
+                    // 3. Verifica Credenziali
                     if (fileEmail.equals(email) && filePassword.equals(password)) {
-                        try {
-                            return Role.valueOf(fields[5].trim());
-                        } catch (IllegalArgumentException e) {
-                            throw new FailedSearchException("Role not valid in the CSV for the user: " + email);
-                        }
+                        // DELEGA al metodo helper: niente più try-catch qui dentro!
+                        return parseRole(fields[5].trim(), email);
                     }
                 }
             }
@@ -50,6 +98,23 @@ public class UserFsDao implements UserDao{
         }
         throw new WrongCredentialsException("Error finding user info with inserted credentials");
     }
+
+
+
+
+    private Role parseRole(String roleString, String email) throws FailedSearchException {
+        try {
+            return Role.valueOf(roleString);
+        } catch (IllegalArgumentException e){
+            throw new FailedSearchException("Role not valid in the CSV for the user: " + email, e);
+        }
+    }
+
+
+
+
+
+
 
 
 
