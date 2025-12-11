@@ -63,11 +63,12 @@ public class UserFsDao implements UserDao{
             if (is == null) {
                 throw new FailedSearchException("File Users.csv not found");
             }
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                if (br.readLine() == null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))){
+
+                String header = br.readLine();
+                if (header == null) {
                     throw new FailedSearchException("Users database file is empty or corrupted");
                 }
-
                 String line;
                 while ((line = br.readLine()) != null) {
 
@@ -113,7 +114,10 @@ public class UserFsDao implements UserDao{
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
             if (is == null) throw new FailedSearchException("CSV file not found");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                br.readLine(); // Header
+                String header = br.readLine();
+                if (header == null) {
+                    throw new FailedSearchException("Users database file is empty or corrupted");
+                }
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(CSV_DELIMITER);
@@ -143,7 +147,10 @@ public class UserFsDao implements UserDao{
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
             if (is == null) throw new FailedSearchException("File Users.csv not found");
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                br.readLine();
+                String header = br.readLine();
+                if (header == null) {
+                    throw new FailedSearchException("Users database file is empty or corrupted");
+                }
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(CSV_DELIMITER);
@@ -177,14 +184,17 @@ public class UserFsDao implements UserDao{
     }
 
 
-    private List<SpecializationType> getChefSpecializations(int chefId) throws IOException {
+    private List<SpecializationType> getChefSpecializations(int chefId) throws IOException, FailedSearchException {
         List<SpecializationType> specs = new ArrayList<>();
 
         try (InputStream is = getClass().getResourceAsStream(CHEF_SPECIALIZATIONS_FILE_PATH)) {
             if (is == null) return specs; // Lista vuota se file manca
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                br.readLine();
+                String header = br.readLine();
+                if (header == null) {
+                    throw new FailedSearchException("Users database file is empty or corrupted");
+                }
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(CSV_DELIMITER);
@@ -194,7 +204,7 @@ public class UserFsDao implements UserDao{
                     if (fileChefId == chefId) {
                         try {
                             specs.add(SpecializationType.valueOf(fields[1].trim()));
-                        } catch (IllegalArgumentException ignored) {
+                        } catch (IllegalArgumentException _) {
                             // Ignore
                         }
                     }
