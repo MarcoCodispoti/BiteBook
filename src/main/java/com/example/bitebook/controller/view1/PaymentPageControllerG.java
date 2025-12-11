@@ -46,7 +46,7 @@ public class PaymentPageControllerG {
     void clickedOnSendRequest(){
         errorLabel.setText("");
         try {
-            ServiceRequestBean serviceRequestBean = sendServiceRequestController.fillServiceRequest(
+            ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(
                     requestMenuBean,
                     requestReservationDetailsBean
             );

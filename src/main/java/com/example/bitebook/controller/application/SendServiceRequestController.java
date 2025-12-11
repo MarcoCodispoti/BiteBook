@@ -15,14 +15,14 @@ import java.util.Set;
 public class SendServiceRequestController{
 
 
-    public MenuBean getMenuLevelsSurcharge(MenuBean menuBean) throws FailedSearchException {
+    public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {
 
         Menu menu = DaoFactory.getMenuDao().getMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
             menuBean.setLuxeLevelSurcharge(menu.getLuxeLevelSurcharge());
         } else {
-            throw new FailedSearchException("Menu levels surcharge not found");
+            throw new FailedSearchException("Menu levels surcharges not found");
         }
         return menuBean;
     }
@@ -49,7 +49,7 @@ public class SendServiceRequestController{
     }
 
 
-    public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
+    public boolean hasAllergyConflict(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
 
         if(menuAllergensBean == null){
             throw new IllegalStateException("Error: Error while obtaining menu allergens");
@@ -88,24 +88,30 @@ public class SendServiceRequestController{
 
 
 
-    public ServiceRequestBean fillServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
+    public ServiceRequestBean createServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
+
         Chef chef = DaoFactory.getChefDao().getChefFromMenu(menuBean.getId());
         if(chef == null) {
             throw new FailedSearchException("Unable to find the chef of the menu");
         }
+
         ChefBean chefBean = new ChefBean();
+
         chefBean.setId(chef.getId());
         chefBean.setName(chef.getName());
         chefBean.setSurname(chef.getSurname());
         serviceRequestBean.setChefBean(chefBean);
+
         Client loggedClient = LoggedUser.getInstance().getClient();
         ClientBean clientBean = new ClientBean(loggedClient.getName(), loggedClient.getSurname());
         clientBean.setId(loggedClient.getId());
         serviceRequestBean.setClientBean(clientBean);
+
         serviceRequestBean.setMenuBean(menuBean);
         serviceRequestBean.setReservationDetailsBean(reservationDetailsBean);
         serviceRequestBean.setStatus(RequestStatus.PENDING);
+
         return serviceRequestBean;
     }
 
@@ -121,12 +127,14 @@ public class SendServiceRequestController{
             return null;
         }
         ServiceRequest serviceRequest = new ServiceRequest();
+
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setClient(convertClientBean(serviceRequestBean.getClientBean()));
         serviceRequest.setChef(convertChefBean(serviceRequestBean.getChefBean()));
         serviceRequest.setMenu(convertMenuBean(serviceRequestBean.getMenuBean()));
         serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetailsBean()));
         serviceRequest.setStatus(serviceRequestBean.getStatus());
+
         if (serviceRequestBean.getReservationDetailsBean() != null && serviceRequestBean.getMenuBean() != null) {
             serviceRequest.setTotalPrice(calculateTotalPrice(
                     serviceRequestBean.getReservationDetailsBean(),
@@ -140,9 +148,11 @@ public class SendServiceRequestController{
     private Client convertClientBean(ClientBean clientBean) {
         if (clientBean == null) return null;
         Client client = new Client();
+
         client.setId(clientBean.getId());
         client.setName(clientBean.getName());
         client.setSurname(clientBean.getSurname());
+
         return client;
     }
 
@@ -150,9 +160,11 @@ public class SendServiceRequestController{
     private Chef convertChefBean(ChefBean chefBean) {
         if (chefBean == null) return null;
         Chef chef = new Chef();
+
         chef.setId(chefBean.getId());
         chef.setName(chefBean.getName());
         chef.setSurname(chefBean.getSurname());
+
         return chef;
     }
 
@@ -160,12 +172,14 @@ public class SendServiceRequestController{
     private Menu convertMenuBean(MenuBean menuBean) {
         if (menuBean == null) return null;
         Menu menu = new Menu();
+
         menu.setId(menuBean.getId());
         menu.setName(menuBean.getName());
         menu.setNumberOfCourses(menuBean.getNumberOfCourses());
         menu.setDietType(menuBean.getDietType());
         menu.setPremiumLevelSurcharge(menuBean.getPremiumLevelSurcharge());
         menu.setLuxeLevelSurcharge(menuBean.getLuxeLevelSurcharge());
+
         return menu;
     }
 
@@ -173,11 +187,13 @@ public class SendServiceRequestController{
     private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean bean) {
         if (bean == null) return null;
         ReservationDetails entity = new ReservationDetails();
+
         entity.setDate(bean.getDate());
         entity.setTime(bean.getTime());
         entity.setParticipantNumber(bean.getParticipantNumber());
         entity.setAddress(bean.getAddress());
         entity.setSelectedMenuLevel(bean.getSelectedMenuLevel());
+
         return entity;
     }
 

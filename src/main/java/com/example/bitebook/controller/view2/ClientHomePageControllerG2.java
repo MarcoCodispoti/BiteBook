@@ -59,7 +59,7 @@ public class ClientHomePageControllerG2{
             return;
         }
         try {
-            boolean chefFound = explorationController.checkCityChefs(searchBean);
+            boolean chefFound = explorationController.areChefsAvailableInCity(searchBean);
 
             if (!chefFound) {
                 displayError("No chef found in the inserted city!");

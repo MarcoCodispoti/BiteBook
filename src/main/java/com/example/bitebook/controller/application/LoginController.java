@@ -29,18 +29,18 @@ public class LoginController{
             case CLIENT:
                 client = userDao.getClientInfo(loginBean.getEmail(), loginBean.getPassword());
                 if (client == null) {
-                    throw new FailedSearchException("Client profile not found for the logged user");
+                    throw new FailedSearchException("Error while logging the client");
                 }
                 client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client)); break;
 
             case CHEF:
                 chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
                 if (chef == null) {
-                    throw new FailedSearchException("Chef profile not found for the logged user");
+                    throw new FailedSearchException("Error while logging the chef");
                 }
                 break;
 
-            default: throw new FailedSearchException("Invalid: Role may be corrupted");
+            default: throw new FailedSearchException("Invalid Role: Role may be corrupted");
         }
 
         LoggedUser.getInstance().logout();

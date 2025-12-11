@@ -80,7 +80,7 @@ public class PaymentPageControllerG2 {
         errorLabel.setVisible(false);
 
         try {
-            ServiceRequestBean serviceRequestBean = sendServiceRequestController.fillServiceRequest(selectedMenuBean, reservationDetailsBean);
+            ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(selectedMenuBean, reservationDetailsBean);
 
             if (serviceRequestBean != null) {
                 serviceRequestBean.validate();

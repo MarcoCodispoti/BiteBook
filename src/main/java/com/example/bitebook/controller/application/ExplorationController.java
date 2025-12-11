@@ -23,7 +23,7 @@ import java.util.Map;
 public class ExplorationController{
 
 
-    public boolean checkCityChefs(ChefBean chefBean) throws FailedSearchException {
+    public boolean areChefsAvailableInCity(ChefBean chefBean) throws FailedSearchException {
 
         ChefDao chefDao = DaoFactory.getChefDao();
         try {

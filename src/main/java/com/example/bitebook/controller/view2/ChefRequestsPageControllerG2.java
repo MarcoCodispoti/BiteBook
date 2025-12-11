@@ -95,7 +95,7 @@ public class ChefRequestsPageControllerG2{
         if (selectedBean != null) {
             selectedBean.setStatus(setStatus);
             try {
-                requestManagerController.manageRequest(selectedBean);
+                requestManagerController.updateRequestStatus(selectedBean);
                 refreshRequests();
             } catch (FailedUpdateException e){
                 logger.log(Level.SEVERE, "Error occurred while managing request",e);

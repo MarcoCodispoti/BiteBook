@@ -112,7 +112,7 @@ public class ServiceRequestPageControllerG{
 
         boolean hasIncompatibility;
         try {
-            hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(menuAllergenBeans);
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(menuAllergenBeans);
         }catch(IllegalStateException e){
             logger.log(Level.SEVERE, "System Error: Unable to check imcompatibilities", e);
             displayError("Error: Unable to check incompatibility");
@@ -233,7 +233,7 @@ public class ServiceRequestPageControllerG{
 
     private void fillIngredientsLevelComboBox() {
         try {
-            selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+            selectedMenuBean = sendServiceRequestController.populateMenuSurcharges(selectedMenuBean);
 
             ingredientsLevelComboBox.getItems().clear();
             ingredientsLevelComboBox.getItems().addAll(MenuLevel.BASE, MenuLevel.PREMIUM, MenuLevel.LUXE);

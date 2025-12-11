@@ -60,7 +60,7 @@ public class RequestManagerController {
 
 
 
-    public void manageRequest(ServiceRequestBean serviceRequestBean) throws FailedUpdateException {
+    public void updateRequestStatus(ServiceRequestBean serviceRequestBean) throws FailedUpdateException {
         ServiceRequest serviceRequest = new ServiceRequest();
 
         serviceRequest.setId(serviceRequestBean.getId());

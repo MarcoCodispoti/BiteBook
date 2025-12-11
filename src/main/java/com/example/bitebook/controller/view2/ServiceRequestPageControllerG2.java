@@ -119,7 +119,7 @@ public class ServiceRequestPageControllerG2{
 
     private void loadMenuSurcharges() {
         try {
-            this.selectedMenuBean = sendServiceRequestController.getMenuLevelsSurcharge(selectedMenuBean);
+            this.selectedMenuBean = sendServiceRequestController.populateMenuSurcharges(selectedMenuBean);
             premiumLevelLabel.setText("+ " + selectedMenuBean.getPremiumLevelSurcharge() + " €");
             luxeLevelLabel.setText("+ " + selectedMenuBean.getLuxeLevelSurcharge() + " €");
         } catch (FailedSearchException e){
@@ -150,7 +150,7 @@ public class ServiceRequestPageControllerG2{
 
         boolean hasIncompatibility;
         try{
-            hasIncompatibility = sendServiceRequestController.clientAllergiesIncompatibility(selectedMenuAllergenBeans);
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(selectedMenuAllergenBeans);
         } catch (IllegalStateException e){
             logger.log(Level.SEVERE, "Safety Warning: Error while confronting ", e);
             displayError("System Error: Unable to check allergies incompatibility");

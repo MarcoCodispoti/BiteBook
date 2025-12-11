@@ -46,7 +46,7 @@ class TestAllergenIncompatibility{
         menuAllergens.add(new AllergenBean(2, "Latte"));
         menuAllergens.add(new AllergenBean(1, "Arachidi")); // CONFLITTO!
 
-        boolean isDangerous = controller.clientAllergiesIncompatibility(menuAllergens);
+        boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
         assertTrue(isDangerous, "Il sistema DEVE rilevare che l'ID 1 è presente in entrambe le liste");
     }
@@ -65,7 +65,7 @@ class TestAllergenIncompatibility{
         List<AllergenBean> menuAllergens = new ArrayList<>();
         menuAllergens.add(new AllergenBean(2, "Latte"));
 
-        boolean isDangerous = controller.clientAllergiesIncompatibility(menuAllergens);
+        boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
         assertFalse(isDangerous, "Non ci sono ID corrispondenti, deve restituire false");
     }
@@ -82,7 +82,7 @@ class TestAllergenIncompatibility{
 
         List<AllergenBean> menuAllergens = new ArrayList<>(); // Lista vuota
 
-        boolean isDangerous = controller.clientAllergiesIncompatibility(menuAllergens);
+        boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
         assertFalse(isDangerous, "Se il menu non ha allergeni, è sicuro");
     }
@@ -92,7 +92,7 @@ class TestAllergenIncompatibility{
     @DisplayName("EDGE CASE: Lista Menu è NULL -> Eccezione 'Error while obtaining menu allergens'")
     void testIncompatibility_NullMenuInput(){
         IllegalStateException e = assertThrows(IllegalStateException.class, () ->
-                controller.clientAllergiesIncompatibility(null)
+                controller.hasAllergyConflict(null)
         );
 
         assertEquals("Error: Error while obtaining menu allergens", e.getMessage());
@@ -107,7 +107,7 @@ class TestAllergenIncompatibility{
         menuAllergens.add(new AllergenBean(1, "Arachidi"));
 
         IllegalStateException e = assertThrows(IllegalStateException.class, () ->
-                controller.clientAllergiesIncompatibility(menuAllergens)
+                controller.hasAllergyConflict(menuAllergens)
         );
 
         assertEquals("Unable to get client info", e.getMessage());
@@ -125,7 +125,7 @@ class TestAllergenIncompatibility{
         menuAllergens.add(new AllergenBean(1, "Arachidi"));
 
         IllegalStateException e = assertThrows(IllegalStateException.class, () ->
-                controller.clientAllergiesIncompatibility(menuAllergens)
+                controller.hasAllergyConflict(menuAllergens)
         );
 
         assertEquals("User data error: Unable to get client allergies info", e.getMessage());

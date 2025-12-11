@@ -106,7 +106,7 @@ public class ChefRequestsPageControllerG{
         }
         try {
             selectedServiceRequestBean.setStatus(newStatus);
-            requestManagerController.manageRequest(selectedServiceRequestBean);
+            requestManagerController.updateRequestStatus(selectedServiceRequestBean);
             refreshPage();
         } catch (FailedUpdateException e) {
             displayError("Error occurred while managing the request: ");
