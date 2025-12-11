@@ -22,10 +22,10 @@ public class AllergiesController{
         List<Allergen> clientAllergies = LoggedUser.getInstance().getClient().getAllergies();
 
         if (clientAllergies != null && !clientAllergies.isEmpty()) {
-            for (Allergen allergen : clientAllergies) {
+            for (Allergen allergy : clientAllergies) {
                 AllergenBean allergenBean = new AllergenBean();
-                allergenBean.setId(allergen.getId());
-                allergenBean.setName(allergen.getName());
+                allergenBean.setId(allergy.getId());
+                allergenBean.setName(allergy.getName());
                 clientAllergyBeans.add(allergenBean);
             }
         }
@@ -34,7 +34,7 @@ public class AllergiesController{
 
 
 
-    public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws FailedRemoveException {
+    public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws FailedRemoveException{
         DaoFactory.getAllergenDao().removeClientAllergy(
                 LoggedUser.getInstance().getClient().getId(),
                 allergyToRemoveBean.getId()
@@ -80,7 +80,7 @@ public class AllergiesController{
 
 
 
-    private void updateLocalSessionList(Allergen newAllergen) {
+    private void updateLocalSessionList(Allergen newAllergen){
         List<Allergen> currentList = LoggedUser.getInstance().getClient().getAllergies();
 
         if (currentList == null) {
