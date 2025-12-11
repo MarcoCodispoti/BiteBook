@@ -154,7 +154,7 @@ public class AllergenDbDao implements AllergenDao{
     public List<Allergen> getAllergens() throws FailedSearchException {
         return executeQuery(
                 "{call getAllergens()}",
-                cstmt -> {}, // Nessun parametro da settare
+                _-> {}, // Nessun parametro da settare
                 "IdAllergen", "Name"
         );
     }
@@ -229,13 +229,13 @@ public class AllergenDbDao implements AllergenDao{
 
     // Gestori eccezioni specifici per evitare try-catch giganti nei metodi void
     private void handleExceptionForRemove(Exception e) throws FailedRemoveException {
-        if (e instanceof QueryException) throw new FailedRemoveException((QueryException) e);
+        if (e instanceof QueryException) throw new FailedRemoveException( e);
         if (e instanceof FailedDatabaseConnectionException) throw new FailedRemoveException("DB Connection Error", e);
         throw new FailedRemoveException("Unknown error", e);
     }
 
     private void handleExceptionForInsert(Exception e) throws FailedInsertException {
-        if (e instanceof QueryException) throw new FailedInsertException("SQL insert error", (QueryException) e);
+        if (e instanceof QueryException) throw new FailedInsertException("SQL insert error",e);
         if (e instanceof FailedDatabaseConnectionException) throw new FailedInsertException(e);
         throw new FailedInsertException("Unknown error", e);
     }
