@@ -25,8 +25,8 @@ public abstract class DaoFactory{
         try {
             Connector.getInstance().getConnection();
             return new UserDbDao();
-        } catch (FailedDatabaseConnectionException e){
-            logger.log(Level.INFO, "Database connection error: Login via File System", e);
+        } catch (FailedDatabaseConnectionException _){
+            logger.log(Level.INFO, "Database connection error: Login via File System");
             return new UserFsDao();
         }
     }

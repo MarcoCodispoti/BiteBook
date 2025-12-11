@@ -59,18 +59,11 @@ public class UserFsDao implements UserDao{
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
 
-        // 1. Apertura Stream
         try (InputStream is = getClass().getResourceAsStream(USERS_FILE_PATH)) {
-
             if (is == null) {
                 throw new FailedSearchException("File Users.csv not found");
             }
-
-            // 2. Lettura File
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-
-                // FIX per "Use value returned from readLine":
-                // Controlliamo se il file è vuoto saltando l'header
                 if (br.readLine() == null) {
                     throw new FailedSearchException("Users database file is empty or corrupted");
                 }
@@ -79,16 +72,12 @@ public class UserFsDao implements UserDao{
                 while ((line = br.readLine()) != null) {
 
                     String[] fields = line.split(CSV_DELIMITER);
-
-                    // Controllo integrità riga CSV
                     if (fields.length < 6) continue;
 
                     String fileEmail = fields[3].trim();
                     String filePassword = fields[4].trim();
 
-                    // 3. Verifica Credenziali
-                    if (fileEmail.equals(email) && filePassword.equals(password)) {
-                        // DELEGA al metodo helper: niente più try-catch qui dentro!
+                    if (fileEmail.equals(email) && filePassword.equals(password)){
                         return parseRole(fields[5].trim(), email);
                     }
                 }
