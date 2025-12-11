@@ -16,6 +16,7 @@ public class SendServiceRequestController{
 
 
     public MenuBean getMenuLevelsSurcharge(MenuBean menuBean) throws FailedSearchException {
+
         Menu menu = DaoFactory.getMenuDao().getMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
@@ -28,12 +29,15 @@ public class SendServiceRequestController{
 
 
     public int calculateTotalPrice(ReservationDetailsBean reservationDetails, MenuBean menuBean) {
+
         if (reservationDetails.getParticipantNumber() <= 0 || reservationDetails.getSelectedMenuLevel() == null) {
             throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong reservation details data");
         }
+
         if (menuBean == null || menuBean.getPricePerPerson() <= 0  || menuBean.getPremiumLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= 0 || menuBean.getLuxeLevelSurcharge() <= menuBean.getPremiumLevelSurcharge()) {
             throw new IllegalArgumentException("Error: Cannot calculate total price: Insufficient or wrong menu details data");
         }
+
         int singleMenuSurcharge;
         switch (reservationDetails.getSelectedMenuLevel()) {
             case BASE -> singleMenuSurcharge = 0;
@@ -46,27 +50,34 @@ public class SendServiceRequestController{
 
 
     public boolean clientAllergiesIncompatibility(List<AllergenBean> menuAllergensBean) throws IllegalStateException{
+
         if(menuAllergensBean == null){
             throw new IllegalStateException("Error: Error while obtaining menu allergens");
         }
+
         if (menuAllergensBean.isEmpty()) {
             return false;
         }
+
         Client client = LoggedUser.getInstance().getClient();
         if (client == null) {
             throw new IllegalStateException("Unable to get client info");
         }
+
         List<Allergen> clientAllergies = client.getAllergies();
         if (clientAllergies == null) {
             throw new IllegalStateException("User data error: Unable to get client allergies info");
         }
+
         if (clientAllergies.isEmpty()) {
             return false;
         }
+
         Set<Integer> clientAllergyIds = new HashSet<>();
         for (Allergen allergen : clientAllergies) {
             clientAllergyIds.add(allergen.getId());
         }
+
         for (AllergenBean menuAllergen : menuAllergensBean) {
             if (clientAllergyIds.contains(menuAllergen.getId())) {
                 return true;

@@ -16,6 +16,7 @@ public class RequestManagerController {
 
     public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
+
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
                 .getClientServiceRequests(LoggedUser.getInstance().getClient());
         if (requests != null) {
@@ -30,6 +31,7 @@ public class RequestManagerController {
 
     public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
+
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
@@ -46,6 +48,7 @@ public class RequestManagerController {
 
     public List<ServiceRequestBean> getChefRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
+
         List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
@@ -60,8 +63,10 @@ public class RequestManagerController {
 
     public void manageRequest(ServiceRequestBean serviceRequestBean) throws FailedUpdateException {
         ServiceRequest serviceRequest = new ServiceRequest();
+
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
+
         DaoFactory.getServiceRequestDao().manageRequest(serviceRequest);
     }
 
@@ -69,6 +74,7 @@ public class RequestManagerController {
 
     private ServiceRequestBean convertToBean(ServiceRequest entity) {
         ServiceRequestBean bean = new ServiceRequestBean();
+
         bean.setId(entity.getId());
         bean.setStatus(entity.getStatus());
         bean.setTotalPrice(entity.getTotalPrice());
@@ -92,11 +98,13 @@ public class RequestManagerController {
 
         if (entity.getReservationDetails() != null) {
             ReservationDetailsBean rdb = new ReservationDetailsBean();
+
             rdb.setSelectedMenuLevel(entity.getReservationDetails().getSelectedMenuLevel());
             rdb.setParticipantNumber(entity.getReservationDetails().getParticipantNumber());
             rdb.setDate(entity.getReservationDetails().getDate());
             rdb.setTime(entity.getReservationDetails().getTime());
             rdb.setAddress(entity.getReservationDetails().getAddress());
+
             bean.setReservationDetailsBean(rdb);
         }
         return bean;
