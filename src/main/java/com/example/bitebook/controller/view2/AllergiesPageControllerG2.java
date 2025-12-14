@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 public class AllergiesPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(AllergiesPageControllerG2.class.getName());
 
 
