@@ -6,38 +6,33 @@ import javafx.scene.control.Label;
 
 public class ClientRequestCardControllerG{
 
-    private ClientRequestsPageControllerG parentController;
-    private ServiceRequestBean serviceRequestBean;
 
     @FXML
     private Label dateLabel;
-
     @FXML
     private Label numberOfParticipantsLabel;
-
     @FXML
     private Label requestIdLabel;
-
     @FXML
     private Label totalPriceLabel;
-
     @FXML
     private Label addressLabel;
-
     @FXML
     private Label timeLabel;
-
     @FXML
     private Label statusLabel;
-
     @FXML
     private Label chefLabel;
-
     @FXML
     private Label menuLabel;
-
     @FXML
     private Label menuLevelLabel;
+
+
+    private ClientRequestsPageControllerG parentController;
+    private ServiceRequestBean serviceRequestBean;
+
+
 
     public void initData(ServiceRequestBean serviceRequestBean){
         this.serviceRequestBean = serviceRequestBean;
@@ -52,6 +47,7 @@ public class ClientRequestCardControllerG{
         addressLabel.setText(serviceRequestBean.getReservationDetailsBean().getAddress());
         statusLabel.setText(String.valueOf(serviceRequestBean.getStatus()));
     }
+
 
 
     public void setParentController(ClientRequestsPageControllerG parentController){

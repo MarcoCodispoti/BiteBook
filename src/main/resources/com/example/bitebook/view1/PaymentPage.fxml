@@ -14,7 +14,7 @@
             </Label>
             <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0" />
-            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Text layoutX="232.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Details" wrappingWidth="276.6703796386719">
@@ -22,7 +22,7 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Pay " textFill="WHITE">
+      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Pay " textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
@@ -74,7 +74,7 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="847.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back" textFill="#383397">
+      <Button fx:id="backButton" layoutX="847.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back" textFill="#383397">
          <font>
             <Font size="22.0" />
          </font>

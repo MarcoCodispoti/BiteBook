@@ -6,6 +6,7 @@ import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
+import com.example.bitebook.util.ViewsResourcesPaths;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,61 +21,74 @@ import java.util.logging.Logger;
 
 public class MenuDetailsPageControllerG{
 
+
     private static final Logger logger = Logger.getLogger(MenuDetailsPageControllerG.class.getName());
 
 
+    @FXML
+    private VBox coursesVBox;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label numberOfCoursesLabel;
+    @FXML
+    private Label dietTypeLabel;
+    @FXML
+    private Label pricePerPersonLabel;
+    @FXML
+    private Label allergensLabel;
+    @FXML
+    private Label messageLabel;
+
+
     private final ExplorationController explorationController = new ExplorationController();
-
-
     private ChefBean menusChefBean;
     private MenuBean selectedMenuBean;
     private List<DishBean> courseBeans = new ArrayList<>();
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
 
 
-    @FXML private VBox coursesVBox;
-    @FXML private Label nameLabel;
-    @FXML private Label numberOfCoursesLabel;
-    @FXML private Label dietTypeLabel;
-    @FXML private Label pricePerPersonLabel;
-    @FXML private Label allergensLabel;
-    @FXML private Label errorLabel;
-
-
-
 
     @FXML
-    void clickedOnHomepage() {
+    void handleHomepage() {
         FxmlLoader.setPage("ClientHomePage");
     }
 
+
+
     @FXML
-    void clickedOnRequests() {
+    void handleRequests() {
         navigateToIfLogged("ClientRequestsPage");
     }
 
+
+
     @FXML
-    void clickedOnAllergies() {
+    void handleAllergies() {
         navigateToIfLogged("AllergiesPage");
     }
 
+
+
     @FXML
-    void clickedOnBackToMenus() {
+    void handleBackToMenus() {
         SelectMenuPageControllerG controller = FxmlLoader.setPageAndReturnController("SelectMenuPage");
         if (controller != null) {
             controller.initData(menusChefBean);
         }
     }
 
+
+
     @FXML
-    void clickedOnConfirmMenu() {
+    void handleConfirmMenu() {
         if (explorationController.isLoggedClient()) {
             ServiceRequestPageControllerG controller = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
             if (controller != null) {
                 controller.initData(selectedMenuBean, menuAllergenBeans, menusChefBean);
             }
         } else {
-            displayError("You must be logged in to proceed");
+            displayMessage("You must be logged in to proceed");
         }
     }
 
@@ -89,7 +103,7 @@ public class MenuDetailsPageControllerG{
         numberOfCoursesLabel.setText(String.valueOf(menuBean.getNumberOfCourses()));
         pricePerPersonLabel.setText(menuBean.getPricePerPerson() + " €");
 
-        errorLabel.setText("");
+        messageLabel.setText("");
 
 
         try {
@@ -99,10 +113,12 @@ public class MenuDetailsPageControllerG{
             populateCourses();
             allergensLabel.setText(formatAllergensList());
         } catch (FailedSearchException e){
-            displayError("Error recovering menu details");
+            displayMessage("Error recovering menu details");
             logger.log(Level.SEVERE, "Error recovering menu details", e);
         }
     }
+
+
 
     private void populateCourses() {
         coursesVBox.getChildren().clear();
@@ -113,7 +129,7 @@ public class MenuDetailsPageControllerG{
 
         for (DishBean dishBean : courseBeans) {
             try {
-                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource("/com/example/bitebook/view1/DishCard.fxml"));
+                FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.DISH_CARD_PATH));
                 Parent dishCard = cardLoader.load();
 
                 DishCardControllerG controller = cardLoader.getController();
@@ -123,7 +139,7 @@ public class MenuDetailsPageControllerG{
 
             } catch (IOException e){
                 logger.log(Level.WARNING, "Error recovering some menu details", e);
-                displayError("Error recovering some menu details");
+                displayMessage("Error recovering some menu details");
             }
         }
     }
@@ -146,18 +162,20 @@ public class MenuDetailsPageControllerG{
     }
 
 
+
     private void navigateToIfLogged(String pageName) {
         if (explorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
-            displayError("You must be logged in to access this page!");
+            displayMessage("You must be logged in to access this page!");
         }
     }
 
 
-    private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+
+    private void displayMessage(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

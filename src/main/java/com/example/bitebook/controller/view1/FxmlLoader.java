@@ -15,10 +15,14 @@ import java.util.logging.Logger;
 
 public class FxmlLoader extends Application {
 
+
     private static final Logger logger = Logger.getLogger(FxmlLoader.class.getName());
 
 
     private static Stage stage;
+
+
+
     @Override
     @SuppressWarnings("java:S2696")
     public void start(Stage primaryStage) {
@@ -38,6 +42,7 @@ public class FxmlLoader extends Application {
     }
 
 
+
     public static void setPage(String fileName){
         try {
             FXMLLoader loader = loadFxml(fileName);
@@ -50,8 +55,9 @@ public class FxmlLoader extends Application {
     }
 
 
+
     public static <T> T setPageAndReturnController(String fileName) {
-        try {
+        try{
             FXMLLoader loader = loadFxml(fileName);
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
@@ -64,6 +70,7 @@ public class FxmlLoader extends Application {
             return null;
         }
     }
+
 
 
     private static FXMLLoader loadFxml(String fileName) throws IOException {
@@ -79,6 +86,8 @@ public class FxmlLoader extends Application {
         }
         return new FXMLLoader(fileUrl);
     }
+
+
 
     private void loadDockIcon() {
         try {
@@ -99,7 +108,6 @@ public class FxmlLoader extends Application {
             logger.log(Level.WARNING, "Error while loading icon", e);
         }
     }
-
 
 
 }

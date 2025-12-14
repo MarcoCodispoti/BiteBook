@@ -17,29 +17,33 @@ import java.util.logging.Logger;
 
 public class ClientRequestsPageControllerG{
 
+
     private static final Logger logger = Logger.getLogger(ClientRequestsPageControllerG.class.getName());
+
+
+    @FXML
+    private VBox requestsVBox;
+    @FXML
+    private Label messageLabel;
 
 
     private List<ServiceRequestBean> serviceRequestBeans;
 
 
-    @FXML
-    private VBox requestsVBox;
-
 
     @FXML
-    private Label errorLabel;
-
-
-    @FXML
-    void clickedOnHomePage() {
+    void handleHomePage() {
         FxmlLoader.setPage("ClientHomePage");
     }
 
+
+
     @FXML
-    void clickedOnAllergies() {
+    void handleAllergies() {
         FxmlLoader.setPage("AllergiesPage");
     }
+
+
 
     @FXML
     public void initialize(){
@@ -50,16 +54,17 @@ public class ClientRequestsPageControllerG{
             if (this.serviceRequestBeans != null && !this.serviceRequestBeans.isEmpty()) {
                 populateRequests();
             } else {
-                displayError("No active request at the moment.");
+                displayMessage("No active request at the moment.");
             }
         } catch (FailedSearchException e) {
-            displayError("Error while obtaining request");
-            logger.log(Level.WARNING, "Error while obtainig request", e);
+            displayMessage("Error while obtaining request");
+            logger.log(Level.WARNING, "Error while obtaining request", e);
         } catch (Exception e) {
-            displayError("Unexpected error while obtaining request");
+            displayMessage("Unexpected error while obtaining request");
             logger.log(Level.SEVERE, "Unexpected error while obtaining request", e);
         }
     }
+
 
 
     private void populateRequests() {
@@ -75,16 +80,17 @@ public class ClientRequestsPageControllerG{
                 requestsVBox.getChildren().add(clientRequestCard);
 
             } catch (IOException e){
-                displayError("Error while loading request");
+                displayMessage("Error while loading request");
                 logger.log(Level.WARNING, "Error while loading some requests" , e);
             }
         }
     }
 
 
-    private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+
+    private void displayMessage(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

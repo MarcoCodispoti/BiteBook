@@ -18,7 +18,7 @@
             <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#handleRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -28,18 +28,18 @@
             <AnchorPane layoutY="228.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#handleAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="errorLabel" layoutX="34.0" layoutY="322.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="34.0" layoutY="322.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#handleHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -62,7 +62,7 @@
             <Font size="34.0" />
          </font>
       </Text>
-      <Button fx:id="selectMenuButton" layoutX="1022.0" layoutY="610.0" mnemonicParsing="false" onAction="#clickedOnSelectMenu" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Select menu" textFill="WHITE">
+      <Button fx:id="selectMenuButton" layoutX="1022.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleSelectMenu" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Select menu" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
@@ -72,7 +72,7 @@
             <VBox fx:id="menusVBox" prefHeight="428.0" prefWidth="722.0" style="-fx-background-color: white;" />
          </content>
       </ScrollPane>
-      <Button fx:id="backToChefsButton" layoutX="1022.0" layoutY="668.0" mnemonicParsing="false" onAction="#clickedOnBackToChefs" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back to chefs" textFill="#383397">
+      <Button fx:id="backToChefsButton" layoutX="1022.0" layoutY="668.0" mnemonicParsing="false" onAction="#handleBackToChefs" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back to chefs" textFill="#383397">
          <font>
             <Font size="22.0" />
          </font>

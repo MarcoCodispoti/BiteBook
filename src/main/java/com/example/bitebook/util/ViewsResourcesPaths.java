@@ -23,8 +23,11 @@ public class ViewsResourcesPaths {
 
     public static final String MENU_CARD_PATH = "/com/example/bitebook/view1/SelectMenuCard.fxml";
 
+    public static final String DISH_CARD_PATH = "/com/example/bitebook/view1/DishCard.fxml";
+
 
     // View 2
     public static final String VIEW2_PACKAGE_PATH = "/com/example/bitebook/view2/";
+
     public static final String ICON2_ICON_PATH = "/com/example/bitebook/images/icon2.png";
 }

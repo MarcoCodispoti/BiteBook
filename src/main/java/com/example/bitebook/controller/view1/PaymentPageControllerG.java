@@ -11,7 +11,33 @@ import java.util.logging.Logger;
 
 public class PaymentPageControllerG {
 
+
     private static final Logger logger = Logger.getLogger(PaymentPageControllerG.class.getName());
+
+
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label numberOfCoursesLabel;
+    @FXML
+    private Label dietTypeLabel;
+    @FXML
+    private Label pricePerPersonLabel;
+    @FXML
+    private Label totalPriceLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Label addressLabel;
+    @FXML
+    private Label numberOfParticipantsLabel;
+    @FXML
+    private Label ingredientsLevelLabel;
+
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private MenuBean requestMenuBean;
@@ -19,32 +45,12 @@ public class PaymentPageControllerG {
     private List<AllergenBean> reservationAllergenBeans;
     private ChefBean reservationChefBean;
 
-    @FXML private Label errorLabel;
-
-    @FXML private Label nameLabel;
-
-    @FXML private Label numberOfCoursesLabel;
-
-    @FXML private Label dietTypeLabel;
-
-    @FXML private Label pricePerPersonLabel;
-
-    @FXML private Label totalPriceLabel;
-
-    @FXML private Label dateLabel;
-
-    @FXML private Label timeLabel;
-
-    @FXML private Label addressLabel;
-
-    @FXML private Label numberOfParticipantsLabel;
-
-    @FXML private Label ingredientsLevelLabel;
 
 
     @FXML
-    void clickedOnSendRequest(){
-        errorLabel.setText("");
+    void handleSendRequest(){
+        messageLabel.setText("");
+
         try {
             ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(
                     requestMenuBean,
@@ -52,23 +58,28 @@ public class PaymentPageControllerG {
             );
             if (serviceRequestBean != null) {
                 serviceRequestBean.validate();
+                sendServiceRequestController.sendServiceRequest(serviceRequestBean);
+                FxmlLoader.setPage("ConfirmationPage");
+            } else{
+                messageLabel.setText("System Error: Could not create request");
             }
-            sendServiceRequestController.sendServiceRequest(serviceRequestBean);
-            FxmlLoader.setPage("ConfirmationPage");
-        } catch (Exception e) {
+        } catch (Exception e){
             logger.log(Level.SEVERE, "Error while sending request!", e);
-            errorLabel.setText("Error completing the request: ");
+            messageLabel.setText("Error completing the request ");
         }
     }
 
 
+
     @FXML
-    void clickedOnBack() {
+    void handleBack() {
         ServiceRequestPageControllerG controller = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
         if (controller != null) {
             controller.initData(requestMenuBean, reservationAllergenBeans, reservationChefBean);
         }
     }
+
+
 
     public void initData(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean, List<AllergenBean> menuAllergenBeans, ChefBean menuChefBean) {
         this.requestMenuBean = menuBean;

@@ -24,7 +24,7 @@
             <Font size="34.0" />
          </font>
       </Text>
-      <Button fx:id="findChefsButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnFindChefs" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Find chefs" textFill="WHITE">
+      <Button fx:id="findChefsButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleFindChefs" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Find chefs" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
@@ -40,7 +40,7 @@
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#handleRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -50,7 +50,7 @@
             <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="allergiesHyperlink1" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                  <Hyperlink fx:id="allergiesHyperlink1" layoutX="2.0" onAction="#handleAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -59,7 +59,7 @@
             </AnchorPane>
             <AnchorPane layoutY="664.0" prefHeight="57.0" prefWidth="219.0">
                <children>
-                  <Hyperlink fx:id="logoutHyperlink" layoutX="3.0" onAction="#clickedOnLogout" prefHeight="74.0" prefWidth="211.0" text=" Logout" textFill="WHITE">
+                  <Hyperlink fx:id="logoutHyperlink" layoutX="3.0" onAction="#handleLogout" prefHeight="74.0" prefWidth="211.0" text=" Logout" textFill="WHITE">
                      <font>
                         <Font size="26.0" />
                      </font>
@@ -84,6 +84,6 @@
          </font>
       </Text>
       <TextField fx:id="insertCityTextField" layoutX="407.0" layoutY="339.0" prefHeight="27.0" prefWidth="216.0" promptText="ex: Rome" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 2;" />
-      <Label fx:id="errorLabel" layoutX="736.0" layoutY="684.0" prefHeight="17.0" prefWidth="267.0" />
+      <Label fx:id="messageLabel" layoutX="736.0" layoutY="684.0" prefHeight="17.0" prefWidth="267.0" />
    </children>
 </AnchorPane>

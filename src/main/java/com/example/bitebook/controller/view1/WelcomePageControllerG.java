@@ -5,13 +5,19 @@ import javafx.fxml.FXML;
 
 public class WelcomePageControllerG {
 
+
+
     @FXML
-    public void clickedOnLogin(){
+    public void handleLogin(){
         FxmlLoader.setPage("LoginPage");
     }
 
+
+
     @FXML
-    public void clickedOnProceedAsGuest(){
+    public void handleProceedAsGuest(){
         FxmlLoader.setPage("ClientHomePage");
     }
+
+
 }

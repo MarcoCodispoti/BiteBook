@@ -17,30 +17,68 @@ import java.util.logging.Logger;
 
 public class SelectChefPageControllerG {
 
+
     private static final Logger logger = Logger.getLogger(SelectChefPageControllerG.class.getName());
+
+
+    @FXML
+    private VBox chefsVBox;
+    @FXML
+    private Label messageLabel;
 
 
     private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
     private static final String DEFAULT_STYLE = "";
-
     private final ExplorationController explorationController = new ExplorationController();
-
     private Parent selectedCardUI;
     private ChefBean cityChefBean;
     private ChefBean selectedChefBean;
     private List<ChefBean> chefInCityBeans = new ArrayList<>();
 
-    @FXML private VBox chefsVBox;
-    @FXML private Label errorLabel;
 
+
+    @FXML
+    void handleViewMenus() {
+        if (selectedChefBean == null) {
+            displayError("Please select a chef first");
+            return;
+        }
+
+        SelectMenuPageControllerG controller = FxmlLoader.setPageAndReturnController("SelectMenuPage");
+        if (controller != null) {
+            selectedChefBean.setCity(cityChefBean.getCity());
+            controller.initData(selectedChefBean);
+        }
+    }
+
+
+
+    @FXML
+    void handleHomepage() {
+        FxmlLoader.setPage("ClientHomePage");
+    }
+
+
+
+    @FXML
+    void handleRequests() {
+        navigateToIfLogged("ClientRequestsPage");
+    }
+
+
+
+    @FXML
+    void handleAllergies() {
+        navigateToIfLogged("AllergiesPage");
+    }
 
 
 
     public void initData(ChefBean chefBean) {
         this.cityChefBean = chefBean;
 
-        errorLabel.setStyle("-fx-text-fill: black;");
-        errorLabel.setText("Chefs in: " + chefBean.getCity());
+        messageLabel.setStyle("-fx-text-fill: black;");
+        messageLabel.setText("Chefs in: " + chefBean.getCity());
 
         try {
             this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
@@ -57,6 +95,8 @@ public class SelectChefPageControllerG {
         }
     }
 
+
+
     private void populateChefs() {
         chefsVBox.getChildren().clear();
 
@@ -72,11 +112,12 @@ public class SelectChefPageControllerG {
 
                 chefsVBox.getChildren().add(chefCard);
             } catch (IOException e){
-                logger.log(Level.WARNING, "Error loading come chef " , e);
+                logger.log(Level.WARNING, "Error loading some chef " , e);
                 displayError("Error loading come chef");
             }
         }
     }
+
 
 
     public void setSelectedChef(ChefBean selectedChefBean, Parent cardUI) {
@@ -88,35 +129,6 @@ public class SelectChefPageControllerG {
         selectedCardUI.setStyle(SELECTED_STYLE);
     }
 
-    @FXML
-    void clickedOnViewMenus() {
-        if (selectedChefBean == null) {
-            displayError("Please select a chef first");
-            return;
-        }
-
-        SelectMenuPageControllerG controller = FxmlLoader.setPageAndReturnController("SelectMenuPage");
-        if (controller != null) {
-            selectedChefBean.setCity(cityChefBean.getCity());
-            controller.initData(selectedChefBean);
-        }
-    }
-
-
-    @FXML
-    void clickedOnHomepage() {
-        FxmlLoader.setPage("ClientHomePage");
-    }
-
-    @FXML
-    void clickedOnRequests() {
-        navigateToIfLogged("ClientRequestsPage");
-    }
-
-    @FXML
-    void clickedOnAllergies() {
-        navigateToIfLogged("AllergiesPage");
-    }
 
 
     private void navigateToIfLogged(String pageName) {
@@ -127,11 +139,12 @@ public class SelectChefPageControllerG {
         }
     }
 
-    private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
-    }
 
+
+    private void displayError(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
+    }
 
 
 }

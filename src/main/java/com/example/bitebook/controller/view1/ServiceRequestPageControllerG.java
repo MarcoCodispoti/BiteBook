@@ -26,33 +26,99 @@ public class ServiceRequestPageControllerG{
     private static final Logger logger = Logger.getLogger(ServiceRequestPageControllerG.class.getName());
 
 
-    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+    @FXML
+    private Button sendRequestButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Label totalPriceLabel;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label numberOfCoursesLabel;
+    @FXML
+    private Label allergensLabel;
+    @FXML
+    private Label dietTypeLabel;
+    @FXML
+    private Label pricePerPersonLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private DatePicker serviceDatePicker;
+    @FXML
+    private ComboBox<LocalTime> timeComboBox;
+    @FXML
+    private TextField addressTextField;
+    @FXML
+    private ComboBox<String> numberOfParticipantsComboBox;
+    @FXML
+    private ComboBox<MenuLevel> ingredientsLevelComboBox;
+    @FXML
+    private AnchorPane allergenWarningAnchorPane;
 
+
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private boolean ignoreAllergenWarning = false;
     private ChefBean menuChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> menuAllergenBeans;
-
     private final ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
 
-    @FXML private Button sendRequestButton;
-    @FXML private Button backButton;
 
-    @FXML private Label totalPriceLabel;
-    @FXML private Label nameLabel;
-    @FXML private Label numberOfCoursesLabel;
-    @FXML private Label allergensLabel;
-    @FXML private Label dietTypeLabel;
-    @FXML private Label pricePerPersonLabel;
-    @FXML private Label errorLabel;
 
-    @FXML private DatePicker serviceDatePicker;
-    @FXML private ComboBox<LocalTime> timeComboBox;
-    @FXML private TextField addressTextField;
-    @FXML private ComboBox<String> numberOfParticipantsComboBox;
-    @FXML private ComboBox<MenuLevel> ingredientsLevelComboBox;
+    @FXML
+    void handleSendRequest() {
+        errorLabel.setVisible(false);
 
-    @FXML private AnchorPane allergenWarningAnchorPane;
+        if (!validateAndCollectFormData()) {
+            return;
+        }
+
+        boolean hasIncompatibility;
+        try {
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(menuAllergenBeans);
+        }catch(IllegalStateException e){
+            logger.log(Level.SEVERE, "System Error: Unable to check incompatibilities", e);
+            displayError("Error: Unable to check incompatibility");
+            return;
+        }
+
+        if (hasIncompatibility && !ignoreAllergenWarning) {
+            showAllergenWarning();
+            return;
+        }
+
+        proceedToPayment();
+    }
+
+
+
+    @FXML
+    void handleProceedAnyway() {
+        ignoreAllergenWarning = true;
+        hideAllergenWarning();
+        handleSendRequest();
+    }
+
+
+
+    @FXML
+    void handleCancelRequest() {
+        FxmlLoader.setPage("ClientHomePage");
+    }
+
+
+
+    @FXML
+    void handleBack() {
+        MenuDetailsPageControllerG controller = FxmlLoader.setPageAndReturnController("MenuDetailsPage");
+        if (controller != null) {
+            controller.initData(selectedMenuBean, menuChefBean);
+        }
+    }
+
+
 
     @FXML
     public void initialize() {
@@ -75,6 +141,8 @@ public class ServiceRequestPageControllerG{
         ingredientsLevelComboBox.valueProperty().addListener((_) -> updateTotalPrice());
     }
 
+
+
     public void initData(MenuBean selectedMenuBean, List<AllergenBean> menuAllergenBeans, ChefBean menuChefBean) {
         this.selectedMenuBean = selectedMenuBean;
         this.menuAllergenBeans = menuAllergenBeans;
@@ -95,6 +163,8 @@ public class ServiceRequestPageControllerG{
         fillIngredientsLevelComboBox();
     }
 
+
+
     private void resetUIState() {
         ignoreAllergenWarning = false;
         allergenWarningAnchorPane.setVisible(false);
@@ -102,50 +172,7 @@ public class ServiceRequestPageControllerG{
         errorLabel.setText("");
     }
 
-    @FXML
-    void clickedOnSendRequest() {
-        errorLabel.setVisible(false);
 
-        if (!validateAndCollectFormData()) {
-            return;
-        }
-
-        boolean hasIncompatibility;
-        try {
-            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(menuAllergenBeans);
-        }catch(IllegalStateException e){
-            logger.log(Level.SEVERE, "System Error: Unable to check imcompatibilities", e);
-            displayError("Error: Unable to check incompatibility");
-            return;
-        }
-
-        if (hasIncompatibility && !ignoreAllergenWarning) {
-            showAllergenWarning();
-            return;
-        }
-
-        proceedToPayment();
-    }
-
-    @FXML
-    void clickedOnProceedAnyway() {
-        ignoreAllergenWarning = true;
-        hideAllergenWarning();
-        clickedOnSendRequest();
-    }
-
-    @FXML
-    void clickedOnCancelRequest() {
-        FxmlLoader.setPage("ClientHomePage");
-    }
-
-    @FXML
-    void clickedOnBack() {
-        MenuDetailsPageControllerG controller = FxmlLoader.setPageAndReturnController("MenuDetailsPage");
-        if (controller != null) {
-            controller.initData(selectedMenuBean, menuChefBean);
-        }
-    }
 
     private boolean validateAndCollectFormData() {
 
@@ -188,12 +215,16 @@ public class ServiceRequestPageControllerG{
         return true;
     }
 
+
+
     private void proceedToPayment() {
         PaymentPageControllerG controller = FxmlLoader.setPageAndReturnController("PaymentPage");
         if (controller != null) {
             controller.initData(selectedMenuBean, reservationDetailsBean, menuAllergenBeans, menuChefBean);
         }
     }
+
+
 
     public void updateTotalPrice() {
         String participantsStr = numberOfParticipantsComboBox.getValue();
@@ -217,6 +248,8 @@ public class ServiceRequestPageControllerG{
         }
     }
 
+
+
     private String formatAllergensList() {
         if (menuAllergenBeans == null || menuAllergenBeans.isEmpty()) return "None";
         return menuAllergenBeans.stream()
@@ -224,12 +257,16 @@ public class ServiceRequestPageControllerG{
                 .collect(Collectors.joining(", "));
     }
 
+
+
     private void fillNumberOfParticipantsComboBox() {
         numberOfParticipantsComboBox.getItems().clear();
         for (int i = 1; i <= 10; i++) {
             numberOfParticipantsComboBox.getItems().add(String.valueOf(i));
         }
     }
+
+
 
     private void fillIngredientsLevelComboBox() {
         try {
@@ -245,6 +282,8 @@ public class ServiceRequestPageControllerG{
         }
     }
 
+
+
     private String formatMenuLevelLabel(MenuLevel level) {
         if (selectedMenuBean == null) return level.toString();
 
@@ -256,10 +295,14 @@ public class ServiceRequestPageControllerG{
         return level + " (Surcharge: +" + surcharge + " €)";
     }
 
+
+
     private void fillTimeComboBox() {
         timeComboBox.getItems().clear();
         timeComboBox.getItems().addAll(generateTimeSlots());
     }
+
+
 
     private List<LocalTime> generateTimeSlots() {
         List<LocalTime> slots = new ArrayList<>();
@@ -267,6 +310,8 @@ public class ServiceRequestPageControllerG{
         addTimeSlots(slots, LocalTime.of(18, 0), LocalTime.of(23, 0));
         return slots;
     }
+
+
 
     private void addTimeSlots(List<LocalTime> slots, LocalTime start, LocalTime end) {
         LocalTime current = start;
@@ -276,11 +321,15 @@ public class ServiceRequestPageControllerG{
         }
     }
 
+
+
     private void showAllergenWarning() {
         backButton.setDisable(true);
         sendRequestButton.setDisable(true);
         allergenWarningAnchorPane.setVisible(true);
     }
+
+
 
     private void hideAllergenWarning() {
         backButton.setDisable(false);
@@ -288,11 +337,12 @@ public class ServiceRequestPageControllerG{
         allergenWarningAnchorPane.setVisible(false);
     }
 
+
+
     private void displayError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
 
-    
 
 }

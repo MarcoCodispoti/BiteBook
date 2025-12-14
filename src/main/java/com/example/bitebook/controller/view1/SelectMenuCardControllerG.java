@@ -7,14 +7,22 @@ import javafx.scene.control.Label;
 
 public class SelectMenuCardControllerG{
 
+
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label dietTypeLabel;
+    @FXML
+    private Label numberOfCoursesLabel;
+    @FXML
+    private Label pricePerPersonLabel;
+
+
     private SelectMenuPageControllerG parentController;
     private Parent cardUi;
     private MenuBean cardMenuBean;
 
-    @FXML private Label nameLabel;
-    @FXML private Label dietTypeLabel;
-    @FXML private Label numberOfCoursesLabel;
-    @FXML private Label pricePerPersonLabel;
+
 
     @FXML
     void handleClick(){
@@ -22,6 +30,8 @@ public class SelectMenuCardControllerG{
             parentController.setSelectedMenu(cardMenuBean, cardUi);
         }
     }
+
+
 
     public void initData(MenuBean menuBean) {
         this.cardMenuBean = menuBean;
@@ -42,14 +52,17 @@ public class SelectMenuCardControllerG{
         pricePerPersonLabel.setText(menuBean.getPricePerPerson() + " €");
     }
 
+
+
     public void setParentController(SelectMenuPageControllerG parentController) {
         this.parentController = parentController;
     }
 
+
+
     public void setCardUi(Parent cardUi) {
         this.cardUi = cardUi;
     }
-
 
 
 }

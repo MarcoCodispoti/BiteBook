@@ -23,7 +23,7 @@
             <Font size="34.0" />
          </font>
       </Text>
-      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Send Request" textFill="WHITE">
+      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397;" text="Send Request" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
@@ -141,12 +141,12 @@
                   <Font size="26.0" />
                </font>
             </Text>
-            <Button fx:id="cancelRequestButton" layoutX="265.0" layoutY="139.0" mnemonicParsing="false" onAction="#clickedOnCancelRequest" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: #383397;" text="Cancel Request" textFill="WHITE">
+            <Button fx:id="cancelRequestButton" layoutX="265.0" layoutY="139.0" mnemonicParsing="false" onAction="#handleCancelRequest" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: #383397;" text="Cancel Request" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="proceedAnywayButton" layoutX="40.0" layoutY="139.0" mnemonicParsing="false" onAction="#clickedOnProceedAnyway" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: red;" text="Proceed Anyway" textFill="WHITE">
+            <Button fx:id="proceedAnywayButton" layoutX="40.0" layoutY="139.0" mnemonicParsing="false" onAction="#handleProceedAnyway" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: red;" text="Proceed Anyway" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
@@ -158,7 +158,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="backButton" layoutX="843.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back " textFill="#383397">
+      <Button fx:id="backButton" layoutX="843.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back " textFill="#383397">
          <font>
             <Font size="22.0" />
          </font>

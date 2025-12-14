@@ -17,7 +17,7 @@
             <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <Button fx:id="backToHomePageButton" layoutX="583.0" layoutY="440.0" mnemonicParsing="false" onAction="#clickedOnBackToHomePage" prefHeight="48.0" prefWidth="224.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Back to homepage" textFill="WHITE">
+      <Button fx:id="backToHomePageButton" layoutX="583.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleBackToHomePage" prefHeight="48.0" prefWidth="224.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Back to homepage" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>

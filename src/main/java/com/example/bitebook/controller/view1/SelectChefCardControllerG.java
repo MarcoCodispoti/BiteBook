@@ -6,21 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 public class SelectChefCardControllerG{
+
+    @FXML
+    private Label styleLabel;
+    @FXML
+    private Label surnameLabel;
+    @FXML
+    private Label specializationsLabel;
+    @FXML
+    private Label nameLabel;
+
+
     private SelectChefPageControllerG parentController;
     private Parent cardUi;
     private ChefBean cardChefBean;
 
-    @FXML
-    private Label styleLabel;
-
-    @FXML
-    private Label surnameLabel;
-
-    @FXML
-    private Label specializationsLabel;
-
-    @FXML
-    private Label nameLabel;
 
 
     @FXML
@@ -29,6 +29,8 @@ public class SelectChefCardControllerG{
             parentController.setSelectedChef(cardChefBean, cardUi);
         }
     }
+
+
 
     public void initData(ChefBean cardChefBean){
         this.cardChefBean = cardChefBean;
@@ -40,7 +42,16 @@ public class SelectChefCardControllerG{
     }
 
 
-    public void setParentController(SelectChefPageControllerG parentController){this.parentController=parentController;}
 
-    public void setCardUI(Parent cardUi){this.cardUi = cardUi;}
+    public void setParentController(SelectChefPageControllerG parentController){
+        this.parentController=parentController;
+    }
+
+
+
+    public void setCardUI(Parent cardUi){
+        this.cardUi = cardUi;
+    }
+
+
 }
