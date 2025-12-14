@@ -60,7 +60,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Label fx:id="errorLabel" layoutX="246.0" layoutY="68.0" prefHeight="17.0" prefWidth="280.0" />
+            <Label fx:id="messageLabel" layoutX="246.0" layoutY="68.0" prefHeight="17.0" prefWidth="280.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

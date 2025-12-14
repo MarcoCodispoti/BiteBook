@@ -20,26 +20,26 @@ public class AllergiesPageControllerG2{
 
 
     private final AllergiesController allergiesController = new AllergiesController();
-
     private List<AllergenBean> clientAllergyBeans = new ArrayList<>();
     private List<AllergenBean> serverAllergyBeans = new ArrayList<>();
 
-    @FXML private Label errorLabel;
-
-    @FXML private ListView<AllergenBean> clientAllergiesListView;
-    @FXML private ListView<AllergenBean> allergensListView;
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private ListView<AllergenBean> clientAllergiesListView;
+    @FXML
+    private ListView<AllergenBean> allergensListView;
 
     @FXML
     void initialize(){
         setupListViewFactory(clientAllergiesListView);
         setupListViewFactory(allergensListView);
-
         refreshData();
     }
 
     private void refreshData() {
-        errorLabel.setText("");
-        errorLabel.setVisible(false);
+        messageLabel.setText("");
+        messageLabel.setVisible(false);
 
         try {
             this.clientAllergyBeans = allergiesController.getClientAllergies();
@@ -72,7 +72,7 @@ public class AllergiesPageControllerG2{
 
     @FXML
     void clickedOnRemoveAllergy() {
-        errorLabel.setText("");
+        messageLabel.setText("");
         AllergenBean selectedBean = clientAllergiesListView.getSelectionModel().getSelectedItem();
 
         if (selectedBean == null) {
@@ -92,7 +92,7 @@ public class AllergiesPageControllerG2{
 
     @FXML
     void clickedOnAddAllergy() {
-        errorLabel.setText("");
+        messageLabel.setText("");
 
         AllergenBean selectedBean = allergensListView.getSelectionModel().getSelectedItem();
 
@@ -153,8 +153,8 @@ public class AllergiesPageControllerG2{
 
 
     private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 
