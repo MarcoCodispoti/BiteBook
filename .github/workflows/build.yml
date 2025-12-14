@@ -40,4 +40,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         # NOTA: Ho aggiunto il flag -DskipTests per assicurarci che l'analisi parta 
         # anche se qualche test fallisce, utile per il primo avvio.
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests -Dsonar.projectKey=MarcoCodispoti_BiteBook -Dsonar.organization=MarcoCodispoti
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests -Dsonar.projectKey=MarcoCodispoti_BiteBook -Dsonar.organization=marcocodispoti
