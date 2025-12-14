@@ -2,7 +2,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - master # o main, controlla il nome del tuo branch!
+      - main # o main, controlla il nome del tuo branch!
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
