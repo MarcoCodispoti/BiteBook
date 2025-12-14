@@ -4,9 +4,10 @@ import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.enums.Role;
 
-@SuppressWarnings("java:S6548")
+// @SuppressWarnings("java:S6548")
 public class LoggedUser{
 
+    private static LoggedUser instance = null;
 
     private Client client;
     private Chef chef;
@@ -14,12 +15,11 @@ public class LoggedUser{
 
     private LoggedUser() {}
 
-    private static class SingletonHolder {
-        private static final LoggedUser INSTANCE = new LoggedUser();
-    }
-
-    public static LoggedUser getInstance() {
-        return SingletonHolder.INSTANCE;
+    public static synchronized LoggedUser getInstance() {
+        if (instance == null) {
+            instance = new LoggedUser();
+        }
+        return instance;
     }
 
     public void logout() {
