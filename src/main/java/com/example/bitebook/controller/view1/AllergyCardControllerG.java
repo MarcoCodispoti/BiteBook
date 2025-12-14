@@ -6,12 +6,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
 public class AllergyCardControllerG{
+
+
+    @FXML
+    private Label allergenName;
+
+
     private AllergiesPageControllerG parentController;
     private Parent cardUi;
     private AllergenBean cardAllergenBean;
 
-    @FXML
-    private Label allergenName;
+
 
     @FXML
     private void handleClick(){
@@ -20,12 +25,24 @@ public class AllergyCardControllerG{
         }
     }
 
+
+
     public void initData(AllergenBean cardAllergenBean){
         this.cardAllergenBean = cardAllergenBean;
         allergenName.setText(cardAllergenBean.getName());
     }
 
-    public void setParentController(AllergiesPageControllerG parentController){this.parentController = parentController;}
 
-    public void setCardUi(Parent cardUi){this.cardUi = cardUi;}
+
+    public void setParentController(AllergiesPageControllerG parentController){
+        this.parentController = parentController;
+    }
+
+
+
+    public void setCardUi(Parent cardUi){
+        this.cardUi = cardUi;
+    }
+
+
 }

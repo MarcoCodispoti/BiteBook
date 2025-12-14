@@ -23,43 +23,40 @@ public class AllergiesPageControllerG{
     private static final Logger logger = Logger.getLogger(AllergiesPageControllerG.class.getName());
 
 
+    @FXML
+    private VBox allergiesVBox;
+    @FXML
+    private ComboBox<AllergenBean> selectAllergyComboBox;
+    @FXML
+    private Label messageLabel;
+
+
     private final AllergiesController allergiesController = new AllergiesController();
     private Parent selectedCardUi;
     private AllergenBean selectedAllergenBean;
 
 
-    @FXML
-    private VBox allergiesVBox;
-
 
     @FXML
-    private ComboBox<AllergenBean> selectAllergyComboBox;
-
-
-    @FXML
-    private Label errorLabel;
-
-
-    @FXML
-    void clickedOnHomepage() {
+    void handleHomepage() {
         FxmlLoader.setPage("ClientHomePage");
     }
 
+
+
     @FXML
-    void clickedOnRequests(){
+    void handleRequests(){
         FxmlLoader.setPage("ClientRequestsPage");
     }
 
 
 
     @FXML
-    void clickedOnRemoveAllergy() {
+    void handleRemoveAllergy() {
         if (selectedAllergenBean != null) {
             try {
                 allergiesController.removeClientAllergy(selectedAllergenBean);
-                displayError("Allergia rimossa.");
                 refreshPage();
-
             } catch (FailedRemoveException e) {
                 displayError("Error while removing allergy");
                 logger.log(Level.SEVERE, "Error while removing allergy" , e);
@@ -70,8 +67,9 @@ public class AllergiesPageControllerG{
     }
 
 
+
     @FXML
-    void clickedOnInsertAllergy() {
+    public void handleInsertAllergy() {
         AllergenBean newAllergyBean = selectAllergyComboBox.getValue();
 
         if (newAllergyBean == null) {
@@ -81,7 +79,6 @@ public class AllergiesPageControllerG{
 
         try {
             allergiesController.insertAllergy(newAllergyBean);
-            displayError("Allergy inserted successfully");
             refreshPage();
         } catch (FailedInsertException e) {
             displayError("Error while inserting allergy: ");
@@ -91,18 +88,20 @@ public class AllergiesPageControllerG{
 
 
 
-
     @FXML
-    void initialize(){
+    private void initialize(){
         refreshPage();
     }
 
 
+
     private void refreshPage(){
-        errorLabel.setText("");
+        messageLabel.setText("");
         allergiesVBox.getChildren().clear();
+
         populateClientAllergies();
         fillSelectAllergyComboBox();
+
         selectedAllergenBean = null;
         selectedCardUi = null;
     }
@@ -112,22 +111,24 @@ public class AllergiesPageControllerG{
     private void populateClientAllergies(){
         allergiesVBox.getChildren().clear();
         List<AllergenBean> clientAllergyBeans = allergiesController.getClientAllergies();
+
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
             displayError("The client has no allergies");
             return;
         }
+
         allergiesVBox.getChildren().clear();
         for(AllergenBean allergyBean : clientAllergyBeans){
             try{
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.ALLERGY_CARD_PATH));
                 Parent allergyCard = cardLoader.load();
                 AllergyCardControllerG controller = cardLoader.getController();
+
                 controller.initData(allergyBean);
                 controller.setCardUi(allergyCard);
                 controller.setParentController(this);
 
                 allergiesVBox.getChildren().add(allergyCard);
-
             } catch (IOException e){
                 displayError("Error while loading client allergy");
                 logger.log(Level.SEVERE, "Error while loading client allergy" , e);
@@ -135,6 +136,7 @@ public class AllergiesPageControllerG{
             }
         }
     }
+
 
 
     public void setSelectedAllergy(AllergenBean allergyBean, Parent cardUi){
@@ -149,8 +151,7 @@ public class AllergiesPageControllerG{
 
 
 
-
-    public void fillSelectAllergyComboBox() {
+    private void fillSelectAllergyComboBox() {
         try {
             List<AllergenBean> allergenListBeans = allergiesController.getAllergens();
             selectAllergyComboBox.getItems().clear();
@@ -164,9 +165,11 @@ public class AllergiesPageControllerG{
     }
 
 
-    private void displayError(String errorMessage){
-        errorLabel.setText(errorMessage);
-        errorLabel.setVisible(true);
+
+    private void displayError(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
+
 
 }

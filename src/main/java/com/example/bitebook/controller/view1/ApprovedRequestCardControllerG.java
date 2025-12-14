@@ -5,35 +5,31 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class ApprovedRequestCardControllerG{
-    private ChefHomePageControllerG parentController;
-    private ServiceRequestBean approvedRequestRequestBean;
+
 
     @FXML
     private Label dateLabel;
-
     @FXML
     private Label numberOfParticipantsLabel;
-
     @FXML
     private Label requestIdLabel;
-
     @FXML
     private Label clientLabel;
-
     @FXML
     private Label totalPriceLabel;
-
     @FXML
     private Label addressLabel;
-
     @FXML
     private Label timeLabel;
-
     @FXML
     private Label menuLabel;
-
     @FXML
     private Label menuLevelLabel;
+
+
+    private ServiceRequestBean approvedRequestRequestBean;
+    private ChefHomePageControllerG parentController;
+
 
 
     public void initData(ServiceRequestBean serviceRequestBean){
@@ -49,7 +45,11 @@ public class ApprovedRequestCardControllerG{
         clientLabel.setText(serviceRequestBean.getClientBean().getName() + " " + serviceRequestBean.getClientBean().getSurname());
     }
 
-    public void setParentController(ChefHomePageControllerG parentController){this.parentController = parentController;}
+
+
+    public void setParentController(ChefHomePageControllerG parentController){
+        this.parentController = parentController;
+    }
 
 
 }

@@ -18,7 +18,7 @@
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#handleHomepage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -28,14 +28,14 @@
             <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#clickedOnRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
+                  <Hyperlink fx:id="requestsHyperlink" layoutX="2.0" onAction="#handleRequests" prefHeight="74.0" prefWidth="217.0" text=" Requests" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0">
@@ -52,7 +52,7 @@
             <Font size="34.0" />
          </font>
       </Text>
-      <Button fx:id="removeAllergyButton" layoutX="538.0" layoutY="667.0" mnemonicParsing="false" onAction="#clickedOnRemoveAllergy" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: red;" text="Remove allergy" textFill="WHITE">
+      <Button fx:id="removeAllergyButton" layoutX="538.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleRemoveAllergy" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: red;" text="Remove allergy" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
@@ -77,7 +77,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="insertAllergyButton" layoutX="846.0" layoutY="436.0" mnemonicParsing="false" onAction="#clickedOnInsertAllergy" prefHeight="48.0" prefWidth="155.0" style="-fx-background-color: #383397;" text="Insert allergy" textFill="WHITE">
+      <Button fx:id="insertAllergyButton" layoutX="846.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleInsertAllergy" prefHeight="48.0" prefWidth="155.0" style="-fx-background-color: #383397;" text="Insert allergy" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>

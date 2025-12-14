@@ -22,29 +22,34 @@ public class ChefHomePageControllerG {
     private static final Logger logger = Logger.getLogger(ChefHomePageControllerG.class.getName());
 
 
+    @FXML
+    private VBox approvedRequestsVBox;
+    @FXML
+    private Label messageLabel;
+
+
     private final RequestManagerController requestManagerController = new RequestManagerController();
     private final LoginController loginController = new LoginController();
-
     private List<ServiceRequestBean> approvedServiceRequestBeans;
-
-    @FXML private VBox approvedRequestsVBox;
-
-    @FXML private Label errorLabel;
 
 
 
     @FXML
-    void clickedOnRequests(){
+    void handleRequests(){
         FxmlLoader.setPage("ChefRequestsPage");
     }
 
-    @FXML
-    void clickedOnMenus(){
-        displayError("Coming soon!");
-    }
+
 
     @FXML
-    void clickedOnLogout(){
+    void handleMenus(){
+        displayMessage("Coming soon!");
+    }
+
+
+
+    @FXML
+    void handleLogout(){
         loginController.logout();
         FxmlLoader.setPage("WelcomePage");
     }
@@ -57,22 +62,24 @@ public class ChefHomePageControllerG {
     }
 
 
+
     private void refreshDashboard(){
-        errorLabel.setText("");
+        messageLabel.setText("");
         approvedRequestsVBox.getChildren().clear();
         try {
             this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
             populateRequests();
         } catch (FailedSearchException e) {
-            displayError("System Error: Unable to load requests.");
-            logger.log(Level.SEVERE, "Unable to load requets", e);
+            displayMessage("System Error: Unable to load requests.");
+            logger.log(Level.SEVERE, "Unable to load requests", e);
         }
     }
 
 
-    private void populateRequests() {
+
+    private void populateRequests(){
         if (approvedServiceRequestBeans == null || approvedServiceRequestBeans.isEmpty()) {
-            displayError("No active request at the moment.");
+            displayMessage("No active request at the moment.");
             return;
         }
         for (ServiceRequestBean serviceRequestBean : approvedServiceRequestBeans) {
@@ -90,9 +97,9 @@ public class ChefHomePageControllerG {
     }
 
 
-    private void displayError(String error){
-        errorLabel.setText(error);
-        errorLabel.setVisible(true);
+    private void displayMessage(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 
