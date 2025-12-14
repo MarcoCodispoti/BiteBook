@@ -29,8 +29,6 @@ public class ClientRequestCardControllerG{
     private Label menuLevelLabel;
 
 
-    // private ClientRequestsPageControllerG parentController;
-
 
     public void initData(ServiceRequestBean serviceRequestBean){
         requestIdLabel.setText(String.valueOf(serviceRequestBean.getId()));
@@ -44,12 +42,6 @@ public class ClientRequestCardControllerG{
         addressLabel.setText(serviceRequestBean.getReservationDetailsBean().getAddress());
         statusLabel.setText(String.valueOf(serviceRequestBean.getStatus()));
     }
-
-
-
-//    public void setParentController(ClientRequestsPageControllerG parentController){
-//        this.parentController = parentController;
-//    }
 
 
 }
