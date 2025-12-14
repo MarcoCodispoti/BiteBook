@@ -28,16 +28,17 @@ public class ClientRequestsPageControllerG{
 
 
     @FXML
-    private Label errorLabel;
+    private Label messageLabel;
 
 
     @FXML
-    void clickedOnHomePage() {
-        FxmlLoader.setPage("ClientHomePage");
+    void handleHomePage() {
+        FxmlLoader.setPage("ClientHome" +
+                "Page");
     }
 
     @FXML
-    void clickedOnAllergies() {
+    void handleAllergies() {
         FxmlLoader.setPage("AllergiesPage");
     }
 
@@ -71,7 +72,6 @@ public class ClientRequestsPageControllerG{
                 Parent clientRequestCard = cardLoader.load();
                 ClientRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
-                controller.setParentController(this);
                 requestsVBox.getChildren().add(clientRequestCard);
 
             } catch (IOException e){
@@ -83,8 +83,8 @@ public class ClientRequestsPageControllerG{
 
 
     private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

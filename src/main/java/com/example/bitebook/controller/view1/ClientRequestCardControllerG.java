@@ -29,13 +29,10 @@ public class ClientRequestCardControllerG{
     private Label menuLevelLabel;
 
 
-    private ClientRequestsPageControllerG parentController;
-    private ServiceRequestBean serviceRequestBean;
-
+    // private ClientRequestsPageControllerG parentController;
 
 
     public void initData(ServiceRequestBean serviceRequestBean){
-        this.serviceRequestBean = serviceRequestBean;
         requestIdLabel.setText(String.valueOf(serviceRequestBean.getId()));
         chefLabel.setText(serviceRequestBean.getChefBean().getName() + " " + serviceRequestBean.getChefBean().getSurname());
         menuLabel.setText(serviceRequestBean.getMenuBean().getName());
@@ -50,9 +47,9 @@ public class ClientRequestCardControllerG{
 
 
 
-    public void setParentController(ClientRequestsPageControllerG parentController){
-        this.parentController = parentController;
-    }
+//    public void setParentController(ClientRequestsPageControllerG parentController){
+//        this.parentController = parentController;
+//    }
 
 
 }

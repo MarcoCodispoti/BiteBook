@@ -27,13 +27,8 @@ public class ApprovedRequestCardControllerG{
     private Label menuLevelLabel;
 
 
-    private ServiceRequestBean approvedRequestRequestBean;
-    private ChefHomePageControllerG parentController;
-
-
 
     public void initData(ServiceRequestBean serviceRequestBean){
-        this.approvedRequestRequestBean = serviceRequestBean;
         requestIdLabel.setText(String.valueOf(serviceRequestBean.getId()));
         menuLabel.setText(serviceRequestBean.getMenuBean().getName());
         menuLevelLabel.setText(String.valueOf(serviceRequestBean.getReservationDetailsBean().getSelectedMenuLevel()));
@@ -45,11 +40,6 @@ public class ApprovedRequestCardControllerG{
         clientLabel.setText(serviceRequestBean.getClientBean().getName() + " " + serviceRequestBean.getClientBean().getSurname());
     }
 
-
-
-    public void setParentController(ChefHomePageControllerG parentController){
-        this.parentController = parentController;
-    }
 
 
 }

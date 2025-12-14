@@ -88,7 +88,6 @@ public class ChefHomePageControllerG {
                 Parent approvedRequestCard = cardLoader.load();
                 ApprovedRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
-                controller.setParentController(this);
                 approvedRequestsVBox.getChildren().add(approvedRequestCard);
             } catch (IOException e){
                 logger.log(Level.WARNING, "Error while loading a card for a request ", e);
