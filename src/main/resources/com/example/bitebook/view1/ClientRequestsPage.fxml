@@ -16,7 +16,7 @@
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomePage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#handleHomePage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -26,14 +26,14 @@
             <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#clickedOnAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
+                  <Hyperlink fx:id="allergiesHyperlink" layoutX="2.0" onAction="#handleAllergies" prefHeight="74.0" prefWidth="217.0" text=" Allergies" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0" />

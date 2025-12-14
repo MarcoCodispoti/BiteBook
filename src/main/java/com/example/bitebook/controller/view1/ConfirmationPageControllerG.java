@@ -4,9 +4,12 @@ import javafx.fxml.FXML;
 
 public class ConfirmationPageControllerG{
 
+
+
         @FXML
-        void clickedOnBackToHomePage() {
+        void handleBackToHomePage() {
             FxmlLoader.setPage("ClientHomePage");
         }
+
 
 }

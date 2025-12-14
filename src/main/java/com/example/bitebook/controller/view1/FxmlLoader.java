@@ -15,10 +15,14 @@ import java.util.logging.Logger;
 
 public class FxmlLoader extends Application {
 
+
     private static final Logger logger = Logger.getLogger(FxmlLoader.class.getName());
 
 
     private static Stage stage;
+
+
+
     @Override
     @SuppressWarnings("java:S2696")
     public void start(Stage primaryStage) {
@@ -38,6 +42,7 @@ public class FxmlLoader extends Application {
     }
 
 
+
     public static void setPage(String fileName){
         try {
             FXMLLoader loader = loadFxml(fileName);
@@ -48,6 +53,7 @@ public class FxmlLoader extends Application {
             logger.log(Level.SEVERE, "Error: Unable to change page", e);
         }
     }
+
 
 
     public static <T> T setPageAndReturnController(String fileName) {
@@ -66,6 +72,7 @@ public class FxmlLoader extends Application {
     }
 
 
+
     private static FXMLLoader loadFxml(String fileName) throws IOException {
         if (fileName == null || fileName.trim().isEmpty()) {
             throw new IllegalArgumentException("xmfl file name cannot be null or empty");
@@ -79,6 +86,8 @@ public class FxmlLoader extends Application {
         }
         return new FXMLLoader(fileUrl);
     }
+
+
 
     private void loadDockIcon() {
         try {
@@ -99,7 +108,6 @@ public class FxmlLoader extends Application {
             logger.log(Level.WARNING, "Error while loading icon", e);
         }
     }
-
 
 
 }

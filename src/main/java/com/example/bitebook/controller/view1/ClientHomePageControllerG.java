@@ -14,33 +14,41 @@ import java.util.logging.Logger;
 
 public class ClientHomePageControllerG{
 
+
     private static final Logger logger = Logger.getLogger(ClientHomePageControllerG.class.getName());
+
+
+    @FXML
+    private TextField insertCityTextField;
+    @FXML
+    private Label messageLabel;
 
 
     private final ExplorationController explorationController = new ExplorationController();
     private final LoginController loginController = new LoginController();
 
-    @FXML private TextField insertCityTextField;
-    @FXML private Label errorLabel;
-
 
 
     @FXML
-    void clickedOnRequests() {
+    void handleRequests() {
         if (checkLoginStatus()) {
             FxmlLoader.setPage("ClientRequestsPage");
         }
     }
 
+
+
     @FXML
-    void clickedOnAllergies() {
+    void handleAllergies() {
         if (checkLoginStatus()) {
             FxmlLoader.setPage("AllergiesPage");
         }
     }
 
+
+
     @FXML
-    void clickedOnLogout() {
+    void handleLogout() {
         loginController.logout();
         FxmlLoader.setPage("WelcomePage");
     }
@@ -48,20 +56,21 @@ public class ClientHomePageControllerG{
 
 
     @FXML
-    void clickedOnFindChefs(){
+    void handleFindChefs(){
+        displayMessage("");
         ChefBean chefBean = new ChefBean();
         chefBean.setCity(insertCityTextField.getText());
         if(!checkCityField()){
             return;
         }
         if (!chefBean.validateCity()){
-            displayError("Please insert a valid city");
+            displayMessage("Please insert a valid city");
             return;
         }
         try {
             boolean chefFound = explorationController.areChefsAvailableInCity(chefBean);
             if (!chefFound) {
-                displayError("No chef found in " + chefBean.getCity() + "!");
+                displayMessage("No chef found in " + chefBean.getCity() + "!");
                 return;
             }
             SelectChefPageControllerG nextController = FxmlLoader.setPageAndReturnController("SelectChefPage");
@@ -69,34 +78,37 @@ public class ClientHomePageControllerG{
                 nextController.initData(chefBean);
             }
         } catch (FailedSearchException e){
-            displayError("System Error while searching.");
+            displayMessage("System Error while searching.");
             logger.log(Level.SEVERE, "System Error while searching.", e);
         }
     }
+
 
 
     private boolean checkLoginStatus() {
         if (explorationController.isLoggedClient()) {
             return true;
         } else {
-            displayError("You must be logged in");
+            displayMessage("You must be logged in");
             return false;
         }
     }
 
 
-    public boolean checkCityField(){
+
+    private boolean checkCityField(){
         if(insertCityTextField.getText().isEmpty()){
-            displayError("Please enter a city");
+            displayMessage("Please enter a city");
             return false;
         }
         return true;
     }
 
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

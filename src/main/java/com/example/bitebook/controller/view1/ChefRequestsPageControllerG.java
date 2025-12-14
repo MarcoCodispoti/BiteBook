@@ -19,37 +19,60 @@ import java.util.logging.Logger;
 
 public class ChefRequestsPageControllerG{
 
+
     private static final Logger logger = Logger.getLogger(ChefRequestsPageControllerG.class.getName());
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
-
     private Parent selectedCardUi;
     private ServiceRequestBean selectedServiceRequestBean;
-
     private List<ServiceRequestBean> chefServiceRequestBeans;
-
-    @FXML private VBox requestsVBox;
-    @FXML private Label errorLabel;
 
 
     @FXML
-    void clickedOnHomePage() {
+    private VBox requestsVBox;
+    @FXML
+    private Label messageLabel;
+
+
+
+    @FXML
+    void handleHomePage() {
         FxmlLoader.setPage("ChefHomePage");
     }
 
+
+
     @FXML
-    void clickedOnMenus() {
-        displayError("Coming soon!");
+    void handleMenus() {
+        displayMessage("Coming soon!");
     }
+
+
+
+    @FXML
+    void handleApproveRequest() {
+        updateRequestStatus(RequestStatus.APPROVED);
+    }
+
+
+
+    @FXML
+    void handleRejectRequest() {
+        updateRequestStatus(RequestStatus.REJECTED);
+    }
+
+
 
     @FXML
     void initialize() {
         refreshPage();
     }
 
+
+
     private void refreshPage(){
-        errorLabel.setText("");
+        messageLabel.setText("");
         requestsVBox.getChildren().clear();
         selectedServiceRequestBean = null;
         selectedCardUi = null;
@@ -57,18 +80,18 @@ public class ChefRequestsPageControllerG{
             this.chefServiceRequestBeans = requestManagerController.getChefRequests();
             populateRequests();
         } catch (FailedSearchException e) {
-            displayError("Unable to load requests");
+            displayMessage("Unable to load requests");
             logger.log(Level.SEVERE,"Unable to load requests",e);
         }
     }
 
 
+
     private void populateRequests() {
         if (chefServiceRequestBeans == null || chefServiceRequestBeans.isEmpty()) {
-            displayError("No incoming requests found.");
+            displayMessage("No incoming requests found.");
             return;
         }
-
         for (ServiceRequestBean serviceRequestBean : chefServiceRequestBeans) {
             try {
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.CHEF_REQUEST_CARD_PATH));
@@ -81,27 +104,17 @@ public class ChefRequestsPageControllerG{
                 requestsVBox.getChildren().add(chefRequestCard);
 
             } catch (IOException e){
-                displayError("Error loading a request");
+                displayMessage("Error loading a request");
                 logger.log(Level.WARNING,"Error loading a request", e );
             }
         }
     }
 
 
-    @FXML
-    void clickedOnApproveRequest() {
-        updateRequestStatus(RequestStatus.APPROVED);
-    }
-
-    @FXML
-    void clickedOnRejectRequest() {
-        updateRequestStatus(RequestStatus.REJECTED);
-    }
-
 
     private void updateRequestStatus(RequestStatus newStatus) {
         if (selectedServiceRequestBean == null) {
-            displayError("Seleziona una richiesta dalla lista prima di procedere.");
+            displayMessage("Please select a request from the list first.");
             return;
         }
         try {
@@ -109,10 +122,11 @@ public class ChefRequestsPageControllerG{
             requestManagerController.updateRequestStatus(selectedServiceRequestBean);
             refreshPage();
         } catch (FailedUpdateException e) {
-            displayError("Error occurred while managing the request: ");
+            displayMessage("Error occurred while managing the request: ");
             logger.log(Level.WARNING,"Error occurred while managing the request",e);
         }
     }
+
 
 
     public void setSelectedRequest(ServiceRequestBean serviceRequestBean, Parent cardUi) {
@@ -125,10 +139,12 @@ public class ChefRequestsPageControllerG{
     }
 
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
+
 
 }
 

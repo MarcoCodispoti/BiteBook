@@ -16,7 +16,7 @@
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#clickedOnHomePage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
+                  <Hyperlink fx:id="homepageHyperlink" layoutX="2.0" onAction="#handleHomePage" prefHeight="74.0" prefWidth="217.0" text=" Homepage" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
@@ -26,14 +26,14 @@
             <AnchorPane layoutY="154.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
-                  <Hyperlink fx:id="menusHyperlink" layoutX="2.0" onAction="#clickedOnMenus" prefHeight="74.0" prefWidth="217.0" text=" Menus" textFill="WHITE">
+                  <Hyperlink fx:id="menusHyperlink" layoutX="2.0" onAction="#handleMenus" prefHeight="74.0" prefWidth="217.0" text=" Menus" textFill="WHITE">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="errorLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Text layoutX="232.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requests">
@@ -46,12 +46,12 @@
             <VBox fx:id="requestsVBox" prefHeight="645.0" prefWidth="729.0" style="-fx-background-color: white;" />
          </content>
       </ScrollPane>
-      <Button fx:id="rejectRequestButton" layoutX="1003.0" layoutY="675.0" mnemonicParsing="false" onAction="#clickedOnRejectRequest" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: red;" text="Reject request" textFill="WHITE">
+      <Button fx:id="rejectRequestButton" layoutX="1003.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleRejectRequest" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: red;" text="Reject request" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="approveRequestButton" layoutX="1003.0" layoutY="614.0" mnemonicParsing="false" onAction="#clickedOnApproveRequest" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: #00BB00;" text="Approve request" textFill="WHITE">
+      <Button fx:id="approveRequestButton" layoutX="1003.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleApproveRequest" prefHeight="48.0" prefWidth="178.0" style="-fx-background-color: #00BB00;" text="Approve request" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>

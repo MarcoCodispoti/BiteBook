@@ -12,17 +12,16 @@ public class DishCardControllerG{
 
     private DishBean dishBean;
 
+
     @FXML
     private Label allergensLabel;
-
     @FXML
     private Label courseTypeLabel;
-
     @FXML
     private Label descriptionLabel;
-
     @FXML
     private Label nameLabel;
+
 
 
     public void initData(DishBean dishBean) {
