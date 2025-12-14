@@ -137,8 +137,8 @@ public class ServiceRequestPageControllerG{
             }
         });
 
-        numberOfParticipantsComboBox.valueProperty().addListener((_) -> updateTotalPrice());
-        ingredientsLevelComboBox.valueProperty().addListener((_) -> updateTotalPrice());
+        numberOfParticipantsComboBox.valueProperty().addListener(_ -> updateTotalPrice());
+        ingredientsLevelComboBox.valueProperty().addListener(_ -> updateTotalPrice());
     }
 
 
