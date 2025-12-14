@@ -7,42 +7,33 @@ import javafx.scene.control.Label;
 
 public class ChefRequestCardControllerG{
 
-    private ChefRequestsPageControllerG parentController;
-    private Parent cardUi;
-
-    private ServiceRequestBean cardServiceRequestBean;
-
-
 
     @FXML
     private Label dateLabel;
-
     @FXML
     private Label numberOfParticipantsLabel;
-
     @FXML
     private Label requestIdLabel;
-
     @FXML
     private Label clientLabel;
-
     @FXML
     private Label totalPriceLabel;
-
     @FXML
     private Label addressLabel;
-
     @FXML
     private Label timeLabel;
-
     @FXML
     private Label statusLabel;
-
     @FXML
     private Label menuLabel;
-
     @FXML
     private Label menuLevelLabel;
+
+
+    private ChefRequestsPageControllerG parentController;
+    private Parent cardUi;
+    private ServiceRequestBean cardServiceRequestBean;
+
 
 
     @FXML
@@ -51,6 +42,7 @@ public class ChefRequestCardControllerG{
             parentController.setSelectedRequest(cardServiceRequestBean,cardUi);
         }
     }
+
 
 
     public void initData(ServiceRequestBean serviceRequestBean){
@@ -68,8 +60,14 @@ public class ChefRequestCardControllerG{
     }
 
 
-    public void setParentController(ChefRequestsPageControllerG parentController){this.parentController=parentController;}
+
+    public void setParentController(ChefRequestsPageControllerG parentController){
+        this.parentController=parentController;
+    }
+
+
 
     public void setCardUi(Parent cardUi){this.cardUi=cardUi;}
+
 
 }
