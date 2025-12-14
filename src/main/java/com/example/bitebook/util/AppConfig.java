@@ -1,8 +1,9 @@
 package com.example.bitebook.util;
 
-@SuppressWarnings("java:S6548")
+// @SuppressWarnings("java:S6548")
 public class AppConfig{
-    private static AppConfig instance;
+
+    private static AppConfig instance = null;
     private final boolean demoMode;
 
     private static final String PROPERTY_KEY = "bitebook.mode";

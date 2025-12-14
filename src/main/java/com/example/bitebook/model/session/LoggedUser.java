@@ -4,7 +4,6 @@ import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.enums.Role;
 
-// @SuppressWarnings("java:S6548")
 public class LoggedUser{
 
     private static LoggedUser instance = null;
