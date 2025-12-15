@@ -18,4 +18,5 @@ public interface ServiceRequestDao{
     List<ServiceRequest> getChefServiceRequests(Chef chef) throws FailedSearchException;
 
     void manageRequest(ServiceRequest serviceRequest) throws FailedUpdateException;
+
 }

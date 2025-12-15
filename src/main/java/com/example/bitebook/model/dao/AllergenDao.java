@@ -19,4 +19,5 @@ public interface AllergenDao {
     void insertAllergy(Allergen allergen, int clientId) throws FailedInsertException;
 
     List<Allergen> getDishAllergens(int dishId) throws FailedSearchException;
+
 }

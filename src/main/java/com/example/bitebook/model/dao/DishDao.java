@@ -8,4 +8,5 @@ import java.util.List;
 public interface DishDao{
 
     List<Dish> getMenuCourses(int menuId) throws FailedSearchException;
+
 }

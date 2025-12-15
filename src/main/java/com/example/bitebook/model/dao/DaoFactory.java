@@ -11,17 +11,22 @@ import java.util.logging.Logger;
 
 public abstract class DaoFactory{
 
+
     private static final Logger logger = Logger.getLogger(DaoFactory.class.getName());
+
 
     private DaoFactory(){
         // Default constructor
     }
+
+
 
     public static UserDao getUserDao() {
 
         if (AppConfig.getInstance().isDemoMode()){
             return new UserDemoDao();
         }
+
         try {
             Connector.getInstance().getConnection();
             return new UserDbDao();
@@ -29,6 +34,7 @@ public abstract class DaoFactory{
             logger.log(Level.INFO, "Database connection error: Login via File System");
             return new UserFsDao();
         }
+
     }
 
 
@@ -45,6 +51,7 @@ public abstract class DaoFactory{
             return new ServiceRequestDemoDao();
         }
     }
+
 
 
     public static AllergenDao getAllergenDao() {
@@ -72,6 +79,7 @@ public abstract class DaoFactory{
     }
 
 
+
     public static MenuDao getMenuDao(){
         if(AppConfig.getInstance().isDemoMode()){
             return new MenuDemoDao();
@@ -81,6 +89,7 @@ public abstract class DaoFactory{
     }
 
 
+
     public static DishDao getDishDao(){
         if(AppConfig.getInstance().isDemoMode()){
             return new DishDemoDao();
@@ -88,5 +97,6 @@ public abstract class DaoFactory{
             return new DishDbDao();
         }
     }
+
 
 }
