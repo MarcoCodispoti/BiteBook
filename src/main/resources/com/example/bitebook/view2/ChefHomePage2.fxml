@@ -19,12 +19,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="menusHyperlink" layoutX="1027.0" onAction="#clickedOnMenus" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
+            <Hyperlink fx:id="menusHyperlink" layoutX="1027.0" onAction="#handleMenus" prefHeight="65.0" prefWidth="98.0" text="Menu" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="878.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="878.0" onAction="#handleRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -34,7 +34,7 @@
                   <Image url="@../images/logout.png" />
                </image>
             </ImageView>
-            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickedOnLogoutButton" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
+            <Button fx:id="logoutButton" layoutX="1131.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleLogout" opacity="0.0" prefHeight="45.0" prefWidth="55.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="676.0" fitWidth="1200.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
@@ -49,7 +49,7 @@
                   <Font size="47.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" layoutX="200.0" layoutY="454.0" prefHeight="11.0" prefWidth="407.0" />
+            <Label fx:id="messageLabel" layoutX="200.0" layoutY="454.0" prefHeight="11.0" prefWidth="407.0" />
             <ListView fx:id="approvedRequestsListView" layoutX="24.0" layoutY="114.0" prefHeight="414.0" prefWidth="1000.0" style="-fx-border-color: #7cb518;" />
             <Label layoutX="25.0" layoutY="92.0" prefHeight="17.0" prefWidth="996.0" text="     Customer                                           Menu                                                    Level                   Participants            Date                           Time                 Address" />
          </children></AnchorPane>

@@ -14,20 +14,50 @@ import java.util.logging.Logger;
 
 public class ChefHomePageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(ChefHomePageControllerG2.class.getName());
+
+
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private ListView<ServiceRequestBean> approvedRequestsListView;
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
 
-    @FXML private Label errorLabel;
 
-    @FXML private ListView<ServiceRequestBean> approvedRequestsListView;
 
     @FXML
-    void initialize() {
+    void handleMenus() {
+        displayMessage("Not implemented yet, sorry :(");
+    }
+
+
+
+    @FXML
+    void handleRequests() {
+        FxmlLoader2.setPage("ChefRequestsPage2");
+    }
+
+
+
+    @FXML
+    void handleLogout(){
+        LoginController loginController = new LoginController();
+        loginController.logout();
+        FxmlLoader2.setPage("LoginPage2");
+    }
+
+
+
+    @FXML
+    void initialize(){
         setupListViewFactory();
         loadApprovedRequests();
     }
+
+
 
     private void setupListViewFactory() {
         approvedRequestsListView.setCellFactory(_ -> new ListCell<>() {
@@ -45,24 +75,28 @@ public class ChefHomePageControllerG2{
         });
     }
 
+
+
     private void loadApprovedRequests() {
         approvedRequestsListView.getItems().clear();
-        errorLabel.setText("");
+        messageLabel.setText("");
 
         try {
             List<ServiceRequestBean> approvedRequests = requestManagerController.getApprovedServiceRequests();
 
             if (approvedRequests == null || approvedRequests.isEmpty()) {
-                displayError("No approved requests found");
+                displayMessage("No approved requests found");
                 return;
             }
             approvedRequestsListView.getItems().addAll(approvedRequests);
 
         } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "Error occurred while obtaining approved requests" , e);
-            displayError("Error occurred while obtaining approved requests");
+            displayMessage("Error occurred while obtaining approved requests");
         }
     }
+
+
 
     private String formatRequestString(ServiceRequestBean bean){
         return String.format(" %-22s %-23s %-10s %-11d  %-12s  %-9s %s",
@@ -77,32 +111,17 @@ public class ChefHomePageControllerG2{
     }
 
 
+
     private String truncate(String input, int width) {
         if (input == null) return "";
         return input.length() > width ? input.substring(0, width - 1) + "." : input;
     }
 
-    @FXML
-    void clickedOnMenus() {
-        displayError("Not implemented yet, sorry :(");
-    }
-
-    @FXML
-    void clickedOnRequests() {
-        FxmlLoader2.setPage("ChefRequestsPage2");
-    }
-
-    @FXML
-    void clickedOnLogoutButton() {
-        LoginController loginController = new LoginController();
-        loginController.logout();
-        FxmlLoader2.setPage("LoginPage2");
-    }
 
 
-    private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+    private void displayMessage(String message){
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

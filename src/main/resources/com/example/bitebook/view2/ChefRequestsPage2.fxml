@@ -18,12 +18,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="menusHyperlink" layoutX="1082.0" onAction="#clickedOnMenus" prefHeight="65.0" prefWidth="118.0" text="Menus" textFill="WHITE">
+            <Hyperlink fx:id="menusHyperlink" layoutX="1082.0" onAction="#handleMenus" prefHeight="65.0" prefWidth="118.0" text="Menus" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="homepageHyperlink" layoutX="913.0" onAction="#clickedOnHomepage" prefHeight="65.0" prefWidth="168.0" text="Homepage" textFill="WHITE">
+            <Hyperlink fx:id="homepageHyperlink" layoutX="913.0" onAction="#handleHomepage" prefHeight="65.0" prefWidth="168.0" text="Homepage" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -43,12 +43,12 @@
                </font>
             </Label>
             <ListView fx:id="chefRequestsListView" layoutX="20.0" layoutY="113.0" prefHeight="423.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
-            <Button fx:id="rejectRequestButton" layoutX="764.0" layoutY="549.0" mnemonicParsing="false" onAction="#clickedOnRejectRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #cc0000; -fx-background-radius: 3;" text="Reject request" textFill="WHITE">
+            <Button fx:id="rejectRequestButton" layoutX="764.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleRejectRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #cc0000; -fx-background-radius: 3;" text="Reject request" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="approveRequestButton" layoutX="957.0" layoutY="549.0" mnemonicParsing="false" onAction="#clickedOnApproveRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Approve request" textFill="WHITE">
+            <Button fx:id="approveRequestButton" layoutX="957.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleApproveRequest" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Approve request" textFill="WHITE">
                <font>
                   <Font size="21.0" />
                </font>

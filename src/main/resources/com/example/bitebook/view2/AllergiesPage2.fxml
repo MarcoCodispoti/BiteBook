@@ -14,12 +14,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="1050.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="149.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="1050.0" onAction="#handleRequests" prefHeight="65.0" prefWidth="149.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="homepageHyperlink" layoutX="879.0" onAction="#clickedOnHomepage" prefHeight="65.0" prefWidth="170.0" text="Homepage" textFill="WHITE">
+            <Hyperlink fx:id="homepageHyperlink" layoutX="879.0" onAction="#handleHomepage" prefHeight="65.0" prefWidth="170.0" text="Homepage" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -49,13 +49,13 @@
                   <Font size="32.0" />
                </font>
             </Label>
-            <Button fx:id="removeAllergyButton" layoutX="49.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickedOnRemoveAllergy" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #cc0000; -fx-background-radius: 3;" text="Remove allergy" textFill="WHITE">
+            <Button fx:id="removeAllergyButton" layoutX="49.0" layoutY="463.0" mnemonicParsing="false" onAction="#handleRemoveAllergy" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #cc0000; -fx-background-radius: 3;" text="Remove allergy" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
             <ListView fx:id="allergensListView" layoutX="435.0" layoutY="143.0" prefHeight="300.0" prefWidth="220.0" style="-fx-background-color: white; -fx-border-color: #7cb518;" />
-            <Button fx:id="addAllergyButton" layoutX="433.0" layoutY="463.0" mnemonicParsing="false" onAction="#clickedOnAddAllergy" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Add allergy" textFill="WHITE">
+            <Button fx:id="addAllergyButton" layoutX="433.0" layoutY="463.0" mnemonicParsing="false" onAction="#handleAddAllergy" prefHeight="54.0" prefWidth="175.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Add allergy" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>

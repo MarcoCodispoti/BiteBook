@@ -15,18 +15,55 @@ import java.util.logging.Logger;
 
 public class ChefRequestsPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(ChefRequestsPageControllerG2.class.getName());
+
+
+    @FXML
+    private ListView<ServiceRequestBean> chefRequestsListView;
+    @FXML
+    private Label errorLabel;
+
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
 
-    @FXML private ListView<ServiceRequestBean> chefRequestsListView;
-    @FXML private Label errorLabel;
+
+
+    @FXML
+    void handleRejectRequest() {
+        manageRequest(RequestStatus.REJECTED);
+    }
+
+
+
+    @FXML
+    void handleApproveRequest() {
+        manageRequest(RequestStatus.APPROVED);
+    }
+
+
+
+    @FXML
+    void handleMenus() {
+        displayError("Not implemented yet, sorry :(");
+    }
+
+
+
+    @FXML
+    void handleHomepage() {
+        FxmlLoader2.setPage("ChefHomePage2");
+    }
+
+
 
     @FXML
     void initialize() {
         setupListView();
         refreshRequests();
     }
+
+
 
     private void setupListView() {
         chefRequestsListView.setCellFactory(_ -> new ListCell<>() {
@@ -42,6 +79,8 @@ public class ChefRequestsPageControllerG2{
             }
         });
     }
+
+
 
     private void refreshRequests() {
         chefRequestsListView.getItems().clear();
@@ -61,6 +100,8 @@ public class ChefRequestsPageControllerG2{
         }
     }
 
+
+
     private String formatRequestString(ServiceRequestBean bean) {
         return String.format(" %-4d  %-20s %-20s %-10s %-5d  %-4d €   %-9s    %-7s  %-30s  %12s",
                 bean.getId(),
@@ -76,17 +117,6 @@ public class ChefRequestsPageControllerG2{
         );
     }
 
-
-    @FXML
-    void clickedOnRejectRequest() {
-        manageRequest(RequestStatus.REJECTED);
-    }
-
-
-    @FXML
-    void clickedOnApproveRequest() {
-        manageRequest(RequestStatus.APPROVED);
-    }
 
 
     private void manageRequest(RequestStatus setStatus) {
@@ -107,21 +137,12 @@ public class ChefRequestsPageControllerG2{
     }
 
 
-    @FXML
-    void clickedOnMenus() {
-        displayError("Not implemented yet, sorry :(");
-    }
-
-
-    @FXML
-    void clickedOnHomepage() {
-        FxmlLoader2.setPage("ChefHomePage2");
-    }
 
     private String truncate(String input, int width) {
         if (input == null) return "";
         return input.length() > width ? input.substring(0, width - 1) + "." : input;
     }
+
 
 
     private void displayError(String message){

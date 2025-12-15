@@ -19,16 +19,76 @@ public class AllergiesPageControllerG2{
     private static final Logger logger = Logger.getLogger(AllergiesPageControllerG2.class.getName());
 
 
-    private final AllergiesController allergiesController = new AllergiesController();
-    private List<AllergenBean> clientAllergyBeans = new ArrayList<>();
-    private List<AllergenBean> serverAllergyBeans = new ArrayList<>();
-
     @FXML
     private Label messageLabel;
     @FXML
     private ListView<AllergenBean> clientAllergiesListView;
     @FXML
     private ListView<AllergenBean> allergensListView;
+
+
+    private final AllergiesController allergiesController = new AllergiesController();
+    private List<AllergenBean> clientAllergyBeans = new ArrayList<>();
+    private List<AllergenBean> serverAllergyBeans = new ArrayList<>();
+
+
+
+    @FXML
+    void handleRequests() {
+        FxmlLoader2.setPage("ClientRequestsPage2");
+    }
+
+
+
+    @FXML
+    void handleHomepage() {
+        FxmlLoader2.setPage("ClientHomePage2");
+    }
+
+
+
+    @FXML
+    void handleRemoveAllergy() {
+        messageLabel.setText("");
+        AllergenBean selectedBean = clientAllergiesListView.getSelectionModel().getSelectedItem();
+
+        if (selectedBean == null) {
+            displayMessage("Please select an allergy to remove first");
+            return;
+        }
+
+        try {
+            allergiesController.removeClientAllergy(selectedBean);
+            refreshData();
+        } catch (FailedRemoveException e){
+            logger.log(Level.WARNING, "Error while removing allergy.", e);
+            displayMessage("Error occurred while removing allergy");
+        }
+    }
+
+
+
+    @FXML
+    void handleAddAllergy() {
+        messageLabel.setText("");
+
+        AllergenBean selectedBean = allergensListView.getSelectionModel().getSelectedItem();
+
+        if (selectedBean == null) {
+            displayMessage("Please select an allergen to add first");
+            return;
+        }
+
+        try {
+            allergiesController.insertAllergy(selectedBean);
+            refreshData();
+        } catch (FailedInsertException e){
+            logger.log(Level.WARNING, "Error while adding allergy.", e);
+            displayMessage("Error occurred while adding allergy");
+        }
+    }
+
+
 
     @FXML
     void initialize(){
@@ -37,9 +97,10 @@ public class AllergiesPageControllerG2{
         refreshData();
     }
 
+
+
     private void refreshData() {
         messageLabel.setText("");
-        messageLabel.setVisible(false);
 
         try {
             this.clientAllergyBeans = allergiesController.getClientAllergies();
@@ -49,13 +110,15 @@ public class AllergiesPageControllerG2{
 
         } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "Error while getting allergens list.", e);
-            displayError("Error while getting allergies, please try again");
+            displayMessage("Error while getting allergies, please try again");
         }
     }
 
 
+
     private void setupListViewFactory(ListView<AllergenBean> listView) {
         listView.setCellFactory(_ -> new ListCell<>() {
+
             @Override
             protected void updateItem(AllergenBean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -70,55 +133,14 @@ public class AllergiesPageControllerG2{
     }
 
 
-    @FXML
-    void clickedOnRemoveAllergy() {
-        messageLabel.setText("");
-        AllergenBean selectedBean = clientAllergiesListView.getSelectionModel().getSelectedItem();
-
-        if (selectedBean == null) {
-            displayError("Please select an allergy to remove first");
-            return;
-        }
-
-        try {
-            allergiesController.removeClientAllergy(selectedBean);
-            refreshData();
-        } catch (FailedRemoveException e){
-            logger.log(Level.WARNING, "Error while removing allergy.", e);
-            displayError("Error occurred while removing allergy");
-        }
-    }
-
-
-    @FXML
-    void clickedOnAddAllergy() {
-        messageLabel.setText("");
-
-        AllergenBean selectedBean = allergensListView.getSelectionModel().getSelectedItem();
-
-        if (selectedBean == null) {
-            displayError("Please select an allergen to add first");
-            return;
-        }
-
-        try {
-            allergiesController.insertAllergy(selectedBean);
-            refreshData();
-        } catch (FailedInsertException e){
-            logger.log(Level.WARNING, "Error while adding allergy.", e);
-            displayError("Error occurred while adding allergy");
-        }
-    }
 
     private void populateLists(){
         clientAllergiesListView.getItems().clear();
         allergensListView.getItems().clear();
 
-
         if (clientAllergyBeans != null) {
             clientAllergiesListView.getItems().addAll(clientAllergyBeans);
         }
-
 
         if (serverAllergyBeans != null) {
             for (AllergenBean bean : serverAllergyBeans) {
@@ -128,6 +150,7 @@ public class AllergiesPageControllerG2{
             }
         }
     }
+
 
 
     private boolean isClientAllergy(AllergenBean allergyBean) {
@@ -141,18 +164,8 @@ public class AllergiesPageControllerG2{
     }
 
 
-    @FXML
-    void clickedOnRequests() {
-        FxmlLoader2.setPage("ClientRequestsPage2");
-    }
 
-    @FXML
-    void clickedOnHomepage() {
-        FxmlLoader2.setPage("ClientHomePage2");
-    }
-
-
-    private void displayError(String message) {
+    private void displayMessage(String message) {
         messageLabel.setText(message);
         messageLabel.setVisible(true);
     }
