@@ -22,6 +22,7 @@ import java.util.List;
 public class UserDbDao implements UserDao {
 
 
+
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException, FailedSearchException {
         String sql = "{call GetCredentialsRole(?,?)}";
@@ -46,7 +47,6 @@ public class UserDbDao implements UserDao {
 
 
 
-
     private Role extractRoleFromResultSet(ResultSet rs) throws SQLException, WrongCredentialsException, FailedSearchException {
         if (rs.next()) {
             String roleString = rs.getString("UserRole");
@@ -55,6 +55,7 @@ public class UserDbDao implements UserDao {
             throw new WrongCredentialsException("No user found with such credentials");
         }
     }
+
 
 
     private Role parseRole(String roleName) throws FailedSearchException {
@@ -85,6 +86,7 @@ public class UserDbDao implements UserDao {
             throw new FailedSearchException(e);
         }
     }
+
 
 
     private Chef fetchChefBasicData(Connection conn, String email, String password) throws SQLException {
@@ -175,4 +177,6 @@ public class UserDbDao implements UserDao {
         }
         return client;
     }
+
+
 }

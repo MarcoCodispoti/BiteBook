@@ -17,7 +17,8 @@ import java.util.ArrayList;
 
 public class DishDbDao implements DishDao{
 
-    // Okk -> Va bene
+
+
     public List<Dish> getMenuCourses(int menuId) throws FailedSearchException {
         List<Dish> courses = new ArrayList<>();
         try (Connection conn = Connector.getInstance().getConnection();

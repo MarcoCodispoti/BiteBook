@@ -17,7 +17,8 @@ import java.util.ArrayList;
 
 public class MenuDbDao implements MenuDao {
 
-    // Okk -> Va bene
+
+
     public List<Menu> getChefMenus(int chefId) throws FailedSearchException{
         List<Menu> chefMenus = new ArrayList<>();
         try(Connection conn = Connector.getInstance().getConnection();
@@ -44,7 +45,7 @@ public class MenuDbDao implements MenuDao {
     }
 
 
-    //  Okk -> Va bene
+
     @Override
     public Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException {
         Menu menu = null;
@@ -67,5 +68,6 @@ public class MenuDbDao implements MenuDao {
 
         return menu;
     }
+
 
 }

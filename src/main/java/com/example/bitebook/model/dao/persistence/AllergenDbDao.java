@@ -16,6 +16,7 @@ import java.util.List;
 
 public class AllergenDbDao implements AllergenDao{
 
+
     @Override
     public List<Allergen> getClientAllergies(Client client) throws FailedSearchException{
         List<Allergen> allergies = new ArrayList<>();
@@ -44,7 +45,8 @@ public class AllergenDbDao implements AllergenDao{
         return allergies;
     }
 
-    // Ok
+
+
     public void removeClientAllergy(int clientId, int allergenId) throws FailedRemoveException {
         try(Connection conn = Connector.getInstance().getConnection();
             CallableStatement cstmt = conn.prepareCall("{call removeClientAllergy(?,?)}")){
@@ -59,7 +61,7 @@ public class AllergenDbDao implements AllergenDao{
     }
 
 
-    // Ok
+
     public List<Allergen>  getAllergens() throws FailedSearchException {
         List<Allergen> allergens = new ArrayList<>();
 
@@ -75,7 +77,7 @@ public class AllergenDbDao implements AllergenDao{
     }
 
 
-    // Ok -> Gestisce bene tutto
+
     public void insertAllergy(Allergen allergen, int clientId) throws FailedInsertException{
         try(Connection conn = Connector.getInstance().getConnection();
             CallableStatement cstmt = conn.prepareCall("{call insertAllergy(?,?)}")){
@@ -93,7 +95,6 @@ public class AllergenDbDao implements AllergenDao{
 
 
 
-    // Okk -> Preso da dishDao
     public List<Allergen> getDishAllergens(int dishId) throws FailedSearchException {
         List<Allergen> allergens = new ArrayList<>();
         try (Connection conn = Connector.getInstance().getConnection();
@@ -110,7 +111,7 @@ public class AllergenDbDao implements AllergenDao{
     }
 
 
-    // metodo helper
+
     private void getResultAllergens(List<Allergen> allergens, CallableStatement cstmt) throws SQLException {
         cstmt.execute();
         try (ResultSet rs = cstmt.getResultSet()) {

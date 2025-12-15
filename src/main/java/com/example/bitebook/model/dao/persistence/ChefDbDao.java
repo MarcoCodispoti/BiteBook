@@ -41,8 +41,6 @@ public class ChefDbDao implements ChefDao{
 
 
 
-
-    // Okk -> Va bene
     public List<Chef> getChefsInCity(String cityName) throws FailedSearchException {
         List<Chef> cityChefs = new ArrayList<>();
 
@@ -96,7 +94,6 @@ public class ChefDbDao implements ChefDao{
 
 
 
-    // Okk -> Va bene
     @Override
     public Chef getChefFromMenu(int menuId) throws FailedSearchException {
         Chef chef = null;

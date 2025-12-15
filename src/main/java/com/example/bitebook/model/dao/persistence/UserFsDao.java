@@ -19,9 +19,11 @@ import java.util.List;
 @SuppressWarnings("java:S1075")
 public class UserFsDao implements UserDao{
 
+
     private static final String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/ChefsSpecializations.csv";
     private static final String USERS_FILE_PATH = "/com/example/bitebook/Users.csv";
     private static final String CSV_DELIMITER = ",";
+
 
 
     @Override
@@ -59,7 +61,6 @@ public class UserFsDao implements UserDao{
 
 
 
-
     private Role parseRole(String roleString, String email) throws FailedSearchException {
         try {
             return Role.valueOf(roleString);
@@ -67,13 +68,6 @@ public class UserFsDao implements UserDao{
             throw new FailedSearchException("Role not valid in the CSV for the user: " + email, e);
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -145,11 +139,13 @@ public class UserFsDao implements UserDao{
     }
 
 
+
     private boolean isMatchingUser(String[] fields, String email, String pass, Role role) {
         return fields[3].trim().equals(email) &&
                 fields[4].trim().equals(pass) &&
                 fields[5].trim().equals(role.toString());
     }
+
 
 
     private List<SpecializationType> getChefSpecializations(int chefId) throws IOException, FailedSearchException {
@@ -181,5 +177,6 @@ public class UserFsDao implements UserDao{
         }
         return specs;
     }
+
 
 }

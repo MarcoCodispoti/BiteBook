@@ -13,7 +13,8 @@ import java.util.List;
 
 public class ServiceRequestDbDao implements ServiceRequestDao {
 
-    // Okk -> Va bene
+
+
     @Override
     public void saveServiceRequest(ServiceRequest serviceRequest) throws FailedInsertException {
         try (Connection conn = Connector.getInstance().getConnection();
@@ -37,7 +38,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    // Okk -> Va bene
+
     @Override
     public List<ServiceRequest> getClientServiceRequests(Client client) throws FailedSearchException {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
@@ -67,7 +68,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    // Okk -> Va bene
+
     @Override
     public List<ServiceRequest> getChefServiceRequests(Chef chef) throws FailedSearchException {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
@@ -97,7 +98,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    // Okk -> Va bene
+
     @Override
     public void manageRequest(ServiceRequest serviceRequest) throws FailedUpdateException {
         String sql;
@@ -120,7 +121,7 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
     }
 
 
-    // helper
+
     private void setRequestDetails(List<ServiceRequest> serviceRequests, ResultSet rs, ServiceRequest request, Client client) throws SQLException {
         request.setClient(client);
         Menu menu = new Menu();
@@ -137,5 +138,6 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
         request.setReservationDetails(details);
         serviceRequests.add(request);
     }
+
 
 }
