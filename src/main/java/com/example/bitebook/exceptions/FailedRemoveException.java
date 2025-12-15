@@ -4,6 +4,7 @@ import java.io.Serial;
 
 public class FailedRemoveException extends Exception {
 
+
     @Serial
     private static final long serialVersionUID = 3L;
 
@@ -11,6 +12,7 @@ public class FailedRemoveException extends Exception {
     public FailedRemoveException(String message, Throwable cause){
         super(message, cause);
     }
+
 
     public FailedRemoveException(Throwable cause){
         super(cause);
