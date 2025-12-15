@@ -18,25 +18,73 @@ import java.util.stream.Collectors;
 
 public class SelectMenuPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(SelectMenuPageControllerG2.class.getName());
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    @FXML
+    private ComboBox<ChefBean> chefComboBox;
+    @FXML
+    private ComboBox<MenuBean> menuComboBox;
+    @FXML
+    private ListView<DishBean> menuDetailsListView;
+    @FXML
+    private Label allergensLabel;
+    @FXML
+    private Label messageLabel;
 
+
+    private final ExplorationController explorationController = new ExplorationController();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
 
 
-    @FXML private ComboBox<ChefBean> chefComboBox;
-    @FXML private ComboBox<MenuBean> menuComboBox;
-    @FXML private ListView<DishBean> menuDetailsListView;
-
-    @FXML private Label allergensLabel;
-    @FXML private Label errorLabel;
 
     @FXML
-    public void initialize() {
+    void clickedOnBack() {
+        FxmlLoader2.setPage("ClientHomePage2");
+    }
+
+
+
+    @FXML
+    void clickedOnAllergies(){
+        navigateToIfLogged("AllergiesPage2", "You must be logged in to view Allergies");
+    }
+
+
+
+    @FXML
+    void clickedOnRequests(){
+        navigateToIfLogged("ClientRequestsPage2", "You must be logged in to view Requests");
+    }
+
+
+
+    @FXML
+    void clickedOnBook(){
+        if (!explorationController.isLoggedClient()) {
+            displayMesssage("You must be logged in to proceed!");
+            return;
+        }
+
+        if (selectedChefBean == null || selectedMenuBean == null) {
+            displayMesssage("Please select a chef and a menu first.");
+            return;
+        }
+
+        ServiceRequestPageControllerG2 serviceRequestPageControllerG2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
+        if(serviceRequestPageControllerG2 != null){
+            serviceRequestPageControllerG2.initData(selectedChefBean,selectedMenuBean,menuAllergenBeans);
+        }
+
+    }
+
+
+
+    @FXML
+    public void initialize(){
         setupChefComboBox();
         setupMenuComboBox();
         setupDishListView();
@@ -44,6 +92,8 @@ public class SelectMenuPageControllerG2{
         chefComboBox.valueProperty().addListener((_, _, newVal) -> onChefSelected(newVal));
         menuComboBox.valueProperty().addListener((_, _, newVal) -> onMenuSelected(newVal));
     }
+
+
 
     public void initData(ChefBean chefBean) {
         try {
@@ -55,9 +105,10 @@ public class SelectMenuPageControllerG2{
             }
         } catch (FailedSearchException e) {
             logger.log(Level.SEVERE, "Error while getting chefs list.", e);
-            displayError("System Error: Unable to retrieve chefs in city.");
+            displayMesssage("System Error: Unable to retrieve chefs in city.");
         }
     }
+
 
 
     private void onChefSelected(ChefBean chef) {
@@ -75,10 +126,11 @@ public class SelectMenuPageControllerG2{
                 }
             } catch (FailedSearchException e) {
                 logger.log(Level.SEVERE, "Error while getting menus list.", e);
-                displayError("Error occurred while searching menus.");
+                displayMesssage("Error occurred while searching menus.");
             }
         }
     }
+
 
 
     private void onMenuSelected(MenuBean menu) {
@@ -95,10 +147,11 @@ public class SelectMenuPageControllerG2{
                 }
             } catch (FailedSearchException e){
                 logger.log(Level.SEVERE, "Error while getting menu details.", e);
-                displayError("Error occurred while getting menu details.");
+                displayMesssage("Error occurred while getting menu details.");
             }
         }
     }
+
 
 
     private void setupChefComboBox() {
@@ -118,6 +171,7 @@ public class SelectMenuPageControllerG2{
         });
     }
 
+
     private void setupMenuComboBox() {
         menuComboBox.setConverter(new StringConverter<>() {
             @Override
@@ -131,6 +185,8 @@ public class SelectMenuPageControllerG2{
             public MenuBean fromString(String string) { return null; }
         });
     }
+
+
 
     private void setupDishListView() {
         menuDetailsListView.setCellFactory(_ -> new ListCell<>() {
@@ -150,42 +206,6 @@ public class SelectMenuPageControllerG2{
     }
 
 
-    @FXML
-    void clickedOnBook() {
-        if (!explorationController.isLoggedClient()) {
-            displayError("You must be logged in to proceed!");
-            return;
-        }
-
-        if (selectedChefBean == null || selectedMenuBean == null) {
-            displayError("Please select a chef and a menu first.");
-            return;
-        }
-
-        ServiceRequestPageControllerG2 serviceRequestPageControllerG2 = FxmlLoader2.setPageAndReturnController("ServiceRequestPage2");
-        if(serviceRequestPageControllerG2 != null){
-            serviceRequestPageControllerG2.initData(selectedChefBean,selectedMenuBean,menuAllergenBeans);
-        }
-
-
-
-    }
-
-    @FXML
-    void clickedOnBack() {
-        FxmlLoader2.setPage("ClientHomePage2");
-    }
-
-    @FXML
-    void clickedOnAllergies() {
-        navigateToIfLogged("AllergiesPage2", "You must be logged in to view Allergies");
-    }
-
-    @FXML
-    void clickedOnRequests() {
-        navigateToIfLogged("ClientRequestsPage2", "You must be logged in to view Requests");
-    }
-
 
     private String formatAllergensList(List<AllergenBean> allergens) {
         if (allergens == null || allergens.isEmpty()) return "None";
@@ -196,20 +216,21 @@ public class SelectMenuPageControllerG2{
     }
 
 
+
     private void navigateToIfLogged(String pageName, String errorMsg) {
         if (explorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
-            displayError(errorMsg);
+            displayMesssage(errorMsg);
         }
     }
 
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
-    }
 
+    private void displayMesssage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
+    }
 
 
 }

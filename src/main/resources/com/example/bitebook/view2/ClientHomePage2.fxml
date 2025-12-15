@@ -14,12 +14,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="allergiesHyperlink" layoutX="976.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="149.0" text=" Allergies" textFill="WHITE">
+            <Hyperlink fx:id="allergiesHyperlink" layoutX="976.0" onAction="#handleAllergies" prefHeight="65.0" prefWidth="149.0" text=" Allergies" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="823.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="823.0" onAction="#handleRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Image url="@../images/logout.png" />
                </image>
             </ImageView>
-            <Button fx:id="logoutButton" layoutX="1139.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickedOnLogout" opacity="0.0" prefHeight="45.0" prefWidth="43.0" />
+            <Button fx:id="logoutButton" layoutX="1139.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleLogout" opacity="0.0" prefHeight="45.0" prefWidth="43.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="676.0" fitWidth="1200.0" layoutX="-1.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
@@ -55,12 +55,12 @@
                </font>
             </Label>
             <TextField fx:id="cityTextField" layoutX="128.0" layoutY="150.0" style="-fx-background-color: white; -fx-border-color: #7cb518;" />
-            <Button fx:id="bookButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
+            <Button fx:id="bookButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Label fx:id="errorLabel" layoutX="404.0" layoutY="494.0" prefHeight="17.0" prefWidth="224.0" />
+            <Label fx:id="messageLabel" layoutX="404.0" layoutY="494.0" prefHeight="17.0" prefWidth="224.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

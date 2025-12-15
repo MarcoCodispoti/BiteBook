@@ -15,22 +15,40 @@ import java.util.logging.Logger;
 
 public class ClientRequestsPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(ClientRequestsPageControllerG2.class.getName());
+
+
+    @FXML
+    private ListView<ServiceRequestBean> clientRequestsListView;
+    @FXML
+    private Label messageLabel;
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
 
-    @FXML
-    private ListView<ServiceRequestBean> clientRequestsListView;
+
 
     @FXML
-    private Label errorLabel;
+    void handleAllergies() {
+        FxmlLoader2.setPage("AllergiesPage2");
+    }
+
+
+
+    @FXML
+    void handleHomepage() {
+        FxmlLoader2.setPage("ClientHomePage2");
+    }
+
+
 
     @FXML
     void initialize() {
         setupListView();
         loadClientRequests();
     }
+
 
 
     private void setupListView() {
@@ -48,9 +66,11 @@ public class ClientRequestsPageControllerG2{
         });
     }
 
+
+
     private void loadClientRequests() {
         clientRequestsListView.getItems().clear();
-        if (errorLabel != null) errorLabel.setText("");
+        if (messageLabel != null) messageLabel.setText("");
 
         try {
             List<ServiceRequestBean> clientRequests = requestManagerController.getClientRequests();
@@ -58,17 +78,18 @@ public class ClientRequestsPageControllerG2{
             if (clientRequests != null && !clientRequests.isEmpty()) {
                 clientRequestsListView.getItems().addAll(clientRequests);
             } else {
-                displayError("No requests found.");
+                displayMessage("No requests found.");
             }
 
         } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "Unable to retrive requests" ,e);
-            displayError("System Error: Unable to retrieve requests.");
+            displayMessage("System Error: Unable to retrieve requests.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected system error" ,e.getCause());
-            displayError("An unexpected error occurred.");
+            logger.log(Level.SEVERE, "Unexpected system error" ,e);
+            displayMessage("An unexpected error occurred.");
         }
     }
+
 
 
     private String formatRequestString(ServiceRequestBean bean) {
@@ -87,27 +108,18 @@ public class ClientRequestsPageControllerG2{
     }
 
 
+
     private String truncate(String input, int width) {
         if (input == null) return "";
         return input.length() > width ? input.substring(0, width - 1) + "." : input;
     }
 
 
-    @FXML
-    void clickedOnAllergies() {
-        FxmlLoader2.setPage("AllergiesPage2");
-    }
 
-    @FXML
-    void clickedOnHomepage() {
-        FxmlLoader2.setPage("ClientHomePage2");
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
-
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
-    }
-
 
 
 }

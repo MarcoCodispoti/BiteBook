@@ -33,12 +33,12 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="payButton" layoutX="636.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickedOnPay" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Pay" textFill="WHITE">
+            <Button fx:id="payButton" layoutX="636.0" layoutY="528.0" mnemonicParsing="false" onAction="#handlePay" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Pay" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" layoutX="468.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
+            <Button fx:id="backButton" layoutX="468.0" layoutY="528.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
                <font>
                   <Font size="22.0" />
                </font>
@@ -120,7 +120,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" layoutX="468.0" layoutY="414.0" prefHeight="17.0" prefWidth="316.0" />
+            <Label fx:id="messageLabel" layoutX="468.0" layoutY="414.0" prefHeight="17.0" prefWidth="316.0" />
             <Label fx:id="participantsNumberLabel" layoutX="245.0" layoutY="402.0" prefHeight="28.0" prefWidth="178.0">
                <font>
                   <Font size="22.0" />
@@ -154,7 +154,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="backToHomepageButton" alignment="CENTER" layoutX="113.0" layoutY="164.0" mnemonicParsing="false" onAction="#clickedOnBackToHomepage" prefHeight="54.0" prefWidth="194.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Back to homepage" textFill="WHITE">
+            <Button fx:id="backToHomepageButton" alignment="CENTER" layoutX="113.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleBackToHomepage" prefHeight="54.0" prefWidth="194.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Back to homepage" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

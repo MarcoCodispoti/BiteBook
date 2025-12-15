@@ -19,12 +19,12 @@
                   <Font name="Charter Black" size="48.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="allergiesHyperlink" layoutX="1050.0" onAction="#clickedOnAllergies" prefHeight="65.0" prefWidth="149.0" text=" Allergies" textFill="WHITE">
+            <Hyperlink fx:id="allergiesHyperlink" layoutX="1050.0" onAction="#handleAllergies" prefHeight="65.0" prefWidth="149.0" text=" Allergies" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="homepageHyperlink" layoutX="881.0" onAction="#clickedOnHomepage" prefHeight="65.0" prefWidth="168.0" text="Homepage" textFill="WHITE">
+            <Hyperlink fx:id="homepageHyperlink" layoutX="881.0" onAction="#handleHomepage" prefHeight="65.0" prefWidth="168.0" text="Homepage" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -44,7 +44,7 @@
                </font>
             </Label>
             <ListView fx:id="clientRequestsListView" layoutX="21.0" layoutY="105.0" prefHeight="425.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
-            <Label fx:id="errorLabel" layoutX="366.0" layoutY="40.0" prefHeight="17.0" prefWidth="388.0" />
+            <Label fx:id="messageLabel" layoutX="366.0" layoutY="40.0" prefHeight="17.0" prefWidth="388.0" />
          </children></AnchorPane>
       <Label layoutX="41.0" layoutY="211.0" prefHeight="17.0" prefWidth="1112.0" text="       ID            Customer                                     Menu                                             Level                   Partic.      Price              Date                            Time              Address                                                                                Status" />
    </children>

@@ -22,7 +22,7 @@ public class ChefRequestsPageControllerG2{
     @FXML
     private ListView<ServiceRequestBean> chefRequestsListView;
     @FXML
-    private Label errorLabel;
+    private Label messageLabel;
 
 
     private final RequestManagerController requestManagerController = new RequestManagerController();
@@ -84,7 +84,7 @@ public class ChefRequestsPageControllerG2{
 
     private void refreshRequests() {
         chefRequestsListView.getItems().clear();
-        errorLabel.setText("");
+        messageLabel.setText("");
 
         try {
             List<ServiceRequestBean> chefRequestBeans = requestManagerController.getChefRequests();
@@ -120,7 +120,7 @@ public class ChefRequestsPageControllerG2{
 
 
     private void manageRequest(RequestStatus setStatus) {
-        errorLabel.setText("");
+        messageLabel.setText("");
         ServiceRequestBean selectedBean = chefRequestsListView.getSelectionModel().getSelectedItem();
         if (selectedBean != null) {
             selectedBean.setStatus(setStatus);
@@ -146,8 +146,8 @@ public class ChefRequestsPageControllerG2{
 
 
     private void displayError(String message){
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

@@ -16,21 +16,27 @@ import java.util.logging.Logger;
 
 public class LoginPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(LoginPageControllerG2.class.getName());
+
+
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private Label messageLabel;
 
 
     private final LoginController loginController = new LoginController();
     private final LoginBean loginBean = new LoginBean();
 
-    @FXML private TextField emailTextField;
-    @FXML private TextField passwordTextField;
-    @FXML private Label errorLabel;
 
 
     @FXML
-    void clickedOnLogin(){
-        errorLabel.setText("");
-        errorLabel.setVisible(false);
+    void handleLogin(){
+        messageLabel.setText("");
+        messageLabel.setVisible(false);
 
         if (!validateAndBindData()) {
             return;
@@ -40,20 +46,23 @@ public class LoginPageControllerG2{
             Role actualRole = LoggedUser.getInstance().getRole();
             navigateByRole(actualRole);
         } catch (WrongCredentialsException _) {
-            displayError("Incorrect username or password.");
+            displayMessage("Incorrect username or password.");
         } catch (FailedSearchException e) {
             logger.log(Level.SEVERE, "Error while logging in" ,e);
-            displayError("System error during login. Please try again.");
+            displayMessage("System error during login. Please try again.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected system error",e.getCause());
-            displayError("An unexpected error occurred.");
+            logger.log(Level.SEVERE, "Unexpected system error",e);
+            displayMessage("An unexpected error occurred.");
         }
     }
 
+
+
     @FXML
-    void clickedOnProceedAsGuest() {
+    void handleProceedAsGuest() {
         FxmlLoader2.setPage("ClientHomePage2");
     }
+
 
 
     private boolean validateAndBindData() {
@@ -61,11 +70,11 @@ public class LoginPageControllerG2{
         String password = passwordTextField.getText();
 
         if (email.isEmpty()) {
-            displayError("Please enter your email.");
+            displayMessage("Please enter your email.");
             return false;
         }
         if (password.isEmpty()) {
-            displayError("Please enter your password.");
+            displayMessage("Please enter your password.");
             return false;
         }
 
@@ -73,34 +82,37 @@ public class LoginPageControllerG2{
         loginBean.setPassword(password);
 
         if (!loginBean.validateEmail()) {
-            displayError("Please insert a valid email format.");
+            displayMessage("Please insert a valid email format.");
             return false;
         }
         if (!loginBean.validatePassword()) {
-            displayError("Password format is invalid.");
+            displayMessage("Password format is invalid.");
             return false;
         }
 
         return true;
     }
 
+
+
     private void navigateByRole(Role role) {
         if (role == null) {
-            displayError("Login system error: Role not found.");
+            displayMessage("Login system error: Role not found.");
             return;
         }
         switch (role) {
             case CLIENT -> FxmlLoader2.setPage("ClientHomePage2");
             case CHEF -> FxmlLoader2.setPage("ChefHomePage2");
-            default -> displayError("Unknown user role.");
+            default -> displayMessage("Unknown user role.");
         }
     }
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
-    }
 
+
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
+    }
 
 
 }

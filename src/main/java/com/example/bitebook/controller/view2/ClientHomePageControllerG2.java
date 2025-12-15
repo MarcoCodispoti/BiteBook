@@ -14,40 +14,52 @@ import java.util.logging.Logger;
 
 public class ClientHomePageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(ClientHomePageControllerG2.class.getName());
+
+
+    @FXML
+    private TextField cityTextField;
+    @FXML
+    private Label messageLabel;
 
 
     private final ExplorationController explorationController = new ExplorationController();
 
-    @FXML private TextField cityTextField;
-    @FXML private Label errorLabel;
+
 
     @FXML
-    void clickedOnAllergies() {
+    void handleAllergies() {
         navigateToIfLogged("AllergiesPage2", "You must be logged in to view Allergies");
     }
 
+
+
     @FXML
-    void clickedOnRequests() {
+    void handleRequests() {
         navigateToIfLogged("ClientRequestsPage2", "You must be logged in to view Requests");
     }
 
+
+
     @FXML
-    void clickedOnLogout() {
+    void handleLogout() {
         LoginController loginController = new LoginController();
         loginController.logout();
         FxmlLoader2.setPage("LoginPage2");
     }
 
+
+
     @FXML
-    void clickedOnBook(){
-        errorLabel.setText("");
-        errorLabel.setVisible(false);
+    void handleBook(){
+        messageLabel.setText("");
+        messageLabel.setVisible(false);
 
         String cityInput = cityTextField.getText().trim();
 
         if (cityInput.isEmpty()) {
-            displayError("Please insert a city first");
+            displayMessage("Please insert a city first");
             return;
         }
 
@@ -55,14 +67,14 @@ public class ClientHomePageControllerG2{
         searchBean.setCity(cityInput);
 
         if (!searchBean.validateCity()) {
-            displayError("You inserted an invalid city name");
+            displayMessage("You inserted an invalid city name");
             return;
         }
         try {
             boolean chefFound = explorationController.areChefsAvailableInCity(searchBean);
 
             if (!chefFound) {
-                displayError("No chef found in the inserted city!");
+                displayMessage("No chef found in the inserted city!");
                 return;
             }
 
@@ -72,24 +84,24 @@ public class ClientHomePageControllerG2{
             }
         } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "Error while searching chefs in city" ,e);
-            displayError("System Error: Unable to search. Please try again later");
+            displayMessage("System Error: Unable to search. Please try again later");
         }
     }
 
 
     private void navigateToIfLogged(String pageName, String errorMessage) {
-        errorLabel.setVisible(false);
+        messageLabel.setVisible(false);
         if (explorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
-            displayError(errorMessage);
+            displayMessage(errorMessage);
         }
     }
 
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

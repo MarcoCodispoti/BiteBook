@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 
 public class ServiceRequestPageControllerG2{
 
+
     private static final Logger logger = Logger.getLogger(ServiceRequestPageControllerG2.class.getName());
 
 
     private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private final ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
-
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> selectedMenuAllergenBeans;
@@ -34,28 +34,24 @@ public class ServiceRequestPageControllerG2{
 
     @FXML private AnchorPane serviceRequestAnchorPane;
     @FXML private AnchorPane allergyWarningAnchorPane;
-
     @FXML private Label menuNameLabel;
     @FXML private Label numberOfCoursesLabel;
     @FXML private Label dietTypeLabel;
     @FXML private Label pricePerPersonLabel;
     @FXML private Label menuAllergensLabel;
-
     @FXML private Label premiumLevelLabel;
     @FXML private Label luxeLevelLabel;
     @FXML private Label totalPriceLabel;
     @FXML private Label errorLabel;
-
     @FXML private DatePicker datePicker;
     @FXML private ComboBox<LocalTime> timeComboBox;
     @FXML private TextField addressTextField;
     @FXML private Slider participantsNumberSlider;
     @FXML private Label participantsNumberLabel;
-
     @FXML private RadioButton baseLevelRadioButton;
     @FXML private RadioButton premiumLevelRadioButton;
     @FXML private RadioButton luxeLevelRadioButton;
-    private ToggleGroup levelToggleGroup;
+    @FXML private ToggleGroup levelToggleGroup;
 
 
     @FXML

@@ -35,14 +35,14 @@
                         <Font size="32.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loginButton" layoutX="610.0" layoutY="360.0" mnemonicParsing="false" onAction="#clickedOnLogin" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Login" textFill="WHITE">
+                  <Button fx:id="loginButton" layoutX="610.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Login" textFill="WHITE">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Button>
                   <AnchorPane layoutX="63.0" layoutY="332.0" prefHeight="1.0" prefWidth="100.0" style="-fx-background-color: black;" />
-                  <Label fx:id="errorLabel" layoutX="68.0" layoutY="350.0" prefHeight="17.0" prefWidth="367.0" />
-                  <Hyperlink fx:id="guestHyperlink" layoutX="59.0" layoutY="308.0" onAction="#clickedOnProceedAsGuest" prefHeight="25.0" prefWidth="111.0" text="proceed as guest" />
+                  <Label fx:id="messageLabel" layoutX="68.0" layoutY="350.0" prefHeight="17.0" prefWidth="367.0" />
+                  <Hyperlink fx:id="guestHyperlink" layoutX="59.0" layoutY="308.0" onAction="#handleProceedAsGuest" prefHeight="25.0" prefWidth="111.0" text="proceed as guest" />
                </children>
             </AnchorPane>
             <TextField fx:id="emailTextField" layoutX="400.0" layoutY="327.0" prefHeight="27.0" prefWidth="170.0" promptText="Insert email" style="-fx-background-color: white; -fx-border-color: #7cb518;" />

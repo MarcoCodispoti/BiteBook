@@ -53,7 +53,7 @@
                   <Font size="21.0" />
                </font>
             </Button>
-            <Label fx:id="errorLabel" layoutX="411.0" layoutY="568.0" prefHeight="17.0" prefWidth="323.0" />
+            <Label fx:id="messageLabel" layoutX="411.0" layoutY="568.0" prefHeight="17.0" prefWidth="323.0" />
          </children></AnchorPane>
       <Label layoutX="40.0" layoutY="192.0" prefHeight="17.0" prefWidth="1112.0" text="       ID            Customer                                     Menu                                             Level                   Partic.      Price              Date                            Time              Address                                                                                Status" />
    </children>

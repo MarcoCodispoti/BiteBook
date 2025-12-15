@@ -16,17 +16,22 @@ import java.util.logging.Logger;
 
 public class FxmlLoader2 extends Application {
 
+
     private static final Logger logger = Logger.getLogger(FxmlLoader2.class.getName());
 
+
     private static Stage stage;
+
 
     @Override
     @SuppressWarnings("java:S2696")
     public void start(Stage primaryStage) {
         try {
             stage = primaryStage;
+
             stage.setTitle("BiteBook v2");
             stage.setResizable(false);
+
             loadDockIcon();
             setPage("LoginPage2");
 
@@ -37,9 +42,11 @@ public class FxmlLoader2 extends Application {
     }
 
 
+
     public static void setPage(String fileName) {
         try {
             FXMLLoader loader = loadFxml(fileName);
+
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
@@ -49,12 +56,15 @@ public class FxmlLoader2 extends Application {
     }
 
 
+
     public static <T> T setPageAndReturnController(String fileName) {
         try{
             FXMLLoader loader = loadFxml(fileName);
+
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
+
             return loader.getController();
         } catch (IOException e){
             logger.log(Level.SEVERE, "Error while changing page with controller ", e);
@@ -63,17 +73,21 @@ public class FxmlLoader2 extends Application {
     }
 
 
+
     private static FXMLLoader loadFxml(String fileName) throws IOException {
         if (fileName == null || fileName.trim().isEmpty()) {
             throw new IllegalArgumentException("FXML file name cannot be null or empty");
         }
+
         String fullPath = ViewsResourcesPaths.VIEW2_PACKAGE_PATH + fileName + ".fxml";
         URL fileUrl = FxmlLoader2.class.getResource(fullPath);
+
         if (fileUrl == null) {
             throw new IOException("FXML file not found: " + fullPath);
         }
         return new FXMLLoader(fileUrl);
     }
+
 
 
     private void loadDockIcon() {
@@ -90,7 +104,7 @@ public class FxmlLoader2 extends Application {
             } else {
                 logger.log(Level.WARNING, "Icon not found in the specified path");
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             logger.log(Level.WARNING, "Error while loading icon", e);
         }
     }

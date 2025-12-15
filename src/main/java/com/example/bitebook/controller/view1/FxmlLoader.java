@@ -46,6 +46,7 @@ public class FxmlLoader extends Application {
     public static void setPage(String fileName){
         try {
             FXMLLoader loader = loadFxml(fileName);
+
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
@@ -59,12 +60,12 @@ public class FxmlLoader extends Application {
     public static <T> T setPageAndReturnController(String fileName) {
         try{
             FXMLLoader loader = loadFxml(fileName);
+
             Parent root = loader.load();
             Scene scene = new Scene(root, 1200, 740);
             stage.setScene(scene);
 
             return loader.getController();
-
         } catch (IOException e){
             logger.log(Level.SEVERE, "Error while changing page with controller ", e);
             return null;
