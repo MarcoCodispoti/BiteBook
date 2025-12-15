@@ -1,4 +1,4 @@
-IdClient,AllergenId,AllergenName        // Struttura: CodiceUtenteAllergia, IdAllergene, NomeAllergen
+IdClient,AllergenId,AllergenName
 1,1,Glutine
 2,4,Pesce
 5,5,Frutta a guscio

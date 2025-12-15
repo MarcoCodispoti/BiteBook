@@ -22,7 +22,7 @@ class TestCalculateTotalPrice{
 
 
     @Test
-    @DisplayName("Calcolo corretto: Livello BASE (Nessun supplemento)")
+    @DisplayName("Correct Calculation: BASE Level (No Surcharge)")
     void testCalculate_Base() {
         // ARRANGE
         MenuBean menu = new MenuBean();
@@ -41,13 +41,13 @@ class TestCalculateTotalPrice{
 
 
     @Test
-    @DisplayName("Calcolo corretto: Livello PREMIUM (+Supplemento)")
+    @DisplayName("Correct Calculation: PREMIUM Level (+Surcharge)")
     void testCalculate_Premium() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
         menu.setPremiumLevelSurcharge(20); // +20€
-        menu.setLuxeLevelSurcharge(21); // non può essere nullo
+        menu.setLuxeLevelSurcharge(21); // cannot be null
 
         ReservationDetailsBean res = new ReservationDetailsBean();
         res.setParticipantNumber(2);
@@ -60,7 +60,7 @@ class TestCalculateTotalPrice{
 
 
     @Test
-    @DisplayName("Calcolo corretto: Livello LUXE (+Supplemento)")
+    @DisplayName("Correct Calculation: LUXE Level (+Surcharge)")
     void testCalculate_Luxe() {
         // ARRANGE
         MenuBean menu = new MenuBean();
@@ -79,40 +79,41 @@ class TestCalculateTotalPrice{
 
 
     @Test
-    @DisplayName("Errore: Numero partecipanti negativo")
+    @DisplayName("Error: Negative Participant Number")
     void testCalculate_NegativeParticipants() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
 
         ReservationDetailsBean res = new ReservationDetailsBean();
-        res.setParticipantNumber(-5); // Input invalido!
+        res.setParticipantNumber(-5); // Invalid input!
         res.setSelectedMenuLevel(MenuLevel.BASE);
 
         assertThrows(IllegalArgumentException.class, () -> controller.calculateTotalPrice(res, menu));
     }
 
+
     @Test
-    @DisplayName("Errore: Livello Menu Null")
+    @DisplayName("Error: Null Menu Level")
     void testCalculate_NullLevel(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
 
         ReservationDetailsBean res = new ReservationDetailsBean();
         res.setParticipantNumber(2);
-        res.setSelectedMenuLevel(null); // Input invalido!
+        res.setSelectedMenuLevel(null); // Invalid input!
 
         assertThrows(IllegalArgumentException.class, () -> controller.calculateTotalPrice(res, menu));
     }
 
     @Test
-    @DisplayName("Limite: 0 Partecipanti -> Errore logico")
+    @DisplayName("Boundary: 0 Participants -> Logical Error")
     void testCalculate_ZeroParticipants(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
 
         ReservationDetailsBean res = new ReservationDetailsBean();
-        res.setParticipantNumber(0); // Non ha senso una prenotazione senza ospiti
+        res.setParticipantNumber(0); // A reservation without guests makes no sense
         res.setSelectedMenuLevel(MenuLevel.BASE);
 
         assertThrows(IllegalArgumentException.class, () -> controller.calculateTotalPrice(res, menu));
@@ -120,11 +121,11 @@ class TestCalculateTotalPrice{
 
 
     @Test
-    @DisplayName("Limite: mancano i supplementi dei livelli del menu")
+    @DisplayName("Boundary: Missing Menu Level Surcharges")
     void testCalculate_missingSurchargePrices(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
-        // mancano i supplementi
+        // missing surcharges
 
         ReservationDetailsBean res = new ReservationDetailsBean();
         res.setParticipantNumber(2);
@@ -134,9 +135,8 @@ class TestCalculateTotalPrice{
     }
 
 
-
     @Test
-    @DisplayName("Limite: Supplemento luxe minore del supplemento premium")
+    @DisplayName("Boundary: Luxe Surcharge Lower Than Premium Surcharge")
     void testCalculate_wrongSurchargePrices() {
         // ARRANGE
         MenuBean menu = new MenuBean();
@@ -151,7 +151,6 @@ class TestCalculateTotalPrice{
         // ACT & ASSERT
         assertThrows(IllegalArgumentException.class, () -> controller.calculateTotalPrice(res, menu));
     }
-
 
 
 }

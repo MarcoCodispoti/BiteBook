@@ -25,6 +25,7 @@ class TestAllergenIncompatibility{
 
     private final SendServiceRequestController controller = new SendServiceRequestController();
 
+
     @AfterEach
     void tearDown() {
         LoggedUser.clear();
@@ -32,7 +33,7 @@ class TestAllergenIncompatibility{
 
 
     @Test
-    @DisplayName("SAFETY: Rilevamento Incompatibilità (Utente allergico vs Menu pericoloso)")
+    @DisplayName("SAFETY: Incompatibility Detection (Allergic User vs Dangerous Menu)")
     void testIncompatibility_Detected(){
         Allergen clientAllergen = new Allergen(1, "Arachidi");
 
@@ -44,16 +45,16 @@ class TestAllergenIncompatibility{
 
         List<AllergenBean> menuAllergens = new ArrayList<>();
         menuAllergens.add(new AllergenBean(2, "Latte"));
-        menuAllergens.add(new AllergenBean(1, "Arachidi")); // CONFLITTO!
+        menuAllergens.add(new AllergenBean(1, "Arachidi")); // CONFLICT!
 
         boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
-        assertTrue(isDangerous, "Il sistema DEVE rilevare che l'ID 1 è presente in entrambe le liste");
+        assertTrue(isDangerous, "The system MUST detect that ID 1 is present in both lists");
     }
 
 
     @Test
-    @DisplayName("SAFETY: Nessuna Incompatibilità (Menu sicuro)")
+    @DisplayName("SAFETY: No Incompatibility (Safe Menu)")
     void testIncompatibility_SafeMenu(){
         Allergen clientAllergen = new Allergen(5, "Glutine");
         Client loggedClient = new Client();
@@ -67,12 +68,12 @@ class TestAllergenIncompatibility{
 
         boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
-        assertFalse(isDangerous, "Non ci sono ID corrispondenti, deve restituire false");
+        assertFalse(isDangerous, "There are no matching IDs, must return false");
     }
 
 
     @Test
-    @DisplayName("EDGE CASE: Menu senza allergeni -> Ritorna False")
+    @DisplayName("EDGE CASE: Menu without allergens -> Returns False")
     void testIncompatibility_EmptyMenu(){
         Client loggedClient = new Client();
         List<Allergen> clientAllergies = new ArrayList<>();
@@ -80,16 +81,16 @@ class TestAllergenIncompatibility{
         loggedClient.setAllergies(clientAllergies);
         LoggedUser.getInstance().setClient(loggedClient);
 
-        List<AllergenBean> menuAllergens = new ArrayList<>(); // Lista vuota
+        List<AllergenBean> menuAllergens = new ArrayList<>(); // Empty list
 
         boolean isDangerous = controller.hasAllergyConflict(menuAllergens);
 
-        assertFalse(isDangerous, "Se il menu non ha allergeni, è sicuro");
+        assertFalse(isDangerous, "If the menu has no allergens, it is safe");
     }
 
 
     @Test
-    @DisplayName("EDGE CASE: Lista Menu è NULL -> Eccezione 'Error while obtaining menu allergens'")
+    @DisplayName("EDGE CASE: Menu List is NULL -> Exception 'Error while obtaining menu allergens'")
     void testIncompatibility_NullMenuInput(){
         IllegalStateException e = assertThrows(IllegalStateException.class, () ->
                 controller.hasAllergyConflict(null)
@@ -98,8 +99,9 @@ class TestAllergenIncompatibility{
         assertEquals("Error: Error while obtaining menu allergens", e.getMessage());
     }
 
+
     @Test
-    @DisplayName("EDGE CASE: Utente non loggato -> Eccezione 'Unable to get client info'")
+    @DisplayName("EDGE CASE: User not logged in -> Exception 'Unable to get client info'")
     void testIncompatibility_NoUserLogged(){
         LoggedUser.clear();
 
@@ -113,11 +115,12 @@ class TestAllergenIncompatibility{
         assertEquals("Unable to get client info", e.getMessage());
     }
 
+
     @Test
-    @DisplayName("DATA CORRUPTION: Utente loggato ma lista allergie NULL -> Eccezione 'User data error'")
+    @DisplayName("DATA CORRUPTION: User logged in but allergies list is NULL -> Exception 'User data error'")
     void testIncompatibility_UserAllergiesListIsNull(){
         Client corruptedClient = new Client();
-        corruptedClient.setAllergies(null); // Dati corrotti
+        corruptedClient.setAllergies(null); // Corrupted data
 
         LoggedUser.getInstance().setClient(corruptedClient);
 

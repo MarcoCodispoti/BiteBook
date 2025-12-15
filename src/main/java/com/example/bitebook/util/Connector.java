@@ -9,12 +9,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Connector{
+
     private static Connector instance = null;
     private Connection conn = null;
+
 
     private Connector() throws FailedDatabaseConnectionException {
         initializeConnection();
     }
+
 
     private void initializeConnection() throws FailedDatabaseConnectionException {
         try (InputStream input = Connector.class.getResourceAsStream("/com/example/bitebook/db.properties")) {
@@ -34,12 +37,14 @@ public class Connector{
         }
     }
 
+
     public static synchronized Connector getInstance() throws FailedDatabaseConnectionException {
         if (instance == null) {
             instance = new Connector();
         }
         return instance;
     }
+
 
     public Connection getConnection() throws FailedDatabaseConnectionException {
         try {
@@ -51,7 +56,6 @@ public class Connector{
             throw new FailedDatabaseConnectionException("Unable to establish connection to database", e);
         }
     }
-
 
 
 }
