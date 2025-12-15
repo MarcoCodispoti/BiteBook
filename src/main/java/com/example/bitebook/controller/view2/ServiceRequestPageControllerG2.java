@@ -32,6 +32,7 @@ public class ServiceRequestPageControllerG2{
     private List<AllergenBean> selectedMenuAllergenBeans;
     private boolean ignoreAllergenWarning = false;
 
+
     @FXML private AnchorPane serviceRequestAnchorPane;
     @FXML private AnchorPane allergyWarningAnchorPane;
     @FXML private Label menuNameLabel;
@@ -42,7 +43,7 @@ public class ServiceRequestPageControllerG2{
     @FXML private Label premiumLevelLabel;
     @FXML private Label luxeLevelLabel;
     @FXML private Label totalPriceLabel;
-    @FXML private Label errorLabel;
+    @FXML private Label messageLabel;
     @FXML private DatePicker datePicker;
     @FXML private ComboBox<LocalTime> timeComboBox;
     @FXML private TextField addressTextField;
@@ -55,12 +56,69 @@ public class ServiceRequestPageControllerG2{
 
 
     @FXML
+    void handleSendRequest() {
+        messageLabel.setVisible(false);
+
+        if (!validateAndBindData()) {
+            return;
+        }
+
+        boolean hasIncompatibility;
+        try{
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(selectedMenuAllergenBeans);
+        } catch (IllegalStateException e){
+            logger.log(Level.SEVERE, "Safety Warning: Error while confronting ", e);
+            displayMessage("System Error: Unable to check allergies incompatibility");
+            return;
+        }
+
+        if (hasIncompatibility && !ignoreAllergenWarning) {
+            toggleWarningPane(true);
+            return;
+        }
+        PaymentPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("PaymentPage2");
+        if (controller != null) {
+            controller.initData(reservationDetailsBean, selectedMenuBean, selectedMenuAllergenBeans, selectedChefBean);
+        }
+    }
+
+
+
+    @FXML
+    void handleProceed() {
+        ignoreAllergenWarning = true;
+        toggleWarningPane(false);
+        handleSendRequest();
+    }
+
+
+
+    @FXML
+    void handleBack() {
+        SelectMenuPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
+        if (controller != null) {
+            controller.initData(selectedChefBean);
+        }
+    }
+
+
+
+    @FXML
+    void handleCancel() {
+        FxmlLoader2.setPage("ClientHomePage2");
+    }
+
+
+
+    @FXML
     public void initialize(){
         setupMenuLevelToggles();
         setupParticipantsSlider();
         allergyWarningAnchorPane.setVisible(false);
-        errorLabel.setVisible(false);
+        messageLabel.setVisible(false);
     }
+
+
 
     public void initData(ChefBean chefBean, MenuBean selectedMenuBean, List<AllergenBean> selectedMenuAllergenBeans) {
         this.selectedChefBean = chefBean;
@@ -78,6 +136,7 @@ public class ServiceRequestPageControllerG2{
 
         updateTotalPrice();
     }
+
 
 
     private void setupMenuLevelToggles() {
@@ -99,6 +158,8 @@ public class ServiceRequestPageControllerG2{
         });
     }
 
+
+
     private void setupParticipantsSlider() {
         participantsNumberSlider.setMin(1);
         participantsNumberSlider.setMax(10);
@@ -113,6 +174,8 @@ public class ServiceRequestPageControllerG2{
         });
     }
 
+
+
     private void loadMenuSurcharges() {
         try {
             this.selectedMenuBean = sendServiceRequestController.populateMenuSurcharges(selectedMenuBean);
@@ -120,9 +183,11 @@ public class ServiceRequestPageControllerG2{
             luxeLevelLabel.setText("+ " + selectedMenuBean.getLuxeLevelSurcharge() + " €");
         } catch (FailedSearchException e){
             logger.log(Level.SEVERE, "Error while loading menu level surcharges" , e);
-            displayError("Warning: Unable to load levels surcharges");
+            displayMessage("Warning: Unable to load levels surcharges");
         }
     }
+
+
 
     private void fillMenuDetails() {
         menuNameLabel.setText(selectedMenuBean.getName());
@@ -136,71 +201,23 @@ public class ServiceRequestPageControllerG2{
     }
 
 
-    @FXML
-    void clickedOnSendRequest() {
-        errorLabel.setVisible(false);
-
-        if (!validateAndBindData()) {
-            return;
-        }
-
-        boolean hasIncompatibility;
-        try{
-            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(selectedMenuAllergenBeans);
-        } catch (IllegalStateException e){
-            logger.log(Level.SEVERE, "Safety Warning: Error while confronting ", e);
-            displayError("System Error: Unable to check allergies incompatibility");
-            return;
-        }
-
-        if (hasIncompatibility && !ignoreAllergenWarning) {
-            toggleWarningPane(true);
-            return;
-        }
-        PaymentPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("PaymentPage2");
-        if (controller != null) {
-            controller.initData(reservationDetailsBean, selectedMenuBean, selectedMenuAllergenBeans, selectedChefBean);
-        }
-    }
-
-
-    @FXML
-    void clickedOnProceed() {
-        ignoreAllergenWarning = true;
-        toggleWarningPane(false);
-        clickedOnSendRequest();
-    }
-
-    @FXML
-    void clickedOnBack() {
-        SelectMenuPageControllerG2 controller = FxmlLoader2.setPageAndReturnController("SelectMenuPage2");
-        if (controller != null) {
-            controller.initData(selectedChefBean);
-        }
-    }
-
-    @FXML
-    void clickedOnCancel() {
-        FxmlLoader2.setPage("ClientHomePage2");
-    }
-
 
     private boolean validateAndBindData() {
         LocalDate date = datePicker.getValue();
         if (date == null || !date.isAfter(LocalDate.now())) {
-            displayError("Please select a valid date after today.");
+            displayMessage("Please select a valid date after today.");
             return false;
         }
 
         LocalTime time = timeComboBox.getValue();
         if (time == null) {
-            displayError("Please select a time.");
+            displayMessage("Please select a time.");
             return false;
         }
 
         String address = addressTextField.getText();
         if (address == null || address.trim().length() < 5) {
-            displayError("Please enter a valid address.");
+            displayMessage("Please enter a valid address.");
             return false;
         }
         reservationDetailsBean.setDate(date);
@@ -209,12 +226,16 @@ public class ServiceRequestPageControllerG2{
         return true;
     }
 
+
+
     private void updateTotalPrice() {
         if (selectedMenuBean != null) {
             int price = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
             totalPriceLabel.setText(price + " €");
         }
     }
+
+
 
     private String formatAllergensList(List<AllergenBean> allergens) {
         if (allergens == null || allergens.isEmpty()) return "None";
@@ -224,10 +245,14 @@ public class ServiceRequestPageControllerG2{
                 .collect(Collectors.joining(", "));
     }
 
+
+
     private void fillTimeComboBox() {
         timeComboBox.getItems().clear();
         timeComboBox.getItems().addAll(generateTimeSlots());
     }
+
+
 
     private List<LocalTime> generateTimeSlots() {
         List<LocalTime> slots = new ArrayList<>();
@@ -238,6 +263,8 @@ public class ServiceRequestPageControllerG2{
         return slots;
     }
 
+
+
     private void addTimeSlots(List<LocalTime> slots, LocalTime start, LocalTime end) {
         LocalTime current = start;
         while (!current.isAfter(end)) {
@@ -246,17 +273,20 @@ public class ServiceRequestPageControllerG2{
         }
     }
 
+
+
     private void toggleWarningPane(boolean show) {
         allergyWarningAnchorPane.setVisible(show);
         allergyWarningAnchorPane.setDisable(!show);
         serviceRequestAnchorPane.setDisable(show);
     }
 
-    private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
-    }
 
+
+    private void displayMessage(String message) {
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
+    }
 
 
 }
