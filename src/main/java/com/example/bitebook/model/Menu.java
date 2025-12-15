@@ -44,4 +44,5 @@ public class Menu {
 
     public int getLuxeLevelSurcharge(){return luxeLevelSurcharge;}
     public void setLuxeLevelSurcharge(int luxeLevelSurcharge){this.luxeLevelSurcharge = luxeLevelSurcharge;}
+
 }

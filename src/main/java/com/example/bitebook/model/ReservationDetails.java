@@ -33,4 +33,5 @@ public class ReservationDetails{
 
     public MenuLevel getSelectedMenuLevel() {return selectedMenuLevel;}
     public void setSelectedMenuLevel(MenuLevel selectedMenuLevel){this.selectedMenuLevel = selectedMenuLevel;}
+
 }

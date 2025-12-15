@@ -6,13 +6,17 @@ import com.example.bitebook.model.enums.Role;
 
 public class LoggedUser{
 
+
     private static LoggedUser instance = null;
+
 
     private Client client;
     private Chef chef;
     private Role role;
 
+
     private LoggedUser() {}
+
 
     public static synchronized LoggedUser getInstance() {
         if (instance == null) {
@@ -21,15 +25,18 @@ public class LoggedUser{
         return instance;
     }
 
+
     public void logout() {
         this.client = null;
         this.chef = null;
         this.role = null;
     }
 
+
     public static void clear() {
         getInstance().logout();
     }
+
 
     public void setChef(Chef chef) {
         this.chef = chef;
@@ -37,11 +44,13 @@ public class LoggedUser{
         this.role = Role.CHEF;
     }
 
+
     public void setClient(Client client) {
         this.client = client;
         this.chef = null;
         this.role = Role.CLIENT;
     }
+
 
     public Chef getChef() { return chef; }
     public Client getClient() { return client; }

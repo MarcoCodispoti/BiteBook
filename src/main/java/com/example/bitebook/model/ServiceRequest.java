@@ -12,9 +12,11 @@ public class ServiceRequest{
     private RequestStatus status;
     private ReservationDetails reservationDetails;
 
+
     public ServiceRequest(){
         // Default constructor
     }
+
 
     public int getId(){return id;}
     public void setId(int id){this.id = id;}
@@ -36,4 +38,5 @@ public class ServiceRequest{
 
     public ReservationDetails getReservationDetails(){return reservationDetails;}
     public void setReservationDetails(ReservationDetails reservationDetails){this.reservationDetails = reservationDetails;}
+
 }
