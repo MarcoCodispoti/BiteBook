@@ -3,10 +3,9 @@ package com.example.bitebook.model.bean;
 import com.example.bitebook.model.enums.RequestStatus;
 
 public class ServiceRequestBean {
+
     private int id;
-
     private ClientBean clientBean;
-
     private ChefBean chef;
     private MenuBean menu;
     private int totalPrice;
@@ -28,11 +27,13 @@ public class ServiceRequestBean {
 
     public ChefBean getChefBean(){return chef;}
     public void setChefBean(ChefBean chef){this.chef = chef;}
+
     public MenuBean getMenuBean(){return menu;}
     public void setMenuBean(MenuBean menu){this.menu = menu;}
 
     public int getTotalPrice(){return totalPrice;}
     public void setTotalPrice(int totalPrice){this.totalPrice = totalPrice;}
+
     public RequestStatus getStatus(){return requestStatus;}
     public void setStatus(RequestStatus requestStatus){this.requestStatus = requestStatus;}
 

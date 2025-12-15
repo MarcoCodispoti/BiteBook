@@ -16,6 +16,7 @@ public class MenuDemoDao implements MenuDao{
     private static final Map<Integer, Menu> menusMap = new HashMap<>();
     private static final Map<Integer, List<Menu>> chefMenusMap = new HashMap<>();
 
+
     static {
         // --- MENU 1 (ID 210) ---
         Menu m1 = new Menu();
@@ -50,11 +51,15 @@ public class MenuDemoDao implements MenuDao{
         chefMenusMap.put(2, chef2Menus);
     }
 
+
+
     @Override
     public List<Menu> getChefMenus(int chefId) {
         List<Menu> menus = chefMenusMap.get(chefId);
         return menus != null ? new ArrayList<>(menus) : new ArrayList<>();
     }
+
+
 
     @Override
     public Menu getMenuLevelsSurcharge(int menuId) {

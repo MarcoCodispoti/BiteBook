@@ -18,9 +18,11 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     private static final Map<Integer, ServiceRequest> fakeTable = new HashMap<>();
     private static int autoIncrementId = 1;
 
+
     private static synchronized int getNextId() {
         return autoIncrementId++;
     }
+
 
 
     @Override
@@ -31,6 +33,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
         }
         fakeTable.put(serviceRequest.getId(), serviceRequest);
     }
+
 
 
     @Override
@@ -46,6 +49,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
     }
 
 
+
     @Override
     public List<ServiceRequest> getChefServiceRequests(Chef chef) {
         List<ServiceRequest> result = new ArrayList<>();
@@ -56,6 +60,7 @@ public class ServiceRequestDemoDao implements ServiceRequestDao {
         }
         return result;
     }
+
 
 
     @Override

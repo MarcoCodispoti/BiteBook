@@ -15,8 +15,11 @@ import java.util.List;
 
 
 public class UserDemoDao implements UserDao {
+
+
     private static final List<Client> demoClients = new ArrayList<>();
     private static final List<Chef> demoChefs = new ArrayList<>();
+
 
     static {
         Client client = new Client();
@@ -41,7 +44,7 @@ public class UserDemoDao implements UserDao {
         demoChefs.add(chef);
     }
 
-    // Okk
+
     @Override
     public Role getCredentialsRole(String email, String password) throws WrongCredentialsException{
         for (Client c : demoClients) {
@@ -82,7 +85,6 @@ public class UserDemoDao implements UserDao {
         }
         return null;
     }
-
 
 
 }

@@ -27,7 +27,9 @@ public class ChefBean extends UserBean{
 
 
     public CookingStyle getCookingStyle(){return cookingStyle;}
+
     public List<SpecializationType> getSpecializationTypes(){return this.specializationTypes;}
+
     public String getCity(){return city;}
     public void setCity(String inputCity){this.city=inputCity;}
 

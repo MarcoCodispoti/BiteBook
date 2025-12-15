@@ -14,9 +14,7 @@ public class AllergenDemoDao implements AllergenDao{
 
 
     private static final Map<Integer, Allergen> allAllergensMap = new HashMap<>();
-
     private static final Map<Integer, List<Allergen>> clientAllergiesMap = new HashMap<>();
-
     private static final Map<Integer, List<Allergen>> dishAllergensMap = new HashMap<>();
 
 
@@ -45,11 +43,13 @@ public class AllergenDemoDao implements AllergenDao{
     }
 
 
+
     @Override
     public List<Allergen> getClientAllergies(Client client){
         List<Allergen> found = clientAllergiesMap.get(client.getId());
         return found != null ? new ArrayList<>(found) : new ArrayList<>();
     }
+
 
 
     @Override
@@ -61,10 +61,12 @@ public class AllergenDemoDao implements AllergenDao{
     }
 
 
+
     @Override
     public List<Allergen> getAllergens(){
         return new ArrayList<>(allAllergensMap.values());
     }
+
 
 
     @Override
@@ -76,6 +78,7 @@ public class AllergenDemoDao implements AllergenDao{
             userAllergies.add(allergen);
         }
     }
+
 
 
     @Override

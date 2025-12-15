@@ -13,9 +13,10 @@ import java.util.Map;
 
 public class ChefDemoDao implements ChefDao{
 
-    private static final Map<Integer, Chef> chefsMap = new HashMap<>();
 
+    private static final Map<Integer, Chef> chefsMap = new HashMap<>();
     private static final Map<Integer, Integer> menuToChefMap = new HashMap<>();
+
 
     static{
         Chef c1 = new Chef(1, "Alessandro", "Borghese", CookingStyle.MODERN, "Roma");
@@ -46,6 +47,7 @@ public class ChefDemoDao implements ChefDao{
     }
 
 
+
     @Override
     public void findCityChefs(String cityName) throws NoChefInCityException {
         boolean found = false;
@@ -62,6 +64,7 @@ public class ChefDemoDao implements ChefDao{
     }
 
 
+
     @Override
     public List<Chef> getChefsInCity(String cityName) {
         List<Chef> cityChefs = new ArrayList<>();
@@ -74,6 +77,7 @@ public class ChefDemoDao implements ChefDao{
     }
 
 
+
     @Override
     public Chef getChefFromMenu(int menuId) {
         Integer chefId = menuToChefMap.get(menuId);
@@ -83,7 +87,6 @@ public class ChefDemoDao implements ChefDao{
         }
         return null;
     }
-
 
 
 }

@@ -17,4 +17,5 @@ public class ClientBean extends UserBean{
         }
         return  this.name != null && !this.name.isEmpty() && this.surname != null && !this.surname.isEmpty();
     }
+
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DishBean{
+
     private final int id;
     private final String name;
     private final CourseType courseType;
@@ -31,9 +32,13 @@ public class DishBean{
     }
 
     public int  getId() {return id;}
+
     public String getName(){return name;}
+
     public CourseType getCourseType(){return courseType;}
+
     public String getDescription(){return description;}
+
     public List<AllergenBean> getAllergens(){return this.allergens;}
 
     public boolean validate(){
