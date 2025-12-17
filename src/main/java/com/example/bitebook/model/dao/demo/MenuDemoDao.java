@@ -62,7 +62,7 @@ public class MenuDemoDao implements MenuDao{
 
 
     @Override
-    public Menu getMenuLevelsSurcharge(int menuId) {
+    public Menu populateMenuLevelsSurcharge(int menuId) {
         Menu fullMenu = menusMap.get(menuId);
 
         if (fullMenu != null){

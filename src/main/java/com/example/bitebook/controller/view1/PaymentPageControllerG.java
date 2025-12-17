@@ -48,7 +48,7 @@ public class PaymentPageControllerG {
 
 
     @FXML
-    void handleSendRequest(){
+    void handlePay(){
         messageLabel.setText("");
 
         try {

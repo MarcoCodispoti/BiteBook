@@ -23,16 +23,19 @@ public class ChefRequestsPageControllerG{
     private static final Logger logger = Logger.getLogger(ChefRequestsPageControllerG.class.getName());
 
 
+    @FXML
+    private VBox requestsVBox;
+    @FXML
+    private Label messageLabel;
+
+
     private final RequestManagerController requestManagerController = new RequestManagerController();
     private Parent selectedCardUi;
     private ServiceRequestBean selectedServiceRequestBean;
     private List<ServiceRequestBean> chefServiceRequestBeans;
 
-
-    @FXML
-    private VBox requestsVBox;
-    @FXML
-    private Label messageLabel;
+    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
+    private static final String UNSELECTED_STYLE = "-fx-border-color: #CCCCCC; -fx-border-width: 2; -fx-border-radius: 2;";
 
 
 
@@ -97,6 +100,8 @@ public class ChefRequestsPageControllerG{
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.CHEF_REQUEST_CARD_PATH));
                 Parent chefRequestCard = cardLoader.load();
 
+                chefRequestCard.setStyle(UNSELECTED_STYLE);
+
                 ChefRequestCardControllerG controller = cardLoader.getController();
                 controller.initData(serviceRequestBean);
                 controller.setCardUi(chefRequestCard);
@@ -132,10 +137,10 @@ public class ChefRequestsPageControllerG{
     public void setSelectedRequest(ServiceRequestBean serviceRequestBean, Parent cardUi) {
         this.selectedServiceRequestBean = serviceRequestBean;
         if (selectedCardUi != null) {
-            selectedCardUi.setStyle("");
+            selectedCardUi.setStyle(UNSELECTED_STYLE);
         }
         selectedCardUi = cardUi;
-        selectedCardUi.setStyle("-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;");
+        selectedCardUi.setStyle(SELECTED_STYLE);
     }
 
 

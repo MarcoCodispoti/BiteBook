@@ -28,13 +28,15 @@ public class SelectMenuPageControllerG{
     @FXML
     private Label messageLabel;
 
-    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
-    private static final String DEFAULT_STYLE = "";
+
     private final ExplorationController explorationController = new ExplorationController();
     private ChefBean selectChefBean;
     private MenuBean selectedMenuBean;
     private List<MenuBean> chefMenuBeans = new ArrayList<>();
     private Parent selectedCardUI;
+
+    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
+    private static final String UNSELECTED_STYLE = "-fx-border-color: #CCCCCC; -fx-border-width: 2; -fx-border-radius: 2;";
 
 
 
@@ -122,6 +124,8 @@ public class SelectMenuPageControllerG{
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.MENU_CARD_PATH));
                 Parent menuCard = cardLoader.load();
 
+                menuCard.setStyle(UNSELECTED_STYLE);
+
                 SelectMenuCardControllerG controller = cardLoader.getController();
                 controller.initData(menuBean);
                 controller.setCardUi(menuCard);
@@ -140,7 +144,7 @@ public class SelectMenuPageControllerG{
         this.selectedMenuBean = menuBean;
 
         if (selectedCardUI != null) {
-            selectedCardUI.setStyle(DEFAULT_STYLE);
+            selectedCardUI.setStyle(UNSELECTED_STYLE);
         }
 
         selectedCardUI = cardUI;

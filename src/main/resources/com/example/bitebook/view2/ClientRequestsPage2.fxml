@@ -46,6 +46,6 @@
             <ListView fx:id="clientRequestsListView" layoutX="21.0" layoutY="105.0" prefHeight="425.0" prefWidth="1112.0" style="-fx-border-color: #7cb518; -fx-border-width: 2;" />
             <Label fx:id="messageLabel" layoutX="366.0" layoutY="40.0" prefHeight="17.0" prefWidth="388.0" />
          </children></AnchorPane>
-      <Label layoutX="41.0" layoutY="211.0" prefHeight="17.0" prefWidth="1112.0" text="       ID            Customer                                     Menu                                             Level                   Partic.      Price              Date                            Time              Address                                                                                Status" />
+      <Label layoutX="41.0" layoutY="211.0" prefHeight="17.0" prefWidth="1112.0" text="       ID            Chef                                               Menu                                                              Level                   Partic.      Price              Date                            Time              Address                                                                                Status" />
    </children>
 </AnchorPane>

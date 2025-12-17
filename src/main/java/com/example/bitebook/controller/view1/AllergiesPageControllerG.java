@@ -35,6 +35,9 @@ public class AllergiesPageControllerG{
     private Parent selectedCardUi;
     private AllergenBean selectedAllergenBean;
 
+    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
+    private static final String UNSELECTED_STYLE = "-fx-border-color: #CCCCCC; -fx-border-width: 2; -fx-border-radius: 2;";
+
 
 
     @FXML
@@ -124,6 +127,8 @@ public class AllergiesPageControllerG{
                 Parent allergyCard = cardLoader.load();
                 AllergyCardControllerG controller = cardLoader.getController();
 
+                allergyCard.setStyle(UNSELECTED_STYLE);
+
                 controller.initData(allergyBean);
                 controller.setCardUi(allergyCard);
                 controller.setParentController(this);
@@ -143,10 +148,10 @@ public class AllergiesPageControllerG{
         this.selectedAllergenBean = allergyBean;
 
         if(selectedCardUi != null){
-            selectedCardUi.setStyle("");
+            selectedCardUi.setStyle(UNSELECTED_STYLE);
         }
         selectedCardUi = cardUi;
-        selectedCardUi.setStyle("-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;");
+        selectedCardUi.setStyle(SELECTED_STYLE);
     }
 
 

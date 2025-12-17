@@ -27,13 +27,14 @@ public class SelectChefPageControllerG {
     private Label messageLabel;
 
 
-    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
-    private static final String DEFAULT_STYLE = "";
     private final ExplorationController explorationController = new ExplorationController();
     private Parent selectedCardUI;
     private ChefBean cityChefBean;
     private ChefBean selectedChefBean;
     private List<ChefBean> chefInCityBeans = new ArrayList<>();
+
+    private static final String SELECTED_STYLE = "-fx-border-color: #383397; -fx-border-width: 3; -fx-border-radius: 2;";
+    private static final String UNSELECTED_STYLE = "-fx-border-color: #CCCCCC; -fx-border-width: 2; -fx-border-radius: 2;";
 
 
 
@@ -105,6 +106,8 @@ public class SelectChefPageControllerG {
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.CHEF_CARD_PATH));
                 Parent chefCard = cardLoader.load();
 
+                chefCard.setStyle(UNSELECTED_STYLE);
+
                 SelectChefCardControllerG controller = cardLoader.getController();
                 controller.initData(chefBean);
                 controller.setCardUI(chefCard);
@@ -123,7 +126,7 @@ public class SelectChefPageControllerG {
     public void setSelectedChef(ChefBean selectedChefBean, Parent cardUI) {
         this.selectedChefBean = selectedChefBean;
         if (selectedCardUI != null) {
-            selectedCardUI.setStyle(DEFAULT_STYLE);
+            selectedCardUI.setStyle(UNSELECTED_STYLE);
         }
         selectedCardUI = cardUI;
         selectedCardUI.setStyle(SELECTED_STYLE);

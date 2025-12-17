@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane onMouseClicked="#handleClick" prefHeight="148.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ChefRequestCardControllerG">
    <children>
       <Text layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request ID: ">
@@ -45,12 +48,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Text layoutX="216.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="201.47177124023438">
+      <Text layoutX="219.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of participants:" wrappingWidth="201.47177124023438">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Label fx:id="numberOfParticipantsLabel" layoutX="420.0" layoutY="43.0" prefHeight="26.0" prefWidth="32.0">
+      <Label fx:id="numberOfParticipantsLabel" layoutX="423.0" layoutY="43.0" prefHeight="26.0" prefWidth="32.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -65,22 +68,22 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Text layoutX="446.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+      <Text layoutX="347.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Label fx:id="addressLabel" layoutX="531.0" layoutY="77.0" prefHeight="26.0" prefWidth="192.0">
+      <Label fx:id="addressLabel" layoutX="426.0" layoutY="78.0" prefHeight="26.0" prefWidth="296.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="timeLabel" layoutX="266.0" layoutY="79.0" prefHeight="26.0" prefWidth="131.0">
+      <Label fx:id="timeLabel" layoutX="269.0" layoutY="79.0" prefHeight="26.0" prefWidth="65.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Text layoutX="217.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+      <Text layoutX="220.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
          <font>
             <Font size="20.0" />
          </font>

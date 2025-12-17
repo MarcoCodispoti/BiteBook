@@ -43,7 +43,7 @@ public class ServiceRequestPageControllerG{
     @FXML
     private Label pricePerPersonLabel;
     @FXML
-    private Label errorLabel;
+    private Label messageLabel;
     @FXML
     private DatePicker serviceDatePicker;
     @FXML
@@ -69,7 +69,7 @@ public class ServiceRequestPageControllerG{
 
     @FXML
     void handleSendRequest() {
-        errorLabel.setVisible(false);
+        messageLabel.setVisible(false);
 
         if (!validateAndCollectFormData()) {
             return;
@@ -168,8 +168,8 @@ public class ServiceRequestPageControllerG{
     private void resetUIState() {
         ignoreAllergenWarning = false;
         allergenWarningAnchorPane.setVisible(false);
-        errorLabel.setVisible(false);
-        errorLabel.setText("");
+        messageLabel.setVisible(false);
+        messageLabel.setText("");
     }
 
 
@@ -226,7 +226,7 @@ public class ServiceRequestPageControllerG{
 
 
 
-    public void updateTotalPrice() {
+    private void updateTotalPrice() {
         String participantsStr = numberOfParticipantsComboBox.getValue();
         MenuLevel level = ingredientsLevelComboBox.getValue();
 
@@ -287,8 +287,8 @@ public class ServiceRequestPageControllerG{
     private String formatMenuLevelLabel(MenuLevel level) {
         if (selectedMenuBean == null) return level.toString();
 
-        double surcharge = switch (level) {
-            case BASE -> 0.0;
+        int surcharge = switch (level) {
+            case BASE -> 0;
             case PREMIUM -> selectedMenuBean.getPremiumLevelSurcharge();
             case LUXE -> selectedMenuBean.getLuxeLevelSurcharge();
         };
@@ -340,8 +340,8 @@ public class ServiceRequestPageControllerG{
 
 
     private void displayError(String message) {
-        errorLabel.setText(message);
-        errorLabel.setVisible(true);
+        messageLabel.setText(message);
+        messageLabel.setVisible(true);
     }
 
 

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.AllergiesPageControllerG">
    <children>
       <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
@@ -35,7 +38,6 @@
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="217.0" prefHeight="220.0" prefWidth="983.0">
@@ -57,31 +59,37 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <ScrollPane fx:id="allergiesScrollPane" layoutX="262.0" layoutY="356.0" prefHeight="359.0" prefWidth="261.0" style="-fx-background-color: white; -fx-border-color: #383397;">
+      <ScrollPane fx:id="allergiesScrollPane" layoutX="262.0" layoutY="380.0" prefHeight="338.0" prefWidth="261.0" style="-fx-background-color: white; -fx-border-color: #383397;">
          <content>
-            <VBox fx:id="allergiesVBox" prefHeight="364.0" prefWidth="240.0" style="-fx-background-color: white;" />
+            <VBox fx:id="allergiesVBox" prefHeight="354.0" prefWidth="240.0" style="-fx-background-color: white;" />
          </content>
       </ScrollPane>
-      <Text layoutX="233.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Allergies" wrappingWidth="154.93951416015625">
+      <Text layoutX="233.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" wrappingWidth="154.93951416015625">
          <font>
             <Font size="28.0" />
          </font>
       </Text>
-      <Text layoutX="845.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add allergy" wrappingWidth="154.93951416015625">
+      <Text layoutX="845.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add allergy" wrappingWidth="154.93951416015625">
          <font>
             <Font size="28.0" />
          </font>
       </Text>
-      <Text layoutX="845.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select your allergy" wrappingWidth="187.37152099609375">
+      <Text layoutX="845.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select allergy to add" wrappingWidth="209.37152099609375">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="insertAllergyButton" layoutX="846.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleInsertAllergy" prefHeight="48.0" prefWidth="155.0" style="-fx-background-color: #383397;" text="Insert allergy" textFill="WHITE">
+      <Button fx:id="insertAllergyButton" layoutX="846.0" layoutY="465.0" mnemonicParsing="false" onAction="#handleInsertAllergy" prefHeight="48.0" prefWidth="155.0" style="-fx-background-color: #383397;" text="Insert allergy" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <ComboBox fx:id="selectAllergyComboBox" layoutX="843.0" layoutY="388.0" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: white; -fx-border-color: #383397;" />
+      <ComboBox fx:id="selectAllergyComboBox" layoutX="843.0" layoutY="417.0" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: white; -fx-border-color: #383397;" />
+      <Label fx:id="messageLabel" layoutX="756.0" layoutY="699.0" prefHeight="17.0" prefWidth="399.0" />
+      <Label layoutX="233.0" layoutY="283.0" prefHeight="28.0" prefWidth="924.0" text="Register here your personal allergies and the allergies of your group of guests!">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

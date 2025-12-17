@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.PaymentPageControllerG">
    <children>
       <AnchorPane prefHeight="740.0" prefWidth="214.0" style="-fx-background-color: #68a0ca;">
@@ -22,7 +24,7 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <Button fx:id="sendRequestButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#handleSendRequest" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Pay " textFill="WHITE">
+      <Button fx:id="paytButton" layoutX="1022.0" layoutY="667.0" mnemonicParsing="false" onAction="#handlePay" prefHeight="48.0" prefWidth="161.0" style="-fx-background-color: #383397; -fx-border-radius: 3;" text="Pay " textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>

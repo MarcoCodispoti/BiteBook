@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="167.0" prefWidth="914.0" style="-fx-background-color: white; -fx-background-radius: 6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ClientRequestCardControllerG">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="164.0" prefWidth="914.0" style="-fx-background-color: white; -fx-background-radius: 6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.ClientRequestCardControllerG">
    <children>
-      <AnchorPane layoutX="4.0" layoutY="4.0" prefHeight="159.0" prefWidth="906.0" style="-fx-background-color: #383397; -fx-background-radius: 6;">
+      <AnchorPane layoutX="4.0" layoutY="3.0" prefHeight="159.0" prefWidth="906.0" style="-fx-background-color: #383397; -fx-background-radius: 6;">
          <children>
             <AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="148.0" prefWidth="894.0" style="-fx-background-color: white; -fx-background-radius: 3;">
                <children>

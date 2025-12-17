@@ -9,7 +9,7 @@ import com.example.bitebook.util.Connector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class DaoFactory{
+public class DaoFactory{
 
 
     private static final Logger logger = Logger.getLogger(DaoFactory.class.getName());

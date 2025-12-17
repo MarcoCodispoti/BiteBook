@@ -93,9 +93,9 @@ public class ClientRequestsPageControllerG2{
 
 
     private String formatRequestString(ServiceRequestBean bean) {
-        return String.format(" %-4d  %-20s %-20s %-10s %-5d  %-4d €   %-9s    %-7s  %-30s  %12s",
+        return String.format(" %-4d  %-20s %-26s %-10s %-5d  %-4d €   %-9s    %-7s  %-30s  %12s",
                 bean.getId(),
-                truncate(bean.getClientBean().getName() + " " + bean.getClientBean().getSurname(),20),
+                truncate(bean.getChefBean().getName() + " " + bean.getChefBean().getSurname(),20),
                 truncate(bean.getMenuBean().getName(),20),
                 bean.getReservationDetailsBean().getSelectedMenuLevel().toString().toLowerCase(),
                 bean.getReservationDetailsBean().getParticipantNumber(),

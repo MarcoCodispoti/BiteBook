@@ -9,6 +9,6 @@ public interface MenuDao {
 
     List<Menu> getChefMenus(int chefId) throws FailedSearchException;
 
-    Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException;
+    Menu populateMenuLevelsSurcharge(int menuId) throws FailedSearchException;
 
 }

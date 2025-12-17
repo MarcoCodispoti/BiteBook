@@ -47,7 +47,7 @@ public class MenuDbDao implements MenuDao {
 
 
     @Override
-    public Menu getMenuLevelsSurcharge(int menuId) throws FailedSearchException {
+    public Menu populateMenuLevelsSurcharge(int menuId) throws FailedSearchException {
         Menu menu = null;
         try (Connection conn = Connector.getInstance().getConnection();
              CallableStatement cstmt = conn.prepareCall("{call getMenuLevelsSurcharge(?)}")){

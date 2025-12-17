@@ -17,7 +17,7 @@ public class SendServiceRequestController{
 
     public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {
 
-        Menu menu = DaoFactory.getMenuDao().getMenuLevelsSurcharge(menuBean.getId());
+        Menu menu = DaoFactory.getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
             menuBean.setLuxeLevelSurcharge(menu.getLuxeLevelSurcharge());
