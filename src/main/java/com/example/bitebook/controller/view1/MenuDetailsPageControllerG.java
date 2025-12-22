@@ -134,7 +134,7 @@ public class MenuDetailsPageControllerG{
             logger.log(Level.WARNING, "Error while finding user with such credentials", e);
             displayLoginMessage("System Error: Try again later");
             return;
-        } catch (WrongCredentialsException e) {
+        } catch (WrongCredentialsException _) {
             displayLoginMessage("Wrong username or password");
             return;
         } catch (Exception e){
