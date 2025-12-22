@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SendServiceRequestController{
+public class ServiceRequestController {
 
 
     public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {
@@ -113,6 +113,7 @@ public class SendServiceRequestController{
         serviceRequestBean.setMenuBean(menuBean);
         serviceRequestBean.setReservationDetailsBean(reservationDetailsBean);
         serviceRequestBean.setStatus(RequestStatus.PENDING);
+        serviceRequestBean.setTotalPrice(calculateTotalPrice(reservationDetailsBean,menuBean));
 
         return serviceRequestBean;
     }
@@ -120,6 +121,9 @@ public class SendServiceRequestController{
 
 
     public void sendServiceRequest(ServiceRequestBean serviceRequestBean) throws FailedInsertException {
+        if(!serviceRequestBean.validate()){
+            throw new IllegalArgumentException("Error: Invalid request");
+        }
         ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
         DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
     }

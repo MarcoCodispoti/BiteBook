@@ -1,6 +1,6 @@
 package junit;
 
-import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.controller.application.ServiceRequestController;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.bean.ReservationDetailsBean;
 import com.example.bitebook.model.enums.MenuLevel;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
     this class tests the calculateTotalPrice method in the SendServiceRequestController
  */
 
-class TestCalculateTotalPrice{
+class CalculateTotalPriceTest {
 
 
-    private final SendServiceRequestController controller = new SendServiceRequestController();
+    private final ServiceRequestController controller = new ServiceRequestController();
 
 
     @Test

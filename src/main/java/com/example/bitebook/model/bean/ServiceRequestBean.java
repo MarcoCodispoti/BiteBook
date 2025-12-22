@@ -51,4 +51,5 @@ public class ServiceRequestBean {
                 && requestStatus != null && reservationDetailsBean != null && reservationDetailsBean.validate();
     }
 
+
 }

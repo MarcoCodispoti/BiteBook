@@ -6,7 +6,7 @@ package junit;
  */
 
 
-import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.controller.application.ServiceRequestController;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.AllergenBean;
@@ -20,10 +20,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestAllergenIncompatibility{
+class HasAllergyConflictTest {
 
 
-    private final SendServiceRequestController controller = new SendServiceRequestController();
+    private final ServiceRequestController controller = new ServiceRequestController();
 
 
     @AfterEach

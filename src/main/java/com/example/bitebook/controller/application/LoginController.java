@@ -13,34 +13,113 @@ import com.example.bitebook.model.session.LoggedUser;
 public class LoginController{
 
 
+//    public void authenticate(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
+//
+//        UserDao userDao = DaoFactory.getUserDao();
+//        Role role = userDao.getCredentialsRole(loginBean.getEmail(), loginBean.getPassword());
+//
+//        if (role == null) {
+//            throw new WrongCredentialsException("Error while authenticating user: Cannot find users with inserted credentials");
+//        }
+//
+//        Client client = null;
+//        Chef chef = null;
+//
+//        switch(role){
+//            case CLIENT:
+//                client = userDao.getClientInfo(loginBean.getEmail(), loginBean.getPassword());
+//                if (client == null) {
+//                    throw new FailedSearchException("Error while logging the client");
+//                }
+//                client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client)); break;
+//
+//            case CHEF:
+//                chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
+//                if (chef == null) {
+//                    throw new FailedSearchException("Error while logging the chef");
+//                }
+//                break;
+//
+//            default: throw new FailedSearchException("Invalid Role: Role may be corrupted");
+//        }
+//
+//        LoggedUser.getInstance().logout();
+//        LoggedUser.getInstance().setRole(role);
+//
+//        if (role == Role.CLIENT) {
+//            LoggedUser.getInstance().setClient(client);
+//        } else {
+//            LoggedUser.getInstance().setChef(chef);
+//        }
+//    }
+//
+//
+//
+//    public void logout(){
+//        LoggedUser.getInstance().logout();
+//    }
+//
+//
+//
+//    public void loginAsClient(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
+//        authenticate(loginBean);
+//
+//        Role role = LoggedUser.getInstance().getRole();
+//
+//        if(role == Role.CHEF){
+//            logout();
+//            throw new WrongCredentialsException("Invalid client credentials");
+//        }
+//    }
+
+
+
     public void authenticate(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
+        Role role = checkCredentials(loginBean.getEmail(), loginBean.getPassword());
+        loadUserAndSetSession(role, loginBean);
+    }
 
-        UserDao userDao = DaoFactory.getUserDao();
-        Role role = userDao.getCredentialsRole(loginBean.getEmail(), loginBean.getPassword());
 
-        if (role == null) {
-            throw new WrongCredentialsException("Error while authenticating user: Cannot find users with inserted credentials");
+
+    public void loginAsClient(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
+        Role role = checkCredentials(loginBean.getEmail(), loginBean.getPassword());
+
+        if (role != Role.CLIENT) {
+            throw new WrongCredentialsException("Access denied: You are not a Client");
         }
 
+        loadUserAndSetSession(role, loginBean);
+    }
+
+
+
+    private Role checkCredentials(String email, String password) throws WrongCredentialsException, FailedSearchException {
+        Role role = DaoFactory.getUserDao().getCredentialsRole(email, password);
+        if (role == null) {
+            throw new WrongCredentialsException("Invalid credentials");
+        }
+        return role;
+    }
+
+
+
+    private void loadUserAndSetSession(Role role, LoginBean loginBean) throws FailedSearchException {
+        UserDao userDao = DaoFactory.getUserDao();
         Client client = null;
         Chef chef = null;
 
-        switch(role){
+        switch (role) {
             case CLIENT:
                 client = userDao.getClientInfo(loginBean.getEmail(), loginBean.getPassword());
-                if (client == null) {
-                    throw new FailedSearchException("Error while logging the client");
-                }
-                client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client)); break;
-
+                if (client == null) throw new FailedSearchException("Error fetching client data");
+                client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client));
+                break;
             case CHEF:
                 chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
-                if (chef == null) {
-                    throw new FailedSearchException("Error while logging the chef");
-                }
+                if (chef == null) throw new FailedSearchException("Error fetching chef data");
                 break;
-
-            default: throw new FailedSearchException("Invalid Role: Role may be corrupted");
+            default:
+                throw new FailedSearchException("Corrupted Role");
         }
 
         LoggedUser.getInstance().logout();
@@ -55,9 +134,10 @@ public class LoginController{
 
 
 
-    public void logout(){
+    public void logout() {
         LoggedUser.getInstance().logout();
     }
+
 
 
 }

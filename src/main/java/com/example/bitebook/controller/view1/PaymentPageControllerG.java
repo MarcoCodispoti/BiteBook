@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.SendServiceRequestController;
+import com.example.bitebook.controller.application.ServiceRequestController;
 import com.example.bitebook.model.bean.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,7 +39,7 @@ public class PaymentPageControllerG {
     private Label ingredientsLevelLabel;
 
 
-    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
+    private final ServiceRequestController serviceRequestController = new ServiceRequestController();
     private MenuBean requestMenuBean;
     private ReservationDetailsBean requestReservationDetailsBean;
     private List<AllergenBean> reservationAllergenBeans;
@@ -52,13 +52,13 @@ public class PaymentPageControllerG {
         messageLabel.setText("");
 
         try {
-            ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(
+            ServiceRequestBean serviceRequestBean = serviceRequestController.createServiceRequest(
                     requestMenuBean,
                     requestReservationDetailsBean
             );
-            if (serviceRequestBean != null) {
+            if (serviceRequestBean != null){
                 serviceRequestBean.validate();
-                sendServiceRequestController.sendServiceRequest(serviceRequestBean);
+                serviceRequestController.sendServiceRequest(serviceRequestBean);
                 FxmlLoader.setPage("ConfirmationPage");
             } else{
                 messageLabel.setText("System Error: Could not create request");
@@ -111,7 +111,7 @@ public class PaymentPageControllerG {
             ingredientsLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
         }
 
-        double totalPrice = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, menuBean);
+        double totalPrice = serviceRequestController.calculateTotalPrice(reservationDetailsBean, menuBean);
         totalPriceLabel.setText(String.valueOf(totalPrice));
     }
 
