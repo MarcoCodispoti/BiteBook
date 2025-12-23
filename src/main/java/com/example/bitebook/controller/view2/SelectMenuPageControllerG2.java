@@ -1,13 +1,13 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
-import com.example.bitebook.model.bean.AllergenBean;
-import com.example.bitebook.model.bean.ChefBean;
-import com.example.bitebook.model.bean.DishBean;
-import com.example.bitebook.model.bean.MenuBean;
+import com.example.bitebook.exceptions.WrongCredentialsException;
+import com.example.bitebook.model.bean.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
@@ -32,12 +32,70 @@ public class SelectMenuPageControllerG2{
     private Label allergensLabel;
     @FXML
     private Label messageLabel;
+    @FXML
+    private AnchorPane selectMenuAnchorPane;
+    @FXML
+    private AnchorPane topbarAnchorPane;
+    @FXML
+    private AnchorPane loginAnchorPane;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button loginBackButton;
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private Label loginMessageLabel;
 
 
     private final ExplorationController explorationController = new ExplorationController();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
+
+
+    @FXML
+    void handleLogin(){
+        if(areEmptyLoginFields()){
+            return;
+        }
+
+        LoginBean loginBean = new LoginBean();
+        loginBean.setEmail(emailTextField.getText());
+        loginBean.setPassword(passwordTextField.getText());
+
+        if(!loginBean.validate()){
+            displayLoginMessage("Invalid Login credentials");
+            return;
+        }
+        try{
+            LoginController loginController = new LoginController();
+            loginController.loginAsClient(loginBean);
+        } catch (FailedSearchException e){
+            logger.log(Level.WARNING, "Error while finding user with such credentials", e);
+            displayLoginMessage("System Error: Try again later");
+            return;
+        } catch (WrongCredentialsException _) {
+            displayLoginMessage("Wrong username or password");
+            return;
+        } catch (Exception e){
+            logger.log(Level.WARNING, "System error occurred", e);
+            displayLoginMessage("Unknown Error");
+            return;
+        }
+
+        hideLoginPopup();
+
+    }
+
+
+
+    @FXML
+    void handleLoginBack(){
+        hideLoginPopup();
+    }
 
 
 
@@ -65,7 +123,7 @@ public class SelectMenuPageControllerG2{
     @FXML
     void clickedOnBook(){
         if (!explorationController.isLoggedClient()) {
-            displayMesssage("You must be logged in to proceed!");
+            setLoginPopup();
             return;
         }
 
@@ -91,6 +149,7 @@ public class SelectMenuPageControllerG2{
 
         chefComboBox.valueProperty().addListener((_, _, newVal) -> onChefSelected(newVal));
         menuComboBox.valueProperty().addListener((_, _, newVal) -> onMenuSelected(newVal));
+        loginAnchorPane.setVisible(false);
     }
 
 
@@ -230,6 +289,42 @@ public class SelectMenuPageControllerG2{
     private void displayMesssage(String message) {
         messageLabel.setText(message);
         messageLabel.setVisible(true);
+    }
+
+
+
+    private void displayLoginMessage(String message) {
+        loginMessageLabel.setText(message);
+    }
+
+
+
+    private void setLoginPopup(){
+        selectMenuAnchorPane.setDisable(true);
+        topbarAnchorPane.setDisable(true);
+        loginAnchorPane.setVisible(true);
+    }
+
+
+
+    private void hideLoginPopup(){
+        selectMenuAnchorPane.setDisable(false);
+        topbarAnchorPane.setDisable(false);
+        loginAnchorPane.setVisible(false);
+    }
+
+
+
+    private boolean areEmptyLoginFields(){
+        if(emailTextField.getText().isEmpty()){
+            displayLoginMessage("Please enter a email address.");
+            return true;
+        }
+        if(passwordTextField.getText().isEmpty()){
+            displayLoginMessage("Please enter a password.");
+            return true;
+        }
+        return false;
     }
 
 
