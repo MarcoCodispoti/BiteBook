@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view1.LoginPageControllerG">
    <children>
       <ImageView fitHeight="746.0" fitWidth="1202.0" opacity="0.85" pickOnBounds="true" preserveRatio="true">
@@ -31,7 +35,7 @@
                   <Font size="46.0" />
                </font>
             </Label>
-            <Label fx:id="messageLabel" layoutX="104.0" layoutY="298.0" prefHeight="17.0" prefWidth="218.0" />
+            <Label fx:id="messageLabel" layoutX="75.0" layoutY="298.0" prefHeight="17.0" prefWidth="296.0" />
             <Button fx:id="backButton" layoutX="153.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="48.0" prefWidth="101.0" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 3;" text="Back " textFill="#383397">
                <font>
                   <Font size="22.0" />

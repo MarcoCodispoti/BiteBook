@@ -35,7 +35,6 @@
                   </Hyperlink>
                </children>
             </AnchorPane>
-            <Label fx:id="messageLabel" layoutX="34.0" layoutY="315.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0">
                <children>
                   <AnchorPane layoutX="8.0" layoutY="74.0" prefHeight="1.0" prefWidth="201.0" style="-fx-background-color: white;" />
@@ -156,5 +155,6 @@
             <Label fx:id="loginMessageLabel" layoutX="25.0" layoutY="233.0" prefHeight="17.0" prefWidth="329.0" />
          </children>
       </AnchorPane>
+      <Label fx:id="messageLabel" layoutX="425.0" layoutY="256.0" prefHeight="17.0" prefWidth="731.0" />
    </children>
 </AnchorPane>

@@ -16,7 +16,6 @@
             </Label>
             <AnchorPane layoutY="74.0" prefHeight="6.0" prefWidth="219.0" style="-fx-background-color: #383397;" />
             <AnchorPane layoutY="80.0" prefHeight="75.0" prefWidth="217.0" />
-            <Label fx:id="messageLabel" layoutX="34.0" layoutY="252.0" prefHeight="17.0" prefWidth="147.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <Text layoutX="232.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Details" wrappingWidth="276.6703796386719">
@@ -151,5 +150,6 @@
             <Font size="26.0" />
          </font>
       </Label>
+      <Label fx:id="messageLabel" layoutX="240.0" layoutY="696.0" prefHeight="17.0" prefWidth="573.0" />
    </children>
 </AnchorPane>

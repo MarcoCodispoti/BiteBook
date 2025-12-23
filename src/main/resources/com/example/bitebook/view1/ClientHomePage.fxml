@@ -84,6 +84,6 @@
          </font>
       </Text>
       <TextField fx:id="insertCityTextField" layoutX="407.0" layoutY="339.0" prefHeight="27.0" prefWidth="216.0" promptText="ex: Rome" style="-fx-background-color: white; -fx-border-color: #383397; -fx-border-radius: 2;" />
-      <Label fx:id="messageLabel" layoutX="736.0" layoutY="684.0" prefHeight="17.0" prefWidth="267.0" />
+      <Label fx:id="messageLabel" layoutX="575.0" layoutY="684.0" prefHeight="17.0" prefWidth="428.0" />
    </children>
 </AnchorPane>
