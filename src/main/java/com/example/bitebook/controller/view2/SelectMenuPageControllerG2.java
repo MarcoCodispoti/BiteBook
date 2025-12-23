@@ -39,10 +39,6 @@ public class SelectMenuPageControllerG2{
     @FXML
     private AnchorPane loginAnchorPane;
     @FXML
-    private Button loginButton;
-    @FXML
-    private Button loginBackButton;
-    @FXML
     private TextField emailTextField;
     @FXML
     private TextField passwordTextField;
@@ -73,12 +69,12 @@ public class SelectMenuPageControllerG2{
         try{
             LoginController loginController = new LoginController();
             loginController.loginAsClient(loginBean);
+        } catch (WrongCredentialsException _) {
+            displayLoginMessage("Wrong username or password");
+            return;
         } catch (FailedSearchException e){
             logger.log(Level.WARNING, "Error while finding user with such credentials", e);
             displayLoginMessage("System Error: Try again later");
-            return;
-        } catch (WrongCredentialsException _) {
-            displayLoginMessage("Wrong username or password");
             return;
         } catch (Exception e){
             logger.log(Level.WARNING, "System error occurred", e);
@@ -136,7 +132,6 @@ public class SelectMenuPageControllerG2{
         if(serviceRequestPageControllerG2 != null){
             serviceRequestPageControllerG2.initData(selectedChefBean,selectedMenuBean,menuAllergenBeans);
         }
-
     }
 
 
@@ -229,6 +224,7 @@ public class SelectMenuPageControllerG2{
             public ChefBean fromString(String string) { return null; }
         });
     }
+
 
 
     private void setupMenuComboBox() {
