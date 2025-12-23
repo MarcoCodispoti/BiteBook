@@ -167,7 +167,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label fx:id="messageLabel" layoutX="468.0" layoutY="414.0" prefHeight="17.0" prefWidth="316.0" />
+            <Label fx:id="messageLabel" layoutX="471.0" layoutY="427.0" prefHeight="17.0" prefWidth="316.0" />
          </children></AnchorPane>
       <AnchorPane fx:id="allergyWarningAnchorPane" layoutX="380.0" layoutY="300.0" prefHeight="238.0" prefWidth="424.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-width: 2;" visible="false">
          <children>

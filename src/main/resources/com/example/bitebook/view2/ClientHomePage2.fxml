@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view2.ClientHomePageControllerG2">
    <children>
       <AnchorPane prefHeight="65.0" prefWidth="1200.0" style="-fx-background-color: #7cb518;">
@@ -60,7 +64,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Label fx:id="messageLabel" layoutX="404.0" layoutY="494.0" prefHeight="17.0" prefWidth="224.0" />
+            <Label fx:id="messageLabel" layoutX="344.0" layoutY="494.0" prefHeight="17.0" prefWidth="284.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

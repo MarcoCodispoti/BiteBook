@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bitebook.controller.view2.PaymentPageControllerG2">
    <children>
       <AnchorPane prefHeight="65.0" prefWidth="1200.0" style="-fx-background-color: #7cb518;">
@@ -120,7 +123,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label fx:id="messageLabel" layoutX="468.0" layoutY="414.0" prefHeight="17.0" prefWidth="316.0" />
+            <Label fx:id="messageLabel" layoutX="24.0" layoutY="563.0" prefHeight="17.0" prefWidth="424.0" />
             <Label fx:id="participantsNumberLabel" layoutX="245.0" layoutY="402.0" prefHeight="28.0" prefWidth="178.0">
                <font>
                   <Font size="22.0" />
