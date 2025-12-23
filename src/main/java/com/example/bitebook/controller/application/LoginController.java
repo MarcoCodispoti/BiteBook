@@ -13,66 +13,6 @@ import com.example.bitebook.model.session.LoggedUser;
 public class LoginController{
 
 
-//    public void authenticate(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
-//
-//        UserDao userDao = DaoFactory.getUserDao();
-//        Role role = userDao.getCredentialsRole(loginBean.getEmail(), loginBean.getPassword());
-//
-//        if (role == null) {
-//            throw new WrongCredentialsException("Error while authenticating user: Cannot find users with inserted credentials");
-//        }
-//
-//        Client client = null;
-//        Chef chef = null;
-//
-//        switch(role){
-//            case CLIENT:
-//                client = userDao.getClientInfo(loginBean.getEmail(), loginBean.getPassword());
-//                if (client == null) {
-//                    throw new FailedSearchException("Error while logging the client");
-//                }
-//                client.setAllergies(DaoFactory.getAllergenDao().getClientAllergies(client)); break;
-//
-//            case CHEF:
-//                chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
-//                if (chef == null) {
-//                    throw new FailedSearchException("Error while logging the chef");
-//                }
-//                break;
-//
-//            default: throw new FailedSearchException("Invalid Role: Role may be corrupted");
-//        }
-//
-//        LoggedUser.getInstance().logout();
-//        LoggedUser.getInstance().setRole(role);
-//
-//        if (role == Role.CLIENT) {
-//            LoggedUser.getInstance().setClient(client);
-//        } else {
-//            LoggedUser.getInstance().setChef(chef);
-//        }
-//    }
-//
-//
-//
-//    public void logout(){
-//        LoggedUser.getInstance().logout();
-//    }
-//
-//
-//
-//    public void loginAsClient(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
-//        authenticate(loginBean);
-//
-//        Role role = LoggedUser.getInstance().getRole();
-//
-//        if(role == Role.CHEF){
-//            logout();
-//            throw new WrongCredentialsException("Invalid client credentials");
-//        }
-//    }
-
-
 
     public void authenticate(LoginBean loginBean) throws WrongCredentialsException, FailedSearchException {
         Role role = checkCredentials(loginBean.getEmail(), loginBean.getPassword());
