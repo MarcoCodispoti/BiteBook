@@ -23,7 +23,7 @@
                   <Font size="32.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="requestsHyperlink" layoutX="897.0" onAction="#clickedOnRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
+            <Hyperlink fx:id="requestsHyperlink" layoutX="897.0" onAction="#handleRequests" prefHeight="65.0" prefWidth="152.0" text="Requests" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>
@@ -52,12 +52,12 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="bookButton" layoutX="656.0" layoutY="393.0" mnemonicParsing="false" onAction="#clickedOnBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
+            <Button fx:id="bookButton" layoutX="656.0" layoutY="393.0" mnemonicParsing="false" onAction="#handleBook" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #7cb518; -fx-background-radius: 3;" text="Book" textFill="WHITE">
                <font>
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#clickedOnBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
+            <Button fx:id="backButton" layoutX="656.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: white; -fx-background-radius: 3; -fx-border-color: #7cb518; -fx-border-width: 2; -fx-border-radius: 3;" text="Back" textFill="#7cb518">
                <font>
                   <Font size="22.0" />
                </font>

@@ -96,7 +96,7 @@ public class SelectMenuPageControllerG2{
 
 
     @FXML
-    void clickedOnBack() {
+    void handleBack() {
         FxmlLoader2.setPage("ClientHomePage2");
     }
 
@@ -110,14 +110,14 @@ public class SelectMenuPageControllerG2{
 
 
     @FXML
-    void clickedOnRequests(){
+    void handleRequests(){
         navigateToIfLogged("ClientRequestsPage2", "You must be logged in to view Requests");
     }
 
 
 
     @FXML
-    void clickedOnBook(){
+    void handleBook(){
         if (!explorationController.isLoggedClient()) {
             setLoginPopup();
             return;
