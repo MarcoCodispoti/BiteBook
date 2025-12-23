@@ -20,7 +20,7 @@ public class Connector{
 
 
     private void initializeConnection() throws FailedDatabaseConnectionException {
-        try (InputStream input = Connector.class.getResourceAsStream("/com/example/bitebook/db.properties")) {
+        try (InputStream input = Connector.class.getResourceAsStream("/com/example/bitebook/Database/db.properties")) {
             if (input == null) {
                 throw new FailedDatabaseConnectionException("db.properties files not found");
             }

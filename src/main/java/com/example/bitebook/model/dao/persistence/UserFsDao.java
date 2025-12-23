@@ -20,8 +20,8 @@ import java.util.List;
 public class UserFsDao implements UserDao{
 
 
-    private static final String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/ChefsSpecializations.csv";
-    private static final String USERS_FILE_PATH = "/com/example/bitebook/Users.csv";
+    private static final String CHEF_SPECIALIZATIONS_FILE_PATH = "/com/example/bitebook/FileSystem/ChefsSpecializations.csv";
+    private static final String USERS_FILE_PATH = "/com/example/bitebook/FileSystem/Users.csv";
     private static final String CSV_DELIMITER = ",";
 
 
