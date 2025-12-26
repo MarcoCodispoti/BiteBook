@@ -36,28 +36,28 @@ public class AllergenFSDao implements AllergenDao{
 
                 String line;
                 while ((line = br.readLine()) != null) {
-                    if (line.trim().isEmpty()) continue;
+                    if (!line.trim().isEmpty()) {
 
-                    String[] fields = line.split(CSV_DELIMITER);
-                    if (fields.length < 3) continue;
+                        String[] fields = line.split(CSV_DELIMITER);
+                        if (fields.length >= 3) {
+                            try {
+                                int fileClientId = Integer.parseInt(fields[0].trim());
 
-                    try {
-                        int fileClientId = Integer.parseInt(fields[0].trim());
-
-                        if (fileClientId == client.getId()){
-                            int allergenId = Integer.parseInt(fields[1].trim());
-                            String allergenName = fields[2].trim();
-                            clientAllergens.add(new Allergen(allergenId, allergenName));
+                                if (fileClientId == client.getId()) {
+                                    int allergenId = Integer.parseInt(fields[1].trim());
+                                    String allergenName = fields[2].trim();
+                                    clientAllergens.add(new Allergen(allergenId, allergenName));
+                                }
+                            } catch (NumberFormatException e) {
+                                throw new FailedSearchException("Error recovering client allergies info in the CSV file", e);
+                            }
                         }
-                    }catch(NumberFormatException e){
-                        throw new FailedSearchException("Error recovering client allergies info in the CSV file", e);
                     }
                 }
             }
-        }  catch (NullPointerException e){
+        } catch (NullPointerException e) {
             throw new FailedSearchException("Error recovering the CSV file", e);
-        }
-         catch (IOException e) {
+        } catch (IOException e) {
             throw new FailedSearchException("Error reading client allergies file", e);
         }
         return clientAllergens;
