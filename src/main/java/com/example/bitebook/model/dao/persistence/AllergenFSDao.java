@@ -24,42 +24,54 @@ public class AllergenFSDao implements AllergenDao{
         List<Allergen> clientAllergens = new ArrayList<>();
 
         try (InputStream is = getClass().getResourceAsStream(CLIENT_ALLERGIES_FILE_PATH)) {
+            // 1. Uscita anticipata se il file non esiste
             if (is == null) {
                 return clientAllergens;
             }
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                String header = br.readLine();
-                if (header == null) {
-                    throw new FailedSearchException("client allergies database file is empty or corrupted");
+                // 2. Controllo header
+                if (br.readLine() == null) {
+                    throw new FailedSearchException("Client allergies database file is empty or corrupted");
                 }
 
                 String line;
                 while ((line = br.readLine()) != null) {
-                    if (!line.trim().isEmpty()) {
+                    // 3. Clausola di guardia: Salta le righe vuote
+                    if (line.trim().isEmpty()) {
+                        continue;
+                    }
 
-                        String[] fields = line.split(CSV_DELIMITER);
-                        if (fields.length >= 3) {
-                            try {
-                                int fileClientId = Integer.parseInt(fields[0].trim());
+                    String[] fields = line.split(CSV_DELIMITER);
 
-                                if (fileClientId == client.getId()) {
-                                    int allergenId = Integer.parseInt(fields[1].trim());
-                                    String allergenName = fields[2].trim();
-                                    clientAllergens.add(new Allergen(allergenId, allergenName));
-                                }
-                            } catch (NumberFormatException e) {
-                                throw new FailedSearchException("Error recovering client allergies info in the CSV file", e);
-                            }
+                    // 4. Clausola di guardia: Salta le righe malformate
+                    if (fields.length < 3) {
+                        continue;
+                    }
+
+                    try {
+                        int fileClientId = Integer.parseInt(fields[0].trim());
+
+                        // 5. Clausola di guardia: Salta se non è il cliente che cerchiamo
+                        if (fileClientId != client.getId()) {
+                            continue;
                         }
+
+                        // Se siamo arrivati qui, è la riga giusta
+                        int allergenId = Integer.parseInt(fields[1].trim());
+                        String allergenName = fields[2].trim();
+                        clientAllergens.add(new Allergen(allergenId, allergenName));
+
+                    } catch (NumberFormatException e) {
+                        throw new FailedSearchException("Error parsing numbers in CSV file", e);
                     }
                 }
             }
-        } catch (NullPointerException e) {
-            throw new FailedSearchException("Error recovering the CSV file", e);
-        } catch (IOException e) {
-            throw new FailedSearchException("Error reading client allergies file", e);
+        } catch (IOException | NullPointerException e) {
+            // Gestione unificata delle eccezioni simili se l'azione da intraprendere è la stessa
+            throw new FailedSearchException("Error accessing or reading the CSV file", e);
         }
+
         return clientAllergens;
     }
 
