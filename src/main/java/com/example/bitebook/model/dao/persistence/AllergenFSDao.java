@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S1075")
 public class AllergenFSDao implements AllergenDao{
 
 
@@ -30,7 +31,8 @@ public class AllergenFSDao implements AllergenDao{
             }
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                if (br.readLine() == null) {
+                String header = br.readLine(); // Assegni il valore a una variabile
+                if (header == null) {
                     throw new FailedSearchException("Client allergies database file is empty or corrupted");
                 }
 
