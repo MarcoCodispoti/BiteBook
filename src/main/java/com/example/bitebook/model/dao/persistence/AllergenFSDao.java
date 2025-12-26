@@ -22,6 +22,7 @@ public class AllergenFSDao implements AllergenDao{
     private static final String CSV_DELIMITER = ",";
 
 
+
     public List<Allergen> getClientAllergies(Client client) throws FailedSearchException {
         List<Allergen> clientAllergens = new ArrayList<>();
 
