@@ -63,8 +63,7 @@ public class DaoFactory{
             return new AllergenDbDao();
 
         } catch (FailedDatabaseConnectionException _){
-            // Dummy fallback on demoDao -> Allow only login without app crash
-            return new AllergenDemoDao();
+            return new AllergenFSDao();
         }
     }
 
