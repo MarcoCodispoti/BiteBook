@@ -152,7 +152,7 @@ public class UserFsDao implements UserDao{
         List<SpecializationType> specs = new ArrayList<>();
 
         try (InputStream is = getClass().getResourceAsStream(CHEF_SPECIALIZATIONS_FILE_PATH)) {
-            if (is == null) return specs; // Lista vuota se file manca
+            if (is == null) return specs;
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 String header = br.readLine();

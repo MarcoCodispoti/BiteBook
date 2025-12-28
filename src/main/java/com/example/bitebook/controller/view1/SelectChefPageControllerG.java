@@ -79,7 +79,6 @@ public class SelectChefPageControllerG {
         this.cityChefBean = chefBean;
 
         messageLabel.setStyle("-fx-text-fill: black;");
-        messageLabel.setText("Chefs in: " + chefBean.getCity());
 
         try {
             this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
