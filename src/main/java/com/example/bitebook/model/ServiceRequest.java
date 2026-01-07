@@ -1,6 +1,10 @@
 package com.example.bitebook.model;
 
+import com.example.bitebook.model.enums.MenuLevel;
 import com.example.bitebook.model.enums.RequestStatus;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class ServiceRequest{
 
@@ -10,11 +14,16 @@ public class ServiceRequest{
     private Menu menu;
     private int totalPrice;
     private RequestStatus status;
-    private ReservationDetails reservationDetails;
+    private final ReservationDetails reservationDetails;
 
 
     public ServiceRequest(){
-        // Default constructor
+        this.reservationDetails = new ReservationDetails();
+    }
+
+
+    public ServiceRequest(LocalDate date, LocalTime time, String address, int participantsNumber, MenuLevel selectedMenuLevel){
+        this.reservationDetails = new ReservationDetails(date,time,address,participantsNumber,selectedMenuLevel);
     }
 
 
@@ -37,6 +46,5 @@ public class ServiceRequest{
     public void setStatus(RequestStatus status){this.status = status;}
 
     public ReservationDetails getReservationDetails(){return reservationDetails;}
-    public void setReservationDetails(ReservationDetails reservationDetails){this.reservationDetails = reservationDetails;}
-
+    // No setter: reservationDetails is part of a Composition relationship.
 }

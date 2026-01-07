@@ -134,13 +134,20 @@ public class ServiceRequestController {
         if (serviceRequestBean == null) {
             return null;
         }
-        ServiceRequest serviceRequest = new ServiceRequest();
+        ReservationDetailsBean reservationDetailsBean = serviceRequestBean.getReservationDetailsBean();
+
+        ServiceRequest serviceRequest = new ServiceRequest(
+                reservationDetailsBean.getDate(),
+                reservationDetailsBean.getTime(),
+                reservationDetailsBean.getAddress(),
+                reservationDetailsBean.getParticipantNumber(),
+                reservationDetailsBean.getSelectedMenuLevel()
+        );
 
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setClient(convertClientBean(serviceRequestBean.getClientBean()));
         serviceRequest.setChef(convertChefBean(serviceRequestBean.getChefBean()));
         serviceRequest.setMenu(convertMenuBean(serviceRequestBean.getMenuBean()));
-        serviceRequest.setReservationDetails(convertReservationDetailsBean(serviceRequestBean.getReservationDetailsBean()));
         serviceRequest.setStatus(serviceRequestBean.getStatus());
 
         if (serviceRequestBean.getReservationDetailsBean() != null && serviceRequestBean.getMenuBean() != null) {
@@ -195,18 +202,5 @@ public class ServiceRequestController {
     }
 
 
-
-    private ReservationDetails convertReservationDetailsBean(ReservationDetailsBean bean) {
-        if (bean == null) return null;
-        ReservationDetails entity = new ReservationDetails();
-
-        entity.setDate(bean.getDate());
-        entity.setTime(bean.getTime());
-        entity.setParticipantNumber(bean.getParticipantNumber());
-        entity.setAddress(bean.getAddress());
-        entity.setSelectedMenuLevel(bean.getSelectedMenuLevel());
-
-        return entity;
-    }
 
 }

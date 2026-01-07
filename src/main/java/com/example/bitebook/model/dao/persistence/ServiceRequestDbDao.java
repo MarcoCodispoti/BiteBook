@@ -127,15 +127,17 @@ public class ServiceRequestDbDao implements ServiceRequestDao {
         Menu menu = new Menu();
         menu.setName(rs.getString("MenuName"));
         request.setMenu(menu);
-        ReservationDetails details = new ReservationDetails();
+        ReservationDetails details = request.getReservationDetails();
         details.setAddress(rs.getString("Address"));
         details.setParticipantNumber(rs.getInt("ParticipantsNumber"));
-        details.setSelectedMenuLevel(MenuLevel.valueOf(rs.getString("MenuLevel")));
+        String menuLevelStr = rs.getString("MenuLevel");
+        if(menuLevelStr != null) {
+            details.setSelectedMenuLevel(MenuLevel.valueOf(menuLevelStr));
+        }
         Date sqlDate = rs.getDate("Date");
         if (sqlDate != null) details.setDate(sqlDate.toLocalDate());
         Time sqlTime = rs.getTime("Time");
         if (sqlTime != null) details.setTime(sqlTime.toLocalTime());
-        request.setReservationDetails(details);
         serviceRequests.add(request);
     }
 

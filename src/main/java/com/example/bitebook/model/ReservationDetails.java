@@ -19,6 +19,15 @@ public class ReservationDetails{
     }
 
 
+    public ReservationDetails(LocalDate date, LocalTime time, String address, int participantNumber, MenuLevel selectedMenuLevel){
+        this.date = date;
+        this.time = time;
+        this.address = address;
+        this.participantNumber = participantNumber;
+        this.selectedMenuLevel = selectedMenuLevel;
+    }
+
+
     public LocalDate getDate() {return date;}
     public void setDate(LocalDate date) {this.date = date;}
 
