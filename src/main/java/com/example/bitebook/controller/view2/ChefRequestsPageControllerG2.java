@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.controller.application.ManageServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
@@ -25,7 +25,7 @@ public class ChefRequestsPageControllerG2{
     private Label messageLabel;
 
 
-    private final RequestManagerController requestManagerController = new RequestManagerController();
+    private final ManageServiceRequestController manageServiceRequestController = new ManageServiceRequestController();
 
 
 
@@ -87,7 +87,7 @@ public class ChefRequestsPageControllerG2{
         messageLabel.setText("");
 
         try {
-            List<ServiceRequestBean> chefRequestBeans = requestManagerController.getChefRequests();
+            List<ServiceRequestBean> chefRequestBeans = manageServiceRequestController.getChefRequests();
 
             if (chefRequestBeans != null && !chefRequestBeans.isEmpty()) {
                 chefRequestsListView.getItems().addAll(chefRequestBeans);
@@ -125,7 +125,7 @@ public class ChefRequestsPageControllerG2{
         if (selectedBean != null) {
             selectedBean.setStatus(setStatus);
             try {
-                requestManagerController.updateRequestStatus(selectedBean);
+                manageServiceRequestController.updateRequestStatus(selectedBean);
                 refreshRequests();
             } catch (FailedUpdateException e){
                 logger.log(Level.SEVERE, "Error occurred while managing request",e);

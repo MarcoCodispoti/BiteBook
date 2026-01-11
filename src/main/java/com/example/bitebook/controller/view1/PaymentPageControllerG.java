@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,7 +39,7 @@ public class PaymentPageControllerG {
     private Label ingredientsLevelLabel;
 
 
-    private final ServiceRequestController serviceRequestController = new ServiceRequestController();
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private MenuBean requestMenuBean;
     private ReservationDetailsBean requestReservationDetailsBean;
     private List<AllergenBean> reservationAllergenBeans;
@@ -52,13 +52,13 @@ public class PaymentPageControllerG {
         messageLabel.setText("");
 
         try {
-            ServiceRequestBean serviceRequestBean = serviceRequestController.createServiceRequest(
+            ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(
                     requestMenuBean,
                     requestReservationDetailsBean
             );
             if (serviceRequestBean != null){
                 serviceRequestBean.validate();
-                serviceRequestController.sendServiceRequest(serviceRequestBean);
+                sendServiceRequestController.sendServiceRequest(serviceRequestBean);
                 FxmlLoader.setPage("ConfirmationPage");
             } else{
                 messageLabel.setText("System Error: Could not create request");
@@ -111,7 +111,7 @@ public class PaymentPageControllerG {
             ingredientsLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
         }
 
-        double totalPrice = serviceRequestController.calculateTotalPrice(reservationDetailsBean, menuBean);
+        int totalPrice = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, menuBean);
         totalPriceLabel.setText(String.valueOf(totalPrice));
     }
 

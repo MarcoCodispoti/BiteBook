@@ -1,7 +1,7 @@
 package com.example.bitebook.controller.view1;
 
 import com.example.bitebook.controller.application.LoginController;
-import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.controller.application.ManageServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import com.example.bitebook.util.ViewsResourcesPaths;
@@ -28,7 +28,7 @@ public class ChefHomePageControllerG {
     private Label messageLabel;
 
 
-    private final RequestManagerController requestManagerController = new RequestManagerController();
+    private final ManageServiceRequestController manageServiceRequestController = new ManageServiceRequestController();
     private final LoginController loginController = new LoginController();
     private List<ServiceRequestBean> approvedServiceRequestBeans;
 
@@ -67,7 +67,7 @@ public class ChefHomePageControllerG {
         messageLabel.setText("");
         approvedRequestsVBox.getChildren().clear();
         try {
-            this.approvedServiceRequestBeans = requestManagerController.getApprovedServiceRequests();
+            this.approvedServiceRequestBeans = manageServiceRequestController.getApprovedServiceRequests();
             populateRequests();
         } catch (FailedSearchException e) {
             displayMessage("System Error: Unable to load requests.");

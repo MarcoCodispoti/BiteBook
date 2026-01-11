@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,7 +44,7 @@ public class PaymentPageControllerG2 {
     private Label messageLabel;
 
 
-    private final ServiceRequestController serviceRequestController = new ServiceRequestController();
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private ChefBean chefBean;
     private MenuBean selectedMenuBean;
     private ReservationDetailsBean reservationDetailsBean;
@@ -56,11 +56,11 @@ public class PaymentPageControllerG2 {
         messageLabel.setVisible(false);
 
         try {
-            ServiceRequestBean serviceRequestBean = serviceRequestController.createServiceRequest(selectedMenuBean, reservationDetailsBean);
+            ServiceRequestBean serviceRequestBean = sendServiceRequestController.createServiceRequest(selectedMenuBean, reservationDetailsBean);
 
             if (serviceRequestBean != null) {
                 serviceRequestBean.validate();
-                serviceRequestController.sendServiceRequest(serviceRequestBean);
+                sendServiceRequestController.sendServiceRequest(serviceRequestBean);
 
                 confirmationAnchorPane.setVisible(true);
                 paymentAnchorPane.setDisable(true);
@@ -124,7 +124,7 @@ public class PaymentPageControllerG2 {
             menuLevelLabel.setText(reservationDetailsBean.getSelectedMenuLevel().toString().toLowerCase());
         }
 
-        double total = serviceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
+        int total = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
         totalPriceLabel.setText(total + " €");
     }
 

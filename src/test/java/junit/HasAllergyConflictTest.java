@@ -6,7 +6,7 @@ package junit;
  */
 
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.AllergenBean;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HasAllergyConflictTest {
 
 
-    private final ServiceRequestController controller = new ServiceRequestController();
+    private final SendServiceRequestController controller = new SendServiceRequestController();
 
 
     @AfterEach
@@ -34,7 +34,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("SAFETY: Incompatibility Detection (Allergic User vs Dangerous Menu)")
-    void testIncompatibility_Detected(){
+    void testHasAllergyConflict_Detected(){
         Allergen clientAllergen = new Allergen(1, "Arachidi");
 
         Client loggedClient = new Client();
@@ -55,7 +55,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("SAFETY: No Incompatibility (Safe Menu)")
-    void testIncompatibility_SafeMenu(){
+    void testHasAllergyConflict_SafeMenu(){
         Allergen clientAllergen = new Allergen(5, "Glutine");
         Client loggedClient = new Client();
         List<Allergen> clientAllergies = new ArrayList<>();
@@ -74,7 +74,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("EDGE CASE: Menu without allergens -> Returns False")
-    void testIncompatibility_EmptyMenu(){
+    void testHasAllergyConflict_EmptyMenu(){
         Client loggedClient = new Client();
         List<Allergen> clientAllergies = new ArrayList<>();
         clientAllergies.add(new Allergen(1, "Arachidi"));
@@ -91,7 +91,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("EDGE CASE: Menu List is NULL -> Exception 'Error while obtaining menu allergens'")
-    void testIncompatibility_NullMenuInput(){
+    void testHasAllergyConflict_NullMenuInput(){
         IllegalStateException e = assertThrows(IllegalStateException.class, () ->
                 controller.hasAllergyConflict(null)
         );
@@ -102,7 +102,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("EDGE CASE: User not logged in -> Exception 'Unable to get client info'")
-    void testIncompatibility_NoUserLogged(){
+    void testHasAllergyConflict_NoUserLogged(){
         LoggedUser.clear();
 
         List<AllergenBean> menuAllergens = new ArrayList<>();
@@ -118,7 +118,7 @@ class HasAllergyConflictTest {
 
     @Test
     @DisplayName("DATA CORRUPTION: User logged in but allergies list is NULL -> Exception 'User data error'")
-    void testIncompatibility_UserAllergiesListIsNull(){
+    void testHasAllergyConflict_UserAllergiesListIsNull(){
         Client corruptedClient = new Client();
         corruptedClient.setAllergies(null); // Corrupted data
 

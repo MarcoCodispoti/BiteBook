@@ -1,7 +1,7 @@
 package com.example.bitebook.controller.view2;
 
 import com.example.bitebook.controller.application.LoginController;
-import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.controller.application.ManageServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.fxml.FXML;
@@ -24,7 +24,7 @@ public class ChefHomePageControllerG2{
     private ListView<ServiceRequestBean> approvedRequestsListView;
 
 
-    private final RequestManagerController requestManagerController = new RequestManagerController();
+    private final ManageServiceRequestController manageServiceRequestController = new ManageServiceRequestController();
 
 
 
@@ -82,7 +82,7 @@ public class ChefHomePageControllerG2{
         messageLabel.setText("");
 
         try {
-            List<ServiceRequestBean> approvedRequests = requestManagerController.getApprovedServiceRequests();
+            List<ServiceRequestBean> approvedRequests = manageServiceRequestController.getApprovedServiceRequests();
 
             if (approvedRequests == null || approvedRequests.isEmpty()) {
                 displayMessage("No approved requests found");

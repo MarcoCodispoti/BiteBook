@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
@@ -58,7 +58,7 @@ public class ServiceRequestPageControllerG{
     private AnchorPane allergenWarningAnchorPane;
 
 
-    private final ServiceRequestController serviceRequestController = new ServiceRequestController();
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private boolean ignoreAllergenWarning = false;
     private ChefBean menuChefBean;
     private MenuBean selectedMenuBean;
@@ -77,7 +77,7 @@ public class ServiceRequestPageControllerG{
 
         boolean hasIncompatibility;
         try {
-            hasIncompatibility = serviceRequestController.hasAllergyConflict(menuAllergenBeans);
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(menuAllergenBeans);
         }catch(IllegalStateException e){
             logger.log(Level.SEVERE, "System Error: Unable to check incompatibilities", e);
             displayError("Error: Unable to check incompatibility");
@@ -238,7 +238,7 @@ public class ServiceRequestPageControllerG{
                 tempBean.setParticipantNumber(participants);
                 tempBean.setSelectedMenuLevel(level);
 
-                int price = serviceRequestController.calculateTotalPrice(tempBean, selectedMenuBean);
+                int price = sendServiceRequestController.calculateTotalPrice(tempBean, selectedMenuBean);
                 totalPriceLabel.setText(price + " €");
             } catch (NumberFormatException _) {
                 totalPriceLabel.setText("--");
@@ -270,7 +270,7 @@ public class ServiceRequestPageControllerG{
 
     private void fillIngredientsLevelComboBox() {
         try {
-            selectedMenuBean = serviceRequestController.populateMenuSurcharges(selectedMenuBean);
+            selectedMenuBean = sendServiceRequestController.populateMenuSurcharges(selectedMenuBean);
 
             ingredientsLevelComboBox.getItems().clear();
             ingredientsLevelComboBox.getItems().addAll(MenuLevel.BASE, MenuLevel.PREMIUM, MenuLevel.LUXE);

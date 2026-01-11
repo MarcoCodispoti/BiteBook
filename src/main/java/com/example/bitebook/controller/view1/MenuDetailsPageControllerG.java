@@ -60,7 +60,7 @@ public class MenuDetailsPageControllerG{
     private Label loginMessageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
     private ChefBean menusChefBean;
     private MenuBean selectedMenuBean;
     private List<DishBean> courseBeans = new ArrayList<>();
@@ -101,7 +101,7 @@ public class MenuDetailsPageControllerG{
 
     @FXML
     void handleConfirmMenu() {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             ServiceRequestPageControllerG controller = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
             if (controller != null) {
                 controller.initData(selectedMenuBean, menuAllergenBeans, menusChefBean);
@@ -168,8 +168,8 @@ public class MenuDetailsPageControllerG{
 
 
         try {
-            this.courseBeans = explorationController.getCourses(selectedMenuBean);
-            this.menuAllergenBeans = explorationController.getMenuAllergens(courseBeans);
+            this.courseBeans = menuExplorationController.getCourses(selectedMenuBean);
+            this.menuAllergenBeans = menuExplorationController.getMenuAllergens(courseBeans);
 
             populateCourses();
             allergensLabel.setText(formatAllergensList());
@@ -245,7 +245,7 @@ public class MenuDetailsPageControllerG{
 
 
     private void navigateToIfLogged(String pageName) {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayMessage("You must be logged in to access this page!");

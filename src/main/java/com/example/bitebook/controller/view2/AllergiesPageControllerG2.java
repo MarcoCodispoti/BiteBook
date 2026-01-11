@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.AllergiesController;
+import com.example.bitebook.controller.application.ManageAllergyController;
 import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedRemoveException;
 import com.example.bitebook.exceptions.FailedSearchException;
@@ -27,7 +27,7 @@ public class AllergiesPageControllerG2{
     private ListView<AllergenBean> allergensListView;
 
 
-    private final AllergiesController allergiesController = new AllergiesController();
+    private final ManageAllergyController manageAllergyController = new ManageAllergyController();
     private List<AllergenBean> clientAllergyBeans = new ArrayList<>();
     private List<AllergenBean> serverAllergyBeans = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class AllergiesPageControllerG2{
         }
 
         try {
-            allergiesController.removeClientAllergy(selectedBean);
+            manageAllergyController.removeClientAllergy(selectedBean);
             refreshData();
         } catch (FailedRemoveException e){
             logger.log(Level.WARNING, "Error while removing allergy.", e);
@@ -80,7 +80,7 @@ public class AllergiesPageControllerG2{
         }
 
         try {
-            allergiesController.insertAllergy(selectedBean);
+            manageAllergyController.insertAllergy(selectedBean);
             refreshData();
         } catch (FailedInsertException e){
             logger.log(Level.WARNING, "Error while adding allergy.", e);
@@ -103,8 +103,8 @@ public class AllergiesPageControllerG2{
         messageLabel.setText("");
 
         try {
-            this.clientAllergyBeans = allergiesController.getClientAllergies();
-            this.serverAllergyBeans = allergiesController.getAllergens();
+            this.clientAllergyBeans = manageAllergyController.getClientAllergies();
+            this.serverAllergyBeans = manageAllergyController.getAllergens();
 
             populateLists();
 

@@ -24,7 +24,7 @@ public class ClientHomePageControllerG2{
     private Label messageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
 
 
 
@@ -71,7 +71,7 @@ public class ClientHomePageControllerG2{
             return;
         }
         try {
-            boolean chefFound = explorationController.areChefsAvailableInCity(searchBean);
+            boolean chefFound = menuExplorationController.areChefsAvailableInCity(searchBean);
 
             if (!chefFound) {
                 displayMessage("No chef found in the inserted city!");
@@ -91,7 +91,7 @@ public class ClientHomePageControllerG2{
 
     private void navigateToIfLogged(String pageName, String errorMessage) {
         messageLabel.setVisible(false);
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
             displayMessage(errorMessage);

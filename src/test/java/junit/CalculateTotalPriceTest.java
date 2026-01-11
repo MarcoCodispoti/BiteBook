@@ -1,6 +1,6 @@
 package junit;
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.bean.ReservationDetailsBean;
 import com.example.bitebook.model.enums.MenuLevel;
@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CalculateTotalPriceTest {
 
 
-    private final ServiceRequestController controller = new ServiceRequestController();
+    private final SendServiceRequestController controller = new SendServiceRequestController();
 
 
     @Test
     @DisplayName("Correct Calculation: BASE Level (No Surcharge)")
-    void testCalculate_Base() {
+    void testCalculateTotalPrice_Base() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50); // 50€
@@ -42,7 +42,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Correct Calculation: PREMIUM Level (+Surcharge)")
-    void testCalculate_Premium() {
+    void testCalculateTotalPrice_Premium() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
@@ -61,7 +61,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Correct Calculation: LUXE Level (+Surcharge)")
-    void testCalculate_Luxe() {
+    void testCalculateTotalPrice_Luxe() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
@@ -80,7 +80,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Error: Negative Participant Number")
-    void testCalculate_NegativeParticipants() {
+    void testCalculateTotalPrice_NegativeParticipants() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
@@ -95,7 +95,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Error: Null Menu Level")
-    void testCalculate_NullLevel(){
+    void testCalculateTotalPrice_NullLevel(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
 
@@ -108,7 +108,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Boundary: 0 Participants -> Logical Error")
-    void testCalculate_ZeroParticipants(){
+    void testCalculateTotalPrice_ZeroParticipants(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
 
@@ -122,7 +122,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Boundary: Missing Menu Level Surcharges")
-    void testCalculate_missingSurchargePrices(){
+    void testCalculateTotalPrice_missingSurchargePrices(){
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);
         // missing surcharges
@@ -137,7 +137,7 @@ class CalculateTotalPriceTest {
 
     @Test
     @DisplayName("Boundary: Luxe Surcharge Lower Than Premium Surcharge")
-    void testCalculate_wrongSurchargePrices() {
+    void testCalculateTotalPrice_wrongSurchargePrices() {
         // ARRANGE
         MenuBean menu = new MenuBean();
         menu.setPricePerPerson(50);

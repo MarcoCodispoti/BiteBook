@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.controller.application.ManageServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ public class ClientRequestsPageControllerG2{
     private Label messageLabel;
 
 
-    private final RequestManagerController requestManagerController = new RequestManagerController();
+    private final ManageServiceRequestController manageServiceRequestController = new ManageServiceRequestController();
 
 
 
@@ -73,7 +73,7 @@ public class ClientRequestsPageControllerG2{
         if (messageLabel != null) messageLabel.setText("");
 
         try {
-            List<ServiceRequestBean> clientRequests = requestManagerController.getClientRequests();
+            List<ServiceRequestBean> clientRequests = manageServiceRequestController.getClientRequests();
 
             if (clientRequests != null && !clientRequests.isEmpty()) {
                 clientRequestsListView.getItems().addAll(clientRequests);

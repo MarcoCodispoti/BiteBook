@@ -46,7 +46,7 @@ public class SelectMenuPageControllerG2{
     private Label loginMessageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
@@ -118,7 +118,7 @@ public class SelectMenuPageControllerG2{
 
     @FXML
     void handleBook(){
-        if (!explorationController.isLoggedClient()) {
+        if (!menuExplorationController.isLoggedClient()) {
             setLoginPopup();
             return;
         }
@@ -151,7 +151,7 @@ public class SelectMenuPageControllerG2{
 
     public void initData(ChefBean chefBean) {
         try {
-            List<ChefBean> chefsInCity = explorationController.getChefsInCity(chefBean);
+            List<ChefBean> chefsInCity = menuExplorationController.getChefsInCity(chefBean);
 
             chefComboBox.getItems().clear();
             if (chefsInCity != null) {
@@ -174,7 +174,7 @@ public class SelectMenuPageControllerG2{
 
         if (chef != null) {
             try {
-                List<MenuBean> chefMenus = explorationController.getChefMenus(chef);
+                List<MenuBean> chefMenus = menuExplorationController.getChefMenus(chef);
                 if (chefMenus != null) {
                     menuComboBox.getItems().addAll(chefMenus);
                 }
@@ -193,10 +193,10 @@ public class SelectMenuPageControllerG2{
         allergensLabel.setText("");
         if (menu != null) {
             try {
-                List<DishBean> dishes = explorationController.getCourses(menu);
+                List<DishBean> dishes = menuExplorationController.getCourses(menu);
                 if (dishes != null) {
                     menuDetailsListView.getItems().addAll(dishes);
-                    this.menuAllergenBeans = explorationController.getMenuAllergens(dishes);
+                    this.menuAllergenBeans = menuExplorationController.getMenuAllergens(dishes);
                     allergensLabel.setText(formatAllergensList(menuAllergenBeans));
                 }
             } catch (FailedSearchException e){
@@ -273,7 +273,7 @@ public class SelectMenuPageControllerG2{
 
 
     private void navigateToIfLogged(String pageName, String errorMsg) {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
             displayMesssage(errorMsg);

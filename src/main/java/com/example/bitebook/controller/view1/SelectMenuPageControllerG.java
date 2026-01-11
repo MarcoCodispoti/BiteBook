@@ -29,7 +29,7 @@ public class SelectMenuPageControllerG{
     private Label messageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
     private ChefBean selectChefBean;
     private MenuBean selectedMenuBean;
     private List<MenuBean> chefMenuBeans = new ArrayList<>();
@@ -87,7 +87,7 @@ public class SelectMenuPageControllerG{
 
 
     private void navigateToIfLogged(String pageName) {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayError("You must be logged in to access this page!");
@@ -102,7 +102,7 @@ public class SelectMenuPageControllerG{
         messageLabel.setVisible(false);
 
         try {
-            this.chefMenuBeans = explorationController.getChefMenus(chefBean);
+            this.chefMenuBeans = menuExplorationController.getChefMenus(chefBean);
             if (this.chefMenuBeans == null || this.chefMenuBeans.isEmpty()) {
                 displayError("This chef has no menus available.");
                 return;

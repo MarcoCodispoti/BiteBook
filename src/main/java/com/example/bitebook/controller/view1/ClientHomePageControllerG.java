@@ -24,7 +24,7 @@ public class ClientHomePageControllerG{
     private Label messageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
     private final LoginController loginController = new LoginController();
 
 
@@ -68,7 +68,7 @@ public class ClientHomePageControllerG{
             return;
         }
         try {
-            boolean chefFound = explorationController.areChefsAvailableInCity(chefBean);
+            boolean chefFound = menuExplorationController.areChefsAvailableInCity(chefBean);
             if (!chefFound) {
                 displayMessage("No chef found in " + chefBean.getCity() + "!");
                 return;
@@ -86,7 +86,7 @@ public class ClientHomePageControllerG{
 
 
     private boolean checkLoginStatus() {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             return true;
         } else {
             displayMessage("You must be logged in");

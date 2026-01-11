@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.AllergiesController;
+import com.example.bitebook.controller.application.ManageAllergyController;
 import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedRemoveException;
 import com.example.bitebook.exceptions.FailedSearchException;
@@ -31,7 +31,7 @@ public class AllergiesPageControllerG{
     private Label messageLabel;
 
 
-    private final AllergiesController allergiesController = new AllergiesController();
+    private final ManageAllergyController manageAllergyController = new ManageAllergyController();
     private Parent selectedCardUi;
     private AllergenBean selectedAllergenBean;
 
@@ -58,7 +58,7 @@ public class AllergiesPageControllerG{
     void handleRemoveAllergy() {
         if (selectedAllergenBean != null) {
             try {
-                allergiesController.removeClientAllergy(selectedAllergenBean);
+                manageAllergyController.removeClientAllergy(selectedAllergenBean);
                 refreshPage();
             } catch (FailedRemoveException e) {
                 displayError("Error while removing allergy");
@@ -81,7 +81,7 @@ public class AllergiesPageControllerG{
         }
 
         try {
-            allergiesController.insertAllergy(newAllergyBean);
+            manageAllergyController.insertAllergy(newAllergyBean);
             refreshPage();
         } catch (FailedInsertException e) {
             displayError("Error while inserting allergy: ");
@@ -113,7 +113,7 @@ public class AllergiesPageControllerG{
 
     private void populateClientAllergies(){
         allergiesVBox.getChildren().clear();
-        List<AllergenBean> clientAllergyBeans = allergiesController.getClientAllergies();
+        List<AllergenBean> clientAllergyBeans = manageAllergyController.getClientAllergies();
 
         if(clientAllergyBeans == null || clientAllergyBeans.isEmpty()){
             displayError("The client has no allergies");
@@ -158,7 +158,7 @@ public class AllergiesPageControllerG{
 
     private void fillSelectAllergyComboBox() {
         try {
-            List<AllergenBean> allergenListBeans = allergiesController.getAllergens();
+            List<AllergenBean> allergenListBeans = manageAllergyController.getAllergens();
             selectAllergyComboBox.getItems().clear();
             if (allergenListBeans != null){
                 selectAllergyComboBox.getItems().addAll(allergenListBeans);

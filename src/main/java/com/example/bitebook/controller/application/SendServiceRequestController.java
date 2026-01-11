@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ServiceRequestController {
+public class SendServiceRequestController {
 
 
     public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {

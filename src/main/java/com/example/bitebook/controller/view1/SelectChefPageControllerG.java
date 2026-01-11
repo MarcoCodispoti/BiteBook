@@ -27,7 +27,7 @@ public class SelectChefPageControllerG {
     private Label messageLabel;
 
 
-    private final ExplorationController explorationController = new ExplorationController();
+    private final ExplorationController menuExplorationController = new ExplorationController();
     private Parent selectedCardUI;
     private ChefBean cityChefBean;
     private ChefBean selectedChefBean;
@@ -81,7 +81,7 @@ public class SelectChefPageControllerG {
         messageLabel.setStyle("-fx-text-fill: black;");
 
         try {
-            this.chefInCityBeans = explorationController.getChefsInCity(this.cityChefBean);
+            this.chefInCityBeans = menuExplorationController.getChefsInCity(this.cityChefBean);
 
             if (this.chefInCityBeans == null || this.chefInCityBeans.isEmpty()) {
                 displayError("No chefs found in this city.");
@@ -134,7 +134,7 @@ public class SelectChefPageControllerG {
 
 
     private void navigateToIfLogged(String pageName) {
-        if (explorationController.isLoggedClient()) {
+        if (menuExplorationController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayError("You must be logged in to access this page!");

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AllergiesController{
+public class ManageAllergyController {
 
 
     public List<AllergenBean> getClientAllergies(){

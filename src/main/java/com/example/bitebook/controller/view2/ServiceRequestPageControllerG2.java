@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ServiceRequestController;
+import com.example.bitebook.controller.application.SendServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.bean.ChefBean;
@@ -25,7 +25,7 @@ public class ServiceRequestPageControllerG2{
     private static final Logger logger = Logger.getLogger(ServiceRequestPageControllerG2.class.getName());
 
 
-    private final ServiceRequestController serviceRequestController = new ServiceRequestController();
+    private final SendServiceRequestController sendServiceRequestController = new SendServiceRequestController();
     private final ReservationDetailsBean reservationDetailsBean = new ReservationDetailsBean();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
@@ -65,7 +65,7 @@ public class ServiceRequestPageControllerG2{
 
         boolean hasIncompatibility;
         try{
-            hasIncompatibility = serviceRequestController.hasAllergyConflict(selectedMenuAllergenBeans);
+            hasIncompatibility = sendServiceRequestController.hasAllergyConflict(selectedMenuAllergenBeans);
         } catch (IllegalStateException e){
             logger.log(Level.SEVERE, "Safety Warning: Error while confronting ", e);
             displayMessage("System Error: Unable to check allergies incompatibility");
@@ -178,7 +178,7 @@ public class ServiceRequestPageControllerG2{
 
     private void loadMenuSurcharges() {
         try {
-            this.selectedMenuBean = serviceRequestController.populateMenuSurcharges(selectedMenuBean);
+            this.selectedMenuBean = sendServiceRequestController.populateMenuSurcharges(selectedMenuBean);
             premiumLevelLabel.setText("+ " + selectedMenuBean.getPremiumLevelSurcharge() + " €");
             luxeLevelLabel.setText("+ " + selectedMenuBean.getLuxeLevelSurcharge() + " €");
         } catch (FailedSearchException e){
@@ -230,7 +230,7 @@ public class ServiceRequestPageControllerG2{
 
     private void updateTotalPrice() {
         if (selectedMenuBean != null) {
-            int price = serviceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
+            int price = sendServiceRequestController.calculateTotalPrice(reservationDetailsBean, selectedMenuBean);
             totalPriceLabel.setText(price + " €");
         }
     }

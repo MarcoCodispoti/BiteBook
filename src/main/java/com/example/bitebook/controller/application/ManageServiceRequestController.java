@@ -10,7 +10,7 @@ import com.example.bitebook.model.session.LoggedUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestManagerController {
+public class ManageServiceRequestController {
 
 
     public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {

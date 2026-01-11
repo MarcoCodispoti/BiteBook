@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.RequestManagerController;
+import com.example.bitebook.controller.application.ManageServiceRequestController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ServiceRequestBean;
 import com.example.bitebook.util.ViewsResourcesPaths;
@@ -44,10 +44,10 @@ public class ClientRequestsPageControllerG{
 
     @FXML
     public void initialize(){
-        RequestManagerController requestManagerController = new RequestManagerController();
+        ManageServiceRequestController manageServiceRequestController = new ManageServiceRequestController();
 
         try {
-            this.serviceRequestBeans = requestManagerController.getClientRequests();
+            this.serviceRequestBeans = manageServiceRequestController.getClientRequests();
             if (this.serviceRequestBeans != null && !this.serviceRequestBeans.isEmpty()) {
                 populateRequests();
             } else {
