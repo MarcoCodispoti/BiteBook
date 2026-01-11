@@ -49,4 +49,3 @@ build/
 /lib/libprism_es2.dylib
 /lib/libprism_sw.dylib
 /lib/libjfxwebkit.dylib
-/src/main/resources/com/example/bitebook/Database/BiteBookDBScript.sql
