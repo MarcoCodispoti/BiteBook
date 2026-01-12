@@ -23,11 +23,11 @@ import java.util.Map;
 public class ExplorationController {
 
 
-    public boolean areChefsAvailableInCity(ChefBean chefBean) throws FailedSearchException {
+    public boolean areChefsAvailableInCity(String insertedCity) throws FailedSearchException {
 
         ChefDao chefDao = DaoFactory.getChefDao();
         try {
-            chefDao.findCityChefs(chefBean.getCity());
+            chefDao.findCityChefs(insertedCity);
             return true;
         } catch (NoChefInCityException _){
             return false;
@@ -42,10 +42,10 @@ public class ExplorationController {
 
 
 
-    public List<ChefBean> getChefsInCity(ChefBean chefBean) throws FailedSearchException {
+    public List<ChefBean> getChefsInCity(String selectedCity) throws FailedSearchException {
         List<ChefBean> chefInCityBeans = new ArrayList<>();
 
-        List<Chef> chefsInCity = DaoFactory.getChefDao().getChefsInCity(chefBean.getCity());
+        List<Chef> chefsInCity = DaoFactory.getChefDao().getChefsInCity(selectedCity);
         if (chefsInCity != null) {
             for (Chef chef : chefsInCity) {
                 chefInCityBeans.add(new ChefBean(chef));
@@ -87,7 +87,7 @@ public class ExplorationController {
 
 
 
-    public List<AllergenBean> getMenuAllergens(List<DishBean> courseBeans) {
+    public List<AllergenBean> getCoursesAllergens(List<DishBean> courseBeans) {
         Map<Integer, AllergenBean> uniqueAllergensMap = new HashMap<>();
 
         if (courseBeans != null) {

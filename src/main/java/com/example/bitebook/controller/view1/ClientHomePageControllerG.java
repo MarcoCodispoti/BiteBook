@@ -58,8 +58,9 @@ public class ClientHomePageControllerG{
     @FXML
     void handleFindChefs(){
         displayMessage("");
+        String insertedCity = insertCityTextField.getText();
         ChefBean chefBean = new ChefBean();
-        chefBean.setCity(insertCityTextField.getText());
+        chefBean.setCity(insertedCity);
         if(!checkCityField()){
             return;
         }
@@ -68,14 +69,14 @@ public class ClientHomePageControllerG{
             return;
         }
         try {
-            boolean chefFound = menuExplorationController.areChefsAvailableInCity(chefBean);
+            boolean chefFound = menuExplorationController.areChefsAvailableInCity(insertedCity);
             if (!chefFound) {
                 displayMessage("No chef found in " + chefBean.getCity() + "!");
                 return;
             }
             SelectChefPageControllerG nextController = FxmlLoader.setPageAndReturnController("SelectChefPage");
             if (nextController != null){
-                nextController.initData(chefBean);
+                nextController.initData(insertedCity);
             }
         } catch (FailedSearchException e){
             displayMessage("System Error while searching.");

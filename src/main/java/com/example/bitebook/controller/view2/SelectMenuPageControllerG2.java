@@ -151,7 +151,7 @@ public class SelectMenuPageControllerG2{
 
     public void initData(ChefBean chefBean) {
         try {
-            List<ChefBean> chefsInCity = menuExplorationController.getChefsInCity(chefBean);
+            List<ChefBean> chefsInCity = menuExplorationController.getChefsInCity(chefBean.getCity());
 
             chefComboBox.getItems().clear();
             if (chefsInCity != null) {
@@ -196,7 +196,7 @@ public class SelectMenuPageControllerG2{
                 List<DishBean> dishes = menuExplorationController.getCourses(menu);
                 if (dishes != null) {
                     menuDetailsListView.getItems().addAll(dishes);
-                    this.menuAllergenBeans = menuExplorationController.getMenuAllergens(dishes);
+                    this.menuAllergenBeans = menuExplorationController.getCoursesAllergens(dishes);
                     allergensLabel.setText(formatAllergensList(menuAllergenBeans));
                 }
             } catch (FailedSearchException e){

@@ -44,7 +44,7 @@ public class SelectMenuPageControllerG{
     void handleBackToChefs() {
         SelectChefPageControllerG controller = FxmlLoader.setPageAndReturnController("SelectChefPage");
         if (controller != null) {
-            controller.initData(selectChefBean);
+            controller.initData(selectChefBean.getCity());
         }
     }
 

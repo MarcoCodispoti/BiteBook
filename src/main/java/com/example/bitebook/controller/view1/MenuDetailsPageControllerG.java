@@ -63,7 +63,7 @@ public class MenuDetailsPageControllerG{
     private final ExplorationController menuExplorationController = new ExplorationController();
     private ChefBean menusChefBean;
     private MenuBean selectedMenuBean;
-    private List<DishBean> courseBeans = new ArrayList<>();
+    private List<DishBean> menuCoursesBeans = new ArrayList<>();
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
 
 
@@ -168,8 +168,8 @@ public class MenuDetailsPageControllerG{
 
 
         try {
-            this.courseBeans = menuExplorationController.getCourses(selectedMenuBean);
-            this.menuAllergenBeans = menuExplorationController.getMenuAllergens(courseBeans);
+            this.menuCoursesBeans = menuExplorationController.getCourses(selectedMenuBean);
+            this.menuAllergenBeans = menuExplorationController.getCoursesAllergens(menuCoursesBeans);
 
             populateCourses();
             allergensLabel.setText(formatAllergensList());
@@ -184,11 +184,11 @@ public class MenuDetailsPageControllerG{
     private void populateCourses() {
         coursesVBox.getChildren().clear();
 
-        if (courseBeans == null || courseBeans.isEmpty()) {
+        if (menuCoursesBeans == null || menuCoursesBeans.isEmpty()) {
             return;
         }
 
-        for (DishBean dishBean : courseBeans) {
+        for (DishBean dishBean : menuCoursesBeans) {
             try {
                 FXMLLoader cardLoader = new FXMLLoader(getClass().getResource(ViewsResourcesPaths.DISH_CARD_PATH));
                 Parent dishCard = cardLoader.load();

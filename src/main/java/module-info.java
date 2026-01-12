@@ -2,6 +2,8 @@ module com.example.bitebook {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires java.sql;
+    requires mysql.connector.j;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -12,7 +14,6 @@ module com.example.bitebook {
     requires com.almasb.fxgl.all;
     requires javafx.graphics;
     requires java.desktop;
-    requires java.sql;
     requires javafx.base;
     requires java.logging;
 

@@ -71,7 +71,7 @@ public class ClientHomePageControllerG2{
             return;
         }
         try {
-            boolean chefFound = menuExplorationController.areChefsAvailableInCity(searchBean);
+            boolean chefFound = menuExplorationController.areChefsAvailableInCity(cityInput);
 
             if (!chefFound) {
                 displayMessage("No chef found in the inserted city!");

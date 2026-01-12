@@ -29,7 +29,7 @@ public class SelectChefPageControllerG {
 
     private final ExplorationController menuExplorationController = new ExplorationController();
     private Parent selectedCardUI;
-    private ChefBean cityChefBean;
+    private String selectedCity;
     private ChefBean selectedChefBean;
     private List<ChefBean> chefInCityBeans = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class SelectChefPageControllerG {
 
         SelectMenuPageControllerG controller = FxmlLoader.setPageAndReturnController("SelectMenuPage");
         if (controller != null) {
-            selectedChefBean.setCity(cityChefBean.getCity());
+            selectedChefBean.setCity(selectedCity);
             controller.initData(selectedChefBean);
         }
     }
@@ -75,13 +75,13 @@ public class SelectChefPageControllerG {
 
 
 
-    public void initData(ChefBean chefBean) {
-        this.cityChefBean = chefBean;
+    public void initData(String insertedCity) {
+        this.selectedCity = insertedCity;
 
         messageLabel.setStyle("-fx-text-fill: black;");
 
         try {
-            this.chefInCityBeans = menuExplorationController.getChefsInCity(this.cityChefBean);
+            this.chefInCityBeans = menuExplorationController.getChefsInCity(this.selectedCity);
 
             if (this.chefInCityBeans == null || this.chefInCityBeans.isEmpty()) {
                 displayError("No chefs found in this city.");
