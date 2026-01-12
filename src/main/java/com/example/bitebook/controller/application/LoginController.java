@@ -25,7 +25,7 @@ public class LoginController{
         Role role = checkCredentials(loginBean.getEmail(), loginBean.getPassword());
 
         if (role != Role.CLIENT) {
-            throw new WrongCredentialsException("Access denied: You are not a Client");
+            throw new WrongCredentialsException("Invalid credentials");
         }
 
         loadUserAndSetSession(role, loginBean);
