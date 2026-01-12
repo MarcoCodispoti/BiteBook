@@ -19,7 +19,7 @@ public class ChefDemoDao implements ChefDao{
 
 
     static{
-        Chef c1 = new Chef(1, "Alessandro", "Borghese", CookingStyle.MODERN, "Roma");
+        Chef c1 = new Chef(1, "Alessandro", "Borghese", CookingStyle.MODERN, "Rome");
         List<SpecializationType> specs1 = new ArrayList<>();
         specs1.add(SpecializationType.SEAFOOD);
         specs1.add(SpecializationType.VEGAN);
@@ -27,7 +27,7 @@ public class ChefDemoDao implements ChefDao{
         chefsMap.put(1, c1);
 
 
-        Chef c2 = new Chef(2, "Antonino", "Cannavacciuolo", CookingStyle.CLASSIC, "Napoli");
+        Chef c2 = new Chef(2, "Antonino", "Cannavacciuolo", CookingStyle.CLASSIC, "Naples");
         List<SpecializationType> specs2 = new ArrayList<>();
         specs2.add(SpecializationType.ITALIAN);
         specs2.add(SpecializationType.SEAFOOD);
@@ -35,7 +35,7 @@ public class ChefDemoDao implements ChefDao{
         chefsMap.put(2, c2);
 
 
-        Chef c3 = new Chef(3, "Carlo", "Cracco", CookingStyle.FUSION, "Milano");
+        Chef c3 = new Chef(3, "Carlo", "Cracco", CookingStyle.FUSION, "Milan");
         List<SpecializationType> specs3 = new ArrayList<>();
         specs3.add(SpecializationType.JAPANESE);
         c3.setSpecializations(specs3);

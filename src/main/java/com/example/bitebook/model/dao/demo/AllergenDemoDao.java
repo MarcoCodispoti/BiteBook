@@ -19,25 +19,25 @@ public class AllergenDemoDao implements AllergenDao{
 
 
     static {
-        Allergen glutine = new Allergen(1, "Glutine");
-        Allergen lattosio = new Allergen(2, "Lattosio");
-        Allergen crostacei = new Allergen(3, "Crostacei");
-        Allergen uova = new Allergen(4, "Uova");
-        Allergen arachidi = new Allergen(5, "Arachidi");
+        Allergen gluten = new Allergen(1, "Gluten");
+        Allergen lactose = new Allergen(2, "Lactose");
+        Allergen crustaceans = new Allergen(3, "Crustaceans");
+        Allergen egg = new Allergen(4, "Egg");
+        Allergen peanuts = new Allergen(5, "peanuts");
 
-        allAllergensMap.put(1, glutine);
-        allAllergensMap.put(2, lattosio);
-        allAllergensMap.put(3, crostacei);
-        allAllergensMap.put(4, uova);
-        allAllergensMap.put(5, arachidi);
+        allAllergensMap.put(1, gluten);
+        allAllergensMap.put(2, lactose);
+        allAllergensMap.put(3, crustaceans);
+        allAllergensMap.put(4, egg);
+        allAllergensMap.put(5, peanuts);
 
         List<Allergen> a1001 = new ArrayList<>();
-        a1001.add(glutine); a1001.add(uova); a1001.add(lattosio);
+        a1001.add(gluten); a1001.add(egg); a1001.add(lactose);
         dishAllergensMap.put(1001, a1001);
 
 
         List<Allergen> a1002 = new ArrayList<>();
-        a1002.add(glutine);
+        a1002.add(gluten);
         dishAllergensMap.put(1002, a1002);
 
     }
