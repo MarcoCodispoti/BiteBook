@@ -20,7 +20,7 @@ public class ManageServiceRequestController {
                 .getClientServiceRequests(LoggedUser.getInstance().getClient());
         if (requests != null) {
             for (ServiceRequest req : requests) {
-                resultBeans.add(convertToBean(req));
+                resultBeans.add(convertRequestToBean(req));
             }
         }
         return resultBeans;
@@ -36,7 +36,7 @@ public class ManageServiceRequestController {
         if (requests != null) {
             for (ServiceRequest req : requests){
                 if (req.getStatus() == RequestStatus.APPROVED) {
-                    resultBeans.add(convertToBean(req));
+                    resultBeans.add(convertRequestToBean(req));
                 }
             }
         }
@@ -52,7 +52,7 @@ public class ManageServiceRequestController {
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
             for (ServiceRequest req : requests) {
-                resultBeans.add(convertToBean(req));
+                resultBeans.add(convertRequestToBean(req));
             }
         }
         return resultBeans;
@@ -71,38 +71,38 @@ public class ManageServiceRequestController {
 
 
 
-    private ServiceRequestBean convertToBean(ServiceRequest entity) {
+    private ServiceRequestBean convertRequestToBean(ServiceRequest request) {
         ServiceRequestBean bean = new ServiceRequestBean();
 
-        bean.setId(entity.getId());
-        bean.setStatus(entity.getStatus());
-        bean.setTotalPrice(entity.getTotalPrice());
+        bean.setId(request.getId());
+        bean.setStatus(request.getStatus());
+        bean.setTotalPrice(request.getTotalPrice());
 
-        if (entity.getChef() != null) {
+        if (request.getChef() != null) {
             ChefBean cb = new ChefBean();
-            cb.setName(entity.getChef().getName());
-            cb.setSurname(entity.getChef().getSurname());
+            cb.setName(request.getChef().getName());
+            cb.setSurname(request.getChef().getSurname());
             bean.setChefBean(cb);
         }
 
-        if (entity.getClient() != null) {
-            bean.setClientBean(new ClientBean(entity.getClient().getName(), entity.getClient().getSurname()));
+        if (request.getClient() != null) {
+            bean.setClientBean(new ClientBean(request.getClient().getName(), request.getClient().getSurname()));
         }
 
-        if (entity.getMenu() != null) {
+        if (request.getMenu() != null) {
             MenuBean mb = new MenuBean();
-            mb.setName(entity.getMenu().getName());
+            mb.setName(request.getMenu().getName());
             bean.setMenuBean(mb);
         }
 
-        if (entity.getReservationDetails() != null) {
+        if (request.getReservationDetails() != null) {
             ReservationDetailsBean rdb = new ReservationDetailsBean();
 
-            rdb.setSelectedMenuLevel(entity.getReservationDetails().getSelectedMenuLevel());
-            rdb.setParticipantNumber(entity.getReservationDetails().getParticipantNumber());
-            rdb.setDate(entity.getReservationDetails().getDate());
-            rdb.setTime(entity.getReservationDetails().getTime());
-            rdb.setAddress(entity.getReservationDetails().getAddress());
+            rdb.setSelectedMenuLevel(request.getReservationDetails().getSelectedMenuLevel());
+            rdb.setParticipantNumber(request.getReservationDetails().getParticipantNumber());
+            rdb.setDate(request.getReservationDetails().getDate());
+            rdb.setTime(request.getReservationDetails().getTime());
+            rdb.setAddress(request.getReservationDetails().getAddress());
             bean.setReservationDetailsBean(rdb);
         }
         return bean;
