@@ -3,7 +3,7 @@ package com.example.bitebook.util;
 
 public class AppConfig{
 
-    private static AppConfig instance = null;
+    
     private final boolean demoMode;
 
     private static final String PROPERTY_KEY = "bitebook.mode";
@@ -17,11 +17,14 @@ public class AppConfig{
     }
 
 
+
+    private static class SingletonHolder {
+        private static final AppConfig INSTANCE = new AppConfig();
+    }
+
+
     public static synchronized AppConfig getInstance() {
-        if (instance == null) {
-            instance = new AppConfig();
-        }
-        return instance;
+        return SingletonHolder.INSTANCE;
     }
 
 

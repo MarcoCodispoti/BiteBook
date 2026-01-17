@@ -29,14 +29,15 @@ public class DaoConfigurator{
     }
 
 
-    public DaoFactory getFactory() {
-        return this.daoFactory;
+
+    private static class SingletonHolder{
+        private static final DaoConfigurator INSTANCE = new DaoConfigurator();
     }
 
 
 
-    private static class SingletonHolder{
-        private static final DaoConfigurator INSTANCE = new DaoConfigurator();
+    public DaoFactory getFactory() {
+        return this.daoFactory;
     }
 
 
