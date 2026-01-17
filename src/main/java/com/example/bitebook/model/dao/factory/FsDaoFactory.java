@@ -8,7 +8,7 @@ import com.example.bitebook.model.dao.demo.ServiceRequestDemoDao;
 import com.example.bitebook.model.dao.persistence.AllergenFSDao;
 import com.example.bitebook.model.dao.persistence.UserFsDao;
 
-public class FsDaoFactory implements AbstractDaoFactory {
+public class FsDaoFactory implements DaoFactory {
     @Override
     public AllergenDao getAllergenDao() {
         return new AllergenFSDao();

@@ -2,7 +2,7 @@ package com.example.bitebook.model.dao.factory;
 
 import com.example.bitebook.model.dao.*;
 
-public interface AbstractDaoFactory {
+public interface DaoFactory {
 
     AllergenDao getAllergenDao();
 

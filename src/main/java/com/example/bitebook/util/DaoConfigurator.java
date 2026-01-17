@@ -1,7 +1,7 @@
 package com.example.bitebook.util;
 
 import com.example.bitebook.exceptions.FailedDatabaseConnectionException;
-import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
+import com.example.bitebook.model.dao.factory.DaoFactory;
 import com.example.bitebook.model.dao.factory.DbDaoFactory;
 import com.example.bitebook.model.dao.factory.DemoDaoFactory;
 import com.example.bitebook.model.dao.factory.FsDaoFactory;
@@ -10,14 +10,14 @@ import com.example.bitebook.model.dao.factory.FsDaoFactory;
 public class DaoConfigurator{
 
 
-    private final AbstractDaoFactory daoFactory;
+    private final DaoFactory daoFactory;
 
 
     private DaoConfigurator(){
         if (AppConfig.getInstance().isDemoMode()) {
             this.daoFactory = new DemoDaoFactory();
         } else {
-            AbstractDaoFactory factoryTemp;
+            DaoFactory factoryTemp;
             try {
                 Connector.getInstance().getConnection();
                 factoryTemp = new DbDaoFactory();
@@ -29,7 +29,7 @@ public class DaoConfigurator{
     }
 
 
-    public AbstractDaoFactory getFactory() {
+    public DaoFactory getFactory() {
         return this.daoFactory;
     }
 

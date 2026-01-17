@@ -3,7 +3,7 @@ package com.example.bitebook.model.dao.factory;
 import com.example.bitebook.model.dao.*;
 import com.example.bitebook.model.dao.demo.*;
 
-public class DemoDaoFactory implements AbstractDaoFactory {
+public class DemoDaoFactory implements DaoFactory {
 
     @Override
     public AllergenDao getAllergenDao() {
