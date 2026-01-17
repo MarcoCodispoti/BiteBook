@@ -35,7 +35,7 @@ public class LoginController{
 
 
     private Role checkCredentials(String email, String password) throws WrongCredentialsException, FailedSearchException {
-        Role role = getDaoFactory().getUserDao().getCredentialsRole(email, password);
+        Role role = DaoConfigurator.getInstance().getFactory().getUserDao().getCredentialsRole(email, password);
         if (role == null) {
             throw new WrongCredentialsException("Invalid credentials");
         }
@@ -45,7 +45,8 @@ public class LoginController{
 
 
     private void loadUserAndSetSession(Role role, LoginBean loginBean) throws FailedSearchException {
-        UserDao userDao = getDaoFactory().getUserDao();
+        AbstractDaoFactory daoFactory = DaoConfigurator.getInstance().getFactory();
+        UserDao userDao = daoFactory.getUserDao();
         Client client = null;
         Chef chef = null;
 
@@ -53,7 +54,7 @@ public class LoginController{
             case CLIENT:
                 client = userDao.getClientInfo(loginBean.getEmail(), loginBean.getPassword());
                 if (client == null) throw new FailedSearchException("Error fetching client data");
-                client.setAllergies(getDaoFactory().getAllergenDao().getClientAllergies(client));
+                client.setAllergies(daoFactory.getAllergenDao().getClientAllergies(client));
                 break;
             case CHEF:
                 chef = userDao.getChefInfo(loginBean.getEmail(), loginBean.getPassword());
@@ -77,12 +78,6 @@ public class LoginController{
 
     public void logout() {
         LoggedUser.getInstance().logout();
-    }
-
-
-
-    private AbstractDaoFactory getDaoFactory(){
-        return DaoConfigurator.getInstance().getFactory();
     }
 
 

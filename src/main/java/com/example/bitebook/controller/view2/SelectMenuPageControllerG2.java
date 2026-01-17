@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view2;
 
-import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.ExploreController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.WrongCredentialsException;
@@ -46,7 +46,7 @@ public class SelectMenuPageControllerG2{
     private Label loginMessageLabel;
 
 
-    private final ExplorationController menuExplorationController = new ExplorationController();
+    private final ExploreController menuExploreController = new ExploreController();
     private ChefBean selectedChefBean;
     private MenuBean selectedMenuBean;
     private List<AllergenBean> menuAllergenBeans = new ArrayList<>();
@@ -118,7 +118,7 @@ public class SelectMenuPageControllerG2{
 
     @FXML
     void handleBook(){
-        if (!menuExplorationController.isLoggedClient()) {
+        if (!menuExploreController.isLoggedClient()) {
             setLoginPopup();
             return;
         }
@@ -151,7 +151,7 @@ public class SelectMenuPageControllerG2{
 
     public void initData(ChefBean chefBean) {
         try {
-            List<ChefBean> chefsInCity = menuExplorationController.getChefsInCity(chefBean.getCity());
+            List<ChefBean> chefsInCity = menuExploreController.getChefsInCity(chefBean.getCity());
 
             chefComboBox.getItems().clear();
             if (chefsInCity != null) {
@@ -174,7 +174,7 @@ public class SelectMenuPageControllerG2{
 
         if (chef != null) {
             try {
-                List<MenuBean> chefMenus = menuExplorationController.getChefMenus(chef);
+                List<MenuBean> chefMenus = menuExploreController.getChefMenus(chef);
                 if (chefMenus != null) {
                     menuComboBox.getItems().addAll(chefMenus);
                 }
@@ -193,10 +193,10 @@ public class SelectMenuPageControllerG2{
         allergensLabel.setText("");
         if (menu != null) {
             try {
-                List<DishBean> dishes = menuExplorationController.getCourses(menu);
+                List<DishBean> dishes = menuExploreController.getCourses(menu);
                 if (dishes != null) {
                     menuDetailsListView.getItems().addAll(dishes);
-                    this.menuAllergenBeans = menuExplorationController.getCoursesAllergens(dishes);
+                    this.menuAllergenBeans = menuExploreController.getCoursesAllergens(dishes);
                     allergensLabel.setText(formatAllergensList(menuAllergenBeans));
                 }
             } catch (FailedSearchException e){
@@ -273,7 +273,7 @@ public class SelectMenuPageControllerG2{
 
 
     private void navigateToIfLogged(String pageName, String errorMsg) {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             FxmlLoader2.setPage(pageName);
         } else {
             displayMesssage(errorMsg);

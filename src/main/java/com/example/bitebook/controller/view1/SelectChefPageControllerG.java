@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.ExploreController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.util.ViewsResourcesPaths;
@@ -27,7 +27,7 @@ public class SelectChefPageControllerG {
     private Label messageLabel;
 
 
-    private final ExplorationController menuExplorationController = new ExplorationController();
+    private final ExploreController menuExploreController = new ExploreController();
     private Parent selectedCardUI;
     private String selectedCity;
     private ChefBean selectedChefBean;
@@ -81,7 +81,7 @@ public class SelectChefPageControllerG {
         messageLabel.setStyle("-fx-text-fill: black;");
 
         try {
-            this.chefInCityBeans = menuExplorationController.getChefsInCity(this.selectedCity);
+            this.chefInCityBeans = menuExploreController.getChefsInCity(this.selectedCity);
 
             if (this.chefInCityBeans == null || this.chefInCityBeans.isEmpty()) {
                 displayError("No chefs found in this city.");
@@ -134,7 +134,7 @@ public class SelectChefPageControllerG {
 
 
     private void navigateToIfLogged(String pageName) {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayError("You must be logged in to access this page!");

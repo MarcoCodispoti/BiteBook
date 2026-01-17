@@ -4,7 +4,6 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
-import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.session.LoggedUser;
 import com.example.bitebook.util.DaoConfigurator;
@@ -18,7 +17,7 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
+        List<ServiceRequest> requests = DaoConfigurator.getInstance().getFactory().getServiceRequestDao()
                 .getClientServiceRequests(LoggedUser.getInstance().getClient());
         if (requests != null) {
             for (ServiceRequest req : requests) {
@@ -33,7 +32,7 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
+        List<ServiceRequest> requests = DaoConfigurator.getInstance().getFactory().getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
             for (ServiceRequest req : requests){
@@ -50,7 +49,7 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getChefRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
+        List<ServiceRequest> requests = DaoConfigurator.getInstance().getFactory().getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
             for (ServiceRequest req : requests) {
@@ -68,7 +67,7 @@ public class ManageServiceRequestController {
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
 
-        getDaoFactory().getServiceRequestDao().manageRequest(serviceRequest);
+        DaoConfigurator.getInstance().getFactory().getServiceRequestDao().manageRequest(serviceRequest);
     }
 
 
@@ -108,12 +107,6 @@ public class ManageServiceRequestController {
             bean.setReservationDetailsBean(rdb);
         }
         return bean;
-    }
-
-
-
-    private AbstractDaoFactory getDaoFactory(){
-        return DaoConfigurator.getInstance().getFactory();
     }
 
 

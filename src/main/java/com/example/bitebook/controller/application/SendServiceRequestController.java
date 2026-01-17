@@ -18,7 +18,7 @@ public class SendServiceRequestController {
 
     public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {
 
-        Menu menu = getDaoFactory().getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
+        Menu menu = DaoConfigurator.getInstance().getFactory().getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
             menuBean.setLuxeLevelSurcharge(menu.getLuxeLevelSurcharge());
@@ -94,7 +94,7 @@ public class SendServiceRequestController {
     public ServiceRequestBean createServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
 
-        Chef chef = getDaoFactory().getChefDao().getChefFromMenu(menuBean.getId());
+        Chef chef = DaoConfigurator.getInstance().getFactory().getChefDao().getChefFromMenu(menuBean.getId());
         if(chef == null) {
             throw new FailedSearchException("Unable to find the chef of the menu");
         }
@@ -126,7 +126,7 @@ public class SendServiceRequestController {
             throw new IllegalArgumentException("Error: Invalid request");
         }
         ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
-        getDaoFactory().getServiceRequestDao().saveServiceRequest(serviceRequest);
+        DaoConfigurator.getInstance().getFactory().getServiceRequestDao().saveServiceRequest(serviceRequest);
     }
 
 
@@ -200,12 +200,6 @@ public class SendServiceRequestController {
         menu.setLuxeLevelSurcharge(menuBean.getLuxeLevelSurcharge());
 
         return menu;
-    }
-
-
-
-    private AbstractDaoFactory getDaoFactory(){
-        return DaoConfigurator.getInstance().getFactory();
     }
 
 

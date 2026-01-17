@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.ExploreController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
@@ -24,7 +24,7 @@ public class ClientHomePageControllerG{
     private Label messageLabel;
 
 
-    private final ExplorationController menuExplorationController = new ExplorationController();
+    private final ExploreController menuExploreController = new ExploreController();
     private final LoginController loginController = new LoginController();
 
 
@@ -69,7 +69,7 @@ public class ClientHomePageControllerG{
             return;
         }
         try {
-            boolean chefFound = menuExplorationController.areChefsAvailableInCity(insertedCity);
+            boolean chefFound = menuExploreController.areChefsAvailableInCity(insertedCity);
             if (!chefFound) {
                 displayMessage("No chef found in " + chefBean.getCity() + "!");
                 return;
@@ -87,7 +87,7 @@ public class ClientHomePageControllerG{
 
 
     private boolean checkLoginStatus() {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             return true;
         } else {
             displayMessage("You must be logged in");

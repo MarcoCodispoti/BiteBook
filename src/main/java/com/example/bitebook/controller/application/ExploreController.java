@@ -22,12 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExplorationController {
+public class ExploreController {
 
 
     public boolean areChefsAvailableInCity(String insertedCity) throws FailedSearchException {
 
-        ChefDao chefDao = getDaoFactory().getChefDao();
+        ChefDao chefDao = DaoConfigurator.getInstance().getFactory().getChefDao();
         try {
             chefDao.findCityChefs(insertedCity);
             return true;
@@ -47,7 +47,7 @@ public class ExplorationController {
     public List<ChefBean> getChefsInCity(String selectedCity) throws FailedSearchException {
         List<ChefBean> chefInCityBeans = new ArrayList<>();
 
-        List<Chef> chefsInCity = getDaoFactory().getChefDao().getChefsInCity(selectedCity);
+        List<Chef> chefsInCity = DaoConfigurator.getInstance().getFactory().getChefDao().getChefsInCity(selectedCity);
         if (chefsInCity != null) {
             for (Chef chef : chefsInCity) {
                 chefInCityBeans.add(new ChefBean(chef));
@@ -61,7 +61,7 @@ public class ExplorationController {
     public List<MenuBean> getChefMenus(ChefBean chefBean) throws FailedSearchException {
         List<MenuBean> chefMenuBeans = new ArrayList<>();
 
-        List<Menu> chefMenus = getDaoFactory().getMenuDao().getChefMenus(chefBean.getId());
+        List<Menu> chefMenus = DaoConfigurator.getInstance().getFactory().getMenuDao().getChefMenus(chefBean.getId());
         if (chefMenus != null) {
             for (Menu menu : chefMenus) {
                 chefMenuBeans.add(new MenuBean(menu));
@@ -75,9 +75,9 @@ public class ExplorationController {
     public List<DishBean> getCourses(MenuBean menuBean) throws FailedSearchException {
         List<DishBean> coursesBean = new ArrayList<>();
 
-        List<Dish> courses = getDaoFactory().getDishDao().getMenuCourses(menuBean.getId());
+        List<Dish> courses = DaoConfigurator.getInstance().getFactory().getDishDao().getMenuCourses(menuBean.getId());
         if (courses != null) {
-            AllergenDao allergenDao = getDaoFactory().getAllergenDao();
+            AllergenDao allergenDao = DaoConfigurator.getInstance().getFactory().getAllergenDao();
             for (Dish dish : courses) {
                 List<Allergen> dishAllergens = allergenDao.getDishAllergens(dish.getId());
                 dish.setAllergens(dishAllergens);
@@ -105,12 +105,6 @@ public class ExplorationController {
             }
         }
         return new ArrayList<>(uniqueAllergensMap.values());
-    }
-
-
-
-    private AbstractDaoFactory getDaoFactory(){
-        return DaoConfigurator.getInstance().getFactory();
     }
 
 

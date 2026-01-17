@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.ExploreController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.bean.ChefBean;
 import com.example.bitebook.model.bean.MenuBean;
@@ -29,7 +29,7 @@ public class SelectMenuPageControllerG{
     private Label messageLabel;
 
 
-    private final ExplorationController menuExplorationController = new ExplorationController();
+    private final ExploreController menuExploreController = new ExploreController();
     private ChefBean selectChefBean;
     private MenuBean selectedMenuBean;
     private List<MenuBean> chefMenuBeans = new ArrayList<>();
@@ -87,7 +87,7 @@ public class SelectMenuPageControllerG{
 
 
     private void navigateToIfLogged(String pageName) {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayError("You must be logged in to access this page!");
@@ -102,7 +102,7 @@ public class SelectMenuPageControllerG{
         messageLabel.setVisible(false);
 
         try {
-            this.chefMenuBeans = menuExplorationController.getChefMenus(chefBean);
+            this.chefMenuBeans = menuExploreController.getChefMenus(chefBean);
             if (this.chefMenuBeans == null || this.chefMenuBeans.isEmpty()) {
                 displayError("This chef has no menus available.");
                 return;

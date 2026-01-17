@@ -1,6 +1,6 @@
 package com.example.bitebook.controller.view1;
 
-import com.example.bitebook.controller.application.ExplorationController;
+import com.example.bitebook.controller.application.ExploreController;
 import com.example.bitebook.controller.application.LoginController;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.WrongCredentialsException;
@@ -60,7 +60,7 @@ public class MenuDetailsPageControllerG{
     private Label loginMessageLabel;
 
 
-    private final ExplorationController menuExplorationController = new ExplorationController();
+    private final ExploreController menuExploreController = new ExploreController();
     private ChefBean menusChefBean;
     private MenuBean selectedMenuBean;
     private List<DishBean> menuCoursesBeans = new ArrayList<>();
@@ -101,7 +101,7 @@ public class MenuDetailsPageControllerG{
 
     @FXML
     void handleConfirmMenu() {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             ServiceRequestPageControllerG controller = FxmlLoader.setPageAndReturnController("ServiceRequestPage");
             if (controller != null) {
                 controller.initData(selectedMenuBean, menuAllergenBeans, menusChefBean);
@@ -168,8 +168,8 @@ public class MenuDetailsPageControllerG{
 
 
         try {
-            this.menuCoursesBeans = menuExplorationController.getCourses(selectedMenuBean);
-            this.menuAllergenBeans = menuExplorationController.getCoursesAllergens(menuCoursesBeans);
+            this.menuCoursesBeans = menuExploreController.getCourses(selectedMenuBean);
+            this.menuAllergenBeans = menuExploreController.getCoursesAllergens(menuCoursesBeans);
 
             populateCourses();
             allergensLabel.setText(formatAllergensList());
@@ -245,7 +245,7 @@ public class MenuDetailsPageControllerG{
 
 
     private void navigateToIfLogged(String pageName) {
-        if (menuExplorationController.isLoggedClient()) {
+        if (menuExploreController.isLoggedClient()) {
             FxmlLoader.setPage(pageName);
         } else {
             displayMessage("You must be logged in to access this page!");

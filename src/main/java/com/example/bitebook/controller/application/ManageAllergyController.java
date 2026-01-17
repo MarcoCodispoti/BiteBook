@@ -6,7 +6,6 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.dao.AllergenDao;
-import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.session.LoggedUser;
 import com.example.bitebook.util.DaoConfigurator;
 
@@ -38,7 +37,7 @@ public class ManageAllergyController {
 
     public void removeClientAllergy(AllergenBean allergyToRemoveBean) throws FailedRemoveException{
 
-        getDaoFactory().getAllergenDao().removeClientAllergy(
+        DaoConfigurator.getInstance().getFactory().getAllergenDao().removeClientAllergy(
                 LoggedUser.getInstance().getClient().getId(),
                 allergyToRemoveBean.getId()
         );
@@ -52,7 +51,7 @@ public class ManageAllergyController {
     public List<AllergenBean> getAllergens() throws FailedSearchException{
         List<AllergenBean> allergenBeans = new ArrayList<>();
 
-        AllergenDao allergenDao = getDaoFactory().getAllergenDao();
+        AllergenDao allergenDao = DaoConfigurator.getInstance().getFactory().getAllergenDao();
         List<Allergen> allergens = allergenDao.getAllergens();
 
         if (allergens != null) {
@@ -74,7 +73,7 @@ public class ManageAllergyController {
         allergen.setId(allergenBean.getId());
         allergen.setName(allergenBean.getName());
 
-        getDaoFactory().getAllergenDao().insertAllergy(
+        DaoConfigurator.getInstance().getFactory().getAllergenDao().insertAllergy(
                 allergen,
                 LoggedUser.getInstance().getClient().getId()
         );
@@ -102,12 +101,6 @@ public class ManageAllergyController {
         if (!alreadyExists) {
             currentList.add(newAllergen);
         }
-    }
-
-
-
-    private AbstractDaoFactory getDaoFactory(){
-        return DaoConfigurator.getInstance().getFactory();
     }
 
 
