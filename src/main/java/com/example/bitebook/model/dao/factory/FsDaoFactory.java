@@ -1,4 +1,4 @@
-package com.example.bitebook.model.dao.Factory;
+package com.example.bitebook.model.dao.factory;
 
 import com.example.bitebook.model.dao.*;
 import com.example.bitebook.model.dao.demo.ChefDemoDao;

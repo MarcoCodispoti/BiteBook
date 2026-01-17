@@ -12,7 +12,7 @@ import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.ChefDao;
-import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
+import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.session.LoggedUser;
 import com.example.bitebook.util.DaoConfigurator;

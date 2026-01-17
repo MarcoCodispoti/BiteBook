@@ -6,7 +6,7 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.Allergen;
 import com.example.bitebook.model.bean.AllergenBean;
 import com.example.bitebook.model.dao.AllergenDao;
-import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
+import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.session.LoggedUser;
 import com.example.bitebook.util.DaoConfigurator;
 

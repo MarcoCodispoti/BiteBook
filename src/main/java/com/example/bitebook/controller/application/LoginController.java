@@ -5,7 +5,7 @@ import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.LoginBean;
-import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
+import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.dao.UserDao;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.session.LoggedUser;

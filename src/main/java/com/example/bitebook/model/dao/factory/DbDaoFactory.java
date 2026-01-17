@@ -1,38 +1,38 @@
-package com.example.bitebook.model.dao.Factory;
+package com.example.bitebook.model.dao.factory;
 
 import com.example.bitebook.model.dao.*;
-import com.example.bitebook.model.dao.demo.*;
+import com.example.bitebook.model.dao.persistence.*;
 
-public class DemoDaoFactory implements AbstractDaoFactory {
+public class DbDaoFactory implements AbstractDaoFactory {
 
     @Override
     public AllergenDao getAllergenDao() {
-        return new AllergenDemoDao();
+        return new AllergenDbDao();
     }
 
     @Override
     public ChefDao getChefDao() {
-        return new ChefDemoDao();
+        return new ChefDbDao();
     }
 
     @Override
     public DishDao getDishDao() {
-        return new DishDemoDao();
+        return new DishDbDao();
     }
 
     @Override
     public MenuDao getMenuDao() {
-        return new MenuDemoDao();
+        return new MenuDbDao();
     }
 
     @Override
     public ServiceRequestDao getServiceRequestDao() {
-        return new ServiceRequestDemoDao();
+        return new ServiceRequestDbDao();
     }
 
     @Override
     public UserDao getUserDao() {
-        return new UserDemoDao();
+        return new UserDbDao();
     }
 
 }

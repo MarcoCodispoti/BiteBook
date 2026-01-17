@@ -4,7 +4,7 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
-import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
+import com.example.bitebook.model.dao.factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.session.LoggedUser;
 import com.example.bitebook.util.DaoConfigurator;
