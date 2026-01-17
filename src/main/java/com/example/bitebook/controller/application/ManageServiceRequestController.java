@@ -4,7 +4,6 @@ import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.exceptions.FailedUpdateException;
 import com.example.bitebook.model.ServiceRequest;
 import com.example.bitebook.model.bean.*;
-// import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.session.LoggedUser;
@@ -19,7 +18,6 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getClientRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        // List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
         List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
                 .getClientServiceRequests(LoggedUser.getInstance().getClient());
         if (requests != null) {
@@ -35,7 +33,6 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getApprovedServiceRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        // List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
         List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
@@ -53,7 +50,6 @@ public class ManageServiceRequestController {
     public List<ServiceRequestBean> getChefRequests() throws FailedSearchException {
         List<ServiceRequestBean> resultBeans = new ArrayList<>();
 
-        // List<ServiceRequest> requests = DaoFactory.getServiceRequestDao()
         List<ServiceRequest> requests = getDaoFactory().getServiceRequestDao()
                 .getChefServiceRequests(LoggedUser.getInstance().getChef());
         if (requests != null) {
@@ -72,7 +68,6 @@ public class ManageServiceRequestController {
         serviceRequest.setId(serviceRequestBean.getId());
         serviceRequest.setStatus(serviceRequestBean.getStatus());
 
-        //DaoFactory.getServiceRequestDao().manageRequest(serviceRequest);
         getDaoFactory().getServiceRequestDao().manageRequest(serviceRequest);
     }
 

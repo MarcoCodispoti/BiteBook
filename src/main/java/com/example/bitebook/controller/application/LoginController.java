@@ -5,7 +5,6 @@ import com.example.bitebook.exceptions.WrongCredentialsException;
 import com.example.bitebook.model.Chef;
 import com.example.bitebook.model.Client;
 import com.example.bitebook.model.bean.LoginBean;
-//import com.example.bitebook.model.dao.DaoFactory;
 import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
 import com.example.bitebook.model.dao.UserDao;
 import com.example.bitebook.model.enums.Role;
@@ -36,7 +35,6 @@ public class LoginController{
 
 
     private Role checkCredentials(String email, String password) throws WrongCredentialsException, FailedSearchException {
-        //Role role = DaoFactory.getUserDao().getCredentialsRole(email, password);
         Role role = getDaoFactory().getUserDao().getCredentialsRole(email, password);
         if (role == null) {
             throw new WrongCredentialsException("Invalid credentials");
@@ -47,7 +45,6 @@ public class LoginController{
 
 
     private void loadUserAndSetSession(Role role, LoginBean loginBean) throws FailedSearchException {
-        // UserDao userDao = DaoFactory.getUserDao();
         UserDao userDao = getDaoFactory().getUserDao();
         Client client = null;
         Chef chef = null;
