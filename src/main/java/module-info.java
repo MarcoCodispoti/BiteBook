@@ -16,6 +16,7 @@ module com.example.bitebook {
     requires java.desktop;
     requires javafx.base;
     requires java.logging;
+    // requires com.example.bitebook;
 
     exports com.example.bitebook.model;
     exports com.example.bitebook.model.enums;

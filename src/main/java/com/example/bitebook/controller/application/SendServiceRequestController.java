@@ -4,9 +4,11 @@ import com.example.bitebook.exceptions.FailedInsertException;
 import com.example.bitebook.exceptions.FailedSearchException;
 import com.example.bitebook.model.*;
 import com.example.bitebook.model.bean.*;
-import com.example.bitebook.model.dao.DaoFactory;
+// import com.example.bitebook.model.dao.DaoFactory;
+import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.RequestStatus;
 import com.example.bitebook.model.session.LoggedUser;
+import com.example.bitebook.util.DaoConfigurator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +19,8 @@ public class SendServiceRequestController {
 
     public MenuBean populateMenuSurcharges(MenuBean menuBean) throws FailedSearchException {
 
-        Menu menu = DaoFactory.getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
+        // Menu menu = DaoFactory.getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
+        Menu menu = getDaoFactory().getMenuDao().populateMenuLevelsSurcharge(menuBean.getId());
         if (menu != null) {
             menuBean.setPremiumLevelSurcharge(menu.getPremiumLevelSurcharge());
             menuBean.setLuxeLevelSurcharge(menu.getLuxeLevelSurcharge());
@@ -93,7 +96,8 @@ public class SendServiceRequestController {
     public ServiceRequestBean createServiceRequest(MenuBean menuBean, ReservationDetailsBean reservationDetailsBean) throws FailedSearchException {
         ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
 
-        Chef chef = DaoFactory.getChefDao().getChefFromMenu(menuBean.getId());
+        // Chef chef = DaoFactory.getChefDao().getChefFromMenu(menuBean.getId());
+        Chef chef = getDaoFactory().getChefDao().getChefFromMenu(menuBean.getId());
         if(chef == null) {
             throw new FailedSearchException("Unable to find the chef of the menu");
         }
@@ -125,7 +129,8 @@ public class SendServiceRequestController {
             throw new IllegalArgumentException("Error: Invalid request");
         }
         ServiceRequest serviceRequest = convertServiceRequestBean(serviceRequestBean);
-        DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
+        // DaoFactory.getServiceRequestDao().saveServiceRequest(serviceRequest);
+        getDaoFactory().getServiceRequestDao().saveServiceRequest(serviceRequest);
     }
 
 
@@ -201,6 +206,11 @@ public class SendServiceRequestController {
         return menu;
     }
 
+
+
+    private AbstractDaoFactory getDaoFactory(){
+        return DaoConfigurator.getInstance().getFactory();
+    }
 
 
 }

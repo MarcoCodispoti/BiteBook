@@ -12,9 +12,12 @@ import com.example.bitebook.model.bean.DishBean;
 import com.example.bitebook.model.bean.MenuBean;
 import com.example.bitebook.model.dao.AllergenDao;
 import com.example.bitebook.model.dao.ChefDao;
-import com.example.bitebook.model.dao.DaoFactory;
+// import com.example.bitebook.model.dao.DaoFactory;
+import com.example.bitebook.model.dao.Factory.AbstractDaoFactory;
 import com.example.bitebook.model.enums.Role;
 import com.example.bitebook.model.session.LoggedUser;
+import com.example.bitebook.util.DaoConfigurator;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,8 @@ public class ExplorationController {
 
     public boolean areChefsAvailableInCity(String insertedCity) throws FailedSearchException {
 
-        ChefDao chefDao = DaoFactory.getChefDao();
+        // ChefDao chefDao = DaoFactory.getChefDao();
+        ChefDao chefDao = getDaoFactory().getChefDao();
         try {
             chefDao.findCityChefs(insertedCity);
             return true;
@@ -45,7 +49,8 @@ public class ExplorationController {
     public List<ChefBean> getChefsInCity(String selectedCity) throws FailedSearchException {
         List<ChefBean> chefInCityBeans = new ArrayList<>();
 
-        List<Chef> chefsInCity = DaoFactory.getChefDao().getChefsInCity(selectedCity);
+        // List<Chef> chefsInCity = DaoFactory.getChefDao().getChefsInCity(selectedCity);
+        List<Chef> chefsInCity = getDaoFactory().getChefDao().getChefsInCity(selectedCity);
         if (chefsInCity != null) {
             for (Chef chef : chefsInCity) {
                 chefInCityBeans.add(new ChefBean(chef));
@@ -59,7 +64,8 @@ public class ExplorationController {
     public List<MenuBean> getChefMenus(ChefBean chefBean) throws FailedSearchException {
         List<MenuBean> chefMenuBeans = new ArrayList<>();
 
-        List<Menu> chefMenus = DaoFactory.getMenuDao().getChefMenus(chefBean.getId());
+        // List<Menu> chefMenus = DaoFactory.getMenuDao().getChefMenus(chefBean.getId());
+        List<Menu> chefMenus = getDaoFactory().getMenuDao().getChefMenus(chefBean.getId());
         if (chefMenus != null) {
             for (Menu menu : chefMenus) {
                 chefMenuBeans.add(new MenuBean(menu));
@@ -73,9 +79,11 @@ public class ExplorationController {
     public List<DishBean> getCourses(MenuBean menuBean) throws FailedSearchException {
         List<DishBean> coursesBean = new ArrayList<>();
 
-        List<Dish> courses = DaoFactory.getDishDao().getMenuCourses(menuBean.getId());
+        // List<Dish> courses = DaoFactory.getDishDao().getMenuCourses(menuBean.getId());
+        List<Dish> courses = getDaoFactory().getDishDao().getMenuCourses(menuBean.getId());
         if (courses != null) {
-            AllergenDao allergenDao = DaoFactory.getAllergenDao();
+            // AllergenDao allergenDao = DaoFactory.getAllergenDao();
+            AllergenDao allergenDao = getDaoFactory().getAllergenDao();
             for (Dish dish : courses) {
                 List<Allergen> dishAllergens = allergenDao.getDishAllergens(dish.getId());
                 dish.setAllergens(dishAllergens);
@@ -104,5 +112,12 @@ public class ExplorationController {
         }
         return new ArrayList<>(uniqueAllergensMap.values());
     }
+
+
+
+    private AbstractDaoFactory getDaoFactory(){
+        return DaoConfigurator.getInstance().getFactory();
+    }
+
 
 }
