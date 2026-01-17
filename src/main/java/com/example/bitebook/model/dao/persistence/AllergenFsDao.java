@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("java:S1075")
-public class AllergenFSDao implements AllergenDao{
+public class AllergenFsDao implements AllergenDao{
 
 
     private static final String CLIENT_ALLERGIES_FILE_PATH = "/com/example/bitebook/FileSystem/ClientsAllergies.csv";
